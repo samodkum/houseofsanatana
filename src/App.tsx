@@ -26,6 +26,7 @@ import { KnowledgeMediaPage } from './components/KnowledgeMediaPage';
 import { HeaderActionButtons } from './components/HeaderActionButtons';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { AccountModal } from './components/AccountModal';
+import { AccountLayout } from './components/AccountLayout';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
 import { handleShopifyOAuthCallback } from './lib/shopify';
 
@@ -38,7 +39,12 @@ const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
 
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'account'>(() => {
+    if (typeof window !== 'undefined' && (window.location.pathname.startsWith('/account') || window.location.hash.startsWith('#account'))) {
+      return 'account';
+    }
+    return 'home';
+  });
   const [joinPathway, setJoinPathway] = useState<MainJoinWay>('join-hos');
   const [isLoading, setIsLoading] = useState(true);
   const [isRevealed, setIsRevealed] = useState(false);
@@ -127,7 +133,12 @@ export default function App() {
     const syncRoute = () => {
       const hash = window.location.hash.toLowerCase();
 
-      if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+
+      if (path.startsWith('/account') || hash.startsWith('#account')) {
+        setCurrentPage('account');
+      } else if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
         setCurrentPage('mall');
       } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages' || hash === '#travel-page' || hash.startsWith('#yatra-')) {
         setCurrentPage('travel');
@@ -138,8 +149,6 @@ export default function App() {
         else setJoinPathway('join-hos');
       } else if (hash === '#media' || hash === '#knowledge' || hash === '#sanatana-media' || hash === '#media-listing' || hash === '#media-sanctum') {
         setCurrentPage('media');
-      } else if (hash.startsWith('#account')) {
-        setIsAccountOpen(true);
       } else {
         setCurrentPage('home');
       }
@@ -147,8 +156,10 @@ export default function App() {
 
     syncRoute();
     window.addEventListener('hashchange', syncRoute);
+    window.addEventListener('popstate', syncRoute);
     return () => {
       window.removeEventListener('hashchange', syncRoute);
+      window.removeEventListener('popstate', syncRoute);
     };
   }, []);
 
@@ -392,7 +403,14 @@ export default function App() {
         }}
       />
 
-      {currentPage === 'mall' ? (
+      {currentPage === 'account' ? (
+        <AccountLayout
+          onBackToStore={() => {
+            window.history.pushState(null, '', '/');
+            setCurrentPage('home');
+          }}
+        />
+      ) : currentPage === 'mall' ? (
         /* ======================================================== */
         /* SANTANA MALL: CONSECRATED TEMPLE STORE PAGE (IVORY BASE) */
         /* ======================================================== */
