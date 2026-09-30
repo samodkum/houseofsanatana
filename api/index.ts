@@ -1,3 +1,5 @@
-import app from '../backend/server';
-
-export default app;
+export default function handler(req: any, res: any) {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({ status: 'ok', brand: 'House of Sanatana' }));
+}
