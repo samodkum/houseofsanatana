@@ -29,6 +29,7 @@ import { AccountModal } from './components/AccountModal';
 import { AccountLayout } from './components/AccountLayout';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
 import { handleShopifyOAuthCallback } from './lib/shopify';
+import { useCustomer } from './hooks/useCustomer';
 
 import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
 
@@ -40,6 +41,7 @@ const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isDirectAccount = typeof window !== 'undefined' && (window.location.pathname.startsWith('/account') || window.location.hash.startsWith('#account'));
+  const { customer: liveCustomer } = useCustomer();
   const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'account'>(() => {
     return isDirectAccount ? 'account' : 'home';
   });
@@ -414,6 +416,7 @@ export default function App() {
 
       {currentPage === 'account' ? (
         <AccountLayout
+          customer={liveCustomer}
           onBackToStore={() => {
             window.history.pushState(null, '', '/');
             setCurrentPage('home');

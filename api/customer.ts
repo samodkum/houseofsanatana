@@ -66,6 +66,27 @@ export default async function handler(req: any, res: any) {
   const token = getCookie(cookieHeader, 'hos_customer_token') || req.headers.authorization?.replace(/^Bearer\s+/i, '');
 
   if (!token) {
+    const userEmail = getCookie(cookieHeader, 'hos_user_email');
+    const userName = getCookie(cookieHeader, 'hos_user_name');
+    const userGiven = getCookie(cookieHeader, 'hos_user_given_name');
+    const userFamily = getCookie(cookieHeader, 'hos_user_family_name');
+
+    if (userEmail) {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        customer: {
+          id: 'shopify-oauth-devotee',
+          displayName: userName || `${userGiven || ''} ${userFamily || ''}`.trim() || userEmail.split('@')[0],
+          firstName: userGiven || '',
+          lastName: userFamily || '',
+          emailAddress: { emailAddress: userEmail },
+          orders: { nodes: [] }
+        }
+      }));
+      return;
+    }
+
     res.statusCode = 401;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({

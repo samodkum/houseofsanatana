@@ -18,17 +18,18 @@ import { OrdersPanel } from './OrdersPanel';
 import { YatrasPanel, SAMPLE_YATRAS } from './YatrasPanel';
 import { ProfilePanel } from './ProfilePanel';
 import { SettingsPanel } from './SettingsPanel';
-import { CustomerData } from '../hooks/useCustomer';
+import { CustomerData, useCustomer } from '../hooks/useCustomer';
+import { getStoredCustomerData, clearStoredCustomerAuth } from '../lib/shopify';
 
 export type AccountTab = 'orders' | 'yatras' | 'profile' | 'settings';
 
 export const SAMPLE_CUSTOMER: CustomerData = {
   id: 'gid://shopify/Customer/79445164163',
-  displayName: 'Anjali Sharma',
-  firstName: 'Anjali',
-  lastName: 'Sharma',
+  displayName: 'Devoted Sadhaka',
+  firstName: 'Devoted',
+  lastName: 'Sadhaka',
   emailAddress: {
-    emailAddress: 'anjali.sharma@sanatana.in',
+    emailAddress: 'devotee@houseofsanatana.in',
   },
   phoneNumber: {
     phoneNumber: '+91 98765 43210',
@@ -71,24 +72,6 @@ export const SAMPLE_CUSTOMER: CustomerData = {
             { title: 'Kedarnath Sanctum Brass Pooja Thali & Diya Kit', quantity: 1 }
           ]
         }
-      },
-      {
-        id: 'gid://shopify/Order/1003',
-        name: '#HOS-0994',
-        processedAt: '2026-02-18T09:00:00Z',
-        financialStatus: 'PAID',
-        totalPrice: {
-          amount: '35000.00',
-          currencyCode: 'INR',
-        },
-        fulfillments: [
-          { displayStatus: 'Confirmed — Sacred Yatra Expedition Pass' }
-        ],
-        lineItems: {
-          nodes: [
-            { title: 'Char Dham Himalayan Sacred Pilgrimage Reservation (Pass #2)', quantity: 1 }
-          ]
-        }
       }
     ]
   }
@@ -109,7 +92,7 @@ interface AccountLayoutProps {
 
 export const AccountLayout: React.FC<AccountLayoutProps> = ({
   customer: propCustomer,
-  isLoading = false,
+  isLoading: propIsLoading = false,
   activeTab: controlledTab,
   onTabChange,
   onUpdateProfile: propUpdateProfile,
@@ -117,9 +100,36 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
   onBackToStore,
   logoUrl,
 }) => {
+  const { customer: hookCustomer, isLoading: hookLoading, logout: hookLogout } = useCustomer();
   const [internalTab, setInternalTab] = useState<AccountTab>('orders');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeCustomer, setActiveCustomer] = useState<CustomerData>(propCustomer || SAMPLE_CUSTOMER);
+
+  // Dynamic customer resolver: live Shopify customer > propCustomer > localStorage > fallback
+  const getResolvedCustomer = (): CustomerData => {
+    if (hookCustomer?.emailAddress?.emailAddress) return hookCustomer;
+    if (propCustomer?.emailAddress?.emailAddress) return propCustomer;
+    
+    const stored = getStoredCustomerData();
+    if (stored?.email) {
+      return {
+        id: stored.id,
+        displayName: stored.displayName || `${stored.firstName || ''} ${stored.lastName || ''}`.trim() || stored.email,
+        firstName: stored.firstName || '',
+        lastName: stored.lastName || '',
+        emailAddress: { emailAddress: stored.email },
+        phoneNumber: stored.phone ? { phoneNumber: stored.phone } : undefined,
+        orders: { nodes: [] }
+      };
+    }
+    return SAMPLE_CUSTOMER;
+  };
+
+  const [activeCustomer, setActiveCustomer] = useState<CustomerData>(getResolvedCustomer);
+
+  useEffect(() => {
+    const resolved = getResolvedCustomer();
+    setActiveCustomer(resolved);
+  }, [hookCustomer, propCustomer]);
 
   const activeTab = controlledTab || internalTab;
 
@@ -136,7 +146,6 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
     if (propUpdateProfile) {
       return propUpdateProfile(firstName, lastName);
     }
-    // Sample local update
     setActiveCustomer(prev => ({
       ...prev,
       firstName,
@@ -147,14 +156,11 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
   };
 
   const handleLogoutAction = async () => {
+    clearStoredCustomerAuth();
     if (onLogout) {
       await onLogout();
     } else {
-      if (onBackToStore) {
-        onBackToStore();
-      } else {
-        window.location.href = '/';
-      }
+      await hookLogout();
     }
   };
 

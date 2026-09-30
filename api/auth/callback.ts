@@ -79,11 +79,33 @@ export default async function handler(req: any, res: any) {
     const maxAge = tokenData.expires_in || 7200;
     const isProduction = process.env.NODE_ENV === 'production' || !!process.env.VERCEL;
     const cookieOptions = `Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${isProduction ? '; Secure' : ''}`;
+    const clientCookie = `Path=/; SameSite=Lax; Max-Age=${maxAge}${isProduction ? '; Secure' : ''}`;
+
+    let customerEmail = '';
+    let customerName = '';
+    let customerGivenName = '';
+    let customerFamilyName = '';
+    if (tokenData.id_token) {
+      try {
+        const payloadBase64 = tokenData.id_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        const payloadJson = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
+        customerEmail = payloadJson.email || '';
+        customerName = payloadJson.name || '';
+        customerGivenName = payloadJson.given_name || '';
+        customerFamilyName = payloadJson.family_name || '';
+      } catch (decodeErr) {
+        console.warn('Could not decode id_token JWT:', decodeErr);
+      }
+    }
 
     // Set auth cookies and clear temporary PKCE cookies
     res.setHeader('Set-Cookie', [
       `hos_customer_token=${encodeURIComponent(tokenData.access_token)}; ${cookieOptions}`,
       tokenData.id_token ? `hos_id_token=${encodeURIComponent(tokenData.id_token)}; ${cookieOptions}` : '',
+      customerEmail ? `hos_user_email=${encodeURIComponent(customerEmail)}; ${clientCookie}` : '',
+      customerName ? `hos_user_name=${encodeURIComponent(customerName)}; ${clientCookie}` : '',
+      customerGivenName ? `hos_user_given_name=${encodeURIComponent(customerGivenName)}; ${clientCookie}` : '',
+      customerFamilyName ? `hos_user_family_name=${encodeURIComponent(customerFamilyName)}; ${clientCookie}` : '',
       `hos_code_verifier=; Path=/; Max-Age=0`,
       `hos_auth_state=; Path=/; Max-Age=0`,
     ].filter(Boolean));
