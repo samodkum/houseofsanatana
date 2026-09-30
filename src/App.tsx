@@ -114,6 +114,11 @@ export default function App() {
 
   // Handle Shopify OAuth callback on mount (?code=...)
   useEffect(() => {
+    const isOAuthReturn = window.location.search.includes('code=');
+    if (isOAuthReturn) {
+      setIsLoading(false);
+      setIsRevealed(true);
+    }
     handleShopifyOAuthCallback().then((success) => {
       if (success) {
         showToast('॥ स्वागतम् ॥ Authenticated with Shopify! Welcome to your Sacred Sanctum.');
