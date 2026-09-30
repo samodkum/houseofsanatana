@@ -5,8 +5,8 @@ export const SHOPIFY_API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || '
 export const SHOPIFY_ACCOUNT_URL = 'https://shopify.com/79445164163/account';
 export const SHOPIFY_CUSTOMER_CLIENT_ID = import.meta.env.VITE_SHOPIFY_CUSTOMER_CLIENT_ID || 'e89e5f5a-bd59-4864-a90e-02521629e672';
 
-export const SHOPIFY_AUTH_URL = 'https://shopify.com/authentication/79445164163/oauth/authorize';
-export const SHOPIFY_TOKEN_URL = 'https://shopify.com/authentication/79445164163/oauth/token';
+export const SHOPIFY_AUTH_URL = 'https://shopify.com/79445164163/auth/oauth/authorize';
+export const SHOPIFY_TOKEN_URL = 'https://shopify.com/79445164163/auth/oauth/token';
 
 const SHOPIFY_ENDPOINT = `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
@@ -527,7 +527,7 @@ async function generateCodeChallenge(codeVerifier: string): Promise<string> {
  * Initiates Shopify OAuth flow by redirecting to the Authorization endpoint
  */
 export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<void> {
-  const currentRedirectUri = redirectUri || window.location.origin + window.location.pathname;
+  const currentRedirectUri = redirectUri || (typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : 'https://houseofsanatana.vercel.app/auth/callback');
   const state = generateRandomString(16);
   const codeVerifier = generateRandomString(64);
   const codeChallenge = await generateCodeChallenge(codeVerifier);
@@ -535,6 +535,11 @@ export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<
   sessionStorage.setItem('shopify_oauth_state', state);
   sessionStorage.setItem('shopify_code_verifier', codeVerifier);
   sessionStorage.setItem('shopify_redirect_uri', currentRedirectUri);
+
+  if (typeof document !== 'undefined') {
+    document.cookie = `hos_code_verifier=${encodeURIComponent(codeVerifier)}; path=/; max-age=900; SameSite=Lax`;
+    document.cookie = `hos_auth_state=${encodeURIComponent(state)}; path=/; max-age=900; SameSite=Lax`;
+  }
 
   const authUrl = new URL(SHOPIFY_AUTH_URL);
   authUrl.searchParams.set('client_id', SHOPIFY_CUSTOMER_CLIENT_ID);

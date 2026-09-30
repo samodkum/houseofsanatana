@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { redirectToShopifyAuthorize } from '../lib/shopify';
 
 export interface CustomerOrderNode {
   id: string;
@@ -130,7 +131,7 @@ export function useCustomer() {
   };
 
   const login = () => {
-    window.location.href = '/auth/login';
+    redirectToShopifyAuthorize();
   };
 
   return {

@@ -19,7 +19,8 @@ import {
   getStoredCustomerToken, 
   getStoredCustomerData,
   clearStoredCustomerAuth,
-  SHOPIFY_ACCOUNT_URL
+  SHOPIFY_ACCOUNT_URL,
+  redirectToShopifyAuthorize
 } from '../lib/shopify';
 
 interface AccountModalProps {
@@ -76,7 +77,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({
 
   const handleSignIn = () => {
     onClose();
-    window.location.href = '/auth/login';
+    redirectToShopifyAuthorize();
   };
 
   return (
