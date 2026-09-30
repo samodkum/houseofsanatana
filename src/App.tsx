@@ -75,7 +75,6 @@ export default function App() {
     setIsLoading(false);
     setIsAccountOpen(false);
     window.history.pushState(null, '', '/account');
-    window.location.hash = 'account';
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
@@ -149,6 +148,9 @@ export default function App() {
 
       if (path.startsWith('/account') || hash.startsWith('#account')) {
         setCurrentPage('account');
+        if (hash.startsWith('#account')) {
+          window.history.replaceState(null, '', '/account');
+        }
       } else if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
         setCurrentPage('mall');
       } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages' || hash === '#travel-page' || hash.startsWith('#yatra-')) {

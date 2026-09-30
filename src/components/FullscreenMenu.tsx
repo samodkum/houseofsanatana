@@ -18,7 +18,7 @@ const MENU_ITEMS: MenuItem[] = [
   { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '#santana-mall', page: 'mall' },
   { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '#travel', page: 'travel' },
   { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '#media', page: 'media' },
-  { id: 'account', label: 'My Devotee Profile & Orders', sanskrit: '॥ भक्त खाता ॥', isExternal: false, href: '#account', isAccount: true },
+  { id: 'account', label: 'My Devotee Profile & Orders', sanskrit: '॥ भक्त खाता ॥', isExternal: false, href: '/account', isAccount: true },
 ];
 
 interface FullscreenMenuProps {

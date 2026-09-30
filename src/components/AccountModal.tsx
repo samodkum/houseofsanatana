@@ -187,7 +187,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                     if (onNavigatePage) {
                       onNavigatePage('account');
                     } else {
-                      window.location.hash = 'account';
+                      window.location.href = '/account';
                     }
                   }}
                   className="w-full py-2.5 rounded-xl border border-[#D9C6A8] hover:border-[#C7833D] bg-white/70 hover:bg-white text-[#8F6E5B] hover:text-[#C7833D] font-dm text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
