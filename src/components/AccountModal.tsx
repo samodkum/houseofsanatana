@@ -76,14 +76,9 @@ export const AccountModal: React.FC<AccountModalProps> = ({
     setSuccessMessage('Signed out successfully.');
   };
 
-  const handleSignIn = async () => {
+  const handleSignIn = () => {
     onClose();
-    try {
-      await redirectToShopifyAuthorize();
-    } catch (e) {
-      console.warn('OAuth redirect fallback to Shopify account URL:', e);
-      window.location.href = SHOPIFY_ACCOUNT_URL;
-    }
+    window.location.href = SHOPIFY_ACCOUNT_URL;
   };
 
   return (
@@ -185,7 +180,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                   className="w-full py-2.5 rounded-xl border border-[#D9C6A8] hover:border-[#C7833D] bg-white/70 hover:bg-white text-[#8F6E5B] hover:text-[#C7833D] font-dm text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#C7833D]" />
-                  <span>Preview Custom Dashboard (/account)</span>
+                  <span>Access Devotee Sanctum (/account)</span>
                 </button>
 
                 <p className="text-xs text-stone-500 font-dm leading-relaxed">
