@@ -289,6 +289,7 @@ export function clearStoredCustomerAuth() {
     try {
       localStorage.removeItem(CUSTOMER_TOKEN_STORAGE_KEY);
       localStorage.removeItem(CUSTOMER_INFO_STORAGE_KEY);
+      localStorage.removeItem('shopify_token');
       localStorage.removeItem('hos_customer_token');
       localStorage.removeItem('hos_customer_data');
       localStorage.removeItem('hos_customer_token_expiry');

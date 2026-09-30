@@ -129,32 +129,56 @@ authRouter.get('/callback', async (req: Request, res: Response) => {
     };
 
     const maxAgeSeconds = tokenData.expires_in || 7200; // default 2 hours
+    const isProd = process.env.NODE_ENV === 'production' || !!process.env.VERCEL;
 
-    // Set secure httpOnly cookie (never accessible to client-side JS)
+    // Set secure httpOnly cookie
     res.cookie('hos_customer_token', tokenData.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: maxAgeSeconds * 1000,
       path: '/',
     });
 
+    res.cookie('token', tokenData.access_token, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      maxAge: maxAgeSeconds * 1000,
+      path: '/',
+    });
+
+    let customerEmail = '';
+    let customerName = '';
     if (tokenData.id_token) {
       res.cookie('hos_id_token', tokenData.id_token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
         maxAge: maxAgeSeconds * 1000,
         path: '/',
       });
+
+      try {
+        const payloadBase64 = tokenData.id_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        const payloadJson = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
+        customerEmail = payloadJson.email || '';
+        customerName = payloadJson.name || '';
+      } catch {}
     }
 
     // Clear temporary PKCE state cookie
     res.clearCookie('hos_pkce_state', { path: '/' });
 
-    // Redirect to the custom React customer account view
+    // Redirect to the custom React customer account view with token in query params
     const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
-    res.redirect(`${frontendUrl}/account`);
+    const redirectParams = new URLSearchParams();
+    redirectParams.set('token', tokenData.access_token);
+    if (tokenData.id_token) redirectParams.set('id_token', tokenData.id_token);
+    if (customerEmail) redirectParams.set('email', customerEmail);
+    if (customerName) redirectParams.set('name', customerName);
+
+    res.redirect(`${frontendUrl}/account?${redirectParams.toString()}`);
   } catch (err: any) {
     console.error('Error during token exchange:', err);
     res.status(500).send('Internal server error during authentication.');

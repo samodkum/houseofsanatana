@@ -28,7 +28,7 @@ import { WishlistDrawer } from './components/WishlistDrawer';
 import { AccountModal } from './components/AccountModal';
 import { AccountLayout } from './components/AccountLayout';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
-import { handleShopifyOAuthCallback } from './lib/shopify';
+import { handleShopifyOAuthCallback, getStoredCustomerData, setStoredCustomerData } from './lib/shopify';
 import { useCustomer } from './hooks/useCustomer';
 
 import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
@@ -127,8 +127,38 @@ export default function App() {
     showToast(`Added ${product.title} to sacred basket`);
   };
 
-  // Handle Shopify OAuth callback on mount (?code=...)
+  // Handle Shopify OAuth callback on mount (?code=... or ?token=...)
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get('token') || params.get('access_token');
+      if (urlToken) {
+        localStorage.setItem('shopify_token', urlToken);
+        localStorage.setItem('hos_customer_token', urlToken);
+        const urlEmail = params.get('email');
+        const urlName = params.get('name');
+        if (urlEmail) {
+          localStorage.setItem('hos_user_email', urlEmail);
+          const existing = getStoredCustomerData();
+          setStoredCustomerData({
+            id: existing?.id || 'shopify-customer',
+            email: urlEmail,
+            firstName: existing?.firstName || (urlName ? urlName.split(' ')[0] : 'Sacred'),
+            lastName: existing?.lastName || (urlName ? urlName.split(' ').slice(1).join(' ') : 'Devotee'),
+            displayName: urlName || urlEmail.split('@')[0],
+            orders: existing?.orders || { edges: [] },
+          });
+        }
+        showToast('॥ स्वागतम् ॥ Sacred Devotee Authenticated!');
+        setCurrentPage('account');
+        setIsLoading(false);
+        setIsAccountOpen(false);
+        window.history.replaceState({}, document.title, '/account');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        return;
+      }
+    }
+
     handleShopifyOAuthCallback().then((success) => {
       if (success) {
         showToast('॥ स्वागतम् ॥ Authenticated with Shopify! Welcome to your Sacred Sanctum.');
