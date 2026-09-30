@@ -96,7 +96,11 @@ export default function App() {
   };
 
   const handleOpenAccount = () => {
-    navigateToAccount('orders');
+    if (isAuthenticated) {
+      navigateToAccount('orders');
+    } else {
+      setIsAccountOpen(true);
+    }
   };
 
   // Sync wishlist to localStorage

@@ -46,7 +46,7 @@ authRouter.get('/login', (req: Request, res: Response) => {
   authorizeUrl.searchParams.set('client_id', clientId);
   authorizeUrl.searchParams.set('response_type', 'code');
   authorizeUrl.searchParams.set('redirect_uri', redirectUri);
-  authorizeUrl.searchParams.set('scope', 'openid email customer-account-api:full');
+  authorizeUrl.searchParams.set('scope', process.env.SHOPIFY_SCOPE || 'openid email');
   authorizeUrl.searchParams.set('state', state);
   authorizeUrl.searchParams.set('nonce', nonce);
   authorizeUrl.searchParams.set('code_challenge', codeChallenge);
