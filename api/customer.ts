@@ -63,14 +63,14 @@ export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   const cookieHeader = req.headers.cookie || '';
-  const token = getCookie(cookieHeader, 'hos_customer_token') || req.headers.authorization?.replace(/^Bearer\s+/i, '');
+  const token = getCookie(cookieHeader, 'hos_customer_token') || getCookie(cookieHeader, 'token') || req.headers.authorization?.replace(/^Bearer\s+/i, '');
+
+  const userEmail = getCookie(cookieHeader, 'hos_user_email');
+  const userName = getCookie(cookieHeader, 'hos_user_name');
+  const userGiven = getCookie(cookieHeader, 'hos_user_given_name');
+  const userFamily = getCookie(cookieHeader, 'hos_user_family_name');
 
   if (!token) {
-    const userEmail = getCookie(cookieHeader, 'hos_user_email');
-    const userName = getCookie(cookieHeader, 'hos_user_name');
-    const userGiven = getCookie(cookieHeader, 'hos_user_given_name');
-    const userFamily = getCookie(cookieHeader, 'hos_user_family_name');
-
     if (userEmail) {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
@@ -98,6 +98,9 @@ export default async function handler(req: any, res: any) {
 
   const shopId = process.env.SHOP_ID || '79445164163';
   const apiEndpoint = `https://shopify.com/${shopId}/account/customer/api/2024-07/graphql`;
+  const authHeader = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
+
+  console.log('Token being sent:', authHeader.substring(0, 20) + '...');
 
   if (req.method === 'POST') {
     // Handle profile update
@@ -113,7 +116,7 @@ export default async function handler(req: any, res: any) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token,
+          'Authorization': authHeader,
         },
         body: JSON.stringify({
           query: CUSTOMER_UPDATE_MUTATION,
@@ -124,6 +127,7 @@ export default async function handler(req: any, res: any) {
       });
 
       const json = await shopifyRes.json() as any;
+      console.log('Profile update API response status:', shopifyRes.status, json);
       res.statusCode = shopifyRes.status;
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json.data?.customerUpdate || json));
@@ -141,7 +145,7 @@ export default async function handler(req: any, res: any) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token,
+        'Authorization': authHeader,
       },
       body: JSON.stringify({
         query: CUSTOMER_DATA_QUERY,
@@ -149,10 +153,37 @@ export default async function handler(req: any, res: any) {
     });
 
     const json = await shopifyRes.json() as any;
+    console.log('API response status:', shopifyRes.status, 'data:', json);
+
+    if (!shopifyRes.ok) {
+      console.error('Shopify Customer Account API Error:', shopifyRes.status, json);
+      // Graceful fallback if user has email cookie
+      if (userEmail) {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({
+          customer: {
+            id: 'shopify-customer',
+            displayName: userName || `${userGiven || ''} ${userFamily || ''}`.trim() || userEmail.split('@')[0],
+            firstName: userGiven || '',
+            lastName: userFamily || '',
+            emailAddress: { emailAddress: userEmail },
+            orders: { nodes: [] }
+          }
+        }));
+        return;
+      }
+      res.statusCode = shopifyRes.status;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ error: 'Shopify API Error', details: json }));
+      return;
+    }
+
     res.statusCode = shopifyRes.status;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(json.data || json));
   } catch (err: any) {
+    console.error('Fetch customer error:', err);
     res.statusCode = 500;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({ error: 'Internal Server Error', message: err.message }));
