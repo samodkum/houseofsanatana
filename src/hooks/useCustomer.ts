@@ -136,21 +136,8 @@ export function useCustomer() {
     }
   };
 
-  const logout = async (disconnectShopify = false) => {
+  const logout = async () => {
     try {
-      clearStoredCustomerAuth();
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('hos_customer_token');
-        localStorage.removeItem('hos_shopify_customer_token');
-        localStorage.removeItem('hos_shopify_customer_data');
-        sessionStorage.clear();
-        document.cookie = 'hos_customer_token=; path=/; max-age=0';
-        document.cookie = 'hos_id_token=; path=/; max-age=0';
-        document.cookie = 'hos_user_email=; path=/; max-age=0';
-        document.cookie = 'hos_user_name=; path=/; max-age=0';
-        document.cookie = 'hos_user_given_name=; path=/; max-age=0';
-        document.cookie = 'hos_user_family_name=; path=/; max-age=0';
-      }
       await fetch('/auth/logout', {
         method: 'POST',
         headers: {
@@ -163,16 +150,12 @@ export function useCustomer() {
     } finally {
       setCustomer(null);
       setIsAuthenticated(false);
-      if (disconnectShopify) {
-        window.location.href = '/auth/logout?shopify=true';
-      } else {
-        window.location.href = '/account';
-      }
+      window.location.href = '/';
     }
   };
 
   const login = () => {
-    window.location.href = '/auth/login';
+    redirectToShopifyAuthorize();
   };
 
   return {

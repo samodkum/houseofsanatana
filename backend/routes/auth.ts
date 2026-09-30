@@ -165,28 +165,16 @@ authRouter.get('/callback', async (req: Request, res: Response) => {
  * POST /auth/logout
  * Clears the customer token cookie and redirects to home.
  */
-authRouter.all('/logout', (req: Request, res: Response) => {
+authRouter.post('/logout', (req: Request, res: Response) => {
   res.clearCookie('hos_customer_token', { path: '/' });
   res.clearCookie('hos_id_token', { path: '/' });
   res.clearCookie('hos_pkce_state', { path: '/' });
-  res.clearCookie('hos_code_verifier', { path: '/' });
-  res.clearCookie('hos_auth_state', { path: '/' });
-  res.clearCookie('hos_user_email', { path: '/' });
-  res.clearCookie('hos_user_name', { path: '/' });
-  res.clearCookie('hos_user_given_name', { path: '/' });
-  res.clearCookie('hos_user_family_name', { path: '/' });
-
-  const shopId = process.env.SHOP_ID || '79445164163';
-  if (req.query.shopify === 'true') {
-    res.redirect(`https://shopify.com/${shopId}/account/logout`);
-    return;
-  }
 
   // Support both JSON API response and direct form post / redirect
   if (req.headers.accept?.includes('application/json')) {
     res.json({ success: true, message: 'Logged out successfully' });
   } else {
-    res.redirect('/account');
+    res.redirect('/');
   }
 });
 

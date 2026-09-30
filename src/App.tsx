@@ -28,7 +28,7 @@ import { WishlistDrawer } from './components/WishlistDrawer';
 import { AccountModal } from './components/AccountModal';
 import { AccountLayout } from './components/AccountLayout';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
-import { handleShopifyOAuthCallback, getStoredCustomerData } from './lib/shopify';
+import { handleShopifyOAuthCallback } from './lib/shopify';
 import { useCustomer } from './hooks/useCustomer';
 
 import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
@@ -75,11 +75,12 @@ export default function App() {
     setIsLoading(false);
     setIsAccountOpen(false);
     window.history.pushState(null, '', '/account');
+    window.location.hash = 'account';
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleOpenAccount = () => {
-    navigateToAccount();
+    setIsAccountOpen(true);
   };
 
   // Sync wishlist to localStorage
@@ -148,9 +149,6 @@ export default function App() {
 
       if (path.startsWith('/account') || hash.startsWith('#account')) {
         setCurrentPage('account');
-        if (hash.startsWith('#account')) {
-          window.history.replaceState(null, '', '/account');
-        }
       } else if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
         setCurrentPage('mall');
       } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages' || hash === '#travel-page' || hash.startsWith('#yatra-')) {
