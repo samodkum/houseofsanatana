@@ -1,121 +1,63 @@
 import { useState, useEffect, useCallback } from 'react';
-import { redirectToShopifyAuthorize, getStoredCustomerData, setStoredCustomerData, clearStoredCustomerAuth, performFullDevoteeLogout } from '../lib/shopify';
+import { redirectToShopifyAuthorize } from '../lib/shopify';
 
-function getCookieValue(name: string): string | null {
-  if (typeof document === 'undefined') return null;
-  const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-  return match && match[3] ? decodeURIComponent(match[3]) : null;
+export interface CustomerOrderNode {
+  id: string;
+  name: string;
+  processedAt: string;
+  financialStatus?: string;
+  totalPrice: {
+    amount: string;
+    currencyCode: string;
+  };
+  fulfillments: Array<{
+    displayStatus?: string;
+  }>;
+  lineItems?: {
+    nodes: Array<{
+      title: string;
+      quantity: number;
+    }>;
+  };
 }
 
-function extractAndPersistUrlAuth(): { token: string | null; email: string | null; name: string | null } {
-  if (typeof window === 'undefined') return { token: null, email: null, name: null };
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get('token') || params.get('access_token');
-  const email = params.get('email');
-  const name = params.get('name');
-
-  if (token) {
-    try {
-      localStorage.setItem('shopify_token', token);
-      localStorage.setItem('hos_customer_token', token);
-      if (email) {
-        localStorage.setItem('hos_user_email', email);
-        const existing = getStoredCustomerData();
-        setStoredCustomerData({
-          id: existing?.id || 'shopify-customer',
-          email,
-          firstName: existing?.firstName || (name ? name.split(' ')[0] : 'Sacred'),
-          lastName: existing?.lastName || (name ? name.split(' ').slice(1).join(' ') : 'Devotee'),
-          displayName: name || email.split('@')[0],
-          orders: existing?.orders || { edges: [] },
-        });
-      }
-      // Clean query parameters from URL bar
-      const cleanUrl = window.location.pathname + (window.location.hash || '');
-      window.history.replaceState({}, document.title, cleanUrl);
-    } catch (e) {
-      console.warn('Could not persist token to localStorage:', e);
-    }
-  }
-
-  return { token, email, name };
+export interface CustomerData {
+  id?: string;
+  displayName: string;
+  firstName?: string;
+  lastName?: string;
+  emailAddress?: {
+    emailAddress: string;
+  };
+  phoneNumber?: {
+    phoneNumber: string;
+  };
+  orders?: {
+    nodes: CustomerOrderNode[];
+  };
 }
 
 export function useCustomer() {
-  const [customer, setCustomer] = useState<CustomerData | null>(() => {
-    // 0. Extract URL params if returning from Shopify OAuth callback
-    extractAndPersistUrlAuth();
-
-    // 1. Check local storage
-    const stored = getStoredCustomerData();
-    if (stored && stored.email) {
-      return {
-        id: stored.id,
-        displayName: stored.displayName || `${stored.firstName || ''} ${stored.lastName || ''}`.trim() || stored.email,
-        firstName: stored.firstName,
-        lastName: stored.lastName,
-        emailAddress: { emailAddress: stored.email },
-        phoneNumber: stored.phone ? { phoneNumber: stored.phone } : undefined,
-        orders: { nodes: [] },
-      };
-    }
-
-    // 2. Check client-side cookies set by OAuth callback
-    const cookieEmail = getCookieValue('hos_user_email');
-    const cookieName = getCookieValue('hos_user_name');
-    const cookieGiven = getCookieValue('hos_user_given_name');
-    const cookieFamily = getCookieValue('hos_user_family_name');
-
-    if (cookieEmail) {
-      return {
-        id: 'shopify-oauth-devotee',
-        displayName: cookieName || cookieGiven ? `${cookieGiven || ''} ${cookieFamily || ''}`.trim() : cookieEmail.split('@')[0],
-        firstName: cookieGiven || '',
-        lastName: cookieFamily || '',
-        emailAddress: { emailAddress: cookieEmail },
-        orders: { nodes: [] },
-      };
-    }
-
-    return null;
-  });
-
+  const [customer, setCustomer] = useState<CustomerData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    const hasLocal = typeof window !== 'undefined' && !!(localStorage.getItem('shopify_token') || localStorage.getItem('hos_customer_token'));
-    return hasLocal || !!(getStoredCustomerData()?.email || getCookieValue('hos_user_email'));
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const fetchCustomer = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const localToken = typeof window !== 'undefined' 
-        ? (localStorage.getItem('shopify_token') || localStorage.getItem('hos_customer_token'))
-        : null;
-
-      const headers: Record<string, string> = {
-        'Accept': 'application/json',
-      };
-      if (localToken) {
-        headers['Authorization'] = `Bearer ${localToken}`;
-      }
-
       const res = await fetch('/api/customer', {
-        headers,
-        credentials: 'include', // sends httpOnly hos_customer_token cookie as well
+        headers: {
+          'Accept': 'application/json',
+        },
+        credentials: 'include', // sends httpOnly hos_customer_token cookie
       });
 
       if (res.status === 401) {
-        // Only clear if no client-side stored session exists
-        const stored = getStoredCustomerData();
-        const cookieEmail = getCookieValue('hos_user_email');
-        if (!stored?.email && !cookieEmail) {
-          setIsAuthenticated(false);
-          setCustomer(null);
-        }
+        setIsAuthenticated(false);
+        setCustomer(null);
         setIsLoading(false);
         return;
       }
@@ -128,21 +70,14 @@ export function useCustomer() {
       if (json.customer) {
         setCustomer(json.customer);
         setIsAuthenticated(true);
-        if (json.customer.emailAddress?.emailAddress) {
-          setStoredCustomerData({
-            id: json.customer.id || 'shopify-customer',
-            email: json.customer.emailAddress.emailAddress,
-            firstName: json.customer.firstName || '',
-            lastName: json.customer.lastName || '',
-            displayName: json.customer.displayName || `${json.customer.firstName || ''} ${json.customer.lastName || ''}`.trim() || json.customer.emailAddress.emailAddress,
-            phone: json.customer.phoneNumber?.phoneNumber,
-            orders: { edges: [] }
-          });
-        }
+      } else {
+        setCustomer(null);
+        setIsAuthenticated(false);
       }
     } catch (err: any) {
-      console.warn('Customer fetch note:', err.message);
+      console.warn('Customer fetch error or unauthenticated:', err.message);
       setError(err.message);
+      setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
     }
@@ -178,13 +113,25 @@ export function useCustomer() {
   };
 
   const logout = async () => {
-    setCustomer(null);
-    setIsAuthenticated(false);
-    await performFullDevoteeLogout();
+    try {
+      await fetch('/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+      });
+    } catch (e) {
+      console.error('Logout error:', e);
+    } finally {
+      setCustomer(null);
+      setIsAuthenticated(false);
+      window.location.href = '/';
+    }
   };
 
   const login = () => {
-    window.location.href = '/auth/login';
+    redirectToShopifyAuthorize();
   };
 
   return {

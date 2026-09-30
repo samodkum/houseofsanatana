@@ -63,19 +63,16 @@ mutation customerUpdate($customer: CustomerUpdateInput!) {
  * Protected route that queries Shopify Customer Account API with customer's Bearer token.
  */
 customerRouter.get('/', requireCustomerAuth, async (req: Request, res: Response) => {
-  const rawToken = (req as any).customerAccessToken;
-  const token = rawToken?.startsWith('Bearer ') ? rawToken : `Bearer ${rawToken}`;
+  const token = (req as any).customerAccessToken;
   const shopId = process.env.SHOP_ID || '79445164163';
   const apiEndpoint = `https://shopify.com/${shopId}/account/customer/api/2024-07/graphql`;
-
-  console.log('Token being sent:', token ? token.substring(0, 20) + '...' : '[NONE]');
 
   try {
     const shopifyRes = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token, // Must be exactly Bearer ${token}
+        'Authorization': token, // Can also be `Bearer ${token}` if Shopify requires
       },
       body: JSON.stringify({
         query: CUSTOMER_DATA_QUERY,
@@ -93,7 +90,6 @@ customerRouter.get('/', requireCustomerAuth, async (req: Request, res: Response)
     }
 
     const json = await shopifyRes.json() as any;
-    console.log('API response:', json);
 
     if (json.errors && json.errors.length > 0) {
       console.error('Shopify GraphQL errors:', json.errors);
@@ -116,8 +112,7 @@ customerRouter.get('/', requireCustomerAuth, async (req: Request, res: Response)
  * Protected route to update customer details (firstName, lastName, etc.)
  */
 customerRouter.post('/update', requireCustomerAuth, async (req: Request, res: Response) => {
-  const rawToken = (req as any).customerAccessToken;
-  const token = rawToken?.startsWith('Bearer ') ? rawToken : `Bearer ${rawToken}`;
+  const token = (req as any).customerAccessToken;
   const shopId = process.env.SHOP_ID || '79445164163';
   const apiEndpoint = `https://shopify.com/${shopId}/account/customer/api/2024-07/graphql`;
 

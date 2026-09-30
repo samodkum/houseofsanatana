@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ShoppingBag, 
   User, 
   Settings, 
   LogOut, 
-  LogIn,
   ArrowLeft, 
   Sparkles, 
   Menu, 
@@ -19,18 +18,17 @@ import { OrdersPanel } from './OrdersPanel';
 import { YatrasPanel, SAMPLE_YATRAS } from './YatrasPanel';
 import { ProfilePanel } from './ProfilePanel';
 import { SettingsPanel } from './SettingsPanel';
-import { CustomerData, useCustomer } from '../hooks/useCustomer';
-import { getStoredCustomerData, clearStoredCustomerAuth } from '../lib/shopify';
+import { CustomerData } from '../hooks/useCustomer';
 
 export type AccountTab = 'orders' | 'yatras' | 'profile' | 'settings';
 
 export const SAMPLE_CUSTOMER: CustomerData = {
   id: 'gid://shopify/Customer/79445164163',
-  displayName: 'Devoted Sadhaka',
-  firstName: 'Devoted',
-  lastName: 'Sadhaka',
+  displayName: 'Anjali Sharma',
+  firstName: 'Anjali',
+  lastName: 'Sharma',
   emailAddress: {
-    emailAddress: 'devotee@houseofsanatana.in',
+    emailAddress: 'anjali.sharma@sanatana.in',
   },
   phoneNumber: {
     phoneNumber: '+91 98765 43210',
@@ -73,6 +71,24 @@ export const SAMPLE_CUSTOMER: CustomerData = {
             { title: 'Kedarnath Sanctum Brass Pooja Thali & Diya Kit', quantity: 1 }
           ]
         }
+      },
+      {
+        id: 'gid://shopify/Order/1003',
+        name: '#HOS-0994',
+        processedAt: '2026-02-18T09:00:00Z',
+        financialStatus: 'PAID',
+        totalPrice: {
+          amount: '35000.00',
+          currencyCode: 'INR',
+        },
+        fulfillments: [
+          { displayStatus: 'Confirmed — Sacred Yatra Expedition Pass' }
+        ],
+        lineItems: {
+          nodes: [
+            { title: 'Char Dham Himalayan Sacred Pilgrimage Reservation (Pass #2)', quantity: 1 }
+          ]
+        }
       }
     ]
   }
@@ -93,7 +109,7 @@ interface AccountLayoutProps {
 
 export const AccountLayout: React.FC<AccountLayoutProps> = ({
   customer: propCustomer,
-  isLoading: propIsLoading = false,
+  isLoading = false,
   activeTab: controlledTab,
   onTabChange,
   onUpdateProfile: propUpdateProfile,
@@ -101,44 +117,11 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
   onBackToStore,
   logoUrl,
 }) => {
-  const { customer: hookCustomer, isLoading: hookLoading, logout: hookLogout } = useCustomer();
   const [internalTab, setInternalTab] = useState<AccountTab>('orders');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // Dynamic customer resolver: live Shopify customer > propCustomer > localStorage > fallback
-  const getResolvedCustomer = (): CustomerData => {
-    if (hookCustomer?.emailAddress?.emailAddress) return hookCustomer;
-    if (propCustomer?.emailAddress?.emailAddress) return propCustomer;
-    
-    const stored = getStoredCustomerData();
-    if (stored?.email) {
-      return {
-        id: stored.id,
-        displayName: stored.displayName || `${stored.firstName || ''} ${stored.lastName || ''}`.trim() || stored.email,
-        firstName: stored.firstName || '',
-        lastName: stored.lastName || '',
-        emailAddress: { emailAddress: stored.email },
-        phoneNumber: stored.phone ? { phoneNumber: stored.phone } : undefined,
-        orders: { nodes: [] }
-      };
-    }
-    return SAMPLE_CUSTOMER;
-  };
-
-  const [activeCustomer, setActiveCustomer] = useState<CustomerData>(getResolvedCustomer);
-
-  useEffect(() => {
-    const resolved = getResolvedCustomer();
-    setActiveCustomer(resolved);
-  }, [hookCustomer, propCustomer]);
+  const [activeCustomer, setActiveCustomer] = useState<CustomerData>(propCustomer || SAMPLE_CUSTOMER);
 
   const activeTab = controlledTab || internalTab;
-
-  const isAuthenticated = !!(
-    (hookCustomer?.emailAddress?.emailAddress) || 
-    (propCustomer?.emailAddress?.emailAddress) || 
-    (getStoredCustomerData()?.email)
-  );
 
   const handleTabSelect = (tab: AccountTab) => {
     if (onTabChange) {
@@ -153,6 +136,7 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
     if (propUpdateProfile) {
       return propUpdateProfile(firstName, lastName);
     }
+    // Sample local update
     setActiveCustomer(prev => ({
       ...prev,
       firstName,
@@ -163,11 +147,14 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
   };
 
   const handleLogoutAction = async () => {
-    clearStoredCustomerAuth();
     if (onLogout) {
       await onLogout();
     } else {
-      await hookLogout();
+      if (onBackToStore) {
+        onBackToStore();
+      } else {
+        window.location.href = '/';
+      }
     }
   };
 
@@ -238,24 +225,14 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
 
         {/* Right Action */}
         <div className="flex items-center gap-2">
-          {isAuthenticated ? (
-            <button
-              type="button"
-              onClick={handleLogoutAction}
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs text-[#8F6E5B] hover:text-[#B33927] transition-colors py-1.5 px-3.5 rounded-full hover:bg-[#FDF2F2] cursor-pointer"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
-            </button>
-          ) : (
-            <a
-              href="/auth/login"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs text-white bg-gradient-to-r from-[#C7833D] to-[#8F6E5B] font-semibold py-1.5 px-4 rounded-full shadow-xs hover:brightness-105 transition-all cursor-pointer"
-            >
-              <LogIn className="w-3.5 h-3.5" />
-              <span>Sign In with Shopify</span>
-            </a>
-          )}
+          <button
+            type="button"
+            onClick={handleLogoutAction}
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-[#8F6E5B] hover:text-[#B33927] transition-colors py-1.5 px-3.5 rounded-full hover:bg-[#FDF2F2] cursor-pointer"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span>Sign Out</span>
+          </button>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -279,29 +256,19 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
             isMobileMenuOpen ? 'block mb-4' : 'hidden md:block'
           }`}
         >
-          {/* Devotee Info */}
+          {/* Devotee Info (Clean without DP) */}
           <div className="flex flex-col items-center text-center pb-6 border-b border-[#D9C6A8]/40">
             <h3 className="font-serif font-bold text-lg text-[#332C25]">
-              {isAuthenticated ? activeCustomer.displayName : 'Devoted Sadhaka'}
+              {activeCustomer.displayName}
             </h3>
             <p className="text-xs text-[#8F6E5B] font-dm truncate max-w-[200px] mt-0.5">
-              {isAuthenticated ? activeCustomer.emailAddress?.emailAddress : 'Connect your sacred account'}
+              {activeCustomer.emailAddress?.emailAddress}
             </p>
 
-            {isAuthenticated ? (
-              <span className="mt-2.5 inline-flex items-center gap-1 text-[10px] font-dm uppercase tracking-widest text-[#3E7C59] bg-[#EBF5EE] border border-[#B9E0C7] px-2.5 py-0.5 rounded-full font-semibold">
-                <ShieldCheck className="w-3 h-3" />
-                Verified Devotee
-              </span>
-            ) : (
-              <a
-                href="/auth/login"
-                className="mt-3 w-full py-2 px-3 rounded-xl bg-gradient-to-r from-[#C7833D] to-[#8F6E5B] text-white text-[11px] font-bold uppercase tracking-wider shadow-sm hover:brightness-105 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Sign In with Shopify</span>
-              </a>
-            )}
+            <span className="mt-2.5 inline-flex items-center gap-1 text-[10px] font-dm uppercase tracking-widest text-[#3E7C59] bg-[#EBF5EE] border border-[#B9E0C7] px-2.5 py-0.5 rounded-full font-semibold">
+              <ShieldCheck className="w-3 h-3" />
+              Verified Devotee
+            </span>
           </div>
 
           {/* Nav List */}
@@ -348,26 +315,16 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
             })}
           </nav>
 
-          {/* Sign Out / Sign In Footer */}
+          {/* Sign Out Footer */}
           <div className="mt-8 pt-6 border-t border-[#D9C6A8]/40">
-            {isAuthenticated ? (
-              <button
-                type="button"
-                onClick={handleLogoutAction}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#8F6E5B] hover:text-[#C7833D] hover:bg-[#FBF4EA] border border-transparent hover:border-[#C7833D]/40 transition-all cursor-pointer"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>Exit Dashboard</span>
-              </button>
-            ) : (
-              <a
-                href="/auth/login"
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-[#C7833D] to-[#8F6E5B] shadow-sm hover:brightness-105 transition-all cursor-pointer"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Sign In with Shopify</span>
-              </a>
-            )}
+            <button
+              type="button"
+              onClick={handleLogoutAction}
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#8F6E5B] hover:text-[#C7833D] hover:bg-[#FBF4EA] border border-transparent hover:border-[#C7833D]/40 transition-all cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Exit Dashboard</span>
+            </button>
           </div>
         </aside>
 

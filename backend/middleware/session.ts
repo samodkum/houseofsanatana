@@ -59,16 +59,10 @@ export function parseCookies(req: Request): Record<string, string> {
 
 // Auth validation middleware
 export function requireCustomerAuth(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization?.replace(/^Bearer\s+/i, '')?.trim();
   const cookies = parseCookies(req);
-
-  console.log('Incoming Authorization Header:', req.headers.authorization ? `${req.headers.authorization.substring(0, 15)}...` : '[NONE]');
-  console.log('Incoming Cookies in requireCustomerAuth:', cookies);
-
-  const token = authHeader || cookies['hos_customer_token'] || cookies['shopify_token'] || cookies['token'] || (req.query?.token as string);
+  const token = cookies['hos_customer_token'] || req.headers.authorization?.replace(/^Bearer\s+/i, '');
 
   if (!token) {
-    console.log('requireCustomerAuth: No token found. Returning 401.');
     res.status(401).json({
       error: 'Unauthorized',
       message: 'No active sacred customer session found. Please log in.',

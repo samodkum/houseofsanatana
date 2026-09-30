@@ -3,7 +3,6 @@ export const SHOPIFY_DOMAIN = import.meta.env.VITE_SHOPIFY_DOMAIN || 'houseofsan
 export const SHOPIFY_STOREFRONT_ACCESS_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || 'd302d09f71a616811b082748dddf5421';
 export const SHOPIFY_API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || '2024-01';
 export const SHOPIFY_ACCOUNT_URL = 'https://shopify.com/79445164163/account';
-export const SHOPIFY_LOGOUT_URL = 'https://shopify.com/79445164163/account/logout';
 export const SHOPIFY_CUSTOMER_CLIENT_ID = import.meta.env.VITE_SHOPIFY_CUSTOMER_CLIENT_ID || 'e89e5f5a-bd59-4864-a90e-02521629e672';
 
 export const SHOPIFY_AUTH_URL = 'https://shopify.com/79445164163/auth/oauth/authorize';
@@ -285,68 +284,8 @@ export function setStoredCustomerData(customer: ShopifyCustomer) {
 }
 
 export function clearStoredCustomerAuth() {
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.removeItem(CUSTOMER_TOKEN_STORAGE_KEY);
-      localStorage.removeItem(CUSTOMER_INFO_STORAGE_KEY);
-      localStorage.removeItem('shopify_token');
-      localStorage.removeItem('hos_customer_token');
-      localStorage.removeItem('hos_customer_data');
-      localStorage.removeItem('hos_customer_token_expiry');
-      localStorage.removeItem('hos_user_email');
-      localStorage.removeItem('hos_user_name');
-      sessionStorage.removeItem('shopify_oauth_state');
-      sessionStorage.removeItem('shopify_code_verifier');
-      sessionStorage.removeItem('shopify_redirect_uri');
-
-      // Clear client-accessible cookies
-      const cookieNames = [
-        'hos_customer_token',
-        'hos_id_token',
-        'hos_user_email',
-        'hos_user_name',
-        'hos_user_given_name',
-        'hos_user_family_name',
-        'hos_code_verifier',
-        'hos_auth_state',
-        'hos_pkce_state',
-      ];
-      cookieNames.forEach((name) => {
-        document.cookie = `${name}=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-        if (window.location.hostname) {
-          document.cookie = `${name}=; path=/; domain=${window.location.hostname}; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-        }
-      });
-    } catch (e) {
-      console.warn('Storage cleanup notice:', e);
-    }
-  }
-}
-
-/**
- * Perform complete devotee sign-out:
- * 1. Wipe local client tokens & cookies
- * 2. Wipe server session cookies via /api/auth/logout
- * 3. Redirect to Shopify's logout endpoint to terminate shopify.com session
- */
-export async function performFullDevoteeLogout(redirectUri?: string): Promise<void> {
-  clearStoredCustomerAuth();
-  try {
-    await fetch('/api/auth/logout', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      credentials: 'include',
-    });
-  } catch (err) {
-    console.warn('Backend logout call completed with fallback:', err);
-  }
-
-  const targetReturn = redirectUri || (typeof window !== 'undefined' ? window.location.origin : 'https://houseofsanatana.vercel.app');
-  const shopifyLogoutWithReturn = `${SHOPIFY_LOGOUT_URL}?return_url=${encodeURIComponent(targetReturn)}`;
-
-  if (typeof window !== 'undefined') {
-    window.location.href = shopifyLogoutWithReturn;
-  }
+  localStorage.removeItem(CUSTOMER_TOKEN_STORAGE_KEY);
+  localStorage.removeItem(CUSTOMER_INFO_STORAGE_KEY);
 }
 
 /**
@@ -606,7 +545,7 @@ export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<
   authUrl.searchParams.set('client_id', SHOPIFY_CUSTOMER_CLIENT_ID);
   authUrl.searchParams.set('response_type', 'code');
   authUrl.searchParams.set('redirect_uri', currentRedirectUri);
-  authUrl.searchParams.set('scope', 'openid email customer-account-api:full');
+  authUrl.searchParams.set('scope', 'openid email');
   authUrl.searchParams.set('state', state);
   authUrl.searchParams.set('code_challenge', codeChallenge);
   authUrl.searchParams.set('code_challenge_method', 'S256');

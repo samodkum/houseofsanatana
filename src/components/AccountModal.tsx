@@ -20,7 +20,6 @@ import {
   getStoredCustomerToken, 
   getStoredCustomerData,
   clearStoredCustomerAuth,
-  performFullDevoteeLogout,
   SHOPIFY_ACCOUNT_URL,
   redirectToShopifyAuthorize
 } from '../lib/shopify';
@@ -71,15 +70,20 @@ export const AccountModal: React.FC<AccountModalProps> = ({
     }
   }, [isOpen]);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
+    clearStoredCustomerAuth();
     setCustomer(null);
-    setSuccessMessage('Signing out Devotee...');
-    await performFullDevoteeLogout();
+    setSuccessMessage('Signed out successfully.');
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     onClose();
-    window.location.href = '/auth/login';
+    try {
+      await redirectToShopifyAuthorize();
+    } catch (e) {
+      console.warn('OAuth redirect fallback to Shopify account URL:', e);
+      window.location.href = SHOPIFY_ACCOUNT_URL;
+    }
   };
 
   return (
@@ -181,7 +185,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                   className="w-full py-2.5 rounded-xl border border-[#D9C6A8] hover:border-[#C7833D] bg-white/70 hover:bg-white text-[#8F6E5B] hover:text-[#C7833D] font-dm text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#C7833D]" />
-                  <span>Access Devotee Sanctum (/account)</span>
+                  <span>Preview Custom Dashboard (/account)</span>
                 </button>
 
                 <p className="text-xs text-stone-500 font-dm leading-relaxed">
@@ -199,23 +203,6 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                     {customer.firstName ? `${customer.firstName} ${customer.lastName}` : 'Blessed Devotee'}
                   </h3>
                 </div>
-
-                {/* Direct Link to Custom Devotee Dashboard */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    if (onNavigatePage) {
-                      onNavigatePage('account');
-                    } else {
-                      window.location.hash = 'account';
-                    }
-                  }}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#8F6E5B] text-white font-dm font-bold text-xs uppercase tracking-wider shadow-md hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4 text-white" />
-                  <span>Enter Devotee Dashboard (/account)</span>
-                </button>
 
                 {/* Quick Shortcuts */}
                 <div className="grid grid-cols-2 gap-2.5">

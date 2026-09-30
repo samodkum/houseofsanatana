@@ -46,7 +46,7 @@ authRouter.get('/login', (req: Request, res: Response) => {
   authorizeUrl.searchParams.set('client_id', clientId);
   authorizeUrl.searchParams.set('response_type', 'code');
   authorizeUrl.searchParams.set('redirect_uri', redirectUri);
-  authorizeUrl.searchParams.set('scope', process.env.SHOPIFY_SCOPE || 'openid email customer-account-api:full');
+  authorizeUrl.searchParams.set('scope', process.env.SHOPIFY_SCOPE || 'openid email');
   authorizeUrl.searchParams.set('state', state);
   authorizeUrl.searchParams.set('nonce', nonce);
   authorizeUrl.searchParams.set('code_challenge', codeChallenge);
@@ -129,56 +129,32 @@ authRouter.get('/callback', async (req: Request, res: Response) => {
     };
 
     const maxAgeSeconds = tokenData.expires_in || 7200; // default 2 hours
-    const isProd = process.env.NODE_ENV === 'production' || !!process.env.VERCEL;
 
-    // Set secure httpOnly cookie
+    // Set secure httpOnly cookie (never accessible to client-side JS)
     res.cookie('hos_customer_token', tokenData.access_token, {
       httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
       maxAge: maxAgeSeconds * 1000,
       path: '/',
     });
 
-    res.cookie('token', tokenData.access_token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
-      maxAge: maxAgeSeconds * 1000,
-      path: '/',
-    });
-
-    let customerEmail = '';
-    let customerName = '';
     if (tokenData.id_token) {
       res.cookie('hos_id_token', tokenData.id_token, {
         httpOnly: true,
-        secure: isProd,
-        sameSite: isProd ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
         maxAge: maxAgeSeconds * 1000,
         path: '/',
       });
-
-      try {
-        const payloadBase64 = tokenData.id_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-        const payloadJson = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
-        customerEmail = payloadJson.email || '';
-        customerName = payloadJson.name || '';
-      } catch {}
     }
 
     // Clear temporary PKCE state cookie
     res.clearCookie('hos_pkce_state', { path: '/' });
 
-    // Redirect to the custom React customer account view with token in query params
+    // Redirect to the custom React customer account view
     const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
-    const redirectParams = new URLSearchParams();
-    redirectParams.set('token', tokenData.access_token);
-    if (tokenData.id_token) redirectParams.set('id_token', tokenData.id_token);
-    if (customerEmail) redirectParams.set('email', customerEmail);
-    if (customerName) redirectParams.set('name', customerName);
-
-    res.redirect(`${frontendUrl}/account?${redirectParams.toString()}`);
+    res.redirect(`${frontendUrl}/account`);
   } catch (err: any) {
     console.error('Error during token exchange:', err);
     res.status(500).send('Internal server error during authentication.');
@@ -189,31 +165,16 @@ authRouter.get('/callback', async (req: Request, res: Response) => {
  * POST /auth/logout
  * Clears the customer token cookie and redirects to home.
  */
-authRouter.all('/logout', (req: Request, res: Response) => {
-  const cookieNames = [
-    'hos_customer_token',
-    'hos_id_token',
-    'hos_pkce_state',
-    'hos_user_email',
-    'hos_user_name',
-    'hos_user_given_name',
-    'hos_user_family_name',
-    'hos_code_verifier',
-    'hos_auth_state',
-  ];
-  cookieNames.forEach((name) => {
-    res.clearCookie(name, { path: '/' });
-  });
-
-  const shopId = process.env.SHOP_ID || '79445164163';
-  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
-  const shopifyLogoutUrl = `https://shopify.com/${shopId}/account/logout?return_url=${encodeURIComponent(frontendUrl)}`;
+authRouter.post('/logout', (req: Request, res: Response) => {
+  res.clearCookie('hos_customer_token', { path: '/' });
+  res.clearCookie('hos_id_token', { path: '/' });
+  res.clearCookie('hos_pkce_state', { path: '/' });
 
   // Support both JSON API response and direct form post / redirect
-  if (req.headers.accept?.includes('application/json') && req.method === 'POST') {
-    res.json({ success: true, message: 'Logged out successfully', shopifyLogoutUrl });
+  if (req.headers.accept?.includes('application/json')) {
+    res.json({ success: true, message: 'Logged out successfully' });
   } else {
-    res.redirect(shopifyLogoutUrl);
+    res.redirect('/');
   }
 });
 

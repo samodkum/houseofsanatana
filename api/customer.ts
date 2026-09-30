@@ -61,61 +61,11 @@ function getCookie(header: string, name: string): string | null {
 export default async function handler(req: any, res: any) {
   // CORS & Methods
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type, Accept');
-
-  if (req.method === 'OPTIONS') {
-    res.statusCode = 200;
-    res.end();
-    return;
-  }
 
   const cookieHeader = req.headers.cookie || '';
-  const authHeaderRaw = req.headers.authorization || '';
-
-  // Diagnostic logs for Vercel functions
-  console.log('Incoming Authorization Header:', authHeaderRaw ? `${authHeaderRaw.substring(0, 20)}...` : '[NONE]');
-  console.log('Incoming Cookie Header:', cookieHeader || '[NONE]');
-
-  // 1. Prioritize Authorization header (sent from React localStorage - completely immune to cross-site cookie restrictions)
-  let token = authHeaderRaw ? authHeaderRaw.replace(/^Bearer\s+/i, '').trim() : '';
-
-  // 2. Fallback to cookies
-  if (!token) {
-    token = getCookie(cookieHeader, 'hos_customer_token') 
-      || getCookie(cookieHeader, 'shopify_token') 
-      || getCookie(cookieHeader, 'token') 
-      || '';
-  }
-
-  // 3. Fallback to URL query parameter if passed
-  if (!token && req.query?.token) {
-    token = String(req.query.token).trim();
-  }
-
-  const userEmail = getCookie(cookieHeader, 'hos_user_email');
-  const userName = getCookie(cookieHeader, 'hos_user_name');
-  const userGiven = getCookie(cookieHeader, 'hos_user_given_name');
-  const userFamily = getCookie(cookieHeader, 'hos_user_family_name');
+  const token = getCookie(cookieHeader, 'hos_customer_token') || req.headers.authorization?.replace(/^Bearer\s+/i, '');
 
   if (!token) {
-    console.log('No customer token found in Authorization header or cookies. Returning 401.');
-    if (userEmail) {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
-        customer: {
-          id: 'shopify-oauth-devotee',
-          displayName: userName || `${userGiven || ''} ${userFamily || ''}`.trim() || userEmail.split('@')[0],
-          firstName: userGiven || '',
-          lastName: userFamily || '',
-          emailAddress: { emailAddress: userEmail },
-          orders: { nodes: [] }
-        }
-      }));
-      return;
-    }
-
     res.statusCode = 401;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({
@@ -127,9 +77,6 @@ export default async function handler(req: any, res: any) {
 
   const shopId = process.env.SHOP_ID || '79445164163';
   const apiEndpoint = `https://shopify.com/${shopId}/account/customer/api/2024-07/graphql`;
-  const authHeader = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
-
-  console.log('Verified token being sent to Shopify:', authHeader.substring(0, 20) + '...');
 
   if (req.method === 'POST') {
     // Handle profile update
@@ -145,7 +92,7 @@ export default async function handler(req: any, res: any) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': authHeader,
+          'Authorization': token,
         },
         body: JSON.stringify({
           query: CUSTOMER_UPDATE_MUTATION,
@@ -156,7 +103,6 @@ export default async function handler(req: any, res: any) {
       });
 
       const json = await shopifyRes.json() as any;
-      console.log('Profile update API response status:', shopifyRes.status, json);
       res.statusCode = shopifyRes.status;
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json.data?.customerUpdate || json));
@@ -174,7 +120,7 @@ export default async function handler(req: any, res: any) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': authHeader,
+        'Authorization': token,
       },
       body: JSON.stringify({
         query: CUSTOMER_DATA_QUERY,
@@ -182,37 +128,10 @@ export default async function handler(req: any, res: any) {
     });
 
     const json = await shopifyRes.json() as any;
-    console.log('API response status:', shopifyRes.status, 'data:', json);
-
-    if (!shopifyRes.ok) {
-      console.error('Shopify Customer Account API Error:', shopifyRes.status, json);
-      // Graceful fallback if user has email cookie
-      if (userEmail) {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({
-          customer: {
-            id: 'shopify-customer',
-            displayName: userName || `${userGiven || ''} ${userFamily || ''}`.trim() || userEmail.split('@')[0],
-            firstName: userGiven || '',
-            lastName: userFamily || '',
-            emailAddress: { emailAddress: userEmail },
-            orders: { nodes: [] }
-          }
-        }));
-        return;
-      }
-      res.statusCode = shopifyRes.status;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ error: 'Shopify API Error', details: json }));
-      return;
-    }
-
     res.statusCode = shopifyRes.status;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(json.data || json));
   } catch (err: any) {
-    console.error('Fetch customer error:', err);
     res.statusCode = 500;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({ error: 'Internal Server Error', message: err.message }));
