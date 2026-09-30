@@ -74,9 +74,15 @@ export const AccountModal: React.FC<AccountModalProps> = ({
     setSuccessMessage('Signed out successfully.');
   };
 
-  const handleSignIn = () => {
-    onClose();
-    redirectToShopifyAuthorize();
+  const handleSignIn = async () => {
+    try {
+      setLoading(true);
+      setErrorMessage(null);
+      await redirectToShopifyAuthorize();
+    } catch (err: any) {
+      setErrorMessage(err?.message || 'Unable to connect to Shopify authentication.');
+      setLoading(false);
+    }
   };
 
   return (

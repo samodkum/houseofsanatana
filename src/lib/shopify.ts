@@ -4,7 +4,6 @@ export const SHOPIFY_STOREFRONT_ACCESS_TOKEN = import.meta.env.VITE_SHOPIFY_STOR
 export const SHOPIFY_API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || '2024-01';
 export const SHOPIFY_ACCOUNT_URL = 'https://shopify.com/79445164163/account';
 export const SHOPIFY_CUSTOMER_CLIENT_ID = import.meta.env.VITE_SHOPIFY_CUSTOMER_CLIENT_ID || 'e89e5f5a-bd59-4864-a90e-02521629e672';
-export const SHOPIFY_REDIRECT_URI = import.meta.env.VITE_SHOPIFY_REDIRECT_URI || '';
 
 export const SHOPIFY_AUTH_URL = 'https://shopify.com/authentication/79445164163/oauth/authorize';
 export const SHOPIFY_TOKEN_URL = 'https://shopify.com/authentication/79445164163/oauth/token';
@@ -528,16 +527,11 @@ async function generateCodeChallenge(codeVerifier: string): Promise<string> {
  * Initiates Shopify OAuth flow by redirecting to the Authorization endpoint
  */
 export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<void> {
-  const currentRedirectUri = redirectUri 
-    || SHOPIFY_REDIRECT_URI 
-    || window.location.origin;
+  const currentRedirectUri = redirectUri || window.location.origin + window.location.pathname;
   const state = generateRandomString(16);
   const codeVerifier = generateRandomString(64);
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-  localStorage.setItem('shopify_oauth_state', state);
-  localStorage.setItem('shopify_code_verifier', codeVerifier);
-  localStorage.setItem('shopify_redirect_uri', currentRedirectUri);
   sessionStorage.setItem('shopify_oauth_state', state);
   sessionStorage.setItem('shopify_code_verifier', codeVerifier);
   sessionStorage.setItem('shopify_redirect_uri', currentRedirectUri);
@@ -557,16 +551,21 @@ export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<
 /**
  * Handles OAuth callback when redirected back with ?code=...
  */
-export async function handleShopifyOAuthCallback(): Promise<{ success: boolean; error?: string }> {
+export async function handleShopifyOAuthCallback(): Promise<boolean> {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const state = urlParams.get('state');
 
-  if (!code) return { success: false };
+  if (!code) return false;
 
-  const savedState = localStorage.getItem('shopify_oauth_state') || sessionStorage.getItem('shopify_oauth_state');
-  const codeVerifier = localStorage.getItem('shopify_code_verifier') || sessionStorage.getItem('shopify_code_verifier');
-  const redirectUri = localStorage.getItem('shopify_redirect_uri') || sessionStorage.getItem('shopify_redirect_uri') || SHOPIFY_REDIRECT_URI || window.location.origin;
+  const savedState = sessionStorage.getItem('shopify_oauth_state');
+  const codeVerifier = sessionStorage.getItem('shopify_code_verifier');
+  const redirectUri = sessionStorage.getItem('shopify_redirect_uri') || window.location.origin + window.location.pathname;
+
+  if (state && savedState && state !== savedState) {
+    console.error('OAuth state mismatch error');
+    return false;
+  }
 
   try {
     const bodyParams = new URLSearchParams();
@@ -586,16 +585,12 @@ export async function handleShopifyOAuthCallback(): Promise<{ success: boolean; 
       body: bodyParams.toString(),
     });
 
-    const tokenData = await res.json().catch(() => ({}));
-
     if (!res.ok) {
-      const errMsg = tokenData.error_description || tokenData.error || `Token exchange failed (${res.status})`;
-      console.error('Shopify Token Error:', errMsg, tokenData);
-      // Clean up URL search params cleanly
-      window.history.replaceState({}, document.title, window.location.pathname);
-      return { success: false, error: errMsg };
+      const errJson = await res.json().catch(() => ({}));
+      throw new Error(errJson.error_description || `Token exchange failed: ${res.status}`);
     }
 
+    const tokenData = await res.json();
     if (tokenData.access_token) {
       setStoredCustomerToken(
         tokenData.access_token, 
@@ -605,18 +600,11 @@ export async function handleShopifyOAuthCallback(): Promise<{ success: boolean; 
       // If id_token JWT exists, decode devotee info directly from Shopify
       if (tokenData.id_token) {
         try {
-          const base64Url = tokenData.id_token.split('.')[1];
-          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-          const jsonPayload = decodeURIComponent(
-            atob(base64)
-              .split('')
-              .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-              .join('')
-          );
-          const decoded = JSON.parse(jsonPayload);
+          const payloadBase64 = tokenData.id_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+          const decoded = JSON.parse(decodeURIComponent(escape(atob(payloadBase64))));
           const devoteeProfile: ShopifyCustomer = {
             id: decoded.sub || 'shopify-customer',
-            firstName: decoded.given_name || (decoded.name ? decoded.name.split(' ')[0] : 'Blessed'),
+            firstName: decoded.given_name || (decoded.name ? decoded.name.split(' ')[0] : 'Sacred'),
             lastName: decoded.family_name || (decoded.name ? decoded.name.split(' ').slice(1).join(' ') : 'Devotee'),
             displayName: decoded.name || decoded.email?.split('@')[0] || 'Devotee',
             email: decoded.email || '',
@@ -631,22 +619,17 @@ export async function handleShopifyOAuthCallback(): Promise<{ success: boolean; 
 
       // Clean up URL search params cleanly
       window.history.replaceState({}, document.title, window.location.pathname);
-      return { success: true };
+      return true;
     }
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to exchange Shopify OAuth code:', err);
-    window.history.replaceState({}, document.title, window.location.pathname);
-    return { success: false, error: err?.message || 'Network error during login' };
   } finally {
-    localStorage.removeItem('shopify_oauth_state');
-    localStorage.removeItem('shopify_code_verifier');
-    localStorage.removeItem('shopify_redirect_uri');
     sessionStorage.removeItem('shopify_oauth_state');
     sessionStorage.removeItem('shopify_code_verifier');
     sessionStorage.removeItem('shopify_redirect_uri');
   }
 
-  return { success: false };
+  return false;
 }
 
 

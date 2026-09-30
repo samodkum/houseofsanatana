@@ -114,12 +114,9 @@ export default function App() {
 
   // Handle Shopify OAuth callback on mount (?code=...)
   useEffect(() => {
-    handleShopifyOAuthCallback().then((result) => {
-      if (result.success) {
-        showToast('॥ स्वागतम् ॥ Logged in with Shopify! Welcome to your Sacred Sanctum.');
-        setIsAccountOpen(true);
-      } else if (result.error) {
-        showToast(`Login Notice: ${result.error}`);
+    handleShopifyOAuthCallback().then((success) => {
+      if (success) {
+        showToast('॥ स्वागतम् ॥ Authenticated with Shopify! Welcome to your Sacred Sanctum.');
         setIsAccountOpen(true);
       }
     });
