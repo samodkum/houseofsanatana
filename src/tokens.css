@@ -1,0 +1,39 @@
+/* House of Sanatana - Sacred Design Tokens */
+:root {
+  /* Core Brand Colors */
+  --color-primary: #C7833D;          /* Sacred Saffron */
+  --color-primary-hover: #B08A4A;    /* Radiant Gold */
+  --color-primary-light: #FBF4EA;    /* Soft Saffron Tint */
+  
+  --color-surface: #F7F1E5;          /* Sacred Ivory Canvas */
+  --color-surface-subtle: #EFE8DA;   /* Muted Ivory */
+  --color-surface-elevated: #FFFFFF; /* Pure Card Surface */
+  --color-surface-dark: #332C25;     /* Sanctum Deep Charcoal */
+
+  --color-border: #D9C6A8;           /* Sand Border */
+  --color-border-subtle: #EADFCF;    /* Soft Outline */
+  --color-border-strong: #8F6E5B;    /* Strong Earth Outline */
+
+  --color-text: #332C25;             /* Primary Text */
+  --color-text-muted: #8F6E5B;       /* Earth Muted Taupe */
+  --color-text-light: #A38573;       /* Subtle Hint */
+
+  --color-sage: #66705A;             /* Consecrated Sage */
+  --color-gold: #B08A4A;             /* Temple Gold */
+  --color-danger: #B33927;           /* Error / Cancel */
+  --color-success: #3E7C59;          /* Sacred Grove Green */
+
+  /* Elevation & Shadows */
+  --shadow-subtle: 0 4px 15px rgba(143, 110, 91, 0.06);
+  --shadow-card: 0 10px 30px rgba(51, 44, 37, 0.08);
+  --shadow-elevated: 0 20px 45px rgba(51, 44, 37, 0.12);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}

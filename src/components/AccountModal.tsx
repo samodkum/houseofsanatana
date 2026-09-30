@@ -19,7 +19,7 @@ import {
   getStoredCustomerToken, 
   getStoredCustomerData,
   clearStoredCustomerAuth,
-  redirectToShopifyAuthorize
+  SHOPIFY_ACCOUNT_URL
 } from '../lib/shopify';
 
 interface AccountModalProps {
@@ -74,15 +74,9 @@ export const AccountModal: React.FC<AccountModalProps> = ({
     setSuccessMessage('Signed out successfully.');
   };
 
-  const handleSignIn = async () => {
-    try {
-      setLoading(true);
-      setErrorMessage(null);
-      await redirectToShopifyAuthorize();
-    } catch (err: any) {
-      setErrorMessage(err?.message || 'Unable to connect to Shopify authentication.');
-      setLoading(false);
-    }
+  const handleSignIn = () => {
+    onClose();
+    window.location.href = '/auth/login';
   };
 
   return (
@@ -253,6 +247,18 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                     <p className="text-xs text-stone-500 py-1">No orders yet. Your purchases will appear here.</p>
                   )}
                 </div>
+
+                {/* Open Full Custom Account Dashboard */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    window.location.href = '/account';
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-[#C7833D] text-white hover:bg-[#B08A4A] transition-all flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider cursor-pointer shadow-sm"
+                >
+                  <span>Open Full Sacred Dashboard</span>
+                </button>
 
                 {/* Sign Out Button */}
                 <button

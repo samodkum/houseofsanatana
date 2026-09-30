@@ -421,42 +421,55 @@ export async function customerRecover(email: string): Promise<boolean> {
 }
 
 /**
- * Fetch Customer Profile & Orders using Customer Account API GraphQL endpoint
+ * Fetch Customer Profile & Orders using Customer Access Token
  */
 export async function getCustomerDetails(customerAccessToken: string): Promise<ShopifyCustomer | null> {
-  const customerAccountGraphQLEndpoint = `https://shopify.com/79445164163/account/customer/api/2024-01/graphql`;
-
-  const customerAccountQuery = `
-    query getCustomerAccount {
-      customer {
+  const query = `
+    query getCustomer($customerAccessToken: String!) {
+      customer(customerAccessToken: $customerAccessToken) {
         id
         firstName
         lastName
         displayName
-        emailAddress {
-          emailAddress
-        }
-        phoneNumber {
-          phoneNumber
-        }
+        email
+        phone
         defaultAddress {
           address1
           address2
           city
           province
-          zip
           country
+          zip
+          phone
         }
-        orders(first: 10) {
+        orders(first: 10, sortKey: PROCESSED_AT, reverse: true) {
           edges {
             node {
               id
-              name
+              orderNumber
               processedAt
               financialStatus
+              fulfillmentStatus
               totalPrice {
                 amount
                 currencyCode
+              }
+              lineItems(first: 5) {
+                edges {
+                  node {
+                    title
+                    quantity
+                    variant {
+                      price {
+                        amount
+                        currencyCode
+                      }
+                      image {
+                        url
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -466,50 +479,19 @@ export async function getCustomerDetails(customerAccessToken: string): Promise<S
   `;
 
   try {
-    const res = await fetch(customerAccountGraphQLEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': customerAccessToken.startsWith('Bearer ') ? customerAccessToken : `Bearer ${customerAccessToken}`,
-      },
-      body: JSON.stringify({ query: customerAccountQuery }),
+    const data = await shopifyFetch<{
+      customer: ShopifyCustomer | null;
+    }>({
+      query,
+      variables: { customerAccessToken },
     });
 
-    if (res.ok) {
-      const json = await res.json();
-      if (json.data?.customer) {
-        const rawCustomer = json.data.customer;
-        const normalizedCustomer: ShopifyCustomer = {
-          id: rawCustomer.id,
-          firstName: rawCustomer.firstName || '',
-          lastName: rawCustomer.lastName || '',
-          displayName: rawCustomer.displayName || `${rawCustomer.firstName || ''} ${rawCustomer.lastName || ''}`.trim() || 'Blessed Devotee',
-          email: rawCustomer.emailAddress?.emailAddress || getStoredCustomerData()?.email || '',
-          phone: rawCustomer.phoneNumber?.phoneNumber,
-          defaultAddress: rawCustomer.defaultAddress,
-          orders: {
-            edges: (rawCustomer.orders?.edges || []).map((edge: any) => ({
-              node: {
-                id: edge.node.id,
-                orderNumber: parseInt(edge.node.name?.replace('#', '') || '0', 10) || 1001,
-                processedAt: edge.node.processedAt || new Date().toISOString(),
-                financialStatus: edge.node.financialStatus || 'PAID',
-                fulfillmentStatus: 'FULFILLED',
-                totalPrice: {
-                  amount: edge.node.totalPrice?.amount || '0',
-                  currencyCode: edge.node.totalPrice?.currencyCode || 'INR',
-                },
-                lineItems: { edges: [] },
-              },
-            })),
-          },
-        };
-        setStoredCustomerData(normalizedCustomer);
-        return normalizedCustomer;
-      }
+    if (data.customer) {
+      setStoredCustomerData(data.customer);
+      return data.customer;
     }
   } catch (err) {
-    console.warn('Customer Account API lookup fallback:', err);
+    console.warn('Storefront API customer lookup note:', err);
   }
 
   // Fallback to stored profile if decoded from OAuth JWT
@@ -541,28 +523,18 @@ async function generateCodeChallenge(codeVerifier: string): Promise<string> {
     .replace(/=+$/, '');
 }
 
-export function getStandardRedirectUri(): string {
-  try {
-    const url = new URL(window.location.href);
-    const cleanPath = url.pathname.replace(/\/+$/, '');
-    return `${url.origin}${cleanPath}` || url.origin;
-  } catch {
-    return window.location.origin;
-  }
-}
-
 /**
  * Initiates Shopify OAuth flow by redirecting to the Authorization endpoint
  */
 export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<void> {
-  const currentRedirectUri = redirectUri || getStandardRedirectUri();
+  const currentRedirectUri = redirectUri || window.location.origin + window.location.pathname;
   const state = generateRandomString(16);
   const codeVerifier = generateRandomString(64);
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-  localStorage.setItem('shopify_oauth_state', state);
-  localStorage.setItem('shopify_code_verifier', codeVerifier);
-  localStorage.setItem('shopify_redirect_uri', currentRedirectUri);
+  sessionStorage.setItem('shopify_oauth_state', state);
+  sessionStorage.setItem('shopify_code_verifier', codeVerifier);
+  sessionStorage.setItem('shopify_redirect_uri', currentRedirectUri);
 
   const authUrl = new URL(SHOPIFY_AUTH_URL);
   authUrl.searchParams.set('client_id', SHOPIFY_CUSTOMER_CLIENT_ID);
@@ -586,12 +558,13 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
 
   if (!code) return false;
 
-  const savedState = localStorage.getItem('shopify_oauth_state') || sessionStorage.getItem('shopify_oauth_state');
-  const codeVerifier = localStorage.getItem('shopify_code_verifier') || sessionStorage.getItem('shopify_code_verifier');
-  const redirectUri = localStorage.getItem('shopify_redirect_uri') || sessionStorage.getItem('shopify_redirect_uri') || getStandardRedirectUri();
+  const savedState = sessionStorage.getItem('shopify_oauth_state');
+  const codeVerifier = sessionStorage.getItem('shopify_code_verifier');
+  const redirectUri = sessionStorage.getItem('shopify_redirect_uri') || window.location.origin + window.location.pathname;
 
   if (state && savedState && state !== savedState) {
-    console.warn('OAuth state mismatch notice - continuing with token exchange');
+    console.error('OAuth state mismatch error');
+    return false;
   }
 
   try {
@@ -614,7 +587,6 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
 
     if (!res.ok) {
       const errJson = await res.json().catch(() => ({}));
-      console.error('Token exchange error response:', errJson);
       throw new Error(errJson.error_description || `Token exchange failed: ${res.status}`);
     }
 
@@ -628,10 +600,8 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
       // If id_token JWT exists, decode devotee info directly from Shopify
       if (tokenData.id_token) {
         try {
-          const rawBase64 = tokenData.id_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-          const padLength = rawBase64.length % 4;
-          const paddedBase64 = padLength ? rawBase64 + '='.repeat(4 - padLength) : rawBase64;
-          const decoded = JSON.parse(decodeURIComponent(escape(atob(paddedBase64))));
+          const payloadBase64 = tokenData.id_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+          const decoded = JSON.parse(decodeURIComponent(escape(atob(payloadBase64))));
           const devoteeProfile: ShopifyCustomer = {
             id: decoded.sub || 'shopify-customer',
             firstName: decoded.given_name || (decoded.name ? decoded.name.split(' ')[0] : 'Sacred'),
@@ -647,9 +617,6 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
         }
       }
 
-      // Query full details in background
-      getCustomerDetails(tokenData.access_token).catch(() => {});
-
       // Clean up URL search params cleanly
       window.history.replaceState({}, document.title, window.location.pathname);
       return true;
@@ -657,9 +624,6 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
   } catch (err) {
     console.error('Failed to exchange Shopify OAuth code:', err);
   } finally {
-    localStorage.removeItem('shopify_oauth_state');
-    localStorage.removeItem('shopify_code_verifier');
-    localStorage.removeItem('shopify_redirect_uri');
     sessionStorage.removeItem('shopify_oauth_state');
     sessionStorage.removeItem('shopify_code_verifier');
     sessionStorage.removeItem('shopify_redirect_uri');

@@ -26,6 +26,8 @@ import { KnowledgeMediaPage } from './components/KnowledgeMediaPage';
 import { HeaderActionButtons } from './components/HeaderActionButtons';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { AccountModal } from './components/AccountModal';
+import { AccountLayout, AccountTab } from './components/AccountLayout';
+import { useCustomer } from './hooks/useCustomer';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
 import { handleShopifyOAuthCallback, redirectToShopifyAuthorize } from './lib/shopify';
 
@@ -38,7 +40,28 @@ const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
 
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'account'>(() => {
+    if (typeof window !== 'undefined' && (window.location.pathname.startsWith('/account') || window.location.hash.startsWith('#account'))) {
+      return 'account';
+    }
+    return 'home';
+  });
+  const [accountTab, setAccountTab] = useState<AccountTab>(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.pathname.includes('/profile') || window.location.hash.includes('profile')) return 'profile';
+      if (window.location.pathname.includes('/settings') || window.location.hash.includes('settings')) return 'settings';
+    }
+    return 'orders';
+  });
+
+  const {
+    customer,
+    isLoading: isCustomerLoading,
+    isAuthenticated,
+    updateProfile,
+    logout,
+    login,
+  } = useCustomer();
   const [joinPathway, setJoinPathway] = useState<MainJoinWay>('join-hos');
   const [isLoading, setIsLoading] = useState(true);
   const [isRevealed, setIsRevealed] = useState(false);
@@ -64,8 +87,16 @@ export default function App() {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
 
+  const navigateToAccount = (tab: AccountTab = 'orders') => {
+    setAccountTab(tab);
+    setCurrentPage('account');
+    const path = tab === 'orders' ? '/account' : `/account/${tab}`;
+    window.history.pushState(null, '', path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleOpenAccount = () => {
-    setIsAccountOpen(true);
+    navigateToAccount('orders');
   };
 
   // Sync wishlist to localStorage
@@ -114,24 +145,26 @@ export default function App() {
 
   // Handle Shopify OAuth callback on mount (?code=...)
   useEffect(() => {
-    const isOAuthReturn = window.location.search.includes('code=');
-    if (isOAuthReturn) {
-      setIsLoading(false);
-      setIsRevealed(true);
-    }
     handleShopifyOAuthCallback().then((success) => {
       if (success) {
         showToast('॥ स्वागतम् ॥ Authenticated with Shopify! Welcome to your Sacred Sanctum.');
-        setIsAccountOpen(true);
+        navigateToAccount('orders');
       }
     });
   }, []);
 
-  // Sync hash routing on mount and hashchange
+  // Sync URL routing on mount, hashchange, and popstate
   useEffect(() => {
-    const syncHash = () => {
+    const syncRoute = () => {
+      const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
+
+      if (path.startsWith('/account') || hash.startsWith('#account')) {
+        setCurrentPage('account');
+        if (path.includes('/profile') || hash.includes('profile')) setAccountTab('profile');
+        else if (path.includes('/settings') || hash.includes('settings')) setAccountTab('settings');
+        else setAccountTab('orders');
+      } else if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
         setCurrentPage('mall');
       } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages' || hash === '#travel-page' || hash.startsWith('#yatra-')) {
         setCurrentPage('travel');
@@ -146,9 +179,14 @@ export default function App() {
         setCurrentPage('home');
       }
     };
-    syncHash();
-    window.addEventListener('hashchange', syncHash);
-    return () => window.removeEventListener('hashchange', syncHash);
+
+    syncRoute();
+    window.addEventListener('hashchange', syncRoute);
+    window.addEventListener('popstate', syncRoute);
+    return () => {
+      window.removeEventListener('hashchange', syncRoute);
+      window.removeEventListener('popstate', syncRoute);
+    };
   }, []);
 
   // Page navigation helpers
@@ -179,8 +217,9 @@ export default function App() {
 
   const navigateToHome = (sectionId?: string) => {
     setCurrentPage('home');
-    window.location.hash = sectionId ? `#${sectionId}` : '#home';
-    if (sectionId) {
+    window.history.pushState(null, '', '/');
+    window.location.hash = sectionId && sectionId !== 'home' ? `#${sectionId}` : '';
+    if (sectionId && sectionId !== 'home') {
       setTimeout(() => scrollToSection(sectionId), 250);
     } else {
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -390,7 +429,26 @@ export default function App() {
         }}
       />
 
-      {currentPage === 'mall' ? (
+      {currentPage === 'account' ? (
+        /* ======================================================== */
+        /* SACRED CUSTOMER ACCOUNT SANCTUM (SHOPIFY PKCE + OIDC)    */
+        /* ======================================================== */
+        <AccountLayout
+          customer={customer}
+          isLoading={isCustomerLoading}
+          isAuthenticated={isAuthenticated}
+          activeTab={accountTab}
+          onTabChange={(tab) => {
+            setAccountTab(tab);
+            const path = tab === 'orders' ? '/account' : `/account/${tab}`;
+            window.history.pushState(null, '', path);
+          }}
+          onUpdateProfile={updateProfile}
+          onLogout={logout}
+          onLogin={login}
+          onBackToStore={() => navigateToHome('home')}
+        />
+      ) : currentPage === 'mall' ? (
         /* ======================================================== */
         /* SANTANA MALL: CONSECRATED TEMPLE STORE PAGE (IVORY BASE) */
         /* ======================================================== */
