@@ -557,20 +557,16 @@ export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<
 /**
  * Handles OAuth callback when redirected back with ?code=...
  */
-export async function handleShopifyOAuthCallback(): Promise<boolean> {
+export async function handleShopifyOAuthCallback(): Promise<{ success: boolean; error?: string }> {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const state = urlParams.get('state');
 
-  if (!code) return false;
+  if (!code) return { success: false };
 
   const savedState = localStorage.getItem('shopify_oauth_state') || sessionStorage.getItem('shopify_oauth_state');
   const codeVerifier = localStorage.getItem('shopify_code_verifier') || sessionStorage.getItem('shopify_code_verifier');
   const redirectUri = localStorage.getItem('shopify_redirect_uri') || sessionStorage.getItem('shopify_redirect_uri') || SHOPIFY_REDIRECT_URI || window.location.origin;
-
-  if (state && savedState && state !== savedState) {
-    console.warn('OAuth state mismatch notice. Proceeding with verification.');
-  }
 
   try {
     const bodyParams = new URLSearchParams();
@@ -590,12 +586,16 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
       body: bodyParams.toString(),
     });
 
+    const tokenData = await res.json().catch(() => ({}));
+
     if (!res.ok) {
-      const errJson = await res.json().catch(() => ({}));
-      throw new Error(errJson.error_description || `Token exchange failed: ${res.status}`);
+      const errMsg = tokenData.error_description || tokenData.error || `Token exchange failed (${res.status})`;
+      console.error('Shopify Token Error:', errMsg, tokenData);
+      // Clean up URL search params cleanly
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return { success: false, error: errMsg };
     }
 
-    const tokenData = await res.json();
     if (tokenData.access_token) {
       setStoredCustomerToken(
         tokenData.access_token, 
@@ -631,10 +631,12 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
 
       // Clean up URL search params cleanly
       window.history.replaceState({}, document.title, window.location.pathname);
-      return true;
+      return { success: true };
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('Failed to exchange Shopify OAuth code:', err);
+    window.history.replaceState({}, document.title, window.location.pathname);
+    return { success: false, error: err?.message || 'Network error during login' };
   } finally {
     localStorage.removeItem('shopify_oauth_state');
     localStorage.removeItem('shopify_code_verifier');
@@ -644,7 +646,7 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
     sessionStorage.removeItem('shopify_redirect_uri');
   }
 
-  return false;
+  return { success: false };
 }
 
 
