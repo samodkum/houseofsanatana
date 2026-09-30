@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, LogOut, Shield, Bell, Moon, ExternalLink, Sparkles } from 'lucide-react';
+import { Settings, LogOut, Bell, Sparkles } from 'lucide-react';
 
 interface SettingsPanelProps {
   onLogout: () => Promise<void>;
@@ -26,44 +26,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onLogout, customer
           Account Settings
         </h2>
         <p className="text-sm text-[#8F6E5B] font-dm mt-1">
-          Configure notifications, security credentials, and your active session.
+          Configure notifications, preferences, and your active session.
         </p>
-      </div>
-
-      {/* Security Section */}
-      <div className="bg-[#FFFFFF] border border-[#D9C6A8]/60 rounded-2xl p-6 sm:p-7 shadow-[0_4px_16px_rgba(51,44,37,0.04)] space-y-5">
-        <div className="flex items-center gap-3 border-b border-[#D9C6A8]/30 pb-4">
-          <div className="w-10 h-10 rounded-full bg-[#F7F1E5] text-[#C7833D] flex items-center justify-center">
-            <Shield className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-serif font-bold text-[#332C25] text-base">
-              Shopify Identity & Security
-            </h3>
-            <p className="text-xs text-[#8F6E5B] font-dm">
-              Protected by OAuth 2.0 PKCE and OpenID Connect (OIDC).
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-3 text-xs font-dm text-[#8F6E5B]">
-          <div className="flex items-center justify-between py-2 border-b border-[#D9C6A8]/20">
-            <span>Authentication Protocol</span>
-            <span className="font-semibold text-[#332C25]">OAuth 2.0 + PKCE</span>
-          </div>
-          <div className="flex items-center justify-between py-2 border-b border-[#D9C6A8]/20">
-            <span>Session Token Storage</span>
-            <span className="font-semibold text-[#3E7C59] bg-[#EBF5EE] px-2 py-0.5 rounded">
-              Secure httpOnly Cookie
-            </span>
-          </div>
-          {customerEmail && (
-            <div className="flex items-center justify-between py-2 border-b border-[#D9C6A8]/20">
-              <span>Authenticated Devotee</span>
-              <span className="font-semibold text-[#332C25]">{customerEmail}</span>
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Preferences Section */}

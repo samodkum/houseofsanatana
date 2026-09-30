@@ -39,14 +39,12 @@ const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
 
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isDirectAccount = typeof window !== 'undefined' && (window.location.pathname.startsWith('/account') || window.location.hash.startsWith('#account'));
   const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'account'>(() => {
-    if (typeof window !== 'undefined' && (window.location.pathname.startsWith('/account') || window.location.hash.startsWith('#account'))) {
-      return 'account';
-    }
-    return 'home';
+    return isDirectAccount ? 'account' : 'home';
   });
   const [joinPathway, setJoinPathway] = useState<MainJoinWay>('join-hos');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => !isDirectAccount);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCommunityModalOpen, setIsCommunityModalOpen] = useState(false);
@@ -69,6 +67,15 @@ export default function App() {
   });
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+
+  const navigateToAccount = () => {
+    setCurrentPage('account');
+    setIsLoading(false);
+    setIsAccountOpen(false);
+    window.history.pushState(null, '', '/account');
+    window.location.hash = 'account';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
 
   const handleOpenAccount = () => {
     setIsAccountOpen(true);
@@ -123,7 +130,11 @@ export default function App() {
     handleShopifyOAuthCallback().then((success) => {
       if (success) {
         showToast('॥ स्वागतम् ॥ Authenticated with Shopify! Welcome to your Sacred Sanctum.');
-        setIsAccountOpen(true);
+        setCurrentPage('account');
+        setIsLoading(false);
+        setIsAccountOpen(false);
+        window.history.pushState(null, '', '/account');
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
     });
   }, []);
@@ -131,8 +142,6 @@ export default function App() {
   // Sync URL routing on mount and hashchange
   useEffect(() => {
     const syncRoute = () => {
-      const hash = window.location.hash.toLowerCase();
-
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
 
@@ -828,6 +837,7 @@ export default function App() {
           if (page === 'mall') navigateToMall();
           else if (page === 'travel') navigateToTravel();
           else if (page === 'join') navigateToJoin();
+          else if (page === 'account') navigateToAccount();
           else navigateToHome();
         }}
         cartCount={totalCartCount}

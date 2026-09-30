@@ -29,7 +29,7 @@ interface AccountModalProps {
   onClose: () => void;
   onOpenWishlist: () => void;
   onOpenCart: () => void;
-  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join') => void;
+  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'account') => void;
   cartCount?: number;
   wishlistCount?: number;
 }
@@ -76,9 +76,14 @@ export const AccountModal: React.FC<AccountModalProps> = ({
     setSuccessMessage('Signed out successfully.');
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     onClose();
-    window.location.href = SHOPIFY_ACCOUNT_URL;
+    try {
+      await redirectToShopifyAuthorize();
+    } catch (e) {
+      console.warn('OAuth redirect fallback to Shopify account URL:', e);
+      window.location.href = SHOPIFY_ACCOUNT_URL;
+    }
   };
 
   return (
@@ -171,8 +176,11 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                   type="button"
                   onClick={() => {
                     onClose();
-                    window.history.pushState(null, '', '/account');
-                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    if (onNavigatePage) {
+                      onNavigatePage('account');
+                    } else {
+                      window.location.hash = 'account';
+                    }
                   }}
                   className="w-full py-2.5 rounded-xl border border-[#D9C6A8] hover:border-[#C7833D] bg-white/70 hover:bg-white text-[#8F6E5B] hover:text-[#C7833D] font-dm text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                 >

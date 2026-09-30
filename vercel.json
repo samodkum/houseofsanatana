@@ -2,7 +2,15 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/auth/callback",
+      "destination": "/api/auth/callback"
+    },
+    {
+      "source": "/auth/login",
+      "destination": "/api/auth/login"
+    },
+    {
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]

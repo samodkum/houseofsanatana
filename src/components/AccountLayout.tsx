@@ -11,14 +11,16 @@ import {
   X, 
   ShieldCheck,
   CheckCircle,
-  Clock
+  Clock,
+  Compass
 } from 'lucide-react';
 import { OrdersPanel } from './OrdersPanel';
+import { YatrasPanel, SAMPLE_YATRAS } from './YatrasPanel';
 import { ProfilePanel } from './ProfilePanel';
 import { SettingsPanel } from './SettingsPanel';
 import { CustomerData } from '../hooks/useCustomer';
 
-export type AccountTab = 'orders' | 'profile' | 'settings';
+export type AccountTab = 'orders' | 'yatras' | 'profile' | 'settings';
 
 export const SAMPLE_CUSTOMER: CustomerData = {
   id: 'gid://shopify/Customer/79445164163',
@@ -156,12 +158,24 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
     }
   };
 
+  const productOrdersCount = (activeCustomer?.orders?.nodes || []).filter((order) => {
+    const isYatra = order.name.toLowerCase().includes('ytr') || 
+      order.lineItems?.nodes?.some(item => item.title.toLowerCase().includes('yatra') || item.title.toLowerCase().includes('pilgrimage'));
+    return !isYatra;
+  }).length;
+
   const navItems: Array<{ id: AccountTab; label: string; icon: React.ElementType; badge?: number }> = [
     { 
       id: 'orders', 
-      label: 'Sacred Orders', 
+      label: 'Products Purchased', 
       icon: ShoppingBag, 
-      badge: activeCustomer?.orders?.nodes?.length 
+      badge: productOrdersCount 
+    },
+    { 
+      id: 'yatras', 
+      label: 'Travel Packages', 
+      icon: Compass, 
+      badge: SAMPLE_YATRAS.length 
     },
     { 
       id: 'profile', 
@@ -191,16 +205,20 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
         </div>
 
         {/* Brand Center */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#C7833D] to-[#B08A4A] flex items-center justify-center text-white shadow-sm ring-2 ring-[#D9C6A8]/50">
-            <span className="font-serif font-bold text-sm tracking-tighter">ॐ</span>
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-[#D9C6A8] shadow-xs shrink-0 bg-[#1A1612]">
+            <img
+              src={logoUrl || "https://res.cloudinary.com/dzc1dckta/image/upload/v1790697704/HOS_logo_bpd1v5.jpg"}
+              alt="House of Sanatana"
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
-          <div className="text-center">
-            <h1 className="font-serif text-sm sm:text-base font-bold tracking-widest text-[#332C25] uppercase">
+          <div className="text-left">
+            <h1 className="font-serif text-sm sm:text-base font-bold tracking-widest text-[#332C25] uppercase leading-tight">
               House of Sanatana
             </h1>
-            <p className="text-[9px] uppercase tracking-widest text-[#8F6E5B] hidden sm:block">
-              Sacred Customer Dashboard (Preview)
+            <p className="text-[9px] uppercase tracking-widest text-[#C7833D] hidden sm:block font-semibold">
+              Sacred Devotee Sanctum
             </p>
           </div>
         </div>
@@ -238,27 +256,8 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
             isMobileMenuOpen ? 'block mb-4' : 'hidden md:block'
           }`}
         >
-          {/* Circular Brand Avatar */}
+          {/* Devotee Info (Clean without DP) */}
           <div className="flex flex-col items-center text-center pb-6 border-b border-[#D9C6A8]/40">
-            <div className="relative mb-3">
-              <div className="w-20 h-20 rounded-full border-2 border-[#C7833D]/40 p-1 shadow-inner bg-[#F7F1E5]">
-                {logoUrl ? (
-                  <img
-                    src={logoUrl}
-                    alt="House of Sanatana"
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                ) : (
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-[#F7F1E5] via-[#EFE8DA] to-[#D9C6A8] flex items-center justify-center text-[#C7833D] font-serif text-2xl font-bold shadow-sm">
-                    ॐ
-                  </div>
-                )}
-              </div>
-              <span className="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-[#3E7C59] border-2 border-white flex items-center justify-center text-[10px] text-white">
-                ✓
-              </span>
-            </div>
-
             <h3 className="font-serif font-bold text-lg text-[#332C25]">
               {activeCustomer.displayName}
             </h3>
@@ -283,19 +282,23 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
                   key={item.id}
                   type="button"
                   onClick={() => handleTabSelect(item.id)}
-                  className={`relative w-full flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-semibold tracking-wide uppercase transition-all duration-200 cursor-pointer ${
+                  className={`group relative w-full flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-semibold tracking-wide uppercase transition-all duration-200 cursor-pointer border ${
                     isActive
-                      ? 'text-[#C7833D] bg-[#FBF4EA] border border-[#D9C6A8]/70 shadow-sm'
-                      : 'text-[#8F6E5B] hover:text-[#332C25] hover:bg-[#F7F1E5]/70'
+                      ? 'text-[#C7833D] bg-[#FBF4EA] border-[#C7833D]/60 shadow-xs'
+                      : 'text-[#8F6E5B] border-transparent hover:text-[#C7833D] hover:bg-[#FBF4EA] hover:border-[#C7833D]/50 hover:shadow-xs'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-[#C7833D]' : 'text-[#8F6E5B]'}`} />
-                    <span>{item.label}</span>
+                    <Icon className={`w-4 h-4 transition-colors duration-200 ${isActive ? 'text-[#C7833D]' : 'text-[#8F6E5B] group-hover:text-[#C7833D]'}`} />
+                    <span className="transition-colors duration-200">{item.label}</span>
                   </div>
 
                   {typeof item.badge === 'number' && item.badge > 0 && (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] bg-[#C7833D] text-white font-bold">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold transition-all duration-200 ${
+                      isActive 
+                        ? 'bg-[#C7833D] text-white shadow-2xs' 
+                        : 'bg-[#D9C6A8]/40 text-[#8F6E5B] group-hover:bg-[#C7833D] group-hover:text-white'
+                    }`}>
                       {item.badge}
                     </span>
                   )}
@@ -312,21 +315,12 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
             })}
           </nav>
 
-          {/* Quick Info & Sign Out Footer */}
-          <div className="mt-8 pt-6 border-t border-[#D9C6A8]/40 space-y-3">
-            <div className="p-3 rounded-xl bg-[#F7F1E5]/60 border border-[#D9C6A8]/40 text-center">
-              <span className="text-[11px] text-[#8F6E5B] font-dm block">
-                Sample Devotee Dashboard
-              </span>
-              <span className="text-[10px] text-[#C7833D] font-dm uppercase tracking-widest font-semibold">
-                Shopify Powered Architecture
-              </span>
-            </div>
-
+          {/* Sign Out Footer */}
+          <div className="mt-8 pt-6 border-t border-[#D9C6A8]/40">
             <button
               type="button"
               onClick={handleLogoutAction}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#8F6E5B] hover:text-[#B33927] hover:bg-[#FDF2F2] transition-colors cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#8F6E5B] hover:text-[#C7833D] hover:bg-[#FBF4EA] border border-transparent hover:border-[#C7833D]/40 transition-all cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Exit Dashboard</span>
@@ -350,6 +344,25 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
                 <OrdersPanel 
                   orders={activeCustomer.orders?.nodes || []} 
                   isLoading={isLoading} 
+                />
+              </motion.div>
+            )}
+
+            {activeTab === 'yatras' && (
+              <motion.div
+                key="yatras-panel"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <YatrasPanel 
+                  yatras={SAMPLE_YATRAS}
+                  isLoading={isLoading}
+                  onExploreYatras={() => {
+                    if (onBackToStore) onBackToStore();
+                    window.location.hash = 'travel';
+                  }}
                 />
               </motion.div>
             )}
