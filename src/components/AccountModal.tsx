@@ -20,6 +20,7 @@ import {
   getStoredCustomerToken, 
   getStoredCustomerData,
   clearStoredCustomerAuth,
+  performFullDevoteeLogout,
   SHOPIFY_ACCOUNT_URL,
   redirectToShopifyAuthorize
 } from '../lib/shopify';
@@ -70,15 +71,15 @@ export const AccountModal: React.FC<AccountModalProps> = ({
     }
   }, [isOpen]);
 
-  const handleLogout = () => {
-    clearStoredCustomerAuth();
+  const handleLogout = async () => {
     setCustomer(null);
-    setSuccessMessage('Signed out successfully.');
+    setSuccessMessage('Signing out Devotee...');
+    await performFullDevoteeLogout();
   };
 
   const handleSignIn = () => {
     onClose();
-    window.location.href = SHOPIFY_ACCOUNT_URL;
+    window.location.href = '/auth/login';
   };
 
   return (
@@ -198,6 +199,23 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                     {customer.firstName ? `${customer.firstName} ${customer.lastName}` : 'Blessed Devotee'}
                   </h3>
                 </div>
+
+                {/* Direct Link to Custom Devotee Dashboard */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    if (onNavigatePage) {
+                      onNavigatePage('account');
+                    } else {
+                      window.location.hash = 'account';
+                    }
+                  }}
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#8F6E5B] text-white font-dm font-bold text-xs uppercase tracking-wider shadow-md hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-white" />
+                  <span>Enter Devotee Dashboard (/account)</span>
+                </button>
 
                 {/* Quick Shortcuts */}
                 <div className="grid grid-cols-2 gap-2.5">

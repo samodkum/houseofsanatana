@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { redirectToShopifyAuthorize, getStoredCustomerData, setStoredCustomerData, clearStoredCustomerAuth } from '../lib/shopify';
+import { redirectToShopifyAuthorize, getStoredCustomerData, setStoredCustomerData, clearStoredCustomerAuth, performFullDevoteeLogout } from '../lib/shopify';
 
 function getCookieValue(name: string): string | null {
   if (typeof document === 'undefined') return null;
@@ -137,25 +137,13 @@ export function useCustomer() {
   };
 
   const logout = async () => {
-    try {
-      await fetch('/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-        },
-        credentials: 'include',
-      });
-    } catch (e) {
-      console.error('Logout error:', e);
-    } finally {
-      setCustomer(null);
-      setIsAuthenticated(false);
-      window.location.href = '/';
-    }
+    setCustomer(null);
+    setIsAuthenticated(false);
+    await performFullDevoteeLogout();
   };
 
   const login = () => {
-    redirectToShopifyAuthorize();
+    window.location.href = '/auth/login';
   };
 
   return {

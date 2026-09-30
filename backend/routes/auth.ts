@@ -165,16 +165,31 @@ authRouter.get('/callback', async (req: Request, res: Response) => {
  * POST /auth/logout
  * Clears the customer token cookie and redirects to home.
  */
-authRouter.post('/logout', (req: Request, res: Response) => {
-  res.clearCookie('hos_customer_token', { path: '/' });
-  res.clearCookie('hos_id_token', { path: '/' });
-  res.clearCookie('hos_pkce_state', { path: '/' });
+authRouter.all('/logout', (req: Request, res: Response) => {
+  const cookieNames = [
+    'hos_customer_token',
+    'hos_id_token',
+    'hos_pkce_state',
+    'hos_user_email',
+    'hos_user_name',
+    'hos_user_given_name',
+    'hos_user_family_name',
+    'hos_code_verifier',
+    'hos_auth_state',
+  ];
+  cookieNames.forEach((name) => {
+    res.clearCookie(name, { path: '/' });
+  });
+
+  const shopId = process.env.SHOP_ID || '79445164163';
+  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const shopifyLogoutUrl = `https://shopify.com/${shopId}/account/logout?return_url=${encodeURIComponent(frontendUrl)}`;
 
   // Support both JSON API response and direct form post / redirect
-  if (req.headers.accept?.includes('application/json')) {
-    res.json({ success: true, message: 'Logged out successfully' });
+  if (req.headers.accept?.includes('application/json') && req.method === 'POST') {
+    res.json({ success: true, message: 'Logged out successfully', shopifyLogoutUrl });
   } else {
-    res.redirect('/');
+    res.redirect(shopifyLogoutUrl);
   }
 });
 

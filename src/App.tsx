@@ -80,7 +80,7 @@ export default function App() {
   };
 
   const handleOpenAccount = () => {
-    setIsAccountOpen(true);
+    navigateToAccount();
   };
 
   // Sync wishlist to localStorage
