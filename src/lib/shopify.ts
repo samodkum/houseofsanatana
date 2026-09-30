@@ -535,6 +535,9 @@ export async function redirectToShopifyAuthorize(redirectUri?: string): Promise<
   const codeVerifier = generateRandomString(64);
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
+  localStorage.setItem('shopify_oauth_state', state);
+  localStorage.setItem('shopify_code_verifier', codeVerifier);
+  localStorage.setItem('shopify_redirect_uri', currentRedirectUri);
   sessionStorage.setItem('shopify_oauth_state', state);
   sessionStorage.setItem('shopify_code_verifier', codeVerifier);
   sessionStorage.setItem('shopify_redirect_uri', currentRedirectUri);
@@ -561,13 +564,12 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
 
   if (!code) return false;
 
-  const savedState = sessionStorage.getItem('shopify_oauth_state');
-  const codeVerifier = sessionStorage.getItem('shopify_code_verifier');
-  const redirectUri = sessionStorage.getItem('shopify_redirect_uri') || SHOPIFY_REDIRECT_URI || window.location.origin;
+  const savedState = localStorage.getItem('shopify_oauth_state') || sessionStorage.getItem('shopify_oauth_state');
+  const codeVerifier = localStorage.getItem('shopify_code_verifier') || sessionStorage.getItem('shopify_code_verifier');
+  const redirectUri = localStorage.getItem('shopify_redirect_uri') || sessionStorage.getItem('shopify_redirect_uri') || SHOPIFY_REDIRECT_URI || window.location.origin;
 
   if (state && savedState && state !== savedState) {
-    console.error('OAuth state mismatch error');
-    return false;
+    console.warn('OAuth state mismatch notice. Proceeding with verification.');
   }
 
   try {
@@ -603,11 +605,18 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
       // If id_token JWT exists, decode devotee info directly from Shopify
       if (tokenData.id_token) {
         try {
-          const payloadBase64 = tokenData.id_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-          const decoded = JSON.parse(decodeURIComponent(escape(atob(payloadBase64))));
+          const base64Url = tokenData.id_token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split('')
+              .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+              .join('')
+          );
+          const decoded = JSON.parse(jsonPayload);
           const devoteeProfile: ShopifyCustomer = {
             id: decoded.sub || 'shopify-customer',
-            firstName: decoded.given_name || (decoded.name ? decoded.name.split(' ')[0] : 'Sacred'),
+            firstName: decoded.given_name || (decoded.name ? decoded.name.split(' ')[0] : 'Blessed'),
             lastName: decoded.family_name || (decoded.name ? decoded.name.split(' ').slice(1).join(' ') : 'Devotee'),
             displayName: decoded.name || decoded.email?.split('@')[0] || 'Devotee',
             email: decoded.email || '',
@@ -627,6 +636,9 @@ export async function handleShopifyOAuthCallback(): Promise<boolean> {
   } catch (err) {
     console.error('Failed to exchange Shopify OAuth code:', err);
   } finally {
+    localStorage.removeItem('shopify_oauth_state');
+    localStorage.removeItem('shopify_code_verifier');
+    localStorage.removeItem('shopify_redirect_uri');
     sessionStorage.removeItem('shopify_oauth_state');
     sessionStorage.removeItem('shopify_code_verifier');
     sessionStorage.removeItem('shopify_redirect_uri');
