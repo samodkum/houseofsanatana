@@ -19,9 +19,7 @@ import {
   getCustomerDetails, 
   getStoredCustomerToken, 
   getStoredCustomerData,
-  clearStoredCustomerAuth,
-  SHOPIFY_ACCOUNT_URL,
-  redirectToShopifyAuthorize
+  clearStoredCustomerAuth
 } from '../lib/shopify';
 
 interface AccountModalProps {
@@ -70,15 +68,30 @@ export const AccountModal: React.FC<AccountModalProps> = ({
     }
   }, [isOpen]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     clearStoredCustomerAuth();
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('hos_customer_token');
+      localStorage.removeItem('hos_shopify_customer_token');
+      localStorage.removeItem('hos_shopify_customer_data');
+      sessionStorage.clear();
+      document.cookie = 'hos_customer_token=; path=/; max-age=0';
+      document.cookie = 'hos_id_token=; path=/; max-age=0';
+      document.cookie = 'hos_user_email=; path=/; max-age=0';
+      document.cookie = 'hos_user_name=; path=/; max-age=0';
+      document.cookie = 'hos_user_given_name=; path=/; max-age=0';
+      document.cookie = 'hos_user_family_name=; path=/; max-age=0';
+    }
     setCustomer(null);
+    try {
+      await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
+    } catch {}
     setSuccessMessage('Signed out successfully.');
   };
 
   const handleSignIn = () => {
     onClose();
-    window.location.href = SHOPIFY_ACCOUNT_URL;
+    window.location.href = '/auth/login';
   };
 
   return (
@@ -199,6 +212,23 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                   </h3>
                 </div>
 
+                {/* Enter Sacred Devotee Dashboard Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    if (onNavigatePage) {
+                      onNavigatePage('account');
+                    } else {
+                      window.location.href = '/account';
+                    }
+                  }}
+                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#8F6E5B] text-white font-dm font-bold text-xs uppercase tracking-wider shadow-md hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-white" />
+                  <span>Open Sacred Devotee Dashboard</span>
+                </button>
+
                 {/* Quick Shortcuts */}
                 <div className="grid grid-cols-2 gap-2.5">
                   <button
@@ -268,14 +298,27 @@ export const AccountModal: React.FC<AccountModalProps> = ({
 
 
                 {/* Sign Out Button */}
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="w-full py-2.5 rounded-xl border border-stone-300 text-xs font-semibold text-stone-600 hover:bg-stone-100 hover:text-stone-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                  <span>Sign Out</span>
-                </button>
+                <div className="space-y-1.5 pt-1">
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="w-full py-2.5 rounded-xl border border-stone-300 text-xs font-semibold text-stone-600 hover:bg-stone-100 hover:text-stone-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleLogout().then(() => {
+                        window.location.href = '/auth/logout?shopify=true';
+                      });
+                    }}
+                    className="w-full text-center text-[10px] text-stone-400 hover:text-[#C7833D] transition-colors underline cursor-pointer"
+                  >
+                    Disconnect from Shopify session completely
+                  </button>
+                </div>
               </div>
             )}
           </motion.div>

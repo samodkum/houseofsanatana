@@ -28,7 +28,7 @@ import { WishlistDrawer } from './components/WishlistDrawer';
 import { AccountModal } from './components/AccountModal';
 import { AccountLayout } from './components/AccountLayout';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
-import { handleShopifyOAuthCallback } from './lib/shopify';
+import { handleShopifyOAuthCallback, getStoredCustomerData } from './lib/shopify';
 import { useCustomer } from './hooks/useCustomer';
 
 import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
@@ -80,7 +80,7 @@ export default function App() {
   };
 
   const handleOpenAccount = () => {
-    setIsAccountOpen(true);
+    navigateToAccount();
   };
 
   // Sync wishlist to localStorage

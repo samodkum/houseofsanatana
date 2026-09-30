@@ -12,8 +12,12 @@ import {
   ShieldCheck,
   CheckCircle,
   Clock,
-  Compass
+  Compass,
+  Crown,
+  LogIn,
+  Loader2
 } from 'lucide-react';
+import { SunIcon } from './SunIcon';
 import { OrdersPanel } from './OrdersPanel';
 import { YatrasPanel, SAMPLE_YATRAS } from './YatrasPanel';
 import { ProfilePanel } from './ProfilePanel';
@@ -104,7 +108,18 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
   const [internalTab, setInternalTab] = useState<AccountTab>('orders');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Dynamic customer resolver: live Shopify customer > propCustomer > localStorage > fallback
+  // Check cookie and stored credentials
+  const cookieEmail = typeof document !== 'undefined' ? (document.cookie.match(/(^|;\s*)hos_user_email=([^;]*)/)?.[2] ? decodeURIComponent(document.cookie.match(/(^|;\s*)hos_user_email=([^;]*)/)![2]) : null) : null;
+  const cookieName = typeof document !== 'undefined' ? (document.cookie.match(/(^|;\s*)hos_user_name=([^;]*)/)?.[2] ? decodeURIComponent(document.cookie.match(/(^|;\s*)hos_user_name=([^;]*)/)![2]) : null) : null;
+
+  const isUserAuthenticated = Boolean(
+    hookCustomer?.emailAddress?.emailAddress ||
+    propCustomer?.emailAddress?.emailAddress ||
+    getStoredCustomerData()?.email ||
+    cookieEmail
+  );
+
+  // Dynamic customer resolver: live Shopify customer > propCustomer > localStorage > cookie > fallback
   const getResolvedCustomer = (): CustomerData => {
     if (hookCustomer?.emailAddress?.emailAddress) return hookCustomer;
     if (propCustomer?.emailAddress?.emailAddress) return propCustomer;
@@ -121,7 +136,26 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
         orders: { nodes: [] }
       };
     }
-    return SAMPLE_CUSTOMER;
+
+    if (cookieEmail) {
+      return {
+        id: 'shopify-oauth-devotee',
+        displayName: cookieName || cookieEmail.split('@')[0],
+        firstName: 'Blessed',
+        lastName: 'Devotee',
+        emailAddress: { emailAddress: cookieEmail },
+        orders: { nodes: [] }
+      };
+    }
+
+    return {
+      id: '',
+      displayName: 'Blessed Devotee',
+      firstName: '',
+      lastName: '',
+      emailAddress: { emailAddress: '' },
+      orders: { nodes: [] }
+    };
   };
 
   const [activeCustomer, setActiveCustomer] = useState<CustomerData>(getResolvedCustomer);
@@ -129,7 +163,7 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
   useEffect(() => {
     const resolved = getResolvedCustomer();
     setActiveCustomer(resolved);
-  }, [hookCustomer, propCustomer]);
+  }, [hookCustomer, propCustomer, cookieEmail]);
 
   const activeTab = controlledTab || internalTab;
 
@@ -231,29 +265,89 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
 
         {/* Right Action */}
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handleLogoutAction}
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-[#8F6E5B] hover:text-[#B33927] transition-colors py-1.5 px-3.5 rounded-full hover:bg-[#FDF2F2] cursor-pointer"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out</span>
-          </button>
+          {isUserAuthenticated ? (
+            <button
+              type="button"
+              onClick={() => handleLogoutAction()}
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs text-[#8F6E5B] hover:text-[#B33927] transition-colors py-1.5 px-3.5 rounded-full hover:bg-[#FDF2F2] cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sign Out</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => { window.location.href = '/auth/login'; }}
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs text-white bg-[#C7833D] hover:brightness-110 font-bold uppercase tracking-wider py-1.5 px-4 rounded-full transition-all shadow-xs cursor-pointer"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span>Sign In</span>
+            </button>
+          )}
 
           {/* Mobile Menu Toggle */}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-[#332C25] hover:bg-[#EFE8DA] transition-colors cursor-pointer"
-            aria-label="Toggle navigation menu"
-          >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {isUserAuthenticated && (
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-xl text-[#332C25] hover:bg-[#EFE8DA] transition-colors cursor-pointer"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          )}
         </div>
       </header>
 
       {/* Main Container */}
-      <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+      {hookLoading && !isUserAuthenticated ? (
+        <div className="flex-1 flex flex-col items-center justify-center py-24 text-[#8F6E5B]">
+          <Loader2 className="w-8 h-8 animate-spin text-[#C7833D] mb-3" />
+          <p className="text-xs font-semibold uppercase tracking-wider font-dm">Connecting to Sacred Devotee Portal...</p>
+        </div>
+      ) : !isUserAuthenticated ? (
+        <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
+          <div className="w-full max-w-md bg-[#FAF6EE] rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-[#DECDB8] p-8 flex flex-col items-center text-center">
+            {/* Sacred Sun Icon */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C7833D] to-[#B08A4A] p-0.5 shadow-lg flex items-center justify-center text-white shrink-0 mb-4">
+              <div className="w-full h-full rounded-[14px] bg-[#26201B] flex items-center justify-center">
+                <SunIcon className="w-8 h-8 text-[#D9C6A8]" />
+              </div>
+            </div>
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#C7833D]/15 border border-[#C7833D]/30 text-[#8F6E5B] text-[10px] font-bold uppercase tracking-wider mb-2">
+              <Crown className="w-3 h-3 text-[#C7833D]" />
+              <span>॥ House of Sanatan ॥</span>
+            </div>
+
+            <h2 className="font-serif font-bold text-2xl sm:text-3xl text-[#26201B] tracking-wide mb-2">
+              Sacred Devotee Portal
+            </h2>
+
+            <p className="text-xs text-[#8F6E5B] font-dm leading-relaxed mb-6">
+              Sign in with your email to view your consecrated purchases, track sacred pilgrimage bookings, and manage your devotee credentials.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => { window.location.href = '/auth/login'; }}
+              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#8F6E5B] text-white font-dm font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2.5 cursor-pointer mb-3"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In / Sign Up</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={onBackToStore || (() => (window.location.href = '/'))}
+              className="text-xs text-[#8F6E5B] hover:text-[#C7833D] font-dm transition-colors underline cursor-pointer"
+            >
+              Back to Sanctum Store
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         {/* ======================================================== */}
         {/* SIDEBAR NAVIGATION                                       */}
         {/* ======================================================== */}
@@ -405,6 +499,7 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
           </AnimatePresence>
         </main>
       </div>
+      )}
     </div>
   );
 };

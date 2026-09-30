@@ -92,6 +92,19 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onLogout, customer
             <span>{isLoggingOut ? 'Signing Out...' : 'Sign Out'}</span>
           </button>
         </div>
+
+        <div className="pt-3 border-t border-rose-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <span className="text-[11px] text-stone-500 font-dm">
+            Need to sign in with a different email or terminate your Shopify session completely?
+          </span>
+          <button
+            type="button"
+            onClick={() => { window.location.href = '/auth/logout?shopify=true'; }}
+            className="text-xs text-[#B33927] hover:underline font-semibold font-dm cursor-pointer shrink-0"
+          >
+            Disconnect Shopify Session
+          </button>
+        </div>
       </div>
     </div>
   );
