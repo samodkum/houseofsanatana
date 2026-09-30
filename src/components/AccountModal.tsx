@@ -77,7 +77,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({
 
   const handleSignIn = () => {
     onClose();
-    redirectToShopifyAuthorize();
+    window.location.href = SHOPIFY_ACCOUNT_URL;
   };
 
   return (
@@ -249,17 +249,6 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                   )}
                 </div>
 
-                {/* Open Full Custom Account Dashboard */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    window.location.href = '/account';
-                  }}
-                  className="w-full py-2.5 rounded-xl bg-[#C7833D] text-white hover:bg-[#B08A4A] transition-all flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider cursor-pointer shadow-sm"
-                >
-                  <span>Open Full Sacred Dashboard</span>
-                </button>
 
                 {/* Sign Out Button */}
                 <button

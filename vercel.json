@@ -2,27 +2,7 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/auth/callback",
-      "destination": "/api/auth/callback"
-    },
-    {
-      "source": "/auth/logout",
-      "destination": "/api/auth/logout"
-    },
-    {
-      "source": "/api/customer/update",
-      "destination": "/api/customer"
-    },
-    {
-      "source": "/api/customer",
-      "destination": "/api/customer"
-    },
-    {
-      "source": "/account/:path*",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/account",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
