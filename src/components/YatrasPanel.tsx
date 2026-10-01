@@ -21,35 +21,8 @@ interface YatrasPanelProps {
   onExploreYatras?: () => void;
 }
 
-export const SAMPLE_YATRAS: YatraBooking[] = [
-  {
-    id: 'yatra-1',
-    orderName: '#HOS-YTR-0994',
-    yatraTitle: 'Char Dham Himalayan Sacred Pilgrimage',
-    destination: 'Yamunotri • Gangotri • Kedarnath • Badrinath',
-    duration: '10 Days • 9 Nights',
-    dates: '18 May 2026 – 27 May 2026',
-    passengers: 2,
-    totalPrice: { amount: '35000.00', currencyCode: 'INR' },
-    status: 'Confirmed',
-    inclusions: ['VIP Sanctum Darshan', 'Consecrated Satvik Meals', 'Vedic Priest & Guide', 'Sacred Bhasma Offering']
-  },
-  {
-    id: 'yatra-2',
-    orderName: '#HOS-YTR-0841',
-    yatraTitle: 'Kashi Vishwanath & Ganga Aarti Divine Sanctum',
-    destination: 'Varanasi (Kashi), Uttar Pradesh',
-    duration: '4 Days • 3 Nights',
-    dates: '12 Nov 2025 – 15 Nov 2025',
-    passengers: 1,
-    totalPrice: { amount: '14500.00', currencyCode: 'INR' },
-    status: 'Completed',
-    inclusions: ['Subah-e-Banaras Boat Darshan', 'Maha Aarti Sanctum Entry', 'Temple Guest House']
-  }
-];
-
 export const YatrasPanel: React.FC<YatrasPanelProps> = ({
-  yatras = SAMPLE_YATRAS,
+  yatras = [],
   isLoading,
   onExploreYatras,
 }) => {

@@ -48,36 +48,40 @@ export function useCustomer() {
     setError(null);
 
     try {
-      const res = await fetch('/api/customer', {
-        headers: {
-          'Accept': 'application/json',
-        },
-        credentials: 'include', // sends httpOnly hos_customer_token cookie
-      });
-
-      if (res.status === 401) {
-        setIsAuthenticated(false);
-        setCustomer(null);
-        setIsLoading(false);
-        return;
+      const token = localStorage.getItem('shopify_token');
+      if (!token) {
+        throw new Error('No authentication token found. Please sign in to access your sacred account.');
       }
 
+      const res = await fetch('/api/customer', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+      });
+
       if (!res.ok) {
-        throw new Error(`Failed to load customer details (${res.status})`);
+        const errorData = await res.json().catch(() => null);
+        throw new Error(errorData?.message || errorData?.error || `Failed to fetch customer data (${res.status})`);
       }
 
       const json = await res.json();
-      if (json.customer) {
-        setCustomer(json.customer);
-        setIsAuthenticated(true);
-      } else {
-        setCustomer(null);
-        setIsAuthenticated(false);
+      const customerData = json?.data?.customer;
+
+      if (!customerData) {
+        throw new Error(json?.error || 'Customer data returned null.');
       }
+
+      setCustomer(customerData);
+      setIsAuthenticated(true);
+      setError(null);
     } catch (err: any) {
-      console.warn('Customer fetch error or unauthenticated:', err.message);
-      setError(err.message);
+      console.warn('useCustomer error:', err.message);
+      setCustomer(null);
       setIsAuthenticated(false);
+      setError(err.message || 'Failed to fetch customer data');
     } finally {
       setIsLoading(false);
     }
@@ -114,13 +118,16 @@ export function useCustomer() {
 
   const logout = async () => {
     try {
+      localStorage.removeItem('shopify_token');
+      localStorage.removeItem('hos_shopify_customer_token');
+      localStorage.removeItem('hos_shopify_customer_data');
       await fetch('/auth/logout', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
         },
         credentials: 'include',
-      });
+      }).catch(() => null);
     } catch (e) {
       console.error('Logout error:', e);
     } finally {

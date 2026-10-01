@@ -263,7 +263,7 @@ const CUSTOMER_TOKEN_STORAGE_KEY = 'hos_shopify_customer_token';
 const CUSTOMER_INFO_STORAGE_KEY = 'hos_shopify_customer_data';
 
 export function getStoredCustomerToken(): string | null {
-  return localStorage.getItem(CUSTOMER_TOKEN_STORAGE_KEY);
+  return localStorage.getItem('shopify_token') || localStorage.getItem(CUSTOMER_TOKEN_STORAGE_KEY);
 }
 
 export function getStoredCustomerData(): ShopifyCustomer | null {
@@ -276,6 +276,7 @@ export function getStoredCustomerData(): ShopifyCustomer | null {
 }
 
 export function setStoredCustomerToken(token: string, expiresAt?: string) {
+  localStorage.setItem('shopify_token', token);
   localStorage.setItem(CUSTOMER_TOKEN_STORAGE_KEY, token);
 }
 
@@ -284,6 +285,7 @@ export function setStoredCustomerData(customer: ShopifyCustomer) {
 }
 
 export function clearStoredCustomerAuth() {
+  localStorage.removeItem('shopify_token');
   localStorage.removeItem(CUSTOMER_TOKEN_STORAGE_KEY);
   localStorage.removeItem(CUSTOMER_INFO_STORAGE_KEY);
 }

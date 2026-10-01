@@ -12,87 +12,18 @@ import {
   ShieldCheck,
   CheckCircle,
   Clock,
-  Compass
+  Compass,
+  Loader2,
+  AlertCircle,
+  LogIn
 } from 'lucide-react';
 import { OrdersPanel } from './OrdersPanel';
-import { YatrasPanel, SAMPLE_YATRAS } from './YatrasPanel';
+import { YatrasPanel, YatraBooking } from './YatrasPanel';
 import { ProfilePanel } from './ProfilePanel';
 import { SettingsPanel } from './SettingsPanel';
-import { CustomerData } from '../hooks/useCustomer';
+import { useCustomer, CustomerData } from '../hooks/useCustomer';
 
 export type AccountTab = 'orders' | 'yatras' | 'profile' | 'settings';
-
-export const SAMPLE_CUSTOMER: CustomerData = {
-  id: 'gid://shopify/Customer/79445164163',
-  displayName: 'Anjali Sharma',
-  firstName: 'Anjali',
-  lastName: 'Sharma',
-  emailAddress: {
-    emailAddress: 'anjali.sharma@sanatana.in',
-  },
-  phoneNumber: {
-    phoneNumber: '+91 98765 43210',
-  },
-  orders: {
-    nodes: [
-      {
-        id: 'gid://shopify/Order/1001',
-        name: '#HOS-1084',
-        processedAt: '2026-03-24T10:30:00Z',
-        financialStatus: 'PAID',
-        totalPrice: {
-          amount: '4999.00',
-          currencyCode: 'INR',
-        },
-        fulfillments: [
-          { displayStatus: 'Delivered to Sanctum' }
-        ],
-        lineItems: {
-          nodes: [
-            { title: 'Kashi Vishwanath Consecrated Rudraksha Mala (108 Beads)', quantity: 1 },
-            { title: 'Sacred Bhasma & Sandalwood Incense Offering', quantity: 2 }
-          ]
-        }
-      },
-      {
-        id: 'gid://shopify/Order/1002',
-        name: '#HOS-1042',
-        processedAt: '2026-03-12T14:15:00Z',
-        financialStatus: 'PAID',
-        totalPrice: {
-          amount: '12499.00',
-          currencyCode: 'INR',
-        },
-        fulfillments: [
-          { displayStatus: 'In Transit — Dispatched via Sacred Courier' }
-        ],
-        lineItems: {
-          nodes: [
-            { title: 'Kedarnath Sanctum Brass Pooja Thali & Diya Kit', quantity: 1 }
-          ]
-        }
-      },
-      {
-        id: 'gid://shopify/Order/1003',
-        name: '#HOS-0994',
-        processedAt: '2026-02-18T09:00:00Z',
-        financialStatus: 'PAID',
-        totalPrice: {
-          amount: '35000.00',
-          currencyCode: 'INR',
-        },
-        fulfillments: [
-          { displayStatus: 'Confirmed — Sacred Yatra Expedition Pass' }
-        ],
-        lineItems: {
-          nodes: [
-            { title: 'Char Dham Himalayan Sacred Pilgrimage Reservation (Pass #2)', quantity: 1 }
-          ]
-        }
-      }
-    ]
-  }
-};
 
 interface AccountLayoutProps {
   customer?: CustomerData | null;
@@ -109,7 +40,7 @@ interface AccountLayoutProps {
 
 export const AccountLayout: React.FC<AccountLayoutProps> = ({
   customer: propCustomer,
-  isLoading = false,
+  isLoading: propLoading,
   activeTab: controlledTab,
   onTabChange,
   onUpdateProfile: propUpdateProfile,
@@ -117,9 +48,13 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
   onBackToStore,
   logoUrl,
 }) => {
+  const customerHook = useCustomer();
+  const customer = propCustomer !== undefined ? propCustomer : customerHook.customer;
+  const isLoading = propLoading !== undefined ? propLoading : customerHook.isLoading;
+  const error = customerHook.error;
+
   const [internalTab, setInternalTab] = useState<AccountTab>('orders');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeCustomer, setActiveCustomer] = useState<CustomerData>(propCustomer || SAMPLE_CUSTOMER);
 
   const activeTab = controlledTab || internalTab;
 
@@ -136,46 +71,127 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
     if (propUpdateProfile) {
       return propUpdateProfile(firstName, lastName);
     }
-    // Sample local update
-    setActiveCustomer(prev => ({
-      ...prev,
-      firstName,
-      lastName,
-      displayName: `${firstName} ${lastName}`.trim(),
-    }));
-    return { success: true };
+    return customerHook.updateProfile(firstName, lastName);
   };
 
   const handleLogoutAction = async () => {
     if (onLogout) {
       await onLogout();
     } else {
-      if (onBackToStore) {
-        onBackToStore();
-      } else {
-        window.location.href = '/';
-      }
+      await customerHook.logout();
     }
   };
 
-  const productOrdersCount = (activeCustomer?.orders?.nodes || []).filter((order) => {
+  // 1. Loading State while fetching from /api/customer
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F7F1E5] text-[#332C25] flex flex-col items-center justify-center p-6 font-dm">
+        <div className="w-16 h-16 rounded-full bg-[#FAF6EE] border border-[#D9C6A8] flex items-center justify-center mb-4 shadow-sm">
+          <Loader2 className="w-8 h-8 text-[#C7833D] animate-spin" />
+        </div>
+        <h2 className="font-serif text-xl sm:text-2xl text-[#332C25] font-semibold mb-2">
+          Loading Sacred Sanctum
+        </h2>
+        <p className="text-xs sm:text-sm text-[#8F6E5B] max-w-sm text-center">
+          Connecting with your customer account...
+        </p>
+      </div>
+    );
+  }
+
+  // 2. Error State if fetch fails or customer is null
+  if (error || !customer) {
+    return (
+      <div className="min-h-screen bg-[#F7F1E5] text-[#332C25] flex flex-col items-center justify-center p-6 font-dm">
+        <div className="w-full max-w-md bg-white border border-[#D9C6A8] rounded-3xl p-8 text-center shadow-lg space-y-5">
+          <div className="w-16 h-16 rounded-full bg-[#FAF6EE] border border-[#D9C6A8] flex items-center justify-center mx-auto text-[#B33927] shadow-inner">
+            <AlertCircle className="w-8 h-8 text-[#B33927]" />
+          </div>
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#B33927] block mb-1">
+              Authentication Required
+            </span>
+            <h2 className="font-serif text-2xl font-bold text-[#332C25]">
+              Unable to Access Sanctum
+            </h2>
+            <p className="text-xs text-[#8F6E5B] mt-2 leading-relaxed">
+              {error || 'No active customer session found. Please sign in to view your orders and devotee profile.'}
+            </p>
+          </div>
+
+          <div className="pt-2 space-y-3">
+            <button
+              type="button"
+              onClick={() => customerHook.login()}
+              className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#8F6E5B] text-white font-dm font-bold text-xs uppercase tracking-wider shadow-md hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In with Shopify</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={onBackToStore || (() => (window.location.href = '/'))}
+              className="w-full py-2.5 rounded-xl border border-[#D9C6A8] hover:border-[#C7833D] bg-white text-[#8F6E5B] hover:text-[#C7833D] font-dm text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+            >
+              Back to Sanctum
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 3. Dynamic Orders and Yatras Derivation (No Mock Data)
+  const allOrders = customer.orders?.nodes || [];
+
+  const yatraOrders = allOrders.filter((order) => {
+    return order.name.toLowerCase().includes('ytr') || 
+      order.lineItems?.nodes?.some(item => 
+        item.title.toLowerCase().includes('yatra') || 
+        item.title.toLowerCase().includes('pilgrimage') ||
+        item.title.toLowerCase().includes('expedition')
+      );
+  });
+
+  const productOrders = allOrders.filter((order) => {
     const isYatra = order.name.toLowerCase().includes('ytr') || 
-      order.lineItems?.nodes?.some(item => item.title.toLowerCase().includes('yatra') || item.title.toLowerCase().includes('pilgrimage'));
+      order.lineItems?.nodes?.some(item => 
+        item.title.toLowerCase().includes('yatra') || 
+        item.title.toLowerCase().includes('pilgrimage') ||
+        item.title.toLowerCase().includes('expedition')
+      );
     return !isYatra;
-  }).length;
+  });
+
+  const yatraBookings: YatraBooking[] = yatraOrders.map((order) => {
+    const firstItem = order.lineItems?.nodes?.[0];
+    return {
+      id: order.id,
+      orderName: order.name,
+      yatraTitle: firstItem?.title || 'Sacred Himalayan Yatra',
+      destination: 'Sacred Sanctum Destination',
+      duration: 'Multi-day Pilgrimage',
+      dates: new Date(order.processedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+      passengers: firstItem?.quantity || 1,
+      totalPrice: order.totalPrice,
+      status: (order.fulfillments?.[0]?.displayStatus?.toLowerCase().includes('confirmed') ? 'Confirmed' : 'Upcoming') as any,
+      inclusions: ['Sanctum Darshan Access', 'Consecrated Offerings', 'Vedic Priest & Guide'],
+    };
+  });
 
   const navItems: Array<{ id: AccountTab; label: string; icon: React.ElementType; badge?: number }> = [
     { 
       id: 'orders', 
       label: 'Products Purchased', 
       icon: ShoppingBag, 
-      badge: productOrdersCount 
+      badge: productOrders.length 
     },
     { 
       id: 'yatras', 
       label: 'Travel Packages', 
       icon: Compass, 
-      badge: SAMPLE_YATRAS.length 
+      badge: yatraBookings.length 
     },
     { 
       id: 'profile', 
@@ -259,10 +275,10 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
           {/* Devotee Info (Clean without DP) */}
           <div className="flex flex-col items-center text-center pb-6 border-b border-[#D9C6A8]/40">
             <h3 className="font-serif font-bold text-lg text-[#332C25]">
-              {activeCustomer.displayName}
+              {customer.displayName || `${customer.firstName || ''} ${customer.lastName || ''}`.trim() || 'Blessed Devotee'}
             </h3>
             <p className="text-xs text-[#8F6E5B] font-dm truncate max-w-[200px] mt-0.5">
-              {activeCustomer.emailAddress?.emailAddress}
+              {customer.emailAddress?.emailAddress || ''}
             </p>
 
             <span className="mt-2.5 inline-flex items-center gap-1 text-[10px] font-dm uppercase tracking-widest text-[#3E7C59] bg-[#EBF5EE] border border-[#B9E0C7] px-2.5 py-0.5 rounded-full font-semibold">
@@ -342,7 +358,7 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
                 <OrdersPanel 
-                  orders={activeCustomer.orders?.nodes || []} 
+                  orders={productOrders} 
                   isLoading={isLoading} 
                 />
               </motion.div>
@@ -357,8 +373,8 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
                 <YatrasPanel 
-                  yatras={SAMPLE_YATRAS}
-                  isLoading={isLoading}
+                  yatras={yatraBookings} 
+                  isLoading={isLoading} 
                   onExploreYatras={() => {
                     if (onBackToStore) onBackToStore();
                     window.location.hash = 'travel';
@@ -376,7 +392,7 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
                 <ProfilePanel 
-                  customer={activeCustomer} 
+                  customer={customer} 
                   onUpdateProfile={handleUpdateProfile} 
                 />
               </motion.div>
@@ -392,7 +408,7 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
               >
                 <SettingsPanel 
                   onLogout={handleLogoutAction} 
-                  customerEmail={activeCustomer.emailAddress?.emailAddress} 
+                  customerEmail={customer.emailAddress?.emailAddress} 
                 />
               </motion.div>
             )}

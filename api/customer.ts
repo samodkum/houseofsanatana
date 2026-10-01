@@ -63,7 +63,7 @@ export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   const cookieHeader = req.headers.cookie || '';
-  const token = getCookie(cookieHeader, 'hos_customer_token') || req.headers.authorization?.replace(/^Bearer\s+/i, '');
+  const token = req.headers.authorization?.replace(/^Bearer\s+/i, '') || getCookie(cookieHeader, 'shopify_token') || getCookie(cookieHeader, 'hos_customer_token');
 
   if (!token) {
     res.statusCode = 401;
@@ -71,6 +71,7 @@ export default async function handler(req: any, res: any) {
     res.end(JSON.stringify({
       error: 'Unauthorized',
       message: 'No active sacred customer session found. Please log in.',
+      data: null,
     }));
     return;
   }
@@ -130,10 +131,18 @@ export default async function handler(req: any, res: any) {
     const json = await shopifyRes.json() as any;
     res.statusCode = shopifyRes.status;
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(json.data || json));
+
+    if (json.errors && json.errors.length > 0) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ error: json.errors.map((e: any) => e.message).join(', '), data: null }));
+      return;
+    }
+
+    const customerObj = json.data?.customer || json.customer || null;
+    res.end(JSON.stringify({ data: { customer: customerObj } }));
   } catch (err: any) {
     res.statusCode = 500;
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ error: 'Internal Server Error', message: err.message }));
+    res.end(JSON.stringify({ error: 'Internal Server Error', message: err.message, data: null }));
   }
 }

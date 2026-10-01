@@ -36,8 +36,8 @@ export const ProfilePanel: React.FC<ProfilePanelProps> = ({ customer, onUpdatePr
     }
   };
 
-  const email = customer?.emailAddress?.emailAddress || 'devotee@houseofsanatana.com';
-  const displayName = customer?.displayName || `${firstName} ${lastName}`.trim() || 'Devoted Sadhaka';
+  const email = customer?.emailAddress?.emailAddress || '';
+  const displayName = customer?.displayName || `${firstName} ${lastName}`.trim() || 'Blessed Devotee';
 
   return (
     <div className="space-y-8 max-w-2xl">

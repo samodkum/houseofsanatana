@@ -88,10 +88,29 @@ export default async function handler(req: any, res: any) {
       `hos_auth_state=; Path=/; Max-Age=0`,
     ].filter(Boolean));
 
-    // Redirect to custom frontend customer dashboard
-    const frontendUrl = (process.env.FRONTEND_URL || 'https://houseofsanatana.vercel.app').replace(/\/$/, '');
-    res.writeHead(302, { Location: `${frontendUrl}/account` });
-    res.end();
+    // Store token in localStorage and redirect to /account
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.end(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Authenticating with Sacred Sanctum...</title>
+</head>
+<body style="background:#F7F1E5;color:#332C25;display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;margin:0;">
+  <div style="text-align:center;">
+    <p style="font-size:14px;letter-spacing:1px;text-transform:uppercase;color:#C7833D;">॥ House of Sanatana ॥</p>
+    <p style="font-size:16px;">Connecting to your customer account...</p>
+  </div>
+  <script>
+    try {
+      localStorage.setItem('shopify_token', ${JSON.stringify(tokenData.access_token)});
+      localStorage.setItem('hos_shopify_customer_token', ${JSON.stringify(tokenData.access_token)});
+    } catch(e) {}
+    window.location.replace('/account');
+  </script>
+</body>
+</html>`);
+    return;
   } catch (err: any) {
     console.error('Callback error:', err);
     res.statusCode = 500;
