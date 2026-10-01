@@ -26,9 +26,7 @@ import { KnowledgeMediaPage } from './components/KnowledgeMediaPage';
 import { HeaderActionButtons } from './components/HeaderActionButtons';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { AccountModal } from './components/AccountModal';
-import { AccountLayout } from './components/AccountLayout';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
-import { handleShopifyOAuthCallback } from './lib/shopify';
 
 import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
 
@@ -39,12 +37,9 @@ const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
 
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const isDirectAccount = typeof window !== 'undefined' && (window.location.pathname.startsWith('/account') || window.location.hash.startsWith('#account'));
-  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'account'>(() => {
-    return isDirectAccount ? 'account' : 'home';
-  });
+  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media'>('home');
   const [joinPathway, setJoinPathway] = useState<MainJoinWay>('join-hos');
-  const [isLoading, setIsLoading] = useState(() => !isDirectAccount);
+  const [isLoading, setIsLoading] = useState(true);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCommunityModalOpen, setIsCommunityModalOpen] = useState(false);
@@ -67,19 +62,6 @@ export default function App() {
   });
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
-
-  const navigateToAccount = () => {
-    setCurrentPage('account');
-    setIsLoading(false);
-    setIsAccountOpen(false);
-    window.history.pushState(null, '', '/account');
-    window.location.hash = 'account';
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  };
-
-  const handleOpenAccount = () => {
-    setIsAccountOpen(true);
-  };
 
   // Sync wishlist to localStorage
   useEffect(() => {
@@ -125,29 +107,11 @@ export default function App() {
     showToast(`Added ${product.title} to sacred basket`);
   };
 
-  // Handle Shopify OAuth callback on mount (?code=...)
+  // Sync hash routing on mount and hashchange
   useEffect(() => {
-    handleShopifyOAuthCallback().then((success) => {
-      if (success) {
-        showToast('॥ स्वागतम् ॥ Authenticated with Shopify! Welcome to your Sacred Sanctum.');
-        setCurrentPage('account');
-        setIsLoading(false);
-        setIsAccountOpen(false);
-        window.history.pushState(null, '', '/account');
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      }
-    });
-  }, []);
-
-  // Sync URL routing on mount and hashchange
-  useEffect(() => {
-    const syncRoute = () => {
-      const path = window.location.pathname.toLowerCase();
+    const syncHash = () => {
       const hash = window.location.hash.toLowerCase();
-
-      if (path.startsWith('/account') || hash.startsWith('#account')) {
-        setCurrentPage('account');
-      } else if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
+      if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
         setCurrentPage('mall');
       } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages' || hash === '#travel-page' || hash.startsWith('#yatra-')) {
         setCurrentPage('travel');
@@ -162,14 +126,9 @@ export default function App() {
         setCurrentPage('home');
       }
     };
-
-    syncRoute();
-    window.addEventListener('hashchange', syncRoute);
-    window.addEventListener('popstate', syncRoute);
-    return () => {
-      window.removeEventListener('hashchange', syncRoute);
-      window.removeEventListener('popstate', syncRoute);
-    };
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+    return () => window.removeEventListener('hashchange', syncHash);
   }, []);
 
   // Page navigation helpers
@@ -200,9 +159,8 @@ export default function App() {
 
   const navigateToHome = (sectionId?: string) => {
     setCurrentPage('home');
-    window.history.pushState(null, '', '/');
-    window.location.hash = sectionId && sectionId !== 'home' ? `#${sectionId}` : '';
-    if (sectionId && sectionId !== 'home') {
+    window.location.hash = sectionId ? `#${sectionId}` : '#home';
+    if (sectionId) {
       setTimeout(() => scrollToSection(sectionId), 250);
     } else {
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -393,10 +351,6 @@ export default function App() {
         isOpen={isMenuOpen} 
         onClose={() => setIsMenuOpen(false)} 
         currentPage={currentPage}
-        onOpenAccount={() => {
-          setIsMenuOpen(false);
-          handleOpenAccount();
-        }}
         onNavigatePage={(page, sectionId) => {
           if (page === 'mall') {
             navigateToMall();
@@ -412,14 +366,7 @@ export default function App() {
         }}
       />
 
-      {currentPage === 'account' ? (
-        <AccountLayout
-          onBackToStore={() => {
-            window.history.pushState(null, '', '/');
-            setCurrentPage('home');
-          }}
-        />
-      ) : currentPage === 'mall' ? (
+      {currentPage === 'mall' ? (
         /* ======================================================== */
         /* SANTANA MALL: CONSECRATED TEMPLE STORE PAGE (IVORY BASE) */
         /* ======================================================== */
@@ -430,7 +377,7 @@ export default function App() {
           onOpenCart={() => setIsCartOpen(true)}
           cartCount={totalCartCount}
           isMenuOpen={isMenuOpen}
-          onOpenAccount={handleOpenAccount}
+          onOpenAccount={() => setIsAccountOpen(true)}
         />
       ) : currentPage === 'travel' ? (
         /* ======================================================== */
@@ -441,7 +388,7 @@ export default function App() {
           onNavigateMall={navigateToMall}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={handleOpenAccount}
+          onOpenAccount={() => setIsAccountOpen(true)}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           isMenuOpen={isMenuOpen}
@@ -456,7 +403,7 @@ export default function App() {
           onNavigateTravel={navigateToTravel}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={handleOpenAccount}
+          onOpenAccount={() => setIsAccountOpen(true)}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           initialPathway={joinPathway}
@@ -472,7 +419,7 @@ export default function App() {
           onNavigateJoin={navigateToJoin}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={handleOpenAccount}
+          onOpenAccount={() => setIsAccountOpen(true)}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
         />
@@ -485,7 +432,7 @@ export default function App() {
               cartCount={totalCartCount}
               onOpenWishlist={() => setIsWishlistOpen(true)}
               onOpenCart={() => setIsCartOpen(true)}
-              onOpenAccount={handleOpenAccount}
+              onOpenAccount={() => setIsAccountOpen(true)}
               isHero={isHeroSection}
             />
           </div>
@@ -827,7 +774,7 @@ export default function App() {
         }}
       />
 
-      {/* Sacred Sadhaka User Account Profile Modal (Connected to Shopify) */}
+      {/* Sacred Sadhaka User Account Profile Modal (Unified across all pages) */}
       <AccountModal
         isOpen={isAccountOpen}
         onClose={() => setIsAccountOpen(false)}
@@ -837,7 +784,6 @@ export default function App() {
           if (page === 'mall') navigateToMall();
           else if (page === 'travel') navigateToTravel();
           else if (page === 'join') navigateToJoin();
-          else if (page === 'account') navigateToAccount();
           else navigateToHome();
         }}
         cartCount={totalCartCount}

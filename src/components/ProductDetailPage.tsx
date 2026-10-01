@@ -35,7 +35,6 @@ interface ProductDetailPageProps {
   onSelectRelatedProduct: (product: MallProduct) => void;
   onAddToCart: (kit: PoojaKit, quantity?: number) => void;
   onOpenCart: () => void;
-  onOpenAccount?: () => void;
   cartCount: number;
   onNavigateHome: () => void;
   onNavigateTravel: () => void;
@@ -50,7 +49,6 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   onSelectRelatedProduct,
   onAddToCart,
   onOpenCart,
-  onOpenAccount,
   cartCount,
   onNavigateHome,
   onNavigateTravel,
@@ -243,7 +241,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* User Account Button - Icon only default, spreads and fills with Sacred Charcoal on hover */}
             <button
               type="button"
-              onClick={onOpenAccount || (() => showToast('Sacred Sadhaka Profile & Orders'))}
+              onClick={() => showToast('Sacred Sadhaka Profile & Orders')}
               className="group relative flex items-center h-11 px-3 rounded-full bg-white/85 hover:bg-[#26201B] border border-[#D9C6A8] hover:border-[#26201B] text-[#26201B] hover:text-[#F7F1E5] shadow-xs hover:shadow-[0_8px_25px_rgba(38,32,27,0.35)] transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer overflow-hidden"
               title="My Account"
             >

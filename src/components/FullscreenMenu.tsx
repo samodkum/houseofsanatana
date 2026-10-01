@@ -9,7 +9,6 @@ export interface MenuItem {
   isExternal?: boolean;
   href: string;
   page?: 'home' | 'mall' | 'travel' | 'join' | 'media';
-  isAccount?: boolean;
 }
 
 const MENU_ITEMS: MenuItem[] = [
@@ -18,14 +17,12 @@ const MENU_ITEMS: MenuItem[] = [
   { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '#santana-mall', page: 'mall' },
   { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '#travel', page: 'travel' },
   { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '#media', page: 'media' },
-  { id: 'account', label: 'My Devotee Profile & Orders', sanskrit: '॥ भक्त खाता ॥', isExternal: false, href: '#account', isAccount: true },
 ];
 
 interface FullscreenMenuProps {
   isOpen: boolean;
   onClose: () => void;
   onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'media', sectionId?: string) => void;
-  onOpenAccount?: () => void;
   currentPage?: 'home' | 'mall' | 'travel' | 'join' | 'media';
 }
 
@@ -33,7 +30,6 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
   isOpen,
   onClose,
   onNavigatePage,
-  onOpenAccount,
   currentPage = 'home',
 }) => {
   const [activeItem, setActiveItem] = useState<string>(currentPage);
@@ -145,9 +141,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                         e.stopPropagation();
                         setActiveItem(item.id);
                         onClose();
-                        if (item.isAccount && onOpenAccount) {
-                          onOpenAccount();
-                        } else if (item.page && onNavigatePage) {
+                        if (item.page && onNavigatePage) {
                           onNavigatePage(item.page, item.href.replace('#', ''));
                         }
                       }}

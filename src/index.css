@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./tokens.css";
 
 @theme {
   --color-hos-ivory: #F7F1E5;

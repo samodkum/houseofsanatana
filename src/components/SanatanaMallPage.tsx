@@ -647,7 +647,6 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
         onSelectRelatedProduct={handleSelectProduct}
         onAddToCart={onAddToCart}
         onOpenCart={onOpenCart}
-        onOpenAccount={onOpenAccount}
         cartCount={cartCount}
         onNavigateHome={onNavigateHome}
         onNavigateTravel={onNavigateTravel}
