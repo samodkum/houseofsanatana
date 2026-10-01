@@ -110,15 +110,21 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
   const [sortBy, setSortBy] = useState<'featured' | 'popular' | 'newest'>('featured');
   
   // Responsive 3D Interactive Book sizing
-  const [bookSize, setBookSize] = useState({ width: 340, height: 490 });
+  const [bookSize, setBookSize] = useState(() => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 480) return { width: 175, height: 255 };
+      if (window.innerWidth < 640) return { width: 215, height: 310 };
+    }
+    return { width: 340, height: 490 };
+  });
 
   useEffect(() => {
     const handleResize = () => {
       if (typeof window !== 'undefined') {
         if (window.innerWidth < 480) {
-          setBookSize({ width: 220, height: 320 });
+          setBookSize({ width: 175, height: 255 });
         } else if (window.innerWidth < 640) {
-          setBookSize({ width: 260, height: 375 });
+          setBookSize({ width: 215, height: 310 });
         } else {
           setBookSize({ width: 340, height: 490 });
         }

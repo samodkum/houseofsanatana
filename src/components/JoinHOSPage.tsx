@@ -291,10 +291,10 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
 
         {/* Ambient Warm Golden Glows */}
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[320px] bg-radial from-[#C7833D]/15 via-transparent to-transparent blur-3xl pointer-events-none" />
-        <div className="absolute -left-16 top-1/4 w-80 h-80 opacity-20 pointer-events-none">
+        <div className="hidden sm:block absolute -left-16 top-1/4 w-80 h-80 opacity-20 pointer-events-none">
           <MandalaGeometry size={320} color="#B08A4A" />
         </div>
-        <div className="absolute -right-16 top-1/4 w-80 h-80 opacity-20 pointer-events-none">
+        <div className="hidden sm:block absolute -right-16 top-1/4 w-80 h-80 opacity-20 pointer-events-none">
           <TempleArchitectureLine size={320} color="#B08A4A" />
         </div>
 
