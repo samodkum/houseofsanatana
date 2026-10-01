@@ -474,9 +474,9 @@ export default function App() {
               }}
             />
 
-            {/* Top Sacred Shloka & Om Symbol */}
+            {/* Top Sacred Shloka & Om Symbol (Desktop / Laptop only) */}
             <div 
-              className={`absolute top-[2%] sm:top-[2.5%] md:top-[3%] inset-x-0 z-10 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
+              className={`hidden md:flex absolute top-[2.5%] md:top-[3%] inset-x-0 z-10 flex-col items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
             >
               {/* Om Symbol */}
               <div 
@@ -501,10 +501,71 @@ export default function App() {
               </div>
             </div>
 
-            {/* Celestial "SANATANA" Typography in the Sky */}
+            {/* ======================================================== */}
+            {/* CELESTIAL "SANATANA" TYPOGRAPHY                          */}
+            {/* ======================================================== */}
+
+            {/* 1. Mobile & Tablet Layout (< md): Centered in the Sky with "HOUSE OF" Eyebrow */}
+            <div 
+              className={`md:hidden absolute inset-x-0 top-[17%] sm:top-[20%] -translate-y-1/2 z-10 flex flex-col items-center justify-center pointer-events-none px-4 transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
+            >
+              {/* Subtle Celestial Aura */}
+              <div 
+                className="absolute inset-0 -top-10 bottom-0 pointer-events-none -z-10"
+                style={{
+                  background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(176, 138, 74, 0.18) 0%, rgba(199, 131, 61, 0.08) 40%, transparent 75%)'
+                }}
+              />
+
+              {/* Glowing "HOUSE OF" Sacred Eyebrow */}
+              <div 
+                className="flex items-center justify-center gap-2.5 mb-1.5"
+                style={isRevealed ? {
+                  animation: 'letterWaveIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both'
+                } : { opacity: 0 }}
+              >
+                <span className="w-7 h-[1px] bg-gradient-to-r from-transparent via-[#B08A4A] to-[#D9C6A8]" />
+                <span className="font-montserrat text-[10px] sm:text-[11px] font-extrabold tracking-[0.38em] text-[#D9C6A8] uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                  HOUSE OF
+                </span>
+                <span className="w-7 h-[1px] bg-gradient-to-l from-transparent via-[#B08A4A] to-[#D9C6A8]" />
+              </div>
+
+              {/* Grand SANATANA Wordmark */}
+              <div className="w-full flex items-center justify-center gap-1 sm:gap-2">
+                {LETTERS.map((char, idx) => {
+                  const entryDelay = 0.2 + idx * 0.08;
+                  return (
+                    <div
+                      key={`mob-char-${char}-${idx}`}
+                      className="flex items-center justify-center"
+                      style={isRevealed ? {
+                        animation: `letterWaveIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) ${entryDelay}s both`
+                      } : { opacity: 0 }}
+                    >
+                      <span
+                        className="font-montserrat font-black text-[10.5vw] sm:text-[9vw] leading-none select-none uppercase inline-block origin-center px-0.5 py-1"
+                        style={{
+                          transform: 'scaleY(1.15)',
+                          background: 'linear-gradient(180deg, #FFFFFF 0%, #F7F1E5 20%, #D9C6A8 50%, #B08A4A 85%, #332C25 100%)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          color: '#B08A4A',
+                          filter: 'drop-shadow(0 3px 8px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 20px rgba(176, 138, 74, 0.5))'
+                        }}
+                      >
+                        {char}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 2. Desktop Layout (>= md): Split-Wing with Corridor for Silhouette */}
             <div 
               id="sanatana-sky-container"
-              className={`absolute inset-x-0 top-[36%] -translate-y-1/2 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
+              className={`hidden md:flex absolute inset-x-0 top-[36%] -translate-y-1/2 z-10 items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
             >
               <div 
                 className="w-full flex items-center justify-between px-3 sm:px-5 md:px-8 lg:px-11 xl:px-14 overflow-visible -translate-x-[1.2vw] sm:-translate-x-[1.5vw]"
@@ -587,10 +648,60 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right-side CTA section */}
+            {/* Mobile Bottom Scrim for crisp text contrast */}
+            <div 
+              className="md:hidden absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-black/95 via-black/55 to-transparent pointer-events-none z-15"
+            />
+
+            {/* ======================================================== */}
+            {/* HERO CTA: MOBILE BOTTOM-RIGHT FLOATING BUTTON            */}
+            {/* ======================================================== */}
+            <div 
+              className={`md:hidden absolute bottom-20 sm:bottom-24 right-5 sm:right-8 z-20 flex flex-col items-end transition-all duration-700 ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+              style={isRevealed ? {
+                animation: 'fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both'
+              } : { opacity: 0 }}
+            >
+              {/* 2-line Sacred Micro-phrase (4 words) */}
+              <div className="mb-2 text-right pointer-events-none">
+                <span className="block font-montserrat font-medium text-[9.5px] tracking-[0.2em] uppercase text-[#D9C6A8] drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                  Where Sacred
+                </span>
+                <span className="block font-montserrat font-extrabold text-xs tracking-[0.08em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#F7F1E5] via-[#D9C6A8] to-[#B08A4A] drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-tight">
+                  Awakens Eternity
+                </span>
+              </div>
+
+              {/* Bespoke Sacred Capsule CTA Button (Compact on Mobile) */}
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen(true)}
+                className="group relative inline-flex items-center gap-2.5 pl-2.5 pr-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#332C25]/95 via-[#26201B]/95 to-[#332C25]/95 border border-[#B08A4A]/70 hover:border-[#D9C6A8] shadow-[0_8px_25px_rgba(0,0,0,0.85),_0_0_15px_rgba(176,138,74,0.3)] backdrop-blur-md transition-all duration-300 cursor-pointer overflow-hidden active:scale-95"
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#B08A4A]/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
+
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-[#C7833D] via-[#B08A4A] to-[#66705A] text-[#120a04] shadow-md group-hover:rotate-180 transition-transform duration-700">
+                  <SunIcon className="w-3.5 h-3.5 text-black" />
+                </div>
+
+                <div className="flex flex-col text-left justify-center">
+                  <span className="font-montserrat font-bold text-xs tracking-[0.04em] text-[#F7F1E5] group-hover:text-white transition-colors leading-none">
+                    Explore HOS
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-center w-5 h-5 rounded-full bg-[#26201B]/90 border border-[#B08A4A]/50 group-hover:border-[#F7F1E5] group-hover:translate-x-0.5 transition-all text-[#D9C6A8]">
+                  <span className="text-[10px] leading-none">➔</span>
+                </div>
+              </button>
+            </div>
+
+            {/* ======================================================== */}
+            {/* HERO CTA: DESKTOP RIGHT-SIDE FLOATING CONTROLS          */}
+            {/* ======================================================== */}
             <div 
               id="hero-cta-section"
-              className={`absolute right-4 sm:right-8 md:right-12 lg:right-16 xl:right-20 top-[49%] sm:top-[51%] md:top-[53%] z-20 flex flex-col items-end text-right max-w-[320px] sm:max-w-[380px] md:max-w-[440px] transition-all duration-700 ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+              className={`hidden md:flex absolute right-8 md:right-12 lg:right-16 xl:right-20 top-[49%] sm:top-[51%] md:top-[53%] z-20 flex-col items-end text-right max-w-[380px] md:max-w-[440px] transition-all duration-700 ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
               style={isRevealed ? {
                 animation: 'fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both'
               } : { opacity: 0 }}

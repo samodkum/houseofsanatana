@@ -13,7 +13,7 @@ export interface MenuItem {
 
 const MENU_ITEMS: MenuItem[] = [
   { id: 'home', label: 'Home', sanskrit: '॥ मुखपृष्ठम् ॥', href: '#home', page: 'home' },
-  { id: 'join', label: 'Join House of Sanatan', sanskrit: '॥ सङ्घ प्रवेशम् ॥', isExternal: false, href: '#join', page: 'join' },
+  { id: 'join', label: 'Join House of Sanatana', sanskrit: '॥ सङ्घ प्रवेशम् ॥', isExternal: false, href: '#join', page: 'join' },
   { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '#santana-mall', page: 'mall' },
   { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '#travel', page: 'travel' },
   { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '#media', page: 'media' },
@@ -100,7 +100,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
               <span className="font-sanskrit text-sm font-bold text-[#D9C6A8]">॥ सनातन सूची ॥</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9C6A8]/50" />
               <span className="font-dm text-xs uppercase tracking-[0.25em] text-[#F7F1E5]/80 font-semibold">
-                House of Sanatan
+                House of Sanatana
               </span>
             </div>
 
@@ -145,25 +145,25 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                           onNavigatePage(item.page, item.href.replace('#', ''));
                         }
                       }}
-                      className="group relative w-full flex items-center justify-between py-4 sm:py-5 px-6 sm:px-8 rounded-3xl transition-all duration-200 cursor-pointer"
+                      className="group relative w-full flex items-center justify-between py-2.5 sm:py-3.5 px-5 sm:px-7 rounded-2xl transition-all duration-200 cursor-pointer"
                     >
                       {/* Active / Hover Pill Highlight */}
                       <div
-                        className={`absolute inset-0 rounded-3xl transition-all duration-200 pointer-events-none ${
+                        className={`absolute inset-0 rounded-2xl transition-all duration-200 pointer-events-none ${
                           isActive 
-                            ? 'bg-[#F7F1E5] shadow-[0_12px_35px_rgba(0,0,0,0.3)] opacity-100 scale-100' 
+                            ? 'bg-[#F7F1E5] shadow-[0_10px_28px_rgba(0,0,0,0.25)] opacity-100 scale-100' 
                             : 'opacity-0 scale-95'
                         }`}
                       />
 
                       {/* Main Link Text in Cormorant Garamond Serif */}
-                      <div className="relative z-10 flex items-baseline gap-4 sm:gap-6">
-                        <span className={`font-dm text-sm sm:text-base font-bold transition-colors duration-150 ${
+                      <div className="relative z-10 flex items-baseline gap-3.5 sm:gap-5">
+                        <span className={`font-dm text-xs sm:text-sm font-bold transition-colors duration-150 ${
                           isActive ? 'text-[#8C4E1D]' : 'text-[#D9C6A8]/70'
                         }`}>
                           0{index + 1}
                         </span>
-                        <span className={`font-cormorant font-normal text-4xl sm:text-5xl md:text-6xl lg:text-[64px] leading-tight tracking-tight transition-colors duration-150 ${
+                        <span className={`font-cormorant font-normal text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] leading-tight tracking-tight transition-colors duration-150 ${
                           isActive ? 'text-[#26201B] font-semibold' : 'text-[#F7F1E5] group-hover:text-white'
                         }`}>
                           {item.label}
@@ -171,15 +171,15 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                       </div>
 
                       {/* Sanskrit Subtext & Arrow */}
-                      <div className="relative z-10 hidden md:flex items-center gap-4">
+                      <div className="relative z-10 hidden md:flex items-center gap-3.5">
                         <span className={`font-sanskrit text-xs font-semibold transition-colors duration-150 ${
                           isActive ? 'text-[#8C4E1D]' : 'text-[#D9C6A8]/70'
                         }`}>
                           {item.sanskrit}
                         </span>
                         <ArrowUpRight 
-                          className={`w-5 h-5 transform transition-transform duration-200 ${
-                            isActive ? 'text-[#26201B] translate-x-1 -translate-y-1' : 'text-[#D9C6A8]/50 group-hover:text-white'
+                          className={`w-4 h-4 transform transition-transform duration-200 ${
+                            isActive ? 'text-[#26201B] translate-x-0.5 -translate-y-0.5' : 'text-[#D9C6A8]/50 group-hover:text-white'
                           }`}
                         />
                       </div>
@@ -194,7 +194,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
           <div className="relative z-20 w-full px-6 sm:px-12 py-4 sm:py-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-dm text-[#D9C6A8]/80">
             <div className="flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-[#D9C6A8]" />
-              <span>Consecrated Vedic Sanctum &bull; House of Sanatan</span>
+              <span>Consecrated Vedic Sanctum &bull; House of Sanatana</span>
             </div>
 
             {/* Social Links */}

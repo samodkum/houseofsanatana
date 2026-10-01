@@ -682,26 +682,6 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pl-16 sm:pl-20 h-18 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
           
-          {/* Left: House of Sanatan Branding */}
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={onNavigateHome}
-              className="flex items-center gap-2.5 text-left group cursor-pointer"
-            >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#58111A] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
-                <SunIcon className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className="font-cormorant font-bold text-lg sm:text-xl md:text-2xl tracking-tight text-[#26201B] group-hover:text-[#58111A] transition-colors">
-                  House of Sanatan
-                </span>
-                <span className="font-dm text-[9px] uppercase tracking-[0.22em] text-[#8F6E5B] font-semibold">
-                  Estd. Vedic Sanctum
-                </span>
-              </div>
-            </button>
-          </div>
 
           {/* Center: Enhanced Prominent Search Bar */}
           <div className="flex-1 max-w-xl mx-2 sm:mx-6">

@@ -41,6 +41,7 @@ import { YatraModal } from './YatraModal';
 import { SunIcon } from './SunIcon';
 import { Footer } from './Footer';
 import { HeaderActionButtons } from './HeaderActionButtons';
+import { BharatYatraMapSection } from './BharatYatraMapSection';
 
 interface TravelPackagePageProps {
   onNavigateHome: (sectionId?: string) => void;
@@ -90,6 +91,9 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
   const [selectedDuration, setSelectedDuration] = useState<'all' | 'short' | 'medium' | 'long'>('all');
   const [sortBy, setSortBy] = useState<'featured' | 'price-low' | 'price-high' | 'rating' | 'duration'>('featured');
 
+  // Highlighted package ID when navigated from map
+  const [highlightedPackageId, setHighlightedPackageId] = useState<string | null>(null);
+
   // Horizontal scroll ref & helper for the 2-row travel packages carousel
   const packagesScrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -98,6 +102,27 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
       const scrollAmount = direction === 'left' ? -420 : 420;
       packagesScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
+  };
+
+  const handleSelectPlaceFromMap = (yatraId: string, circuit: YatraCircuitType) => {
+    setSearchQuery('');
+    setSelectedCircuit('all');
+    setHighlightedPackageId(yatraId);
+    setTimeout(() => setHighlightedPackageId(null), 3500);
+
+    const catalogSec = document.getElementById('catalog');
+    if (catalogSec) {
+      catalogSec.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    setTimeout(() => {
+      const targetCard = document.getElementById(`package-${yatraId}`);
+      if (targetCard && packagesScrollRef.current) {
+        const containerLeft = packagesScrollRef.current.getBoundingClientRect().left;
+        const cardLeft = targetCard.getBoundingClientRect().left;
+        packagesScrollRef.current.scrollBy({ left: cardLeft - containerLeft - 30, behavior: 'smooth' });
+      }
+    }, 400);
   };
 
   // Custom Bespoke Pilgrimage Planner State
@@ -245,14 +270,14 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
       {/* 2. HERO BANNER: BRAND STADIUM CAPSULES & FLOATING BUBBLES */}
       {/*    (Directly matching user reference: [We] [Seek] [→] [Sanctum]) */}
       {/* ======================================================== */}
-      <section className="relative w-full overflow-hidden pt-10 sm:pt-14 md:pt-16 pb-12 sm:pb-16 px-4 sm:px-8 max-w-6xl mx-auto flex flex-col items-center text-center">
+      <section className="relative w-full overflow-hidden pt-28 sm:pt-32 md:pt-36 lg:pt-16 pb-12 sm:pb-16 px-4 sm:px-8 max-w-6xl mx-auto flex flex-col items-center text-center">
         
         {/* Ambient Warm Vedic Glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-b from-[#D9C6A8]/20 via-[#C7833D]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
 
-        {/* --- FLOATING CIRCULAR VIGNETTES (Exact Match to User Reference) --- */}
+        {/* --- FLOATING CIRCULAR VIGNETTES (Exact Match to User Reference - Laptop Only) --- */}
         {/* Left Upper Bubble: Sacred Turquoise Lake & Himalayan Reflection */}
-        <div className="absolute left-3 sm:left-8 md:left-12 lg:left-20 top-6 sm:top-10 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden sm:block">
+        <div className="absolute left-8 lg:left-20 top-10 w-16 lg:w-20 h-16 lg:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=300&auto=format&fit=crop"
             alt="Sacred Lake"
@@ -261,7 +286,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         </div>
 
         {/* Left Lower Bubble: Misty Sacred Cedar Valley */}
-        <div className="absolute left-14 sm:left-20 md:left-28 lg:left-40 top-32 sm:top-36 md:top-40 w-11 h-11 sm:w-13 sm:h-13 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden sm:block">
+        <div className="absolute left-28 lg:left-40 top-40 w-13 lg:w-16 h-13 lg:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=300&auto=format&fit=crop"
             alt="Misty Valleys"
@@ -270,7 +295,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         </div>
 
         {/* Right Upper Bubble: Azure High-Altitude Glacier Peak */}
-        <div className="absolute right-3 sm:right-8 md:right-12 lg:right-20 top-8 sm:top-12 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden sm:block">
+        <div className="absolute right-8 lg:right-20 top-12 w-16 lg:w-20 h-16 lg:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=300&auto=format&fit=crop"
             alt="Glacier Sanctum"
@@ -279,7 +304,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         </div>
 
         {/* Right Lower Bubble: Consecrated Golden Canyon Shrine */}
-        <div className="absolute right-14 sm:right-20 md:right-28 lg:right-40 top-32 sm:top-36 md:top-40 w-11 h-11 sm:w-13 sm:h-13 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden sm:block">
+        <div className="absolute right-28 lg:right-40 top-40 w-13 lg:w-16 h-13 lg:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300&auto=format&fit=crop"
             alt="Desert Canyon Sanctum"
@@ -299,30 +324,20 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
             We curate consecrated Himalayan kora, VIP temple sanctum access, and high-altitude luxury charters guided by authentic Vedic scholars.
           </p>
 
-          {/* Dual Action CTAs (Pill with Arrow + Minimal Dot Link) */}
-          <div className="flex items-center justify-center gap-4 sm:gap-6 mt-6 sm:mt-7">
+          {/* Action CTA Button */}
+          <div className="flex items-center justify-center mt-6 sm:mt-7">
             <button
               type="button"
               onClick={() => {
-                const el = document.getElementById('catalog');
+                const isLaptop = window.innerWidth >= 1024;
+                const el = isLaptop ? (document.getElementById('bharat-map-section') || document.getElementById('catalog')) : document.getElementById('catalog');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
               className="px-6 py-2.5 rounded-full bg-white border border-[#26201B] hover:bg-[#26201B] hover:text-[#F7F1E5] text-[#26201B] font-dm text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-xs transition-all duration-300 group cursor-pointer"
             >
-              <span>View Expeditions</span>
+              <span className="hidden lg:inline">Explore Bharat Map & Yatras</span>
+              <span className="lg:hidden">Explore Sacred Yatras</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('bespoke-planner');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="flex items-center gap-2 px-3 py-2 text-[#26201B] hover:text-[#C7833D] font-dm text-xs sm:text-sm font-medium transition-colors cursor-pointer group"
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-[#E8B84B] ring-2 ring-[#E8B84B]/30 group-hover:scale-125 transition-transform" />
-              <span>Plan Custom Yatra</span>
             </button>
           </div>
         </div>
@@ -441,20 +456,36 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-stretch gap-4 sm:gap-5 w-full"
+            className="flex flex-row items-stretch gap-2.5 sm:gap-5 w-full"
           >
             {[SACRED_FACILITIES[0], SACRED_FACILITIES[1]].map((facility, localIdx) => {
               // Card 0 is big by default; Card 1 becomes big ONLY when cursor is on it
               const isSpread = localIdx === 0 ? !isCard1Hovered : isCard1Hovered;
               const isSmallCard = localIdx === 1; // Only the small card expands on hover
 
+              const handleClick = () => {
+                if (localIdx === 0) {
+                  if (isCard1Hovered) {
+                    setIsCard1Hovered(false);
+                  } else {
+                    setActiveFacility(facility);
+                  }
+                } else {
+                  if (!isCard1Hovered) {
+                    setIsCard1Hovered(true);
+                  } else {
+                    setActiveFacility(facility);
+                  }
+                }
+              };
+
               return (
                 <div
                   key={facility.id}
                   onMouseEnter={isSmallCard ? () => setIsCard1Hovered(true) : undefined}
                   onMouseLeave={isSmallCard ? () => setIsCard1Hovered(false) : undefined}
-                  onClick={() => setActiveFacility(facility)}
-                  className={`group relative overflow-hidden rounded-[26px] sm:rounded-[30px] cursor-pointer transition-all duration-500 ease-out shadow-lg hover:shadow-2xl border border-black/10 bg-[#26201B] h-[260px] sm:h-[290px] ${
+                  onClick={handleClick}
+                  className={`group relative overflow-hidden rounded-[20px] xs:rounded-[24px] sm:rounded-[30px] cursor-pointer transition-all duration-500 ease-out shadow-lg hover:shadow-2xl border border-black/10 bg-[#26201B] h-[240px] xs:h-[265px] sm:h-[290px] ${
                     isSpread ? 'flex-[1.8] sm:flex-[2.2]' : 'flex-[1]'
                   }`}
                 >
@@ -468,45 +499,45 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
 
-                  {/* Top Bar: Tag on Left, White Circular Arrow Button on Right (Matching Image 2) */}
-                  <div className="relative z-10 p-5 sm:p-6 flex items-start justify-between">
-                    <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[10px] font-dm font-bold uppercase tracking-wider">
+                  {/* Top Bar: Tag on Left, White Circular Arrow Button on Right */}
+                  <div className="relative z-10 p-3.5 xs:p-4 sm:p-6 flex items-start justify-between gap-2">
+                    <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[8px] xs:text-[9px] sm:text-[10px] font-dm font-bold uppercase tracking-wider line-clamp-1">
                       {facility.tag}
                     </span>
 
-                    {/* White Circular Arrow Button (Signature element from reference) */}
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#26201B] flex items-center justify-center font-bold shadow-md group-hover:bg-[#C7833D] group-hover:text-white transition-colors duration-300">
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    {/* White Circular Arrow Button */}
+                    <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-white text-[#26201B] flex items-center justify-center font-bold shadow-md group-hover:bg-[#C7833D] group-hover:text-white transition-colors duration-300">
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
 
                   {/* Content Area at Bottom */}
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
-                    <h3 className="font-cormorant text-2xl sm:text-3xl font-bold text-white tracking-wide leading-tight drop-shadow-sm">
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-3.5 xs:p-4 sm:p-6">
+                    <h3 className="font-cormorant text-base xs:text-lg sm:text-2xl md:text-3xl font-bold text-white tracking-wide leading-tight drop-shadow-sm line-clamp-2">
                       {facility.title}
                     </h3>
 
-                    {/* Expanded details when spreaded (Matching Image 2 text box) */}
+                    {/* Expanded details when spreaded */}
                     {isSpread ? (
-                      <div className="mt-2">
-                        <div className="p-3 sm:p-3.5 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 max-w-xl">
-                          <p className="font-dm text-xs text-[#F7F1E5]/95 line-clamp-2 leading-relaxed">
+                      <div className="mt-1.5 sm:mt-2">
+                        <div className="p-2 xs:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl bg-white/15 backdrop-blur-md border border-white/20 max-w-xl">
+                          <p className="font-dm text-[10px] xs:text-xs text-[#F7F1E5]/95 line-clamp-2 leading-relaxed">
                             {facility.description}
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-3 mt-3">
-                          <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] font-dm">
+                        <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
+                          <span className="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[8px] xs:text-[9px] sm:text-[10px] font-dm line-clamp-1">
                             {facility.subtitle}
                           </span>
-                          <span className="text-[11px] font-dm font-bold text-[#D9C6A8] flex items-center gap-1 group-hover:text-white transition-colors">
-                            Explore Privilege ➔
+                          <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-dm font-bold text-[#D9C6A8] flex items-center gap-1 group-hover:text-white transition-colors shrink-0">
+                            Explore ➔
                           </span>
                         </div>
                       </div>
                     ) : (
                       <div className="mt-1">
-                        <span className="font-dm text-xs text-[#D9C6A8] line-clamp-1">
+                        <span className="font-dm text-[10px] xs:text-xs text-[#D9C6A8] line-clamp-1">
                           {facility.subtitle}
                         </span>
                       </div>
@@ -523,20 +554,36 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-stretch gap-4 sm:gap-5 w-full"
+            className="flex flex-row items-stretch gap-2.5 sm:gap-5 w-full"
           >
             {[SACRED_FACILITIES[2], SACRED_FACILITIES[3]].map((facility, localIdx) => {
               // Card 2 is small by default, spreads on hover. Card 3 is big by default.
               const isSpread = localIdx === 0 ? isCard2Hovered : !isCard2Hovered;
               const isSmallCard = localIdx === 0; // Only the small card expands on hover
 
+              const handleClick = () => {
+                if (localIdx === 0) {
+                  if (!isCard2Hovered) {
+                    setIsCard2Hovered(true);
+                  } else {
+                    setActiveFacility(facility);
+                  }
+                } else {
+                  if (isCard2Hovered) {
+                    setIsCard2Hovered(false);
+                  } else {
+                    setActiveFacility(facility);
+                  }
+                }
+              };
+
               return (
                 <div
                   key={facility.id}
                   onMouseEnter={isSmallCard ? () => setIsCard2Hovered(true) : undefined}
                   onMouseLeave={isSmallCard ? () => setIsCard2Hovered(false) : undefined}
-                  onClick={() => setActiveFacility(facility)}
-                  className={`group relative overflow-hidden rounded-[26px] sm:rounded-[30px] cursor-pointer transition-all duration-500 ease-out shadow-lg hover:shadow-2xl border border-black/10 bg-[#26201B] h-[260px] sm:h-[290px] ${
+                  onClick={handleClick}
+                  className={`group relative overflow-hidden rounded-[20px] xs:rounded-[24px] sm:rounded-[30px] cursor-pointer transition-all duration-500 ease-out shadow-lg hover:shadow-2xl border border-black/10 bg-[#26201B] h-[240px] xs:h-[265px] sm:h-[290px] ${
                     isSpread ? 'flex-[1.8] sm:flex-[2.2]' : 'flex-[1]'
                   }`}
                 >
@@ -550,45 +597,45 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
 
-                  {/* Top Bar: Tag on Left, White Circular Arrow Button on Right (Matching Image 2) */}
-                  <div className="relative z-10 p-5 sm:p-6 flex items-start justify-between">
-                    <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[10px] font-dm font-bold uppercase tracking-wider">
+                  {/* Top Bar: Tag on Left, White Circular Arrow Button on Right */}
+                  <div className="relative z-10 p-3.5 xs:p-4 sm:p-6 flex items-start justify-between gap-2">
+                    <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[8px] xs:text-[9px] sm:text-[10px] font-dm font-bold uppercase tracking-wider line-clamp-1">
                       {facility.tag}
                     </span>
 
                     {/* White Circular Arrow Button */}
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#26201B] flex items-center justify-center font-bold shadow-md group-hover:bg-[#C7833D] group-hover:text-white transition-colors duration-300">
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-white text-[#26201B] flex items-center justify-center font-bold shadow-md group-hover:bg-[#C7833D] group-hover:text-white transition-colors duration-300">
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
 
                   {/* Content Area at Bottom */}
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
-                    <h3 className="font-cormorant text-2xl sm:text-3xl font-bold text-white tracking-wide leading-tight drop-shadow-sm">
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-3.5 xs:p-4 sm:p-6">
+                    <h3 className="font-cormorant text-base xs:text-lg sm:text-2xl md:text-3xl font-bold text-white tracking-wide leading-tight drop-shadow-sm line-clamp-2">
                       {facility.title}
                     </h3>
 
                     {/* Expanded details when spreaded */}
                     {isSpread ? (
-                      <div className="mt-2">
-                        <div className="p-3 sm:p-3.5 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 max-w-xl">
-                          <p className="font-dm text-xs text-[#F7F1E5]/95 line-clamp-2 leading-relaxed">
+                      <div className="mt-1.5 sm:mt-2">
+                        <div className="p-2 xs:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl bg-white/15 backdrop-blur-md border border-white/20 max-w-xl">
+                          <p className="font-dm text-[10px] xs:text-xs text-[#F7F1E5]/95 line-clamp-2 leading-relaxed">
                             {facility.description}
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-3 mt-3">
-                          <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] font-dm">
+                        <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
+                          <span className="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[8px] xs:text-[9px] sm:text-[10px] font-dm line-clamp-1">
                             {facility.subtitle}
                           </span>
-                          <span className="text-[11px] font-dm font-bold text-[#D9C6A8] flex items-center gap-1 group-hover:text-white transition-colors">
-                            Explore Privilege ➔
+                          <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-dm font-bold text-[#D9C6A8] flex items-center gap-1 group-hover:text-white transition-colors shrink-0">
+                            Explore ➔
                           </span>
                         </div>
                       </div>
                     ) : (
                       <div className="mt-1">
-                        <span className="font-dm text-xs text-[#D9C6A8] line-clamp-1">
+                        <span className="font-dm text-[10px] xs:text-xs text-[#D9C6A8] line-clamp-1">
                           {facility.subtitle}
                         </span>
                       </div>
@@ -604,9 +651,24 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 5. ALL YATRAS CATALOG: CIRCUITS, SEARCH & FILTERS        */}
+      {/* 5. INTERACTIVE BHARAT YATRA MAP (11 SACRED PILGRIMAGES)  */}
+      {/*    (Visible on Laptop / Desktop only)                    */}
       {/* ======================================================== */}
-      <section id="catalog" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="hidden lg:block">
+        <BharatYatraMapSection
+          onSelectPlace={handleSelectPlaceFromMap}
+          onSelectYatra={setSelectedYatra}
+          onFilterCircuit={(circuit) => {
+            setSelectedCircuit(circuit);
+          }}
+        />
+      </div>
+
+      {/* ======================================================== */}
+      {/* 6. ALL YATRAS CATALOG: CIRCUITS, SEARCH & FILTERS        */}
+      {/* ======================================================== */}
+      <span id="packages-section" className="block -mt-8 pt-8 pointer-events-none" />
+      <section id="catalog" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-6">
         
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-8">
@@ -777,20 +839,27 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
               className="grid grid-rows-2 grid-flow-col auto-cols-[300px] sm:auto-cols-[340px] md:auto-cols-[380px] gap-4 sm:gap-6 overflow-x-auto scroll-smooth py-2 px-1 sm:px-2 no-scrollbar snap-x snap-mandatory"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {filteredYatras.map((yatra, idx) => (
-                <motion.div
-                  key={yatra.id}
-                  initial={{ opacity: 0, y: 35, scale: 0.93 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: false, amount: 0.05 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: Math.min((idx % 6) * 0.07 + 0.08, 0.45), 
-                    ease: [0.22, 1, 0.36, 1] 
-                  }}
-                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                  className="group relative bg-white/95 border border-[#D9C6A8] hover:border-[#B08A4A] rounded-3xl overflow-hidden shadow-[0_8px_25px_rgba(51,44,37,0.06)] hover:shadow-[0_18px_40px_rgba(51,44,37,0.14)] transition-shadow duration-300 flex flex-col justify-between snap-start w-full"
-                >
+              {filteredYatras.map((yatra, idx) => {
+                const isTargetHighlighted = highlightedPackageId === yatra.id;
+                return (
+                  <motion.div
+                    key={yatra.id}
+                    id={`package-${yatra.id}`}
+                    initial={{ opacity: 0, y: 35, scale: 0.93 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: false, amount: 0.05 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: Math.min((idx % 6) * 0.07 + 0.08, 0.45), 
+                      ease: [0.22, 1, 0.36, 1] 
+                    }}
+                    whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                    className={`group relative bg-white/95 rounded-3xl overflow-hidden transition-all duration-500 flex flex-col justify-between snap-start w-full ${
+                      isTargetHighlighted
+                        ? 'border-2 border-[#E8B84B] ring-4 ring-[#E8B84B] shadow-[0_0_35px_rgba(232,184,75,0.8)] scale-[1.02] z-30'
+                        : 'border border-[#D9C6A8] hover:border-[#B08A4A] shadow-[0_8px_25px_rgba(51,44,37,0.06)] hover:shadow-[0_18px_40px_rgba(51,44,37,0.14)]'
+                    }`}
+                  >
                   {/* Image Section */}
                   <div className="relative w-full h-44 sm:h-48 overflow-hidden bg-black/10">
                     <img
@@ -895,8 +964,9 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         )}

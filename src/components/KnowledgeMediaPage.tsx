@@ -34,8 +34,8 @@ import {
 import { HeaderActionButtons } from './HeaderActionButtons';
 import { Footer } from './Footer';
 import { MosaicGallerySection } from './MosaicGallerySection';
-import { ScrapbookConnectSection } from './ScrapbookConnectSection';
 import { InteractiveBook } from './InteractiveBook';
+import { MediaHeroLoopSection } from './MediaHeroLoopSection';
 
 interface KnowledgeMediaPageProps {
   onNavigateHome: (sectionId?: string) => void;
@@ -108,6 +108,26 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<'all' | 'video' | 'audio' | 'article'>('all');
   const [sortBy, setSortBy] = useState<'featured' | 'popular' | 'newest'>('featured');
+  
+  // Responsive 3D Interactive Book sizing
+  const [bookSize, setBookSize] = useState({ width: 340, height: 490 });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        if (window.innerWidth < 480) {
+          setBookSize({ width: 220, height: 320 });
+        } else if (window.innerWidth < 640) {
+          setBookSize({ width: 260, height: 375 });
+        } else {
+          setBookSize({ width: 340, height: 490 });
+        }
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Interactive Modals
   const [activeVideoModal, setActiveVideoModal] = useState<KnowledgeMediaItem | null>(null);
@@ -203,8 +223,8 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
     <div className="relative w-full min-h-screen bg-[#FFF8E7] text-[#1A1612] font-dm selection:bg-[#B08A4A]/20">
       
       {/* ======================================================== */}
-      {/* 1. TOP STICKY NAVIGATION BAR                            */}
-      <nav className="sticky top-0 z-40 w-full bg-[#FFF8E7]/90 backdrop-blur-md transition-all">
+      {/* 1. TOP NAVIGATION BAR                                   */}
+      <nav className="relative z-40 w-full bg-transparent transition-all">
         <div className="w-full pl-20 sm:pl-24 pr-5 sm:pr-8 lg:pr-12 h-16 sm:h-20 flex items-center justify-between">
           
           {/* Left: Brand Back to Home Button */}
@@ -234,179 +254,21 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
       </nav>
 
       {/* ======================================================== */}
-      {/* 2. HERO SECTION: EXACT FIDELITY TO USER'S REFERENCE      */}
-      {/*    Ample breathing space below heading, true coordinates  */}
-      {/*    for center oval and 4 satellite circles                */}
+      {/* 2. HERO SECTION: CONTINUOUS LOOPING DEVOTEE MARQUEE      */}
       {/* ======================================================== */}
-      <section className="relative w-full pt-6 sm:pt-8 md:pt-10 pb-8 sm:pb-12 overflow-hidden px-4 sm:px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
-        
-        {/* Soft Ambient Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[360px] bg-gradient-to-b from-[#C7833D]/8 via-[#B08A4A]/4 to-transparent blur-3xl pointer-events-none rounded-full" />
-
-        {/* --- MAIN HERO HEADLINE: Clean, elegant, light/regular weight --- */}
-        <div className="relative z-10 max-w-3xl mx-auto mb-1 sm:mb-2">
-          <h1 className="font-cormorant text-3xl sm:text-5xl md:text-[54px] lg:text-[58px] font-normal tracking-tight text-[#1A1612] leading-[1.18]">
-            Take a glance at <br />
-            <span className="inline-flex items-center gap-2 sm:gap-2.5 align-middle my-1 font-normal">
-              {/* Avatar 1: Vedic Acharya */}
-              <span className="inline-block w-8 sm:w-10 md:w-11 h-8 sm:h-10 md:h-11 rounded-full overflow-hidden border-2 border-white shadow-xs">
-                <img 
-                  src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=150&q=80" 
-                  alt="Vedic Scholar" 
-                  className="w-full h-full object-cover" 
-                />
-              </span>
-              {/* Avatar 2: Devotional Artist */}
-              <span className="inline-block w-8 sm:w-10 md:w-11 h-8 sm:h-10 md:h-11 rounded-full overflow-hidden border-2 border-white shadow-xs -ml-3 sm:-ml-3.5">
-                <img 
-                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=150&q=80" 
-                  alt="Vedic Artist" 
-                  className="w-full h-full object-cover" 
-                />
-              </span>
-              {/* Icon 3: Sleek Solid Black Circle with Play Button */}
-              <span className="inline-flex items-center justify-center w-8 sm:w-10 md:w-11 h-8 sm:h-10 md:h-11 rounded-full bg-[#1A1612] text-white shadow-xs -ml-3 sm:-ml-3.5">
-                <Play className="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-white ml-0.5" />
-              </span>
-            </span>{' '}
-            <span className="font-normal text-[#1A1612]">our sacred work.</span>
-          </h1>
-        </div>
-
-        {/* --- FLOATING VIGNETTES COMPOSITION CONTAINER (Wider Stage with Generous Satellite Spacing) --- */}
-        <div className="relative w-full max-w-[1180px] mx-auto h-[340px] sm:h-[410px] md:h-[450px] lg:h-[480px] -mt-2 sm:-mt-4 md:-mt-6 lg:-mt-8 px-2 sm:px-4 select-none">
-          
-          {/* 1. UPPER-LEFT SATELLITE: Green Harvest Bowl (Pushed further away to the left) */}
-          <div className="absolute left-[0%] sm:left-[1%] md:left-[1%] lg:left-[1%] top-[18%] sm:top-[20%] md:top-[21%] w-20 sm:w-28 md:w-34 lg:w-38 aspect-square rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-transform duration-500 hover:scale-108 z-10">
-            <img
-              src="https://images.unsplash.com/photo-1516117172878-fd2c41f4a759?auto=format&fit=crop&w=400&q=80"
-              alt="Sacred Samagri Bowl"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* 2. LOWER-LEFT SATELLITE: Golden Sunset Field (Pushed further away and downward) */}
-          <div className="absolute left-[6%] sm:left-[8%] md:left-[9%] lg:left-[10%] bottom-[1%] sm:bottom-[2%] md:bottom-[3%] w-14 sm:w-18 md:w-22 lg:w-24 aspect-square rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-[0_10px_25px_rgba(0,0,0,0.12)] transition-transform duration-500 hover:scale-108 z-10">
-            <img
-              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=300&q=80"
-              alt="Golden Dawn Yatra"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* 3. CENTRAL LARGE STADIUM/OVAL WINDOW: Living Sacred Agriculture & Ashram Seva */}
-          <div 
-            onClick={() => setActiveVideoModal(KNOWLEDGE_MEDIA_ITEMS[0])}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] sm:w-[370px] md:w-[445px] lg:w-[500px] h-[188px] sm:h-[265px] md:h-[318px] lg:h-[352px] rounded-[95px] sm:rounded-[135px] md:rounded-[160px] lg:rounded-[175px] overflow-hidden border-4 sm:border-6 border-white shadow-[0_25px_60px_rgba(26,22,18,0.16)] group cursor-pointer transition-transform duration-500 hover:scale-[1.02] z-0"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
-              alt="House of Sanatan Documentary"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            />
-            {/* Soft Ambient Vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10 group-hover:from-black/35 transition-colors" />
-
-            {/* Central Translucent Frosted Glass Play Button */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-14 sm:w-18 md:w-20 h-14 sm:h-18 md:h-20 rounded-full bg-white/75 hover:bg-white text-[#1A1612] shadow-2xl backdrop-blur-md flex items-center justify-center transition-all duration-300 group-hover:scale-112 active:scale-95">
-                <Play className="w-6 sm:w-7 md:w-8 h-6 sm:h-7 md:h-8 fill-[#1A1612] ml-1" />
-              </div>
-            </div>
-          </div>
-
-          {/* 4. UPPER-RIGHT SATELLITE: Lush Sacred Green Tulsi / Bilva Foliage (Pushed higher and further right) */}
-          <div className="absolute right-[4%] sm:right-[5%] md:right-[6%] lg:right-[7%] top-[0%] sm:top-[1%] md:top-[2%] w-16 sm:w-22 md:w-26 lg:w-28 aspect-square rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-[0_12px_30px_rgba(0,0,0,0.12)] transition-transform duration-500 hover:scale-108 z-10">
-            <img
-              src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80"
-              alt="Sacred Bilva Leaves"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* 5. LOWER-RIGHT SATELLITE: Devotional Hands Offering Consecrated Sprouts (Pushed further outward to the right) */}
-          <div className="absolute right-[0%] sm:right-[0%] md:right-[0%] lg:right-[0%] top-[44%] sm:top-[46%] md:top-[48%] w-22 sm:w-30 md:w-36 lg:w-40 aspect-square rounded-full overflow-hidden border-3 sm:border-4 border-white/95 shadow-[0_14px_35px_rgba(0,0,0,0.12)] transition-transform duration-500 hover:scale-108 z-10">
-            <img
-              src="https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=400&q=80"
-              alt="Hands Holding Consecrated Offering"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* 6. BOTTOM-RIGHT CAPSULE BUTTON: "learn more »" (Exact Reproduction of Reference Image) */}
-          <div className="absolute right-[14%] sm:right-[18%] md:right-[20%] lg:right-[22%] bottom-[0%] sm:bottom-[1%] md:bottom-[2%] z-20">
-            <button
-              type="button"
-              onClick={scrollToCatalog}
-              className="rounded-full border border-stone-300/80 bg-white/95 hover:bg-[#1A1612] text-stone-700 hover:text-white pl-4 sm:pl-5 pr-1.5 sm:pr-2 py-1.5 sm:py-2 flex items-center gap-2.5 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-md transition-all duration-300 group cursor-pointer active:scale-95"
-            >
-              <span className="font-dm text-xs sm:text-[13px] font-normal tracking-normal text-stone-600 group-hover:text-white">
-                learn more
-              </span>
-              <div className="w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-[#1A1612] group-hover:bg-white text-white group-hover:text-[#1A1612] flex items-center justify-center transition-colors">
-                <span className="text-[11px] sm:text-xs font-bold leading-none select-none">»</span>
-              </div>
-            </button>
-          </div>
-
-        </div>
-
-      </section>
+      <MediaHeroLoopSection
+        onExploreClick={() => {
+          const el = document.getElementById('mosaic-gallery');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
       {/* ======================================================== */}
       {/* 2.5 MOSAIC GALLERY HORIZONTAL SCROLL SECTION             */}
       {/* ======================================================== */}
-      <MosaicGallerySection />
-
-      {/* ======================================================== */}
-      {/* 2.7 INTERACTIVE SACRED KNOWLEDGE COMPENDIUM (3D BOOK)    */}
-      {/* ======================================================== */}
-      <section className="py-16 sm:py-24 px-4 sm:px-8 max-w-6xl mx-auto text-center relative overflow-visible">
-        
-        {/* Editorial Section Header */}
-        <div className="max-w-2xl mx-auto mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 border border-[#D9C6A8] text-[#C7833D] text-xs font-dm font-bold tracking-widest uppercase mb-3 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#B08A4A]" />
-            <span>॥ पावन ग्रन्थ ॥ &bull; SACRED YATRA COMPENDIUM</span>
-          </div>
-          
-          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#26201B] leading-tight">
-            Flip Through The Sacred Yatra Granth
-          </h2>
-
-          <p className="font-dm text-xs sm:text-sm text-[#8F6E5B] max-w-xl mx-auto mt-2.5 font-normal leading-relaxed">
-            Click anywhere on the book to turn pages through consecrated Himalayan trails, sanctum darshan protocols, and divine Vedic journeys.
-          </p>
-        </div>
-
-        {/* 3D Interactive Flipping Book Canvas */}
-        <div className="flex justify-center items-center overflow-visible">
-          <InteractiveBook
-            width={340}
-            height={490}
-            frontCover="https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop"
-            innerPages={[
-              "https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800&auto=format&fit=crop"
-            ]}
-            backCover="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800&auto=format&fit=crop"
-            borderRadius={12}
-            shadow={{
-              color: "#26201B",
-              opacity: 0.28,
-              blur: 35,
-              offsetX: 12,
-              offsetY: 18,
-              spread: 0,
-            }}
-          />
-        </div>
-
-      </section>
+      <div id="mosaic-gallery">
+        <MosaicGallerySection />
+      </div>
 
       {/* ======================================================== */}
       {/* 3. KNOWLEDGE & MEDIA EXPLORER CATALOG SECTION            */}
@@ -783,9 +645,57 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
       )}
 
       {/* ======================================================== */}
-      {/* 5.5 SCRAPBOOK CONNECT CORNER SECTION                     */}
+      {/* 5.5 FINAL SECTION: INTERACTIVE SACRED KNOWLEDGE BOOK     */}
       {/* ======================================================== */}
-      <ScrapbookConnectSection onNavigateHome={() => onNavigateHome('home')} />
+      <section className="py-16 sm:py-24 px-4 sm:px-8 max-w-6xl mx-auto text-center relative overflow-visible bg-[#FFF8E7]">
+        
+        {/* Soft Ambient Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[360px] bg-gradient-to-b from-[#C7833D]/8 via-[#B08A4A]/4 to-transparent blur-3xl pointer-events-none rounded-full" />
+
+        {/* Editorial Section Header */}
+        <div className="relative z-10 max-w-2xl mx-auto mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 border border-[#D9C6A8] text-[#C7833D] text-xs font-dm font-bold tracking-widest uppercase mb-3 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#B08A4A]" />
+            <span>॥ पावन ग्रन्थ ॥ &bull; SACRED MEDIA COMPENDIUM</span>
+          </div>
+          
+          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#26201B] leading-tight">
+            Flip Through The Sacred Sanctum
+          </h2>
+
+          <p className="font-dm text-xs sm:text-sm md:text-base text-[#8F6E5B] max-w-xl mx-auto mt-2.5 font-normal leading-relaxed">
+            Click anywhere on the book to turn pages through consecrated archives, temple hymns, and timeless Vedic wisdom.
+          </p>
+        </div>
+
+        {/* 3D Interactive Flipping Book Canvas */}
+        <div className="flex justify-center items-center overflow-visible">
+          <InteractiveBook
+            width={bookSize.width}
+            height={bookSize.height}
+            frontCover="https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop"
+            innerPages={[
+              "https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800&auto=format&fit=crop"
+            ]}
+            backCover="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800&auto=format&fit=crop"
+            borderRadius={12}
+            shadow={{
+              color: "#26201B",
+              opacity: 0.28,
+              blur: 35,
+              offsetX: 12,
+              offsetY: 18,
+              spread: 0,
+            }}
+          />
+        </div>
+
+      </section>
 
       {/* ======================================================== */}
       {/* 6. EDITORIAL LUXURY FOOTER                               */}

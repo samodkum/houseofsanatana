@@ -46,61 +46,91 @@ export const TravelProductBridge: React.FC = () => {
           style={{ y: textY }}
           className="lg:col-span-7 flex flex-col justify-center relative z-20"
         >
-          {/* Subtle Temple Architecture Line Drawing Watermark behind heading */}
-          <div className="absolute -top-12 sm:-top-20 left-1/2 -translate-x-1/2 sm:left-12 sm:translate-x-0 pointer-events-none opacity-15 sm:opacity-20 z-0 select-none">
-            <TempleArchitectureLine size={520} color="#705B4C" />
+          {/* Subtle Temple Architecture Line Drawing Watermark behind heading (Reduced size) */}
+          <div className="absolute -top-10 sm:-top-16 left-1/2 -translate-x-1/2 sm:left-8 sm:translate-x-0 pointer-events-none opacity-15 sm:opacity-20 z-0 select-none overflow-visible">
+            <TempleArchitectureLine size={320} color="#705B4C" className="w-[280px] sm:w-[380px] md:w-[460px] h-auto" />
           </div>
 
           {/* Eyebrow Label */}
-          <div className="relative z-10 inline-flex items-center gap-2 mb-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 inline-flex items-center gap-2 mb-4"
+          >
             <span className="px-3 py-1 rounded-full bg-[#8F6E5B]/10 border border-[#8F6E5B]/20 text-[#8F6E5B] text-[10px] sm:text-xs font-dm font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-[#8F6E5B]" />
               <span>॥ तीर्थात मन्दिरम् ॥ &bull; FROM YATRA TO SANCTUM</span>
             </span>
-          </div>
+          </motion.div>
 
-          {/* Main Giant Stacked Typography */}
-          <div className="relative z-10 space-y-0 tracking-tight select-none">
-            {/* LINE 1: A SANCTUM */}
-            <div className="flex items-baseline gap-3 sm:gap-4 flex-wrap">
-              <h2 className="font-cormorant font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[104px] text-[#8F6E5B] leading-[0.88] uppercase tracking-[-0.02em]">
-                A SANCTUM
-              </h2>
-            </div>
-
-            {/* LINE 2: OF SACRED */}
-            <div className="flex items-baseline gap-3 sm:gap-4 flex-wrap">
-              <h2 className="font-cormorant font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[104px] text-[#8F6E5B] leading-[0.88] uppercase tracking-[-0.02em]">
-                OF SACRED
-              </h2>
-            </div>
-
-            {/* LINE 3: OFFERINGS. */}
-            <div className="flex items-baseline gap-3 sm:gap-4 flex-wrap">
-              <h2 className="font-cormorant font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[104px] text-[#8F6E5B] leading-[0.88] uppercase tracking-[-0.02em]">
-                OFFERINGS.
-              </h2>
-            </div>
-          </div>
+          {/* Main Giant Stacked Typography with Staggered Entrance Animation */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.25 }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.12, delayChildren: 0.05 }
+              }
+            }}
+            className="relative z-10 space-y-0 tracking-tight select-none"
+          >
+            {['A SANCTUM', 'OF SACRED', 'OFFERINGS.'].map((lineText, idx) => (
+              <motion.div 
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 26, scale: 0.96 },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1,
+                    transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } 
+                  }
+                }}
+                className="flex items-baseline gap-3 sm:gap-4 flex-wrap"
+              >
+                <h2 className="font-cormorant font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[104px] text-[#8F6E5B] leading-[0.88] uppercase tracking-[-0.02em]">
+                  {lineText}
+                </h2>
+              </motion.div>
+            ))}
+          </motion.div>
 
           {/* Subtitle / Tagline in matching lowercase editorial font */}
-          <div className="relative z-10 mt-4 sm:mt-5 flex items-center gap-3">
+          <motion.div 
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 mt-4 sm:mt-5 flex items-center gap-3"
+          >
             <p className="font-dm text-sm sm:text-base md:text-lg font-medium text-[#8F6E5B]/85 tracking-tight">
               ॥ पवित्र पूजा सामग्री ॥ Handcrafted ritual essentials & temple-consecrated pooja chests.
             </p>
-          </div>
+          </motion.div>
 
           {/* Prompt to scroll to products */}
-          <div className="relative z-10 mt-5 inline-flex items-center gap-2 text-xs font-dm font-bold uppercase tracking-widest text-[#C7833D]">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 mt-5 inline-flex items-center gap-2 text-xs font-dm font-bold uppercase tracking-widest text-[#C7833D]"
+          >
             <span>Explore The Collection Below</span>
             <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* ======================================================== */}
         {/* RIGHT 5 COLS: ENLARGED ABSTRACT LOTUS PETALS MOTIF        */}
+        {/* (Visible only on desktop/laptop lg+, removed on mobile)   */}
         {/* ======================================================== */}
-        <div className="lg:col-span-5 relative flex items-center justify-end">
+        <div className="hidden lg:flex lg:col-span-5 relative items-center justify-end">
           <motion.div
             style={{ y: lotusY }}
             className="w-full flex items-center justify-end p-2 sm:p-4 translate-x-2 sm:translate-x-6 drop-shadow-[0_20px_45px_rgba(102,112,90,0.18)]"

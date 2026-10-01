@@ -17,12 +17,12 @@ export interface YatraCircuitConfig {
 }
 
 export const YATRA_CIRCUITS_CONFIG: YatraCircuitConfig[] = [
-  { id: 'all', label: 'All Expeditions', sanskrit: '॥ सर्व तीर्थानि ॥', description: 'Explore all consecrated spiritual journeys across Bharat & Kailash', count: 8 },
+  { id: 'all', label: 'All Expeditions', sanskrit: '॥ सर्व तीर्थानि ॥', description: 'Explore all consecrated spiritual journeys across Bharat & Kailash', count: 11 },
   { id: 'himalayas', label: 'Himalayan & Kailash', sanskrit: '॥ गिरिराज यात्रा ॥', description: 'Cosmic abodes of Lord Shiva, high-altitude kora & glacier snan', count: 2 },
   { id: 'chardham', label: 'Char Dham & Divine East', sanskrit: '॥ चतुर्धाम क्षेत्र ॥', description: 'Sacred coastal and mountain sanctums of Lord Vishnu & Jagannath', count: 2 },
-  { id: 'shaktipeeth', label: '51 Shakti Peethas', sanskrit: '॥ शक्ति पीठम् ॥', description: 'Awakened epicenters of the Divine Mother & Tantric energy sanctums', count: 2 },
+  { id: 'shaktipeeth', label: '51 Shakti Peethas', sanskrit: '॥ शक्ति पीठम् ॥', description: 'Awakened epicenters of the Divine Mother & Tantric energy sanctums', count: 3 },
   { id: 'braj', label: 'Braj & Rajasthan Dham', sanskrit: '॥ ब्रज मण्डल ॥', description: 'The sacred playground of Sri Radha Krishna & Khatu Shyam Naresh', count: 1 },
-  { id: 'jyotirlinga', label: '12 Jyotirlingas', sanskrit: '॥ द्वादश ज्योतिर्लिङ्ग ॥', description: 'Pillar of eternal cosmic fire darshans across Kashi & ancient shrines', count: 1 },
+  { id: 'jyotirlinga', label: '12 Jyotirlingas', sanskrit: '॥ द्वादश ज्योतिर्लिङ्ग ॥', description: 'Pillar of eternal cosmic fire darshans across Kashi, Shirdi & ancient shrines', count: 3 },
 ];
 
 export interface SacredFacility {
@@ -442,6 +442,116 @@ export const EXPANDED_TRAVEL_PACKAGES: YatraPackage[] = [
       { day: 3, title: '22 Teertham Snan & Spatika Lingam Abhishek', description: 'Early morning sacred holy bath in all 22 temple wells with priest chanting, followed by Spatika Lingam darshan.', stay: 'Daiwik Hotels Rameshwaram' },
       { day: 4, title: 'Dhanushkodi, Ram Setu & Dr. Kalam Memorial', description: 'Sunrise excursion to ghost city of Dhanushkodi and Ram Setu point. Return to Madurai for cultural evening.', stay: 'Heritage Madurai' },
       { day: 5, title: 'Alagar Kovil & Consecrated Return', description: 'Visit Vishnu Alagar Kovil in scenic hills, taste traditional Madurai prasadam, and airport drop.', stay: 'Return Journey' }
+    ]
+  },
+  {
+    id: 'shirdi-jyotirlinga-tour',
+    title: 'Shirdi & Jyotirlinga Tour',
+    subtitle: 'Sai Baba Samadhi Mandir, Trimbakeshwar Jyotirlinga & Shani Shingnapur',
+    circuit: 'jyotirlinga',
+    durationDays: 4,
+    durationNights: 3,
+    pricePerPerson: 19500,
+    rating: 4.96,
+    reviewsCount: 480,
+    image: 'https://images.unsplash.com/photo-1545232979-fbf68fe9b1af?auto=format&fit=crop&w=1000&q=80',
+    badge: 'VIP Kakad Aarti',
+    startLocation: 'Mumbai / Pune / Shirdi',
+    nextBatches: ['Oct 22, 2026', 'Nov 14, 2026', 'Dec 10, 2026', 'Jan 16, 2027'],
+    highlights: [
+      'VIP Kakad & Shej Aarti entry passes at Sai Baba Samadhi Mandir, Shirdi',
+      'Special Rudrabhishek at Trimbakeshwar Jyotirlinga (Kushaavarta Holy Snan)',
+      'Darshan at Swayambhu Shani Dev Temple at Shani Shingnapur with oil abhishek',
+      'Dwarkamai, Chavadi & Gurusthan guided meditative walks'
+    ],
+    inclusions: [
+      'VIP Shirdi & Trimbakeshwar Passes',
+      'Priest-Guided Kushaavarta Snan',
+      '5-Star Stays in Shirdi & Nashik',
+      'Satvik Maharashtrian Vegetarian Cuisine',
+      'AC Chauffeur Transport',
+      'Consecrated Sai Udi & Prasad Box'
+    ],
+    itinerary: [
+      { day: 1, title: 'Arrival & Welcome to Holy Shirdi', description: 'Pickup from Mumbai/Pune/Shirdi Airport, check-in, afternoon VIP Darshan of Sai Baba Samadhi and evening Dhoop Aarti.', stay: 'Sun-n-Sand Resort Shirdi' },
+      { day: 2, title: 'Pre-Dawn Kakad Aarti & Shani Shingnapur', description: '4:30 AM VIP Kakad Aarti entry, followed by pilgrimage drive to holy Shani Shingnapur for oil anointing.', stay: 'Sun-n-Sand Resort Shirdi' },
+      { day: 3, title: 'Shirdi to Nashik & Trimbakeshwar Jyotirlinga', description: 'Scenic morning drive to Nashik. Holy bath at Kushaavarta Kund and priority Garbhagriha Rudrabhishekam at Trimbakeshwar.', stay: 'Courtyard by Marriott Nashik' },
+      { day: 4, title: 'Panchavati, Sita Gufa & Consecrated Farewell', description: 'Visit sacred Panchavati, Kalaram temple and departure transfer with blessed Sai Udi and Prasad.', stay: 'Return Journey' }
+    ]
+  },
+  {
+    id: '12-jyotirlinga-maha-tour',
+    title: '12 Jyotirlinga Maha Tour',
+    subtitle: 'The supreme pan-India pilgrimage to Lord Shiva’s eternal pillars of light',
+    circuit: 'jyotirlinga',
+    durationDays: 14,
+    durationNights: 13,
+    pricePerPerson: 74900,
+    rating: 5.0,
+    reviewsCount: 620,
+    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1000&q=80',
+    badge: 'Maha Jyotirlinga Pass',
+    startLocation: 'Delhi / Ahmedabad / Mumbai',
+    nextBatches: ['Oct 30, 2026', 'Nov 25, 2026', 'Jan 08, 2027', 'Feb 20, 2027'],
+    highlights: [
+      'Comprehensive darshan of key Jyotirlingas: Somnath, Mahakaleshwar, Omkareshwar, Kashi, Baidyanath & Mallikarjuna',
+      'Bhasma Aarti VIP entry at Mahakaleshwar, Ujjain with traditional Solah robes',
+      'Sound & Light show at Arabian Sea shore at Somnath temple',
+      'All VIP queue skips, priest-assisted Rudrabhishekams and Ganga Jal urns'
+    ],
+    inclusions: [
+      'All Temple VIP Sugam Darshan Passes',
+      'Bhasma Aarti Pre-dawn Entry in Ujjain',
+      'Premium 4-Star & 5-Star Hotel Chain Stays',
+      'All Pure Satvik Regional Dining',
+      'Flight & Train Connections included',
+      'Vedic Scholar Acharya Companion'
+    ],
+    itinerary: [
+      { day: 1, title: 'Somnath First Jyotirlinga Darshan', description: 'Arrival in Gujarat, sunset Arabian sea Aarti at Shree Somnath Jyotirlinga.', stay: 'The Fern Somnath' },
+      { day: 2, title: 'Nageshwar & Dwarka Dham', description: 'Visit Nageshwar Jyotirlinga, Bet Dwarka island and Dwarkadhish evening Aarti.', stay: 'Dwarkadhish Lords Eco Inn' },
+      { day: 3, title: 'Ujjain Mahakaleshwar & Omkareshwar', description: 'Transit to Madhya Pradesh. Witness sacred Narmada Omkareshwar Jyotirlinga parikrama.', stay: 'Ananta Spa Ujjain' },
+      { day: 4, title: 'Bhasma Aarti at Mahakal & Kashi Transit', description: 'Sacred 3:30 AM Bhasma Aarti at Mahakaleshwar, flight transit to holy Varanasi.', stay: 'Taj Ganges Varanasi' },
+      { day: 5, title: 'Kashi Vishwanath Corridor & Ganga Aarti', description: 'VIP Rudrabhishekam inside Kashi Vishwanath Golden Temple and private bajra boat aarti.', stay: 'Taj Ganges Varanasi' },
+      { day: 6, title: 'Deoghar Baba Baidyanath Dham', description: 'Pilgrimage drive to Jharkhand for sacred Jalabhishek at Baba Baidyanath Jyotirlinga.', stay: 'Hotel Baidyanath Deoghar' },
+      { day: 7, title: 'Mallikarjuna Srisailam & Rameshwaram', description: 'Flight to Andhra Pradesh, Krishna river snan, Mallikarjuna Darshan, and onwards to Tamil Nadu.', stay: 'Grand Kakinada / Madurai' },
+      { day: 8, title: 'Consecrated Return with 12-Jyotirlinga Yantra', description: 'Grand Vedic Hawan, distribution of 12-Jyotirlinga consecrated bronze yantra, departure transfer.', stay: 'Return Journey' }
+    ]
+  },
+  {
+    id: '51-shakti-peeth-tour',
+    title: 'Shakti Peeth Yatra Tour',
+    subtitle: 'Awakened cosmic epicenters of Devi Adishakti across holy Bharat',
+    circuit: 'shaktipeeth',
+    durationDays: 11,
+    durationNights: 10,
+    pricePerPerson: 58000,
+    rating: 4.97,
+    reviewsCount: 410,
+    image: 'https://images.unsplash.com/photo-1590076215667-875d4ef2d7ee?auto=format&fit=crop&w=1000&q=80',
+    badge: 'Chandi Mahayagya',
+    startLocation: 'Kolkata / Guwahati / Jammu',
+    nextBatches: ['Oct 12, 2026', 'Nov 19, 2026', 'Jan 20, 2027', 'Feb 26, 2027'],
+    highlights: [
+      'Consecrated pilgrimage covering Kamakhya (Assam), Kalighat (Kolkata), Tarapith, Jwala Ji & Vaishno Devi',
+      'Traditional Chandi Homam & Kumari Puja performed by hereditary priests',
+      'Blessed Rakta Vastra, authentic Kamakhya Sindoor, and Mata Vaishno Devi Chunari',
+      'Dedicated helicopter transfer from Katra to Sanjichhat for Mata Vaishno Devi'
+    ],
+    inclusions: [
+      'VIP Sanctum Passes at all Shakti Peeths',
+      'Katra Helicopter Shuttles for Vaishno Devi',
+      '5-Star Stays across Kolkata, Guwahati & Katra',
+      'Satvik Bhog & Pure Desi Ghee Prasad',
+      'Dedicated Sanskrit Acharya & Chandi Pathak',
+      'All Domestic Flights & Transfers'
+    ],
+    itinerary: [
+      { day: 1, title: 'Kolkata Kalighat & Tarapith Shakti Peeth', description: 'Welcome in Kolkata, VIP Darshan at Kalighat where Sati’s right toes fell, followed by mystic Tarapith.', stay: 'The Oberoi Grand Kolkata' },
+      { day: 2, title: 'Guwahati Maa Kamakhya Nilachal Cave', description: 'Flight to Guwahati. Touch the holy sacred spring cave (Yoni Peeth) and receive consecrated Rakta Vastra.', stay: 'Vivanta Guwahati' },
+      { day: 3, title: 'Himachal Jwala Ji & Kangra Devi', description: 'Flight to Dharamshala, visit eternal blue flame at Jwala Ji (tongue of Sati) and Brajeshwari Kangra.', stay: 'Hyatt Regency Dharamshala' },
+      { day: 4, title: 'Jammu to Katra & Heli Flight to Vaishno Devi', description: 'Heli shuttle to Sanjichhat, VIP Darshan at Holy Pindi cave of Mata Vaishno Devi.', stay: 'The White Hotel Katra' },
+      { day: 5, title: 'Maha Purnahuti & Consecrated Farewell', description: 'Grand Chandi Hawan purnahuti with temple priests, blessing with sanctified Devi Chunari, and departure.', stay: 'Return Journey' }
     ]
   }
 ];

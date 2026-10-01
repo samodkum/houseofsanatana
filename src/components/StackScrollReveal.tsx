@@ -295,8 +295,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ card, transform, onAddToCart 
               {card.title}
             </h3>
 
-            {/* Pill Tags (as in reference image) */}
-            <div className="flex items-center gap-2 mb-3 flex-wrap">
+            {/* Pill Tags (Hidden on mobile < sm, visible on desktop) */}
+            <div className="hidden sm:flex items-center gap-2 mb-3 flex-wrap">
               <span className="font-dm text-[10px] sm:text-xs font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/15 border border-white/20 text-amber-200">
                 {card.category}
               </span>

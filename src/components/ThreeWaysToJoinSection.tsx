@@ -175,13 +175,130 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
         </div>
 
         {/* ======================================================== */}
-        {/* STEP-FLOW COMPONENT (Interactive Two-Column UI)           */}
+        {/* MOBILE ONLY: EXPANDING CYLINDRICAL / SQUARE ACCORDION    */}
+        {/* 3 layouts in a line: 1 full square card + 2 thin         */}
+        {/* cylindrical pills that expand to square on tap.          */}
+        {/* ======================================================== */}
+        <div className="lg:hidden w-full max-w-[500px] mx-auto flex flex-row gap-2 sm:gap-3 h-[320px] xs:h-[340px] sm:h-[360px] items-stretch">
+          {JOIN_WAYS.map((way, idx) => {
+            const isActive = idx === activeIdx;
+
+            return (
+              <motion.div
+                key={way.id}
+                layout
+                onClick={() => setActiveIdx(idx)}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 26,
+                  mass: 0.8
+                }}
+                className={`relative overflow-hidden cursor-pointer transition-all duration-300 select-none ${
+                  isActive 
+                    ? 'flex-[3.5] xs:flex-[3.8] rounded-3xl shadow-[0_16px_36px_rgba(0,0,0,0.2)]' 
+                    : 'flex-[0.75] xs:flex-[0.8] rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.1)] hover:opacity-95'
+                }`}
+                style={{
+                  backgroundColor: way.accentColor,
+                  border: `1.5px solid ${isActive ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.2)'}`,
+                }}
+              >
+                {/* INACTIVE CYLINDRICAL STATE */}
+                {!isActive && (
+                  <div className="w-full h-full flex flex-col items-center justify-between py-5 px-1 text-white">
+                    {/* Top Serial Number Pill */}
+                    <div className="w-7 h-7 rounded-full bg-black/25 backdrop-blur-xs border border-white/20 flex items-center justify-center font-dm font-bold text-[11px] text-[#F7F1E5]">
+                      {way.serialNumber}
+                    </div>
+
+                    {/* Middle Vertical Text Label */}
+                    <div className="flex-1 flex items-center justify-center my-3 overflow-hidden">
+                      <span className="font-cormorant font-bold text-xs sm:text-sm tracking-wider uppercase whitespace-nowrap -rotate-90 text-[#F7F1E5] drop-shadow-xs">
+                        {way.title.split('/')[0].trim()}
+                      </span>
+                    </div>
+
+                    {/* Bottom Icon */}
+                    <div className="w-7 h-7 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white">
+                      {way.icon}
+                    </div>
+                  </div>
+                )}
+
+                {/* ACTIVE FULL SQUARE STATE (RICH CONTEXT SQUARE) */}
+                {isActive && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="w-full h-full flex flex-col justify-between p-4 sm:p-5 relative text-white"
+                  >
+                    {/* Background Subtle Gradient & Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/35 pointer-events-none" />
+
+                    {/* Top Header Badge & Sanskrit */}
+                    <div className="flex items-center justify-between gap-1.5 z-10">
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/25 backdrop-blur-xs border border-white/20 text-[9.5px] font-dm font-bold text-[#F7F1E5] uppercase tracking-wider">
+                        <span>[{way.serialNumber}]</span>
+                        <span className="line-clamp-1">{way.badge}</span>
+                      </div>
+                      <span className="font-sanskrit text-[10.5px] font-bold text-[#D9C6A8] shrink-0">
+                        {way.sanskrit}
+                      </span>
+                    </div>
+
+                    {/* Middle Core Content: Title, Subtitle & Context Description */}
+                    <div className="my-auto space-y-1.5 z-10">
+                      <div>
+                        <h3 className="font-cormorant text-xl xs:text-2xl font-semibold leading-tight text-[#F7F1E5] uppercase">
+                          {way.title}
+                        </h3>
+                        <p className="font-cormorant text-xs text-[#D9C6A8] font-medium leading-tight">
+                          {way.subtitle}
+                        </p>
+                      </div>
+
+                      {/* Informative Context Description */}
+                      <p className="font-dm text-[11px] text-white/90 leading-relaxed font-normal line-clamp-3">
+                        {way.description}
+                      </p>
+
+                      {/* Primary highlight bullet */}
+                      <div className="pt-0.5 flex items-start gap-1.5 text-[10px] font-dm text-[#F7F1E5]/95 leading-tight">
+                        <CheckCircle2 className="w-3 h-3 text-[#D9C6A8] shrink-0 mt-0.5" />
+                        <span className="line-clamp-1">{way.highlights[0]}</span>
+                      </div>
+                    </div>
+
+                    {/* Bottom CTA Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAction(way.ctaAction);
+                      }}
+                      className="w-full py-2.5 px-3.5 rounded-xl bg-[#F7F1E5] text-[#8F6E5B] font-dm font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform z-10 shrink-0 cursor-pointer"
+                    >
+                      <span>{way.ctaText}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </motion.div>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* ======================================================== */}
+        {/* DESKTOP ONLY: STEP-FLOW TWO-COLUMN UI                     */}
         {/* Inspired by Framer Step-Flow: interactive rows + visual */}
         {/* ======================================================== */}
-        <div className="w-full max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+        <div className="hidden lg:grid w-full max-w-[1100px] mx-auto grid-cols-12 gap-8 lg:gap-14 items-center">
           
           {/* ------------------------------------------------------ */}
-          {/* LEFT COLUMN: STEP SELECTOR TEXTBOX LIST (5 Cols)       */}
+          {/* LEFT COLUMN: STEP SELECTOR TEXTBOX LIST (6 Cols)       */}
           {/* ------------------------------------------------------ */}
           <div className="lg:col-span-6 flex flex-col justify-center gap-4 relative">
             {JOIN_WAYS.map((way, idx) => {

@@ -268,9 +268,19 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
   const [inspectYatra, setInspectYatra] = useState<YatraPackage | null>(null);
   const [showAllPackagesModal, setShowAllPackagesModal] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth : 1200
+  );
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Track vertical scroll across the generous 380vh section height
+  // Track vertical scroll across the generous section height
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -278,14 +288,51 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
 
   // Smooth out the scroll progress using spring physics for relaxed, controlled pacing
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 240,
-    damping: 30,
-    mass: 0.2,
+    stiffness: 90,
+    damping: 24,
+    mass: 0.35,
     restDelta: 0.0001,
   });
 
-  // Balanced horizontal translation to glide through the 5 stops and final CTA card
-  const trackX = useTransform(smoothProgress, [0, 1], ["20px", "-1680px"]);
+  // Responsive camera-tracking translation: ensures the airplane is always visible and framed on mobile & desktop
+  const isMobileOrTablet = windowWidth < 1024;
+
+  const trackX = useTransform(smoothProgress, (p) => {
+    if (!isMobileOrTablet) {
+      // Standard desktop glide
+      return `${20 - p * 1700}px`;
+    }
+
+    // On mobile / tablet: Camera automatically follows the airplane's progress along the 2850px highway
+    // Piecewise interpolation matching busX keyframes: [60, 300, 740, 1180, 1620, 2060, 2500, 2740]
+    let curBusX = 60;
+    if (p <= 0.06) {
+      curBusX = 60 + (p / 0.06) * (300 - 60);
+    } else if (p <= 0.22) {
+      curBusX = 300 + ((p - 0.06) / (0.22 - 0.06)) * (740 - 300);
+    } else if (p <= 0.40) {
+      curBusX = 740 + ((p - 0.22) / (0.40 - 0.22)) * (1180 - 740);
+    } else if (p <= 0.58) {
+      curBusX = 1180 + ((p - 0.40) / (0.58 - 0.40)) * (1620 - 1180);
+    } else if (p <= 0.76) {
+      curBusX = 1620 + ((p - 0.58) / (0.76 - 0.58)) * (2060 - 1620);
+    } else if (p <= 0.94) {
+      curBusX = 2060 + ((p - 0.76) / (0.94 - 0.76)) * (2500 - 2060);
+    } else {
+      curBusX = 2500 + ((p - 0.94) / (1.0 - 0.94)) * (2740 - 2500);
+    }
+
+    // Desired anchor on screen for the airplane (centered around 36% - 40% of screen width)
+    const targetScreenX = Math.max(75, windowWidth * 0.38);
+    let desiredTrackX = targetScreenX - curBusX;
+
+    // Bounds limit so we don't over-shift before beginning or beyond the end
+    const minTrackX = windowWidth - 2850;
+    if (desiredTrackX > 20) desiredTrackX = 20;
+    if (desiredTrackX < minTrackX) desiredTrackX = minTrackX;
+
+    return `${desiredTrackX}px`;
+  });
 
   // Bus X translation along the curvy highway track directly visiting each card's point & final CTA
   const busX = useTransform(
@@ -657,7 +704,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
       {/* ======================================================== */}
       <div
         ref={containerRef}
-        className="relative w-full h-[380vh] transition-colors duration-1000 ease-out"
+        className="relative w-full h-[540vh] sm:h-[460vh] md:h-[400vh] lg:h-[380vh] transition-colors duration-1000 ease-out"
         style={{ backgroundColor: currentStageConfig.hex }}
       >
         {/* Sticky Viewport locks on screen for horizontal travel */}

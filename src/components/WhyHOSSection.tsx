@@ -242,6 +242,63 @@ const PILLARS: PillarCard[] = [
   }
 ];
 
+{/* Reusable Rotating Circular Vedic Sanctum Lotus Seal */}
+const VedicSanctumSeal = ({ className = "w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32" }: { className?: string }) => (
+  <motion.div 
+    initial={{ scale: 0 }}
+    whileInView={{ scale: 1 }}
+    viewport={{ once: false, amount: 0.15 }}
+    transition={{ type: "spring", stiffness: 280, damping: 18, delay: 0.2 }}
+    className="relative inline-block cursor-pointer group z-20 shrink-0"
+  >
+    <div className={`relative ${className} drop-shadow-xl transition-transform duration-300 group-hover:scale-108`}>
+      {/* 1. Rotating Outer Text Ring ONLY */}
+      <motion.svg
+        animate={{ rotate: 360 }}
+        transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
+        viewBox="0 0 200 200"
+        className="absolute inset-0 w-full h-full select-none overflow-visible pointer-events-none"
+      >
+        <defs>
+          <path
+            id="vedicSanctumCirclePath"
+            d="M 100,100 m -84,0 a 84,84 0 1,1 168,0 a 84,84 0 1,1 -168,0"
+          />
+        </defs>
+        <text
+          fill="#A87C3A"
+          className="font-dm font-bold text-[10.5px] uppercase tracking-[0.22em]"
+        >
+          <textPath
+            href="#vedicSanctumCirclePath"
+            startOffset="0%"
+          >
+            • VEDIC SANCTUM • VEDIC SANCTUM • VEDIC SANCTUM • VEDIC SANCTUM • VEDIC SANCTUM
+          </textPath>
+        </text>
+      </motion.svg>
+
+      {/* 2. Static Inner Medallion & Lotus (Completely Stable) */}
+      <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full select-none">
+        <circle cx="100" cy="100" r="69" fill="#B08A4A" />
+        <g fill="#F7F1E5" transform="translate(100, 100) scale(0.68) translate(-100, -100)">
+          <path d="M 100,42 C 116,68 120,96 100,122 C 80,96 84,68 100,42 Z" />
+          <path d="M 100,58 C 109,75 111,94 100,108 C 89,94 91,75 100,58 Z" fill="#B08A4A" />
+          <path d="M 100,122 C 82,108 72,82 81,58 C 92,72 98,96 100,122 Z" />
+          <path d="M 100,122 C 118,108 128,82 119,58 C 108,72 102,96 100,122 Z" />
+          <path d="M 100,122 C 72,116 54,92 60,68 C 76,82 88,104 100,122 Z" />
+          <path d="M 100,122 C 128,116 146,92 140,68 C 124,82 112,104 100,122 Z" />
+          <path d="M 100,122 C 64,124 40,102 44,84 C 64,96 82,112 100,122 Z" />
+          <path d="M 100,122 C 136,124 160,102 156,84 C 136,96 118,112 100,122 Z" />
+          <path d="M 100,146 C 90,132 93,122 100,122 C 107,122 110,132 100,146 Z" />
+          <path d="M 100,122 C 86,132 72,138 64,136 C 72,126 86,122 100,122 Z" />
+          <path d="M 100,122 C 114,132 128,138 136,136 C 128,126 114,122 100,122 Z" />
+        </g>
+      </svg>
+    </div>
+  </motion.div>
+);
+
 export const WhyHOSSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activePillar, setActivePillar] = useState<PillarCard>(PILLARS[0]);
@@ -337,126 +394,79 @@ export const WhyHOSSection: React.FC = () => {
 
           {/* Main Giant Chunky Typography Hero Block */}
           <div className="relative inline-block w-full">
-            {/* Elegant Loopy Cursive Line-Art Script (Animated SVG Flourish) */}
-            <div className="absolute -top-10 sm:-top-16 left-1/3 sm:left-2/5 w-44 sm:w-72 md:w-96 h-28 sm:h-44 md:h-52 pointer-events-none z-20">
-              <svg viewBox="0 0 320 160" fill="none" className="w-full h-full text-[#66705A]/40 sm:text-[#66705A]/50">
-                <motion.path
-                  d="M 30,120 C 70,10 130,-10 180,45 C 225,95 110,150 75,100 C 40,50 145,10 235,30 C 285,42 305,90 270,135"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 1 }}
-                  viewport={{ once: false, amount: 0.25 }}
-                  transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-                />
-              </svg>
-            </div>
-
             {/* Giant Chunky Stacked Heading */}
             <div className="relative z-10 select-none pb-2">
-              {/* Line 1: WHY CHOOSE */}
-              <div className="overflow-visible py-0.5">
+
+              {/* MOBILE 3-LINE HEADING (sm:hidden) */}
+              <div className="sm:hidden flex flex-col space-y-1">
+                {/* Line 1: WHY CHOOSE */}
                 <motion.h2 
                   initial={{ y: 24, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: false, amount: 0.15 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-cormorant text-[11vw] sm:text-[9.5vw] md:text-[8vw] lg:text-[108px] xl:text-[124px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase"
+                  className="font-cormorant text-[11.5vw] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase"
                 >
                   WHY CHOOSE
                 </motion.h2>
-              </div>
 
-              {/* Line 2: HOUSE OF SANATANA? + Starburst Badge */}
-              <div className="overflow-visible flex items-baseline flex-wrap relative py-0.5">
+                {/* Line 2: HOUSE OF */}
                 <motion.h2 
                   initial={{ y: 24, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: false, amount: 0.15 }}
-                  transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-cormorant text-[11vw] sm:text-[9.5vw] md:text-[8vw] lg:text-[108px] xl:text-[124px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase inline-flex items-baseline"
+                  transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+                  className="font-cormorant text-[11.5vw] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase"
                 >
-                  <span>HOUSE OF SANATANA</span>
-                  <span className="text-[#8F6E5B]">?</span>
+                  HOUSE OF
                 </motion.h2>
 
-                {/* Circular Vedic Sanctum Lotus Seal - Rotating Text Only */}
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: false, amount: 0.15 }}
-                  transition={{ type: "spring", stiffness: 280, damping: 18, delay: 0.2 }}
-                  className="relative ml-2 sm:ml-4 md:ml-6 -mt-3 sm:-mt-6 md:-mt-10 inline-block cursor-pointer group z-20 shrink-0"
-                >
-                  <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-38 md:h-38 drop-shadow-xl transition-transform duration-300 group-hover:scale-108">
-                    
-                    {/* 1. Rotating Outer Text Ring ONLY */}
-                    <motion.svg
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
-                      viewBox="0 0 200 200"
-                      className="absolute inset-0 w-full h-full select-none overflow-visible pointer-events-none"
-                    >
-                      <defs>
-                        {/* Circular text path centered at 100,100 with radius 84 */}
-                        <path
-                          id="vedicSanctumCirclePath"
-                          d="M 100,100 m -84,0 a 84,84 0 1,1 168,0 a 84,84 0 1,1 -168,0"
-                        />
-                      </defs>
-
-                      {/* Circular Rotating Text (5 instances of • VEDIC SANCTUM) */}
-                      <text
-                        fill="#A87C3A"
-                        className="font-dm font-bold text-[10.5px] uppercase tracking-[0.22em]"
-                      >
-                        <textPath
-                          href="#vedicSanctumCirclePath"
-                          startOffset="0%"
-                        >
-                          • VEDIC SANCTUM • VEDIC SANCTUM • VEDIC SANCTUM • VEDIC SANCTUM • VEDIC SANCTUM
-                        </textPath>
-                      </text>
-                    </motion.svg>
-
-                    {/* 2. Static Inner Medallion & Lotus (Completely Stable) */}
-                    <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full select-none">
-                      {/* Inner Solid Gold/Bronze Medallion */}
-                      <circle cx="100" cy="100" r="69" fill="#B08A4A" />
-
-                      {/* Sacred Lotus Flower Icon (Centered Cream/Ivory Lotus) */}
-                      <g fill="#F7F1E5" transform="translate(100, 100) scale(0.68) translate(-100, -100)">
-                        {/* Central Lotus Main Body */}
-                        <path d="M 100,42 C 116,68 120,96 100,122 C 80,96 84,68 100,42 Z" />
-                        {/* Inner Cutout on Center Petal */}
-                        <path d="M 100,58 C 109,75 111,94 100,108 C 89,94 91,75 100,58 Z" fill="#B08A4A" />
-
-                        {/* Inner Flanking Petals (Left & Right) */}
-                        <path d="M 100,122 C 82,108 72,82 81,58 C 92,72 98,96 100,122 Z" />
-                        <path d="M 100,122 C 118,108 128,82 119,58 C 108,72 102,96 100,122 Z" />
-
-                        {/* Outer Flanking Petals */}
-                        <path d="M 100,122 C 72,116 54,92 60,68 C 76,82 88,104 100,122 Z" />
-                        <path d="M 100,122 C 128,116 146,92 140,68 C 124,82 112,104 100,122 Z" />
-
-                        {/* Side Horizontal Spread Petals */}
-                        <path d="M 100,122 C 64,124 40,102 44,84 C 64,96 82,112 100,122 Z" />
-                        <path d="M 100,122 C 136,124 160,102 156,84 C 136,96 118,112 100,122 Z" />
-
-                        {/* Base Lower Calyx Leaf (Downward Pointing) */}
-                        <path d="M 100,146 C 90,132 93,122 100,122 C 107,122 110,132 100,146 Z" />
-
-                        {/* Base Side Leaves */}
-                        <path d="M 100,122 C 86,132 72,138 64,136 C 72,126 86,122 100,122 Z" />
-                        <path d="M 100,122 C 114,132 128,138 136,136 C 128,126 114,122 100,122 Z" />
-                      </g>
-                    </svg>
-
-                  </div>
-                </motion.div>
+                {/* Line 3: SANATANA? + Circular Seal */}
+                <div className="flex items-center gap-3">
+                  <motion.h2 
+                    initial={{ y: 24, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: false, amount: 0.15 }}
+                    transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-cormorant text-[11.5vw] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase shrink-0"
+                  >
+                    SANATANA?
+                  </motion.h2>
+                  <VedicSanctumSeal className="w-14 h-14" />
+                </div>
               </div>
+
+              {/* DESKTOP / TABLET 2-LINE HEADING (hidden sm:block) */}
+              <div className="hidden sm:block">
+                {/* Line 1: WHY CHOOSE */}
+                <div className="overflow-visible py-0.5">
+                  <motion.h2 
+                    initial={{ y: 24, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: false, amount: 0.15 }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-cormorant sm:text-[7vw] md:text-[6vw] lg:text-[76px] xl:text-[90px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.95] uppercase"
+                  >
+                    WHY CHOOSE
+                  </motion.h2>
+                </div>
+
+                {/* Line 2: HOUSE OF SANATANA? + Circular Vedic Seal */}
+                <div className="overflow-visible flex items-center flex-wrap lg:flex-nowrap gap-3 sm:gap-5 py-0.5">
+                  <motion.h2 
+                    initial={{ y: 24, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: false, amount: 0.15 }}
+                    transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-cormorant sm:text-[7vw] md:text-[6vw] lg:text-[76px] xl:text-[90px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.95] uppercase shrink-0"
+                  >
+                    HOUSE OF SANATANA?
+                  </motion.h2>
+
+                  <VedicSanctumSeal />
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -466,12 +476,12 @@ export const WhyHOSSection: React.FC = () => {
         {/* Left: Giant Typography Watermark + Tilted Cards Cluster  */}
         {/* Right: Featured Pillar Details & Scripture Overview       */}
         {/* ======================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 items-center min-h-[580px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 items-center min-h-[440px] lg:min-h-[580px]">
           
           {/* ====================================================== */}
           {/* LEFT 7 COLS: GIANT WATERMARK TEXT & TILTED CARDS       */}
           {/* ====================================================== */}
-          <div className="lg:col-span-7 relative flex items-center justify-center min-h-[460px] sm:min-h-[520px]">
+          <div className="lg:col-span-7 relative flex items-center justify-center min-h-[440px] sm:min-h-[520px]">
             
             {/* GIANT BACKGROUND TYPOGRAPHY WATERMARK */}
             <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none select-none overflow-hidden">
@@ -487,20 +497,22 @@ export const WhyHOSSection: React.FC = () => {
             </div>
 
             {/* CLUSTER OF TILTED SERVICE CARDS IN AUTHENTIC BRAND HUES */}
-            <div className="relative w-full max-w-[580px] h-[440px] sm:h-[480px] flex items-center justify-center">
+            <div className="relative w-full max-w-[580px] h-[430px] sm:h-[480px] flex items-center justify-center">
               {PILLARS.map((pillar, index) => {
                 const isHovered = hoveredCardId === pillar.id;
                 const isSelected = activePillar.id === pillar.id;
                 const style = pillar.cardStyle;
                 const isWaterBlue = pillar.brandColor.id === 'water-blue';
 
-                // Staggered positioning matching Framer video
-                const offsets = [
-                  { left: '4%', top: '6%', zIndex: 10 },
-                  { left: '26%', top: '38%', zIndex: 12 },
-                  { left: '48%', top: '10%', zIndex: 14 },
-                  { left: '62%', top: '44%', zIndex: 16 },
+                // Responsive positioning: tighter cluster on mobile so all cards stay in-screen, standard layout on desktop
+                const positionClasses = [
+                  'left-[0%] sm:left-[4%] top-[4%] sm:top-[6%]',
+                  'left-[10%] sm:left-[26%] top-[38%] sm:top-[38%]',
+                  'left-[28%] sm:left-[48%] top-[6%] sm:top-[10%]',
+                  'left-[38%] sm:left-[62%] top-[44%] sm:top-[44%]',
                 ][index];
+
+                const baseZIndex = [10, 12, 14, 16][index];
 
                 return (
                   <motion.div
@@ -518,7 +530,7 @@ export const WhyHOSSection: React.FC = () => {
                     animate={{
                       rotate: isHovered ? 0 : pillar.initialRotate,
                       scale: isHovered ? 1.08 : isSelected ? 1.03 : 1,
-                      zIndex: isHovered ? 30 : isSelected ? 22 : offsets.zIndex,
+                      zIndex: isHovered ? 30 : isSelected ? 22 : baseZIndex,
                     }}
                     transition={{
                       type: 'spring',
@@ -526,33 +538,28 @@ export const WhyHOSSection: React.FC = () => {
                       damping: 24,
                       mass: 0.6
                     }}
-                    style={{
-                      position: 'absolute',
-                      left: offsets.left,
-                      top: offsets.top,
-                    }}
-                    className={`w-[210px] sm:w-[240px] p-5 sm:p-6 rounded-2xl cursor-pointer select-none transition-shadow duration-300 border ${style.bg} ${style.border} ${
+                    className={`absolute ${positionClasses} w-[180px] sm:w-[240px] p-4 sm:p-6 rounded-2xl cursor-pointer select-none transition-shadow duration-300 border ${style.bg} ${style.border} ${
                       isSelected || isHovered
                         ? `${style.glow} ring-2 ring-[#B08A4A]`
                         : 'shadow-[0_12px_28px_rgba(34,21,8,0.18)]'
                     }`}
                   >
                     {/* Top Description */}
-                    <p className={`font-dm text-[11px] sm:text-xs ${style.descText} leading-relaxed mb-6 line-clamp-3 font-normal`}>
+                    <p className={`font-dm text-[10.5px] sm:text-xs ${style.descText} leading-relaxed mb-4 sm:mb-6 line-clamp-3 font-normal`}>
                       {pillar.description}
                     </p>
 
                     {/* Bottom Title & Serial Bracket (e.g. [ 01 ] Thoughtful Planning) */}
-                    <div className="pt-3 border-t border-white/20 flex flex-col gap-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-dm font-bold text-xs text-[#F7F1E5]">
+                    <div className="pt-2.5 sm:pt-3 border-t border-white/20 flex flex-col gap-0.5 sm:gap-1">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <span className="font-dm font-bold text-[11px] sm:text-xs text-[#F7F1E5]">
                           [{pillar.number}]
                         </span>
-                        <h4 className={`font-cormorant text-sm sm:text-base font-semibold ${style.text} tracking-wide leading-tight`}>
+                        <h4 className={`font-cormorant text-xs sm:text-base font-semibold ${style.text} tracking-wide leading-tight`}>
                           {pillar.title}
                         </h4>
                       </div>
-                      <span className="font-sanskrit text-[10px] text-[#D9C6A8] font-semibold">
+                      <span className="font-sanskrit text-[9px] sm:text-[10px] text-[#D9C6A8] font-semibold">
                         {pillar.sanskrit}
                       </span>
                     </div>
@@ -572,7 +579,7 @@ export const WhyHOSSection: React.FC = () => {
           {/* RIGHT 5 COLS: FEATURED SHOWCASE PANEL                   */}
           {/* Dynamically reflects active pillar's exact brand color  */}
           {/* ====================================================== */}
-          <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-6">
+          <div className="hidden lg:flex lg:col-span-5 flex-col justify-between h-full space-y-6">
             
             {/* Top Section Descriptive Note */}
             <div className="space-y-3">

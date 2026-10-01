@@ -278,7 +278,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
       {/* ======================================================== */}
       {/* 2. HERO SECTION: THE THREE WAYS TO JOIN HOUSE OF SANATAN */}
       {/* ======================================================== */}
-      <section className="relative w-full pt-16 sm:pt-22 pb-16 sm:pb-24 overflow-hidden bg-gradient-to-b from-[#F7F1E5] via-[#EFE6D5] to-[#F7F1E5]">
+      <section className="relative w-full pt-10 sm:pt-22 pb-10 sm:pb-24 overflow-hidden bg-gradient-to-b from-[#F7F1E5] via-[#EFE6D5] to-[#F7F1E5]">
         
         {/* Subtle Sacred Geometry Watermark Background */}
         <div 
@@ -304,9 +304,9 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#66705A]/10 border border-[#66705A]/25 text-[#3E4734] text-xs font-dm font-semibold mb-6 shadow-xs"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#66705A]/10 border border-[#66705A]/25 text-[#3E4734] text-[10px] sm:text-xs font-dm font-semibold mb-3.5 sm:mb-6 shadow-xs"
           >
-            <span className="w-2 h-2 rounded-full bg-[#66705A] shadow-[0_0_8px_rgba(102,112,90,0.6)] animate-pulse" />
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#66705A] shadow-[0_0_8px_rgba(102,112,90,0.6)] animate-pulse" />
             <span className="tracking-widest uppercase">॥ सङ्घ प्रवेशम् ॥ JOIN HOUSE OF SANATAN</span>
           </motion.div>
 
@@ -315,11 +315,11 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-dm text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-normal text-[#1A1612] tracking-tight leading-[1.16] max-w-5xl mx-auto"
+            className="font-dm text-2xl xs:text-3xl sm:text-6xl md:text-7xl lg:text-[76px] font-normal text-[#1A1612] tracking-tight leading-[1.16] max-w-5xl mx-auto"
           >
             <span className="block font-light text-[#1A1612]">Reimagining Sacred Living</span>
-            <span className="inline-flex items-center gap-2 sm:gap-4 flex-wrap justify-center mt-2 sm:mt-3">
-              <span className="inline-block px-5 sm:px-8 py-1 sm:py-2.5 rounded-full bg-[#E3EBDC] text-[#22351D] font-medium text-3xl sm:text-5xl md:text-6xl lg:text-[68px] leading-none shadow-xs border border-[#C5D9BA]">
+            <span className="inline-flex items-center gap-1.5 sm:gap-4 flex-wrap justify-center mt-1 sm:mt-3">
+              <span className="inline-block px-3.5 sm:px-8 py-0.5 sm:py-2.5 rounded-full bg-[#E3EBDC] text-[#22351D] font-medium text-xl xs:text-2xl sm:text-5xl md:text-6xl lg:text-[68px] leading-none shadow-xs border border-[#C5D9BA]">
                 Sanatana
               </span>
               <span className="text-[#1A1612] font-light">for the Modern World</span>
@@ -331,7 +331,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 sm:mt-7 font-dm text-base sm:text-lg md:text-xl text-[#6B5A4E] font-normal leading-relaxed max-w-3xl mx-auto"
+            className="mt-3 sm:mt-7 font-dm text-xs sm:text-lg md:text-xl text-[#6B5A4E] font-normal leading-relaxed max-w-3xl mx-auto"
           >
             Enter our sacred ecosystem — whether you are a devotee seeking daily family sadhana, an accredited temple trust forging dharmic alliances, or a filmmaker creating consecrated media for millions.
           </motion.p>
@@ -341,7 +341,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="mt-7 sm:mt-8 flex justify-center"
+            className="mt-4 sm:mt-8 flex justify-center"
           >
             <button
               type="button"
@@ -349,11 +349,11 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                 const el = document.getElementById('join-three-ways-matrix');
                 el?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="group inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 rounded-full bg-[#1A1612] hover:bg-[#2C241D] text-white font-dm font-bold text-xs sm:text-sm tracking-wide shadow-[0_12px_28px_rgba(0,0,0,0.18)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.25)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer border border-[#D9C6A8]/40"
+              className="group inline-flex items-center gap-2 sm:gap-3 pl-4 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#1A1612] hover:bg-[#2C241D] text-white font-dm font-bold text-[11px] sm:text-sm tracking-wide shadow-[0_12px_28px_rgba(0,0,0,0.18)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.25)] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer border border-[#D9C6A8]/40"
             >
               <span>Choose Your Pathway</span>
-              <span className="w-8 h-8 rounded-full bg-white/10 text-[#D9C6A8] flex items-center justify-center shadow-xs group-hover:translate-x-0.5 transition-transform">
-                <SunIcon className="w-4 h-4 text-[#D9C6A8]" />
+              <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/10 text-[#D9C6A8] flex items-center justify-center shadow-xs group-hover:translate-x-0.5 transition-transform">
+                <SunIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9C6A8]" />
               </span>
             </button>
           </motion.div>
@@ -383,12 +383,10 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
             };
 
             return (
-              <div className="mt-10 sm:mt-14 max-w-6xl mx-auto w-full text-left">
+              <div className="mt-6 sm:mt-14 max-w-6xl mx-auto w-full text-left">
                 
-
-
                 {/* 2. CENTER STAGE: FLANKING MONUMENTAL TEXT + TILTED CARD */}
-                <div className="relative w-full min-h-[460px] sm:min-h-[520px] md:min-h-[560px] flex items-center justify-center">
+                <div className="relative w-full min-h-[300px] xs:min-h-[340px] sm:min-h-[520px] md:min-h-[560px] flex items-center justify-center">
 
                   {/* LEFT FLANKING MONUMENTAL TYPOGRAPHY */}
                   <div className="absolute left-0 sm:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-0 pointer-events-none flex flex-col items-start leading-[0.95]">
@@ -397,7 +395,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.45 }}
-                      className="font-dm text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-light text-[#8F987D] tracking-tight block"
+                      className="font-dm text-xl xs:text-2xl sm:text-6xl md:text-7xl lg:text-[84px] font-light text-[#8F987D] tracking-tight block"
                     >
                       {activeSlide.leftWords.accent}
                     </motion.span>
@@ -407,7 +405,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: 0.05 }}
-                      className="font-dm text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-bold text-[#1A1612] tracking-tight block"
+                      className="font-dm text-xl xs:text-2xl sm:text-6xl md:text-7xl lg:text-[84px] font-bold text-[#1A1612] tracking-tight block"
                     >
                       {activeSlide.leftWords.bold1}
                     </motion.span>
@@ -417,7 +415,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.55, delay: 0.1 }}
-                      className="font-dm text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-bold text-[#1A1612] tracking-tight block"
+                      className="font-dm text-xl xs:text-2xl sm:text-6xl md:text-7xl lg:text-[84px] font-bold text-[#1A1612] tracking-tight block"
                     >
                       {activeSlide.leftWords.bold2}
                     </motion.span>
@@ -430,7 +428,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.45 }}
-                      className="font-dm text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-light text-[#8F987D] tracking-tight block"
+                      className="font-dm text-xl xs:text-2xl sm:text-6xl md:text-7xl lg:text-[84px] font-light text-[#8F987D] tracking-tight block"
                     >
                       {activeSlide.rightWords.line1}
                     </motion.span>
@@ -440,7 +438,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: 0.05 }}
-                      className="font-dm text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-light text-[#8F987D] tracking-tight block"
+                      className="font-dm text-xl xs:text-2xl sm:text-6xl md:text-7xl lg:text-[84px] font-light text-[#8F987D] tracking-tight block"
                     >
                       {activeSlide.rightWords.line2}
                     </motion.span>
@@ -461,7 +459,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                           const el = document.getElementById('join-three-ways-matrix');
                           el?.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="relative w-[270px] sm:w-[320px] md:w-[360px] h-[370px] sm:h-[440px] md:h-[480px] shadow-[0_30px_70px_rgba(0,0,0,0.22)] cursor-pointer group select-none transition-shadow"
+                        className="relative w-[210px] xs:w-[230px] sm:w-[320px] md:w-[360px] h-[280px] xs:h-[310px] sm:h-[440px] md:h-[480px] shadow-[0_20px_50px_rgba(0,0,0,0.2)] cursor-pointer group select-none transition-shadow"
                         style={{
                           clipPath: 'url(#tabbedCardNotchClipJoin)',
                           WebkitClipPath: 'url(#tabbedCardNotchClipJoin)'
@@ -478,17 +476,17 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
 
                         {/* FLOATING FROSTED GLASS BADGE */}
-                        <div className="absolute bottom-9 left-5 right-5 p-3 sm:p-3.5 rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white shadow-lg pointer-events-none text-left">
-                          <h4 className="font-dm font-bold text-sm sm:text-base leading-tight text-white/95">
+                        <div className="absolute bottom-7 sm:bottom-9 left-3.5 sm:left-5 right-3.5 sm:right-5 p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white shadow-lg pointer-events-none text-left">
+                          <h4 className="font-dm font-bold text-xs sm:text-base leading-tight text-white/95">
                             {activeSlide.badgeName}
                           </h4>
-                          <p className="font-dm text-[11px] sm:text-xs text-[#D9C6A8] font-medium mt-0.5 leading-snug">
+                          <p className="font-dm text-[10px] sm:text-xs text-[#D9C6A8] font-medium mt-0.5 leading-snug">
                             {activeSlide.badgeRole}
                           </p>
                         </div>
 
                         {/* Carousel Pagination Dots inside the card at bottom */}
-                        <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-1.5 pointer-events-auto">
+                        <div className="absolute bottom-2 sm:bottom-3 left-0 right-0 flex items-center justify-center gap-1.5 pointer-events-auto">
                           {(['join-hos', 'partnership', 'co-creator'] as MainJoinWay[]).map((wayId, dotIdx) => (
                             <button
                               key={wayId}
@@ -500,8 +498,8 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                               aria-label={`Go to slide ${dotIdx + 1}`}
                               className={`transition-all duration-300 rounded-full cursor-pointer ${
                                 wayId === activeWay 
-                                  ? 'w-4 h-1.5 bg-white shadow-xs' 
-                                  : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/70'
+                                  ? 'w-3.5 sm:w-4 h-1 sm:h-1.5 bg-white shadow-xs' 
+                                  : 'w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/40 hover:bg-white/70'
                               }`}
                             />
                           ))}
@@ -514,9 +512,9 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                         type="button"
                         onClick={handlePrevSlide}
                         aria-label="Previous pathway"
-                        className="absolute -left-5 sm:-left-12 bottom-6 sm:bottom-10 w-11 h-11 sm:w-13 sm:h-13 rounded-full border border-stone-300/80 bg-white/95 backdrop-blur-sm hover:bg-white text-stone-800 flex items-center justify-center shadow-[0_6px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer z-20"
+                        className="absolute -left-3 sm:-left-12 bottom-4 sm:bottom-10 w-9 h-9 sm:w-13 sm:h-13 rounded-full border border-stone-300/80 bg-white/95 backdrop-blur-sm hover:bg-white text-stone-800 flex items-center justify-center shadow-[0_6px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer z-20"
                       >
-                        <ChevronLeft className="w-5 h-5 text-stone-800" />
+                        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-stone-800" />
                       </button>
 
                       {/* Next Button (>) floating to the right of the tilted card */}
@@ -524,9 +522,9 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                         type="button"
                         onClick={handleNextSlide}
                         aria-label="Next pathway"
-                        className="absolute -right-5 sm:-right-12 bottom-6 sm:bottom-10 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#1A1612] hover:bg-[#2C241D] text-white flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.22)] active:scale-95 transition-all cursor-pointer z-20"
+                        className="absolute -right-3 sm:-right-12 bottom-4 sm:bottom-10 w-9 h-9 sm:w-13 sm:h-13 rounded-full bg-[#1A1612] hover:bg-[#2C241D] text-white flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.22)] active:scale-95 transition-all cursor-pointer z-20"
                       >
-                        <ChevronRight className="w-5 h-5 text-white" />
+                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       </button>
 
                     </div>
@@ -536,17 +534,17 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
                 </div>
 
                 {/* 3. BOTTOM ACTION CTA BUTTON */}
-                <div className="mt-8 sm:mt-10 flex flex-col items-center gap-3">
+                <div className="mt-5 sm:mt-10 flex flex-col items-center gap-3">
                   <button
                     type="button"
                     onClick={() => {
                       const el = document.getElementById('join-three-ways-matrix');
                       el?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="py-3 px-7 rounded-2xl bg-[#1A1612] hover:bg-[#2C241D] text-white font-dm font-bold text-xs uppercase tracking-wider flex items-center gap-2.5 shadow-lg transition-all hover:scale-[1.02] active:scale-95 cursor-pointer border border-[#D9C6A8]/40"
+                    className="py-2.5 sm:py-3 px-5 sm:px-7 rounded-xl sm:rounded-2xl bg-[#1A1612] hover:bg-[#2C241D] text-white font-dm font-bold text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-all hover:scale-[1.02] active:scale-95 cursor-pointer border border-[#D9C6A8]/40"
                   >
                     <span>Open {activeSlide.cardTitle} Form</span>
-                    <ArrowRight className="w-4 h-4 text-[#D9C6A8]" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9C6A8]" />
                   </button>
                 </div>
 
@@ -560,50 +558,53 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
       {/* ======================================================== */}
       {/* 3. INTERACTIVE 3-WAY HUB & WORKFLOW SECTION               */}
       {/* ======================================================== */}
-      <section id="join-three-ways-matrix" className="relative w-full py-16 sm:py-24 bg-[#F7F1E5] border-t border-[#D9C6A8]/60">
+      <section id="join-three-ways-matrix" className="relative w-full py-10 sm:py-24 bg-[#F7F1E5] border-t border-[#D9C6A8]/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Main 3-Tab Header Switcher */}
-          <div className="flex items-center justify-center mb-12 sm:mb-16">
-            <div className="inline-flex p-1.5 rounded-3xl bg-white border border-[#D9C6A8] shadow-sm max-w-full overflow-x-auto">
+          <div className="flex items-center justify-center mb-8 sm:mb-16">
+            <div className="inline-flex p-1 sm:p-1.5 rounded-2xl sm:rounded-3xl bg-white border-2 border-[#8F6E5B]/30 sm:border-[#D9C6A8] shadow-[0_8px_24px_rgba(51,44,37,0.1)] max-w-full overflow-x-auto">
               
               <button
                 type="button"
                 onClick={() => setActiveWay('join-hos')}
-                className={`py-3 px-5 sm:px-7 rounded-2xl font-dm text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
+                className={`py-2 px-3 xs:px-3.5 sm:py-3 sm:px-7 rounded-xl sm:rounded-2xl font-dm text-[11px] sm:text-sm font-extrabold uppercase tracking-tight sm:tracking-wider flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer whitespace-nowrap ${
                   activeWay === 'join-hos'
-                    ? 'bg-[#C7833D] text-white shadow-md'
-                    : 'text-[#8F6E5B] hover:bg-[#F7F1E5]'
+                    ? 'bg-[#C7833D] text-white shadow-[0_4px_14px_rgba(199,131,61,0.4)] border border-white/30 scale-[1.02]'
+                    : 'text-[#5C4535] hover:bg-[#F7F1E5] font-bold'
                 }`}
               >
-                <HeartHandshake className="w-4 h-4" />
-                <span>1. Join HOS (Family & Seekers)</span>
+                <HeartHandshake className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 stroke-[2.5]" />
+                <span className="sm:hidden">1. Join HOS</span>
+                <span className="hidden sm:inline">1. Join HOS (Family & Seekers)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveWay('partnership')}
-                className={`py-3 px-5 sm:px-7 rounded-2xl font-dm text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
+                className={`py-2 px-3 xs:px-3.5 sm:py-3 sm:px-7 rounded-xl sm:rounded-2xl font-dm text-[11px] sm:text-sm font-extrabold uppercase tracking-tight sm:tracking-wider flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer whitespace-nowrap ${
                   activeWay === 'partnership'
-                    ? 'bg-[#66705A] text-white shadow-md'
-                    : 'text-[#8F6E5B] hover:bg-[#F7F1E5]'
+                    ? 'bg-[#556346] text-white shadow-[0_4px_14px_rgba(85,99,70,0.4)] border border-white/30 scale-[1.02]'
+                    : 'text-[#5C4535] hover:bg-[#F7F1E5] font-bold'
                 }`}
               >
-                <Building2 className="w-4 h-4" />
-                <span>2. Sacred Partnerships</span>
+                <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 stroke-[2.5]" />
+                <span className="sm:hidden">2. Partnerships</span>
+                <span className="hidden sm:inline">2. Sacred Partnerships</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveWay('co-creator')}
-                className={`py-3 px-5 sm:px-7 rounded-2xl font-dm text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
+                className={`py-2 px-3 xs:px-3.5 sm:py-3 sm:px-7 rounded-xl sm:rounded-2xl font-dm text-[11px] sm:text-sm font-extrabold uppercase tracking-tight sm:tracking-wider flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer whitespace-nowrap ${
                   activeWay === 'co-creator'
-                    ? 'bg-[#B08A4A] text-white shadow-md'
-                    : 'text-[#8F6E5B] hover:bg-[#F7F1E5]'
+                    ? 'bg-[#A67C38] text-white shadow-[0_4px_14px_rgba(166,124,56,0.4)] border border-white/30 scale-[1.02]'
+                    : 'text-[#5C4535] hover:bg-[#F7F1E5] font-bold'
                 }`}
               >
-                <Video className="w-4 h-4" />
-                <span>3. Co-Creator (Content)</span>
+                <Video className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 stroke-[2.5]" />
+                <span className="sm:hidden">3. Co-Creator</span>
+                <span className="hidden sm:inline">3. Co-Creator (Content)</span>
               </button>
 
             </div>

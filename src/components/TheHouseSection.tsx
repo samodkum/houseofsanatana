@@ -754,21 +754,16 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                 initial={{ opacity: 0, y: 15 }}
                 animate={isFit ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ delay: 1.48, duration: 0.35 }}
-                className="pt-5 border-t border-[#D9C6A8]/30 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto w-full"
+                className="pt-2 sm:pt-5 pb-5 sm:pb-0 -translate-y-3 sm:translate-y-0 border-t border-[#D9C6A8]/30 flex items-center justify-center max-w-5xl mx-auto w-full"
               >
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm font-dm text-[#F7F1E5]/90 font-normal">
-                  <Sparkles className="w-4 h-4 text-[#D9C6A8] shrink-0" />
-                  <span>॥ धर्मो रक्षति रक्षितः ॥ &bull; Eternal Sanctum Lineage &amp; Vedic Heritage</span>
-                </div>
-
                 {/* LINK TO ABOUT BUTTON */}
                 <button
                   type="button"
                   onClick={onOpenAbout}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 sm:px-10 py-3.5 rounded-full bg-gradient-to-r from-[#B08A4A] via-[#C7833D] to-[#B08A4A] hover:from-[#C7833D] hover:to-[#B08A4A] text-[#F7F1E5] font-dm font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-[#D9C6A8]"
+                  className="w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-5 sm:px-10 py-2 sm:py-3.5 rounded-full bg-gradient-to-r from-[#B08A4A] via-[#C7833D] to-[#B08A4A] hover:from-[#C7833D] hover:to-[#B08A4A] text-[#F7F1E5] font-dm font-bold text-[11px] sm:text-sm tracking-wider uppercase shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-[#D9C6A8] -translate-y-1 sm:translate-y-0"
                 >
                   <span>Discover Full Story &amp; About Us</span>
-                  <ArrowRight className="w-4 h-4 text-[#F7F1E5]" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F7F1E5]" />
                 </button>
               </motion.div>
 
