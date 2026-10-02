@@ -96,10 +96,12 @@ const DEVOTEE_ITEMS: DevoteeCardItem[] = [
 
 interface MediaHeroLoopSectionProps {
   onExploreClick?: () => void;
+  isMenuOpen?: boolean;
 }
 
 export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
-  onExploreClick
+  onExploreClick,
+  isMenuOpen = false
 }) => {
   const [rotation, setRotation] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -113,12 +115,14 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
       const delta = time - lastTime;
       lastTime = time;
 
-      if (!isHovered) {
-        // Continuous smooth rotation in one direction (approx 360 deg in 28s)
-        setRotation((prev) => (prev + (delta * 0.013)) % 360);
-      } else {
-        // Slow down slightly when user hovers to inspect
-        setRotation((prev) => (prev + (delta * 0.003)) % 360);
+      if (!isMenuOpen) {
+        if (!isHovered) {
+          // Continuous smooth rotation in one direction (approx 360 deg in 28s)
+          setRotation((prev) => (prev + (delta * 0.013)) % 360);
+        } else {
+          // Slow down slightly when user hovers to inspect
+          setRotation((prev) => (prev + (delta * 0.003)) % 360);
+        }
       }
 
       reqRef.current = requestAnimationFrame(animate);
@@ -129,12 +133,12 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
     return () => {
       if (reqRef.current) cancelAnimationFrame(reqRef.current);
     };
-  }, [isHovered]);
+  }, [isHovered, isMenuOpen]);
 
   const total = DEVOTEE_ITEMS.length;
 
   return (
-    <section className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-10 sm:pb-14 overflow-hidden bg-[#FFF8E7] flex flex-col items-center justify-between min-h-[580px] sm:min-h-[640px] md:min-h-[680px] lg:min-h-[720px] max-h-[850px] select-none">
+    <section className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-10 sm:pb-14 overflow-hidden bg-[#FFF8E7] flex flex-col items-center justify-between min-h-[580px] sm:min-h-[640px] md:min-h-[680px] lg:min-h-[720px] max-h-[850px] select-none isolate">
       
       {/* ======================================================== */}
       {/* 1. TOP EDITORIAL HERO HEADER & CALL TO ACTION            */}
@@ -172,7 +176,9 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
       {/*    Images follow an elegant curved smile/arc in motion    */}
       {/* ======================================================== */}
       <div 
-        className="relative w-full max-w-[1240px] h-[270px] sm:h-[310px] md:h-[340px] lg:h-[360px] mx-auto mt-2 sm:mt-4 overflow-visible flex items-center justify-center"
+        className={`relative w-full max-w-[1240px] h-[270px] sm:h-[310px] md:h-[340px] lg:h-[360px] mx-auto mt-2 sm:mt-4 overflow-visible flex items-center justify-center transition-opacity duration-300 ${
+          isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -211,7 +217,7 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
               className="absolute group"
               style={{
                 transform: `translate3d(${xOffset}px, ${yDrop}px, 0) scale(${scale})`,
-                zIndex: Math.round((zDepth + 1) * 50),
+                zIndex: Math.round((zDepth + 1) * 5) + 1,
                 opacity: opacity,
                 transition: 'opacity 0.2s ease-out',
               }}

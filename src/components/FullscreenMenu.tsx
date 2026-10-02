@@ -73,7 +73,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
             duration: isOpen ? 0.85 : 0.65,
             ease: [0.16, 1, 0.3, 1]
           }}
-          className="fixed inset-0 z-[80] text-[#F7F1E5] flex flex-col justify-between overflow-hidden select-none pointer-events-auto bg-[#8C4E1D]"
+          className="fixed inset-0 z-[9999] text-[#F7F1E5] flex flex-col justify-between overflow-hidden select-none pointer-events-auto bg-[#8C4E1D]"
           style={{
             background: 'radial-gradient(ellipse 110% 110% at 8% 8%, #9E5D24 0%, #8C4E1D 35%, #6E3812 70%, #462208 100%)',
             willChange: 'clip-path, opacity'

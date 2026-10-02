@@ -14,7 +14,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleMenu,
 }) => {
   return (
-    <header className="fixed top-5 sm:top-7 left-5 sm:left-8 z-[90] pointer-events-auto select-none flex items-center">
+    <header className="fixed top-5 sm:top-7 left-5 sm:left-8 z-[10000] pointer-events-auto select-none flex items-center">
       {/* 
         Compact Floating 3-Line Menu Trigger Button
         Styled in the EXACT color and gradient of the word "SANATANA":

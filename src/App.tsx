@@ -330,7 +330,7 @@ export default function App() {
       )}
 
       {/* Single Persistent Top Navigation Bar */}
-      <div className={`transition-opacity duration-700 ease-out ${(isRevealed && isNavbarVisible) || isMenuOpen || currentPage !== 'home' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      <div className={`relative z-[10000] transition-opacity duration-700 ease-out ${(isRevealed && isNavbarVisible) || isMenuOpen || currentPage !== 'home' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <Navbar 
           isOpen={isMenuOpen} 
           onToggleMenu={() => setIsMenuOpen(!isMenuOpen)} 
@@ -422,6 +422,7 @@ export default function App() {
           onOpenAccount={() => setIsAccountOpen(true)}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
+          isMenuOpen={isMenuOpen}
         />
       ) : (
         <>

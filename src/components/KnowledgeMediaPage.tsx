@@ -47,6 +47,7 @@ interface KnowledgeMediaPageProps {
   onOpenAccount?: () => void;
   cartCount?: number;
   wishlistCount?: number;
+  isMenuOpen?: boolean;
 }
 
 // Sound Synthesizer for Vedic Drone / Tanpura Chords using Web Audio API
@@ -102,7 +103,8 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
   onOpenWishlist,
   onOpenAccount,
   cartCount = 0,
-  wishlistCount = 0
+  wishlistCount = 0,
+  isMenuOpen = false
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<MediaCategoryType>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -233,20 +235,8 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
       <nav className="relative z-40 w-full bg-transparent transition-all">
         <div className="w-full pl-20 sm:pl-24 pr-5 sm:pr-8 lg:pr-12 h-16 sm:h-20 flex items-center justify-between">
           
-          {/* Left: Brand Back to Home Button */}
-          <div className="flex items-center">
-            <button
-              type="button"
-              onClick={() => onNavigateHome('home')}
-              className="group flex items-center gap-2 py-2 px-3.5 sm:px-4 rounded-full bg-white border border-[#D9C6A8] hover:border-[#1A1612] shadow-2xs transition-all text-xs font-dm font-semibold text-[#8F6E5B] hover:text-[#1A1612] cursor-pointer"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to Home</span>
-            </button>
-          </div>
-
           {/* Right: Action Controls (Wishlist, Cart, Account) shifted to corner */}
-          <div className="flex items-center gap-3 sm:gap-5">
+          <div className="flex items-center gap-3 sm:gap-5 ml-auto">
             <HeaderActionButtons
               wishlistCount={wishlistCount}
               cartCount={cartCount}
@@ -263,6 +253,7 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
       {/* 2. HERO SECTION: CONTINUOUS LOOPING DEVOTEE MARQUEE      */}
       {/* ======================================================== */}
       <MediaHeroLoopSection
+        isMenuOpen={isMenuOpen}
         onExploreClick={() => {
           const el = document.getElementById('mosaic-gallery');
           if (el) el.scrollIntoView({ behavior: 'smooth' });
