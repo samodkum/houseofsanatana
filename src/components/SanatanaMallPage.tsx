@@ -34,8 +34,8 @@ import { SunIcon } from './SunIcon';
 import { ProductDetailPage } from './ProductDetailPage';
 import { WishlistDrawer } from './WishlistDrawer';
 import { Footer } from './Footer';
-import { DividerOrnamental } from './ui/SacredPatterns';
 import { HeaderActionButtons } from './HeaderActionButtons';
+import { openShopifyAccount } from '../lib/shopify';
 
 interface SanatanaMallPageProps {
   onNavigateHome: () => void;
@@ -733,7 +733,7 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
               cartCount={cartCount}
               onOpenWishlist={() => setIsWishlistDrawerOpen(true)}
               onOpenCart={onOpenCart}
-              onOpenAccount={onOpenAccount || (() => showToast('Sacred Sadhaka Profile & Orders'))}
+              onOpenAccount={onOpenAccount || openShopifyAccount}
             />
 
           </div>

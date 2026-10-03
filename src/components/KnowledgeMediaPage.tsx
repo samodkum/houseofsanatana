@@ -33,6 +33,7 @@ import {
 } from '../data/mediaData';
 import { HeaderActionButtons } from './HeaderActionButtons';
 import { Footer } from './Footer';
+import { openShopifyAccount } from '../lib/shopify';
 import { MosaicGallerySection } from './MosaicGallerySection';
 import { InteractiveBook } from './InteractiveBook';
 import { MediaHeroLoopSection } from './MediaHeroLoopSection';
@@ -242,7 +243,7 @@ export const KnowledgeMediaPage: React.FC<KnowledgeMediaPageProps> = ({
               cartCount={cartCount}
               onOpenWishlist={onOpenWishlist || (() => showToast('Sacred Wishlist'))}
               onOpenCart={onOpenCart || (() => showToast('Sacred Basket'))}
-              onOpenAccount={onOpenAccount || (() => showToast('Sadhaka Account'))}
+              onOpenAccount={onOpenAccount || openShopifyAccount}
             />
           </div>
 

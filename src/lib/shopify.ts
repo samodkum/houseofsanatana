@@ -1,7 +1,11 @@
-// Shopify Storefront API configuration and client
 export const SHOPIFY_DOMAIN = import.meta.env.VITE_SHOPIFY_DOMAIN || 'houseofsanatana.myshopify.com';
 export const SHOPIFY_STOREFRONT_ACCESS_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || 'd302d09f71a616811b082748dddf5421';
 export const SHOPIFY_API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || '2024-01';
+export const SHOPIFY_ACCOUNT_URL = 'https://shopify.com/79445164163/account';
+
+export const openShopifyAccount = () => {
+  window.open(SHOPIFY_ACCOUNT_URL, '_blank', 'noopener,noreferrer');
+};
 
 const SHOPIFY_ENDPOINT = `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 

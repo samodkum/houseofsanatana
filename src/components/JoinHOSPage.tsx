@@ -52,6 +52,7 @@ import { LotusLineArt, MandalaGeometry, TempleArchitectureLine, IndianJaaliPatte
 import { SunIcon } from './SunIcon';
 import { Footer } from './Footer';
 import { HeaderActionButtons } from './HeaderActionButtons';
+import { openShopifyAccount } from '../lib/shopify';
 
 export type MainJoinWay = 'join-hos' | 'partnership' | 'co-creator';
 
@@ -269,7 +270,7 @@ export const JoinHOSPage: React.FC<JoinHOSPageProps> = ({
               cartCount={cartCount}
               onOpenWishlist={onOpenWishlist || (() => {})}
               onOpenCart={onOpenCart || (() => {})}
-              onOpenAccount={onOpenAccount || (() => {})}
+              onOpenAccount={onOpenAccount || openShopifyAccount}
             />
           </div>
         </div>

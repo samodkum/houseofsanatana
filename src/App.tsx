@@ -25,7 +25,7 @@ import { JoinHOSPage, MainJoinWay } from './components/JoinHOSPage';
 import { KnowledgeMediaPage } from './components/KnowledgeMediaPage';
 import { HeaderActionButtons } from './components/HeaderActionButtons';
 import { WishlistDrawer } from './components/WishlistDrawer';
-import { AccountModal } from './components/AccountModal';
+import { openShopifyAccount } from './lib/shopify';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
 
 import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
@@ -61,7 +61,6 @@ export default function App() {
     }
   });
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   // Sync wishlist to localStorage
   useEffect(() => {
@@ -377,7 +376,7 @@ export default function App() {
           onOpenCart={() => setIsCartOpen(true)}
           cartCount={totalCartCount}
           isMenuOpen={isMenuOpen}
-          onOpenAccount={() => setIsAccountOpen(true)}
+          onOpenAccount={openShopifyAccount}
         />
       ) : currentPage === 'travel' ? (
         /* ======================================================== */
@@ -388,7 +387,7 @@ export default function App() {
           onNavigateMall={navigateToMall}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={() => setIsAccountOpen(true)}
+          onOpenAccount={openShopifyAccount}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           isMenuOpen={isMenuOpen}
@@ -403,7 +402,7 @@ export default function App() {
           onNavigateTravel={navigateToTravel}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={() => setIsAccountOpen(true)}
+          onOpenAccount={openShopifyAccount}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           initialPathway={joinPathway}
@@ -419,7 +418,7 @@ export default function App() {
           onNavigateJoin={navigateToJoin}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={() => setIsAccountOpen(true)}
+          onOpenAccount={openShopifyAccount}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           isMenuOpen={isMenuOpen}
@@ -433,7 +432,7 @@ export default function App() {
               cartCount={totalCartCount}
               onOpenWishlist={() => setIsWishlistOpen(true)}
               onOpenCart={() => setIsCartOpen(true)}
-              onOpenAccount={() => setIsAccountOpen(true)}
+              onOpenAccount={openShopifyAccount}
               isHero={isHeroSection}
             />
           </div>
@@ -886,21 +885,6 @@ export default function App() {
         }}
       />
 
-      {/* Sacred Sadhaka User Account Profile Modal (Unified across all pages) */}
-      <AccountModal
-        isOpen={isAccountOpen}
-        onClose={() => setIsAccountOpen(false)}
-        onOpenWishlist={() => setIsWishlistOpen(true)}
-        onOpenCart={() => setIsCartOpen(true)}
-        onNavigatePage={(page) => {
-          if (page === 'mall') navigateToMall();
-          else if (page === 'travel') navigateToTravel();
-          else if (page === 'join') navigateToJoin();
-          else navigateToHome();
-        }}
-        cartCount={totalCartCount}
-        wishlistCount={wishlistIds.size}
-      />
 
       {/* Toast Notification */}
       {toastMessage && (

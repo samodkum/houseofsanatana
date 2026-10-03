@@ -17,6 +17,7 @@ const MENU_ITEMS: MenuItem[] = [
   { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '#santana-mall', page: 'mall' },
   { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '#travel', page: 'travel' },
   { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '#media', page: 'media' },
+  { id: 'account', label: 'My Account', sanskrit: '॥ साधक खाता ॥', isExternal: true, href: 'https://shopify.com/79445164163/account' },
 ];
 
 interface FullscreenMenuProps {
@@ -137,6 +138,10 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                     <a
                       href={item.href}
                       onClick={(e) => {
+                        if (item.isExternal) {
+                          onClose();
+                          return;
+                        }
                         e.preventDefault();
                         e.stopPropagation();
                         setActiveItem(item.id);
@@ -145,6 +150,8 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                           onNavigatePage(item.page, item.href.replace('#', ''));
                         }
                       }}
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
                       className="group relative w-full flex items-center justify-between py-2.5 sm:py-3.5 px-5 sm:px-7 rounded-2xl transition-all duration-200 cursor-pointer"
                     >
                       {/* Active / Hover Pill Highlight */}

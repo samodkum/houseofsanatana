@@ -42,6 +42,7 @@ import { SunIcon } from './SunIcon';
 import { Footer } from './Footer';
 import { HeaderActionButtons } from './HeaderActionButtons';
 import { BharatYatraMapSection } from './BharatYatraMapSection';
+import { openShopifyAccount } from '../lib/shopify';
 
 interface TravelPackagePageProps {
   onNavigateHome: (sectionId?: string) => void;
@@ -262,7 +263,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
           cartCount={cartCount}
           onOpenWishlist={onOpenWishlist || (() => showToast(wishlistIds.size > 0 ? `Sacred Wishlist (${wishlistIds.size} saved)` : 'Your Sacred Wishlist is empty'))}
           onOpenCart={onOpenCart || (() => {})}
-          onOpenAccount={onOpenAccount || (() => showToast('Sacred Sadhaka Profile & Orders'))}
+          onOpenAccount={onOpenAccount || openShopifyAccount}
         />
       </div>
 

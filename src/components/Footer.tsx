@@ -95,6 +95,14 @@ export const Footer: React.FC = () => {
                 >
                   About Us
                 </a>
+                <a 
+                  href="https://shopify.com/79445164163/account" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
+                >
+                  My Account
+                </a>
               </nav>
             </div>
 

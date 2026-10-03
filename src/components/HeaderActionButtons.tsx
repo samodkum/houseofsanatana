@@ -1,13 +1,14 @@
 import React from 'react';
 import { Heart, ShoppingBag, User } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { openShopifyAccount } from '../lib/shopify';
 
 export interface HeaderActionButtonsProps {
   wishlistCount: number;
   cartCount: number;
   onOpenWishlist: () => void;
   onOpenCart: () => void;
-  onOpenAccount: () => void;
+  onOpenAccount?: () => void;
   className?: string;
   isHero?: boolean;
 }
@@ -17,7 +18,7 @@ export const HeaderActionButtons: React.FC<HeaderActionButtonsProps> = ({
   cartCount,
   onOpenWishlist,
   onOpenCart,
-  onOpenAccount,
+  onOpenAccount = openShopifyAccount,
   className = '',
   isHero = false,
 }) => {
