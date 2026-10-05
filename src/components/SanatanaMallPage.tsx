@@ -36,6 +36,7 @@ import { WishlistDrawer } from './WishlistDrawer';
 import { Footer } from './Footer';
 import { HeaderActionButtons } from './HeaderActionButtons';
 import { openShopifyAccount } from '../lib/shopify';
+import { DividerOrnamental } from './ui/SacredPatterns';
 
 interface SanatanaMallPageProps {
   onNavigateHome: () => void;
