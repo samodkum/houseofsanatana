@@ -51,8 +51,13 @@ export const Footer: React.FC = () => {
             <div className="lg:col-span-7 flex flex-col items-start">
               {/* Brand Heading */}
               <a 
-                href="#home" 
-                className="font-cormorant font-normal text-4xl sm:text-5xl md:text-6xl text-[#F7F1E5] tracking-tight hover:text-white transition-colors mb-8 sm:mb-10 block"
+                href="/" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.history.pushState(null, '', '/');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="font-cormorant font-normal text-4xl sm:text-5xl md:text-6xl text-[#F7F1E5] tracking-tight hover:text-white transition-colors mb-8 sm:mb-10 block cursor-pointer"
               >
                 House Of Sanatana
               </a>
@@ -60,40 +65,63 @@ export const Footer: React.FC = () => {
               {/* Large Stacked Nav Links */}
               <nav className="flex flex-col items-start gap-2 sm:gap-3.5" aria-label="Footer Navigation">
                 <a 
-                  href="#join" 
-                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
+                  href="/join" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/join');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                  }}
+                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200 cursor-pointer"
                 >
                   Join House Of Sanatana
                 </a>
                 <a 
-                  href="#travel" 
-                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
+                  href="/travel" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/travel');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                  }}
+                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200 cursor-pointer"
                 >
                   Sacred Yatras
                 </a>
                 <a 
-                  href="#santana-mall" 
-                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
+                  href="/mall" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/mall');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                  }}
+                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200 cursor-pointer"
                 >
                   Santana Mall
                 </a>
                 <a 
-                  href="#the-house" 
-                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
+                  href="/" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById('the-house');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200 cursor-pointer"
                 >
                   The House
                 </a>
                 <a 
-                  href="#three-ways-to-join" 
-                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
+                  href="/orders" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/orders');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                  }}
+                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200 cursor-pointer"
                 >
-                  Vedic Guidance
-                </a>
-                <a 
-                  href="#about-us" 
-                  className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
-                >
-                  About Us
+                  My Orders & Yatras
                 </a>
                 <a 
                   href="https://shopify.com/79445164163/account" 
@@ -101,7 +129,7 @@ export const Footer: React.FC = () => {
                   rel="noopener noreferrer"
                   className="font-cormorant font-normal text-3xl sm:text-4xl md:text-[44px] leading-tight text-[#F7F1E5]/90 hover:text-white hover:translate-x-1.5 transition-all duration-200"
                 >
-                  My Account
+                  Shopify Account Portal
                 </a>
               </nav>
             </div>

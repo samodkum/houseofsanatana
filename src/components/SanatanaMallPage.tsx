@@ -149,13 +149,13 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
 
   const handleSelectProduct = (product: MallProduct) => {
     setSelectedProduct(product);
-    window.location.hash = `product-${product.id}`;
+    window.history.pushState({ productId: product.id }, '', `/product/${product.id}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToCollection = () => {
     setSelectedProduct(null);
-    window.location.hash = 'santana-mall';
+    window.history.pushState(null, '', '/mall');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

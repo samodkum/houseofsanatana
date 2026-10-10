@@ -25,7 +25,7 @@ export async function generateCodeChallenge(verifier: string): Promise<string> {
 /**
  * Initiates the Shopify Customer Account OAuth flow
  */
-export async function loginCustomer(returnDestination = '/#orders'): Promise<void> {
+export async function loginCustomer(returnDestination = '/orders'): Promise<void> {
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
   const state = generateCodeVerifier().slice(0, 16);
@@ -90,7 +90,7 @@ export async function handleCustomerAuthCallback(): Promise<boolean> {
     sessionStorage.removeItem('shopify_code_verifier');
     sessionStorage.removeItem('shopify_oauth_state');
 
-    const destination = sessionStorage.getItem('shopify_auth_destination') || '/#orders';
+    const destination = sessionStorage.getItem('shopify_auth_destination') || '/orders';
     sessionStorage.removeItem('shopify_auth_destination');
 
     window.location.href = destination;

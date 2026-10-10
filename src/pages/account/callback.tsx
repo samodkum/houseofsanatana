@@ -48,8 +48,8 @@ export default function AccountCallbackPage() {
         sessionStorage.removeItem('shopify_code_verifier');
         sessionStorage.removeItem('shopify_oauth_state');
 
-        // After success, clean URL and navigate to /#orders
-        window.location.href = '/#orders';
+        // After success, clean URL and navigate to /orders
+        window.location.href = '/orders';
       } catch (err: any) {
         console.error('Callback error:', err);
         setError(err.message || 'Failed to authenticate');
@@ -72,7 +72,7 @@ export default function AccountCallbackPage() {
             </h2>
             <p className="text-xs text-[#8F6E5B] mb-6 leading-relaxed">{error}</p>
             <a
-              href="/#orders"
+              href="/orders"
               className="inline-flex items-center px-5 py-2.5 rounded-full bg-[#58111A] text-white text-xs font-bold"
             >
               Return to Orders

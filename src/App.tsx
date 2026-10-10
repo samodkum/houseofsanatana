@@ -110,67 +110,117 @@ export default function App() {
     showToast(`Added ${product.title} to sacred basket`);
   };
 
-  // Sync hash routing on mount and hashchange
+  // Sync routing on mount, popstate and back/forward without '#'
   useEffect(() => {
-    const syncHash = () => {
-      const hash = window.location.hash.toLowerCase();
-      if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
+    const syncRoute = () => {
+      // Prioritize clean pathname, fallback to legacy hash if present
+      const rawPath = window.location.pathname.toLowerCase().replace(/^\/+/, '');
+      const rawHash = window.location.hash.toLowerCase().replace(/^#+/, '');
+      const route = rawPath || rawHash;
+
+      if (
+        route === 'mall' ||
+        route === 'santana-mall' ||
+        route === 'sanatana-mall' ||
+        route === 'shop' ||
+        route.startsWith('product-')
+      ) {
         setCurrentPage('mall');
-      } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages' || hash === '#travel-page' || hash.startsWith('#yatra-')) {
+      } else if (
+        route === 'travel' ||
+        route === 'yatras' ||
+        route === 'travel-packages' ||
+        route === 'travel-page' ||
+        route.startsWith('yatra-')
+      ) {
         setCurrentPage('travel');
-      } else if (hash === '#join' || hash === '#join-sanatana' || hash === '#join-hos' || hash === '#sangha' || hash === '#partnership' || hash === '#partner' || hash === '#co-creator' || hash === '#cocreate' || hash === '#creator') {
+      } else if (
+        route === 'join' ||
+        route === 'join-sanatana' ||
+        route === 'join-hos' ||
+        route === 'sangha' ||
+        route === 'partnership' ||
+        route === 'partner' ||
+        route === 'co-creator' ||
+        route === 'cocreate' ||
+        route === 'creator'
+      ) {
         setCurrentPage('join');
-        if (hash === '#partnership' || hash === '#partner') setJoinPathway('partnership');
-        else if (hash === '#co-creator' || hash === '#cocreate' || hash === '#creator') setJoinPathway('co-creator');
+        if (route === 'partnership' || route === 'partner') setJoinPathway('partnership');
+        else if (route === 'co-creator' || route === 'cocreate' || route === 'creator') setJoinPathway('co-creator');
         else setJoinPathway('join-hos');
-      } else if (hash === '#media' || hash === '#knowledge' || hash === '#sanatana-media' || hash === '#media-listing' || hash === '#media-sanctum') {
+      } else if (
+        route === 'media' ||
+        route === 'knowledge' ||
+        route === 'sanatana-media' ||
+        route === 'media-listing' ||
+        route === 'media-sanctum'
+      ) {
         setCurrentPage('media');
-      } else if (hash === '#orders' || hash === '#my-orders' || hash === '#customer-orders' || hash === '#account-orders') {
+      } else if (
+        route === 'orders' ||
+        route === 'my-orders' ||
+        route === 'customer-orders' ||
+        route === 'account-orders' ||
+        route === 'account'
+      ) {
         setCurrentPage('orders');
       } else {
         setCurrentPage('home');
       }
+
+      // If there's an unwanted '#' in the address bar, strip it out cleanly
+      if (window.location.hash) {
+        const cleanPath = route ? `/${route}` : '/';
+        window.history.replaceState(null, '', cleanPath);
+      }
     };
-    syncHash();
-    window.addEventListener('hashchange', syncHash);
-    return () => window.removeEventListener('hashchange', syncHash);
+
+    syncRoute();
+    window.addEventListener('popstate', syncRoute);
+    window.addEventListener('hashchange', syncRoute);
+    return () => {
+      window.removeEventListener('popstate', syncRoute);
+      window.removeEventListener('hashchange', syncRoute);
+    };
   }, []);
 
-  // Page navigation helpers
+  // Clean Page navigation helpers without '#'
   const navigateToOrders = () => {
     setCurrentPage('orders');
-    window.location.hash = 'orders';
+    window.history.pushState({ page: 'orders' }, '', '/orders');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToMall = () => {
     setCurrentPage('mall');
-    window.location.hash = 'santana-mall';
+    window.history.pushState({ page: 'mall' }, '', '/mall');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToTravel = () => {
     setCurrentPage('travel');
-    window.location.hash = 'travel';
+    window.history.pushState({ page: 'travel' }, '', '/travel');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToJoin = (pathway?: MainJoinWay) => {
     if (pathway) setJoinPathway(pathway);
     setCurrentPage('join');
-    window.location.hash = pathway ? `#${pathway}` : '#join';
+    const path = pathway ? `/${pathway}` : '/join';
+    window.history.pushState({ page: 'join', pathway }, '', path);
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToMedia = () => {
     setCurrentPage('media');
-    window.location.hash = 'media';
+    window.history.pushState({ page: 'media' }, '', '/media');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToHome = (sectionId?: string) => {
     setCurrentPage('home');
-    window.location.hash = sectionId ? `#${sectionId}` : '#home';
+    window.history.pushState({ page: 'home' }, '', '/');
     if (sectionId) {
       setTimeout(() => scrollToSection(sectionId), 250);
     } else {

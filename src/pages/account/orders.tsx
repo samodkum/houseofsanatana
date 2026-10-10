@@ -201,7 +201,7 @@ export default function OrdersPage({
           <div className="flex items-center gap-2.5">
             <button
               type="button"
-              onClick={() => loginCustomer('/#orders')}
+              onClick={() => loginCustomer('/orders')}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#58111A] text-white text-xs font-semibold hover:bg-[#430c13] transition-all shadow-xs cursor-pointer"
             >
               <LogIn className="w-3.5 h-3.5 text-[#D9C6A8]" />
@@ -241,7 +241,7 @@ export default function OrdersPage({
 
             <button
               type="button"
-              onClick={() => loginCustomer('/#orders')}
+              onClick={() => loginCustomer('/orders')}
               className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#58111A] text-white text-xs font-bold hover:bg-[#430c13] transition-all shadow-sm cursor-pointer"
             >
               <LogIn className="w-3.5 h-3.5 text-[#D9C6A8]" />

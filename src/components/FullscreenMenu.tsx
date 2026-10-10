@@ -12,12 +12,12 @@ export interface MenuItem {
 }
 
 const MENU_ITEMS: MenuItem[] = [
-  { id: 'home', label: 'Home', sanskrit: '॥ मुखपृष्ठम् ॥', href: '#home', page: 'home' },
-  { id: 'join', label: 'Join House of Sanatana', sanskrit: '॥ सङ्घ प्रवेशम् ॥', isExternal: false, href: '#join', page: 'join' },
-  { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '#santana-mall', page: 'mall' },
-  { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '#travel', page: 'travel' },
-  { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '#media', page: 'media' },
-  { id: 'orders', label: 'My Orders & Yatras', sanskrit: '॥ आदेश सूची ॥', isExternal: false, href: '#orders', page: 'orders' },
+  { id: 'home', label: 'Home', sanskrit: '॥ मुखपृष्ठम् ॥', href: '/', page: 'home' },
+  { id: 'join', label: 'Join House of Sanatana', sanskrit: '॥ सङ्घ प्रवेशम् ॥', isExternal: false, href: '/join', page: 'join' },
+  { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '/mall', page: 'mall' },
+  { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '/travel', page: 'travel' },
+  { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '/media', page: 'media' },
+  { id: 'orders', label: 'My Orders & Yatras', sanskrit: '॥ आदेश सूची ॥', isExternal: false, href: '/orders', page: 'orders' },
   { id: 'account', label: 'Shopify Portal', sanskrit: '॥ साधक खाता ॥', isExternal: true, href: 'https://shopify.com/79445164163/account' },
 ];
 
