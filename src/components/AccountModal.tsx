@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, User, Crown, ShieldCheck, ShoppingBag, Heart, Calendar, Phone, ArrowRight, ExternalLink } from 'lucide-react';
+import { X, User, Crown, ShieldCheck, ShoppingBag, Heart, Calendar, Phone, ArrowRight, ExternalLink, Package } from 'lucide-react';
 import { SunIcon } from './SunIcon';
 
 interface AccountModalProps {
@@ -8,7 +8,8 @@ interface AccountModalProps {
   onClose: () => void;
   onOpenWishlist: () => void;
   onOpenCart: () => void;
-  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join') => void;
+  onOpenOrders?: () => void;
+  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'orders') => void;
   cartCount?: number;
   wishlistCount?: number;
 }
@@ -18,6 +19,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({
   onClose,
   onOpenWishlist,
   onOpenCart,
+  onOpenOrders,
   onNavigatePage,
   cartCount = 0,
   wishlistCount = 0,
@@ -140,6 +142,30 @@ export const AccountModal: React.FC<AccountModalProps> = ({
 
               {/* Navigation Shortcuts */}
               <div className="space-y-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    if (onOpenOrders) {
+                      onOpenOrders();
+                    } else if (onNavigatePage) {
+                      onNavigatePage('orders');
+                    }
+                  }}
+                  className="w-full p-3.5 rounded-xl bg-gradient-to-r from-[#FAF6EE] to-[#F4EDE0] hover:from-[#F4EDE0] hover:to-[#EFE5D7] border border-[#C7833D]/50 flex items-center justify-between text-xs font-bold text-[#58111A] transition-all cursor-pointer shadow-xs group"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Package className="w-4 h-4 text-[#58111A]" />
+                    <span>My Sacred Orders & Yatras</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] text-[#C7833D] font-medium bg-[#C7833D]/10 px-2 py-0.5 rounded-md">
+                      Products & Travel
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#58111A] group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                </button>
+
                 {onNavigatePage && (
                   <button
                     type="button"
@@ -168,7 +194,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                   >
                     <div className="flex items-center gap-2.5">
                       <Calendar className="w-4 h-4 text-[#66705A]" />
-                      <span>My Sacred Yatra Bookings</span>
+                      <span>Explore Sacred Yatras</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
                   </button>

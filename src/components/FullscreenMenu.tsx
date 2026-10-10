@@ -8,7 +8,7 @@ export interface MenuItem {
   sanskrit: string;
   isExternal?: boolean;
   href: string;
-  page?: 'home' | 'mall' | 'travel' | 'join' | 'media';
+  page?: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders';
 }
 
 const MENU_ITEMS: MenuItem[] = [
@@ -17,14 +17,15 @@ const MENU_ITEMS: MenuItem[] = [
   { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '#santana-mall', page: 'mall' },
   { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '#travel', page: 'travel' },
   { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '#media', page: 'media' },
-  { id: 'account', label: 'My Account', sanskrit: '॥ साधक खाता ॥', isExternal: true, href: 'https://shopify.com/79445164163/account' },
+  { id: 'orders', label: 'My Orders & Yatras', sanskrit: '॥ आदेश सूची ॥', isExternal: false, href: '#orders', page: 'orders' },
+  { id: 'account', label: 'Shopify Portal', sanskrit: '॥ साधक खाता ॥', isExternal: true, href: 'https://shopify.com/79445164163/account' },
 ];
 
 interface FullscreenMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'media', sectionId?: string) => void;
-  currentPage?: 'home' | 'mall' | 'travel' | 'join' | 'media';
+  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders', sectionId?: string) => void;
+  currentPage?: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders';
 }
 
 export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({

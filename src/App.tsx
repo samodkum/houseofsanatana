@@ -25,6 +25,8 @@ import { JoinHOSPage, MainJoinWay } from './components/JoinHOSPage';
 import { KnowledgeMediaPage } from './components/KnowledgeMediaPage';
 import { HeaderActionButtons } from './components/HeaderActionButtons';
 import { WishlistDrawer } from './components/WishlistDrawer';
+import { AccountModal } from './components/AccountModal';
+import { OrdersPage } from './pages/account/orders';
 import { openShopifyAccount } from './lib/shopify';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
 
@@ -37,7 +39,8 @@ const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
 
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders'>('home');
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [joinPathway, setJoinPathway] = useState<MainJoinWay>('join-hos');
   const [isLoading, setIsLoading] = useState(true);
   const [isRevealed, setIsRevealed] = useState(false);
@@ -121,6 +124,8 @@ export default function App() {
         else setJoinPathway('join-hos');
       } else if (hash === '#media' || hash === '#knowledge' || hash === '#sanatana-media' || hash === '#media-listing' || hash === '#media-sanctum') {
         setCurrentPage('media');
+      } else if (hash === '#orders' || hash === '#my-orders' || hash === '#customer-orders' || hash === '#account-orders') {
+        setCurrentPage('orders');
       } else {
         setCurrentPage('home');
       }
@@ -131,6 +136,12 @@ export default function App() {
   }, []);
 
   // Page navigation helpers
+  const navigateToOrders = () => {
+    setCurrentPage('orders');
+    window.location.hash = 'orders';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
   const navigateToMall = () => {
     setCurrentPage('mall');
     window.location.hash = 'santana-mall';
@@ -359,6 +370,8 @@ export default function App() {
             navigateToJoin();
           } else if (page === 'media') {
             navigateToMedia();
+          } else if (page === 'orders') {
+            navigateToOrders();
           } else {
             navigateToHome(sectionId);
           }
@@ -376,7 +389,7 @@ export default function App() {
           onOpenCart={() => setIsCartOpen(true)}
           cartCount={totalCartCount}
           isMenuOpen={isMenuOpen}
-          onOpenAccount={openShopifyAccount}
+          onOpenAccount={() => setIsAccountModalOpen(true)}
         />
       ) : currentPage === 'travel' ? (
         /* ======================================================== */
@@ -387,7 +400,7 @@ export default function App() {
           onNavigateMall={navigateToMall}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={openShopifyAccount}
+          onOpenAccount={() => setIsAccountModalOpen(true)}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           isMenuOpen={isMenuOpen}
@@ -402,7 +415,7 @@ export default function App() {
           onNavigateTravel={navigateToTravel}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={openShopifyAccount}
+          onOpenAccount={() => setIsAccountModalOpen(true)}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           initialPathway={joinPathway}
@@ -418,10 +431,19 @@ export default function App() {
           onNavigateJoin={navigateToJoin}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={openShopifyAccount}
+          onOpenAccount={() => setIsAccountModalOpen(true)}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           isMenuOpen={isMenuOpen}
+        />
+      ) : currentPage === 'orders' ? (
+        /* ======================================================== */
+        /* SACRED ORDERS & YATRAS: CUSTOMER ORDERS PAGE             */
+        /* ======================================================== */
+        <OrdersPage
+          onBack={() => navigateToHome('home')}
+          onExploreProducts={navigateToMall}
+          onExploreTravel={navigateToTravel}
         />
       ) : (
         <>
@@ -432,7 +454,7 @@ export default function App() {
               cartCount={totalCartCount}
               onOpenWishlist={() => setIsWishlistOpen(true)}
               onOpenCart={() => setIsCartOpen(true)}
-              onOpenAccount={openShopifyAccount}
+              onOpenAccount={() => setIsAccountModalOpen(true)}
               isHero={isHeroSection}
             />
           </div>
@@ -870,6 +892,24 @@ export default function App() {
       <AboutModal
         isOpen={isAboutModalOpen}
         onClose={() => setIsAboutModalOpen(false)}
+      />
+
+      {/* Sacred Customer Account Modal */}
+      <AccountModal
+        isOpen={isAccountModalOpen}
+        onClose={() => setIsAccountModalOpen(false)}
+        onOpenWishlist={() => setIsWishlistOpen(true)}
+        onOpenCart={() => setIsCartOpen(true)}
+        onOpenOrders={navigateToOrders}
+        onNavigatePage={(p) => {
+          if (p === 'orders') navigateToOrders();
+          else if (p === 'mall') navigateToMall();
+          else if (p === 'travel') navigateToTravel();
+          else if (p === 'join') navigateToJoin();
+          else navigateToHome();
+        }}
+        cartCount={totalCartCount}
+        wishlistCount={wishlistIds.size}
       />
 
       {/* Slide-Over Wishlist Drawer (Unified across all pages) */}
