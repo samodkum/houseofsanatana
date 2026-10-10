@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'cors';
+import cors from "cors";
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import customerRoutes from './routes/customerOrder';
@@ -10,16 +10,17 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // CORS configuration
-app.use(
-  cors({
-    origin: [
-      process.env.FRONTEND_URL || 'https://houseofsanatana.vercel.app',
-      'https://houseofsanatana.vercel.app',
-      'http://localhost:3000',
-    ],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    "https://houseofsanatana.vercel.app",
+    "http://localhost:5173"
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+}));
+
+app.options("*", cors());
 
 // Middleware
 app.use(express.json());
