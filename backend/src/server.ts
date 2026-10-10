@@ -12,7 +12,11 @@ const PORT = process.env.PORT || 3001;
 // CORS configuration
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: [
+      process.env.FRONTEND_URL || 'https://houseofsanatana.vercel.app',
+      'https://houseofsanatana.vercel.app',
+      'http://localhost:3000',
+    ],
     credentials: true,
   })
 );

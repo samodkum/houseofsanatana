@@ -2,9 +2,9 @@ import { Router, Request, Response } from 'express';
 
 const router = Router();
 
-const SHOP_ID = process.env.SHOP_ID || '79445164163';
-const SHOPIFY_CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || '';
-const REDIRECT_URI = process.env.REDIRECT_URI || '';
+const SHOP_ID = process.env.SHOP_ID || '63911682135';
+const SHOPIFY_CLIENT_ID = process.env.SHOPIFY_CLIENT_ID || 'e89e5f5a-bd59-4864-a90e-02521629e672';
+const REDIRECT_URI = process.env.REDIRECT_URI || 'https://houseofsanatana.vercel.app/account/callback';
 const isProduction = process.env.NODE_ENV === 'production';
 
 // 1. POST /api/customer/token

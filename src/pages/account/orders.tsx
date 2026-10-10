@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { CustomerOrder } from '../../api/customerOrders';
+import { CustomerOrder, GET_CUSTOMER_ORDERS } from '../../api/customerOrders';
+import { loginCustomer } from '../../lib/customerAuth';
 import { OrderTabs, OrderTabType } from '../../components/account/OrderTabs';
 import { OrderList } from '../../components/account/OrderList';
 import { ArrowLeft, Loader2, RefreshCw, AlertCircle, ShieldCheck, LogIn } from 'lucide-react';
@@ -102,8 +103,13 @@ export default function OrdersPage({
     setErrorMessage(null);
     setIsUnauthenticated(false);
     try {
-      // Call backend proxy which hits Shopify Customer Account API
-      const res = await fetch('/api/customer/orders', { credentials: 'include' });
+      // Call Railway backend proxy which hits Shopify Customer Account API
+      const res = await fetch('https://houseofsanatana-production.up.railway.app/api/customer/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ query: GET_CUSTOMER_ORDERS }),
+      });
       
       if (res.status === 401) {
         setIsUnauthenticated(true);
@@ -114,9 +120,10 @@ export default function OrdersPage({
         throw new Error(`Proxy returned status ${res.status}`);
       }
 
-      const data = await res.json();
-      if (data && Array.isArray(data.orders)) {
-        setOrders(data.orders);
+      const json = await res.json();
+      const orderNodes = json?.data?.customer?.orders?.nodes || json?.orders;
+      if (orderNodes && Array.isArray(orderNodes)) {
+        setOrders(orderNodes);
         setIsUsingMock(false);
       } else {
         throw new Error('Invalid orders response format');
@@ -192,13 +199,14 @@ export default function OrdersPage({
           </div>
 
           <div className="flex items-center gap-2.5">
-            <a
-              href="/api/customer/login"
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#58111A] text-white text-xs font-semibold hover:bg-[#430c13] transition-all shadow-xs"
+            <button
+              type="button"
+              onClick={() => loginCustomer('/#orders')}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#58111A] text-white text-xs font-semibold hover:bg-[#430c13] transition-all shadow-xs cursor-pointer"
             >
               <LogIn className="w-3.5 h-3.5 text-[#D9C6A8]" />
               <span>Sign In to Account</span>
-            </a>
+            </button>
 
             <button
               type="button"
@@ -231,13 +239,14 @@ export default function OrdersPage({
               </div>
             </div>
 
-            <a
-              href="/api/customer/login"
-              className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#58111A] text-white text-xs font-bold hover:bg-[#430c13] transition-all shadow-sm"
+            <button
+              type="button"
+              onClick={() => loginCustomer('/#orders')}
+              className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#58111A] text-white text-xs font-bold hover:bg-[#430c13] transition-all shadow-sm cursor-pointer"
             >
               <LogIn className="w-3.5 h-3.5 text-[#D9C6A8]" />
               <span>Sign In with Shopify</span>
-            </a>
+            </button>
           </div>
         )}
 

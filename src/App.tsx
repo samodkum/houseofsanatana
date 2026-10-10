@@ -27,6 +27,7 @@ import { HeaderActionButtons } from './components/HeaderActionButtons';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { AccountModal } from './components/AccountModal';
 import { OrdersPage } from './pages/account/orders';
+import { AccountCallbackPage } from './pages/account/callback';
 import { openShopifyAccount } from './lib/shopify';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
 
@@ -378,7 +379,12 @@ export default function App() {
         }}
       />
 
-      {currentPage === 'mall' ? (
+      {window.location.pathname.startsWith('/account/callback') ? (
+        /* ======================================================== */
+        /* SHOPIFY CUSTOMER ACCOUNT OAUTH CALLBACK HANDLER         */
+        /* ======================================================== */
+        <AccountCallbackPage />
+      ) : currentPage === 'mall' ? (
         /* ======================================================== */
         /* SANTANA MALL: CONSECRATED TEMPLE STORE PAGE (IVORY BASE) */
         /* ======================================================== */
