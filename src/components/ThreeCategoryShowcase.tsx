@@ -21,8 +21,8 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
     {
       id: 'kits' as const,
       num: digitMode === '123' ? '1' : '3',
-      color: '#7EAEC4', // Soft powder sky blue
-      title: 'Sacred Pooja Kits', // Concise 3 words
+      color: '#3DB3E4', // Sacred Water Blue
+      title: 'Sacred Pooja Kits',
       image: '/@fs/C:/Users/Anjal/.gemini/antigravity-ide/brain/c650d01c-2fcb-423d-a351-1d218e575db7/category_pooja_kit_1790488501548.jpg',
       fallback: 'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=800&q=85',
       targetId: 'section-category-grid',
@@ -31,8 +31,8 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
     {
       id: 'murtis' as const,
       num: digitMode === '123' ? '2' : '6',
-      color: '#F1BD70', // Warm golden yellow
-      title: 'Devalaya Vigrahas', // Concise 2 words
+      color: '#C59239', // Temple Gold
+      title: 'Devalaya Vigrahas',
       image: '/@fs/C:/Users/Anjal/.gemini/antigravity-ide/brain/c650d01c-2fcb-423d-a351-1d218e575db7/category_murti_vigraha_1790488518838.jpg',
       fallback: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=85',
       targetId: 'section-category-grid',
@@ -41,8 +41,8 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
     {
       id: 'dravyas' as const,
       num: digitMode === '123' ? '3' : '9',
-      color: '#D79880', // Terracotta clay pink
-      title: 'Vedic Dravyas', // Concise 2 words
+      color: '#607427', // Mountain / Bilva Green
+      title: 'Vedic Dravyas',
       image: '/@fs/C:/Users/Anjal/.gemini/antigravity-ide/brain/c650d01c-2fcb-423d-a351-1d218e575db7/category_vedic_dravyas_1790488547761.jpg',
       fallback: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?auto=format&fit=crop&w=800&q=85',
       targetId: 'section-category-grid',
@@ -51,28 +51,28 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
   ];
 
   return (
-    <section className="relative w-full pt-16 sm:pt-24 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FAF6EE] select-none">
+    <section className="relative w-full pt-16 sm:pt-24 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FEFBF2] select-none">
       
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-[#EADECA]/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-[#C59239]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10">
 
         {/* Overhead Label */}
         <div className="flex flex-col items-center justify-center mb-14 sm:mb-18">
-          <span className="font-dm text-xs sm:text-sm font-bold uppercase tracking-[0.35em] text-[#8C9A75]">
+          <span className="font-dm text-xs sm:text-sm font-bold uppercase tracking-[0.35em] text-[#607427]">
             SHOP
           </span>
 
           {/* Subtle switcher for number preference */}
-          <div className="mt-2.5 inline-flex items-center gap-1 p-0.5 rounded-full bg-[#EFE7D5]/70 border border-[#D9C6A8]/50 text-[10px] font-dm text-[#8F6E5B]">
+          <div className="mt-2.5 inline-flex items-center gap-1 p-0.5 rounded-full bg-white/90 border border-[#C59239]/30 text-[10px] font-dm text-[#3D2619]">
             <button
               type="button"
               onClick={() => setDigitMode('123')}
               className={`px-2.5 py-0.5 rounded-full transition-all cursor-pointer font-bold ${
                 digitMode === '123'
-                  ? 'bg-white text-[#26201B] shadow-2xs'
-                  : 'text-[#8F6E5B]/70 hover:text-[#26201B]'
+                  ? 'bg-[#FE7613] text-white shadow-2xs'
+                  : 'text-[#3D2619]/70 hover:text-[#221508]'
               }`}
             >
               1 • 2 • 3 Order
@@ -82,8 +82,8 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
               onClick={() => setDigitMode('369')}
               className={`px-2.5 py-0.5 rounded-full transition-all cursor-pointer font-bold ${
                 digitMode === '369'
-                  ? 'bg-white text-[#26201B] shadow-2xs'
-                  : 'text-[#8F6E5B]/70 hover:text-[#26201B]'
+                  ? 'bg-[#FE7613] text-white shadow-2xs'
+                  : 'text-[#3D2619]/70 hover:text-[#221508]'
               }`}
             >
               3 • 6 • 9 Cosmic
@@ -122,19 +122,19 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = cat.fallback;
                     }}
-                    className="w-full h-full object-contain mix-blend-multiply filter drop-shadow-[0_18px_20px_rgba(40,30,20,0.18)] transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-contain mix-blend-multiply filter drop-shadow-[0_18px_20px_rgba(34,21,8,0.14)] transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
                 </div>
 
                 {/* Ground Contact Shadow: softly spreads on hover */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[180px] h-[20px] bg-[#2E2419]/15 rounded-[100%] blur-[8px] pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:opacity-60" />
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[180px] h-[20px] bg-[#221508]/15 rounded-[100%] blur-[8px] pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:opacity-60" />
 
               </div>
 
               {/* 2-3 Word Detail Just Below the Layout */}
               <div className="mt-5 text-center flex flex-col items-center">
-                <h4 className="font-dm text-sm sm:text-base font-bold text-[#26201B] group-hover:text-[#C7833D] transition-colors tracking-tight">
+                <h4 className="font-dm text-sm sm:text-base font-bold text-[#221508] group-hover:text-[#FE7613] transition-colors tracking-tight">
                   {cat.title}
                 </h4>
               </div>

@@ -8,24 +8,23 @@ export interface MenuItem {
   sanskrit: string;
   isExternal?: boolean;
   href: string;
-  page?: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders';
+  page?: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'account';
 }
 
 const MENU_ITEMS: MenuItem[] = [
-  { id: 'home', label: 'Home', sanskrit: '॥ मुखपृष्ठम् ॥', href: '/', page: 'home' },
-  { id: 'join', label: 'Join House of Sanatana', sanskrit: '॥ सङ्घ प्रवेशम् ॥', isExternal: false, href: '/join', page: 'join' },
-  { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '/mall', page: 'mall' },
-  { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '/travel', page: 'travel' },
-  { id: 'media', label: 'Knowledge & Media', sanskrit: '॥ ज्ञान गङ्गा ॥', isExternal: false, href: '/media', page: 'media' },
-  { id: 'orders', label: 'My Orders & Yatras', sanskrit: '॥ आदेश सूची ॥', isExternal: false, href: '/orders', page: 'orders' },
-  { id: 'account', label: 'Shopify Portal', sanskrit: '॥ साधक खाता ॥', isExternal: true, href: 'https://shopify.com/79445164163/account' },
+  { id: 'home', label: 'Home', sanskrit: '॥ मुखपृष्ठम् ॥', href: '#home', page: 'home' },
+  { id: 'join', label: 'Join House of Sanatana', sanskrit: '॥ सङ्घ प्रवेशम् ॥', isExternal: false, href: '#join', page: 'join' },
+  { id: 'mall', label: 'Santana Mall', sanskrit: '॥ सनातन हाट ॥', isExternal: false, href: '#santana-mall', page: 'mall' },
+  { id: 'travel', label: 'Sacred Yatras', sanskrit: '॥ तीर्थ यात्रा ॥', isExternal: false, href: '#travel', page: 'travel' },
+  { id: 'media', label: 'Co-Creator Program', sanskrit: '॥ सह-स्रष्टा सङ्घ ॥', isExternal: false, href: '#media', page: 'media' },
+  { id: 'account', label: 'My Account', sanskrit: '॥ साधक खाता ॥', isExternal: false, href: '#account', page: 'account' },
 ];
 
 interface FullscreenMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders', sectionId?: string) => void;
-  currentPage?: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders';
+  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'account', sectionId?: string) => void;
+  currentPage?: 'home' | 'mall' | 'travel' | 'join' | 'media' | 'account';
 }
 
 export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
@@ -75,9 +74,9 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
             duration: isOpen ? 0.85 : 0.65,
             ease: [0.16, 1, 0.3, 1]
           }}
-          className="fixed inset-0 z-[9999] text-[#F7F1E5] flex flex-col justify-between overflow-hidden select-none pointer-events-auto bg-[#8C4E1D]"
+          className="fixed inset-0 z-[9999] text-[#FEFBF2] flex flex-col justify-between overflow-hidden select-none pointer-events-auto bg-[#0A4C83]"
           style={{
-            background: 'radial-gradient(ellipse 110% 110% at 8% 8%, #9E5D24 0%, #8C4E1D 35%, #6E3812 70%, #462208 100%)',
+            background: 'radial-gradient(ellipse 110% 110% at 8% 8%, #105996 0%, #0A4C83 35%, #073863 70%, #041B32 100%)',
             willChange: 'clip-path, opacity'
           }}
         >
@@ -85,7 +84,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
           <div 
             className="absolute inset-0 pointer-events-none opacity-[0.04]"
             style={{
-              backgroundImage: `radial-gradient(circle at 50% 50%, #F7F1E5 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(circle at 50% 50%, #FEFBF2 1px, transparent 1px)`,
               backgroundSize: '36px 36px'
             }}
           />
@@ -93,21 +92,21 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
           {/* Ambient Warm Golden Glow */}
           <div 
             className="absolute top-0 right-0 w-[550px] h-[550px] pointer-events-none opacity-20 rounded-full blur-[100px]"
-            style={{ backgroundColor: '#D9C6A8' }}
+            style={{ backgroundColor: '#C59239' }}
           />
 
           {/* Top Header Row inside Menu */}
           <div className="relative z-20 w-full px-6 sm:px-12 pt-6 sm:pt-8 flex items-center justify-between">
             <div className="flex items-center gap-3 pl-16 sm:pl-20">
-              <span className="font-sanskrit text-sm font-bold text-[#D9C6A8]">॥ सनातन सूची ॥</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D9C6A8]/50" />
-              <span className="font-dm text-xs uppercase tracking-[0.25em] text-[#F7F1E5]/80 font-semibold">
+              <span className="font-sanskrit text-sm font-bold text-[#E4B968]">॥ सनातन सूची ॥</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E4B968]/50" />
+              <span className="font-dm text-xs uppercase tracking-[0.25em] text-[#FEFBF2]/80 font-semibold">
                 House of Sanatana
               </span>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-dm text-[#D9C6A8]/80 uppercase tracking-wider hidden sm:inline-block">
+              <span className="text-[11px] font-dm text-[#E4B968]/80 uppercase tracking-wider hidden sm:inline-block">
                 Press ESC to close
               </span>
             </div>
@@ -159,7 +158,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                       <div
                         className={`absolute inset-0 rounded-2xl transition-all duration-200 pointer-events-none ${
                           isActive 
-                            ? 'bg-[#F7F1E5] shadow-[0_10px_28px_rgba(0,0,0,0.25)] opacity-100 scale-100' 
+                            ? 'bg-[#FEFBF2] shadow-[0_10px_28px_rgba(0,0,0,0.25)] opacity-100 scale-100' 
                             : 'opacity-0 scale-95'
                         }`}
                       />
@@ -167,12 +166,12 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                       {/* Main Link Text in Cormorant Garamond Serif */}
                       <div className="relative z-10 flex items-baseline gap-3.5 sm:gap-5">
                         <span className={`font-dm text-xs sm:text-sm font-bold transition-colors duration-150 ${
-                          isActive ? 'text-[#8C4E1D]' : 'text-[#D9C6A8]/70'
+                          isActive ? 'text-[#0A4C83]' : 'text-[#E4B968]/70'
                         }`}>
                           0{index + 1}
                         </span>
                         <span className={`font-cormorant font-normal text-3xl sm:text-4xl md:text-[42px] lg:text-[48px] leading-tight tracking-tight transition-colors duration-150 ${
-                          isActive ? 'text-[#26201B] font-semibold' : 'text-[#F7F1E5] group-hover:text-white'
+                          isActive ? 'text-[#221508] font-semibold' : 'text-[#FEFBF2] group-hover:text-white'
                         }`}>
                           {item.label}
                         </span>
@@ -181,13 +180,13 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                       {/* Sanskrit Subtext & Arrow */}
                       <div className="relative z-10 hidden md:flex items-center gap-3.5">
                         <span className={`font-sanskrit text-xs font-semibold transition-colors duration-150 ${
-                          isActive ? 'text-[#8C4E1D]' : 'text-[#D9C6A8]/70'
+                          isActive ? 'text-[#0A4C83]' : 'text-[#E4B968]/70'
                         }`}>
                           {item.sanskrit}
                         </span>
                         <ArrowUpRight 
                           className={`w-4 h-4 transform transition-transform duration-200 ${
-                            isActive ? 'text-[#26201B] translate-x-0.5 -translate-y-0.5' : 'text-[#D9C6A8]/50 group-hover:text-white'
+                            isActive ? 'text-[#221508] translate-x-0.5 -translate-y-0.5' : 'text-[#E4B968]/50 group-hover:text-white'
                           }`}
                         />
                       </div>
@@ -199,9 +198,9 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
           </div>
 
           {/* Bottom Social & Footer Row inside Menu */}
-          <div className="relative z-20 w-full px-6 sm:px-12 py-4 sm:py-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-dm text-[#D9C6A8]/80">
+          <div className="relative z-20 w-full px-6 sm:px-12 py-4 sm:py-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-dm text-[#E4B968]/80">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#D9C6A8]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#E4B968]" />
               <span>Consecrated Vedic Sanctum &bull; House of Sanatana</span>
             </div>
 
@@ -212,7 +211,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="LinkedIn"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#F7F1E5] transition-all"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#FEFBF2] transition-all"
               >
                 <Linkedin className="w-3.5 h-3.5" />
               </a>
@@ -221,7 +220,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="YouTube"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#F7F1E5] transition-all"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#FEFBF2] transition-all"
               >
                 <Youtube className="w-3.5 h-3.5" />
               </a>
@@ -230,7 +229,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="Instagram"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#F7F1E5] transition-all"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#FEFBF2] transition-all"
               >
                 <Instagram className="w-3.5 h-3.5" />
               </a>
@@ -239,7 +238,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="Twitter / X"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#F7F1E5] transition-all"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#FEFBF2] transition-all"
               >
                 <Twitter className="w-3.5 h-3.5" />
               </a>
@@ -248,7 +247,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="WhatsApp"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#F7F1E5] transition-all"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#FEFBF2] transition-all"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
               </a>

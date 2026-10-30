@@ -59,12 +59,12 @@ interface Bloom {
 const SACRED_PALETTE_HUES = [15, 35, 45, 345, 5, 25, 355, 40];
 
 export const HoverBloomCanvas: React.FC<HoverBloomProps> = ({
-  backgroundColor = '#F7F1E5',
-  paperTint = '#D9C6A8',
+  backgroundColor = '#FEFBF2',
+  paperTint = '#C59239',
   grid = true,
   gridSize = 28,
   gridDotSize = 1.2,
-  gridColor = 'rgba(143, 110, 91, 0.04)',
+  gridColor = 'rgba(197, 146, 57, 0.04)',
   maxBlooms = 120,
   spawnRate = 16,
   bloomScale = 1.1,

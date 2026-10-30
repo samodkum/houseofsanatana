@@ -13,94 +13,96 @@ export interface DevoteeCardItem {
 
 const DEVOTEE_ITEMS: DevoteeCardItem[] = [
   {
-    id: 'dev-1',
-    name: 'Aarav Shastri',
-    role: 'Vedic Scholar & Researcher',
+    id: 'creator-1',
+    name: 'Aarav Joshi',
+    role: 'Vedic Yatra Vlogger',
     location: 'Varanasi',
     image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80',
-    quote: 'The authenticity of their consecrated rituals is unmatched.'
+    quote: 'Filmed the Kashi Moksha package reels—reached 400K+ pilgrims.'
   },
   {
-    id: 'dev-2',
-    name: 'Meera Deshmukh',
-    role: 'Sadhika & Yoga Acharya',
-    location: 'Pune',
+    id: 'creator-2',
+    name: 'Priya Nambiar',
+    role: 'Himalayan Travel Creator',
+    location: 'Dehradun',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80',
-    quote: 'Brought sacred peace and divine presence into our home.'
+    quote: 'HOS sponsored my Kedarnath helicopter expedition & Swiss camp stay.'
   },
   {
-    id: 'dev-3',
-    name: 'Dr. Rajeshwar Iyer',
-    role: 'Ayurvedic Healer',
-    location: 'Bengaluru',
+    id: 'creator-3',
+    name: 'Mohit Sharma',
+    role: 'Braj Parikrama Storyteller',
+    location: 'Mathura',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
-    quote: 'Pure herbs and authentic Vedic preparations that align prana.'
+    quote: 'Creating devotional reels with full logistic and VIP darshan backing.'
   },
   {
-    id: 'dev-4',
-    name: 'Vikramaditya Sen',
-    role: 'Himalayan Yatri',
-    location: 'Kolkata',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80',
-    quote: 'Kedarnath yatra with HOS was a transcendent milestone.'
-  },
-  {
-    id: 'dev-5',
-    name: 'Ananya Sharma',
-    role: 'Classical Temple Artist',
-    location: 'Jaipur',
+    id: 'creator-4',
+    name: 'Ananya Sundaram',
+    role: 'Temple Heritage Filmmaker',
+    location: 'Madurai',
     image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80',
-    quote: 'Sacred craftsmanship preserved with timeless dignity.'
+    quote: 'Covered the Rameshwaram 22-wells circuit with dedicated archaeologist guides.'
   },
   {
-    id: 'dev-6',
-    name: 'Devavrat Joshi',
-    role: 'Temple Architect',
-    location: 'Ahmedabad',
+    id: 'creator-5',
+    name: 'Karan Dave',
+    role: 'Sacred Artifact Reviewer',
+    location: 'Haridwar',
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=80',
-    quote: 'Revitalizing sacred temple geometries for our future.'
+    quote: 'Testing authentic lab-tested Rudrakshas and copper yantras on camera.'
   },
   {
-    id: 'dev-7',
-    name: 'Kavita Sundaram',
-    role: 'Devotional Singer',
+    id: 'creator-6',
+    name: 'Radha Raman Das',
+    role: 'Vedic Lifestyle Creator',
+    location: 'Vrindavan',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80',
+    quote: 'Co-creating genuine consecrated content with transparent creator royalties.'
+  },
+  {
+    id: 'creator-7',
+    name: 'Meenakshi Iyer',
+    role: 'Classical Chants & Aarti Creator',
     location: 'Chennai',
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=500&q=80',
-    quote: 'The chants resonate with pure divine frequencies.'
+    quote: 'Direct fair-trade collaboration celebrating ancient Vedic traditions.'
   },
   {
-    id: 'dev-8',
-    name: 'Siddharth Varma',
-    role: 'Sadhaka & Tech Founder',
-    location: 'Hyderabad',
+    id: 'creator-8',
+    name: 'Vikramaditya Sen',
+    role: 'Sacred Geography Explorer',
+    location: 'Rishikesh',
     image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=500&q=80',
-    quote: 'A bridge connecting ancient spiritual wisdom with modern life.'
+    quote: 'Documenting the sacred shrines of Bharat with full hospitality sponsorship.'
   },
   {
-    id: 'dev-9',
+    id: 'creator-9',
     name: 'Gaurav Kulkarni',
-    role: 'Pooja Kit Co-Creator',
+    role: 'Artisan Guild Co-Creator',
     location: 'Nashik',
     image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80',
-    quote: 'Working with traditional artisans to consecrate pure brass & herbs.'
+    quote: 'Showcasing the traditional metallurgy of our temple sculptors.'
   },
   {
-    id: 'dev-10',
+    id: 'creator-10',
     name: 'Pooja Chawla',
-    role: 'Pilgrim & Sadhika',
-    location: 'Rishikesh',
+    role: 'Devotional Reels Influencer',
+    location: 'Delhi',
     image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80',
-    quote: 'Every interaction carries the grace of Sanatana Dharma.'
+    quote: 'Empowering creators to share the profound beauty of Sanatana Dharma.'
   }
 ];
 
 interface MediaHeroLoopSectionProps {
   onExploreClick?: () => void;
+  onApplyClick?: () => void;
   isMenuOpen?: boolean;
 }
 
 export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
   onExploreClick,
+  onApplyClick,
   isMenuOpen = false
 }) => {
   const [rotation, setRotation] = useState(0);
@@ -138,7 +140,7 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
   const total = DEVOTEE_ITEMS.length;
 
   return (
-    <section className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-10 sm:pb-14 overflow-hidden bg-[#FFF8E7] flex flex-col items-center justify-between min-h-[580px] sm:min-h-[640px] md:min-h-[680px] lg:min-h-[720px] max-h-[850px] select-none isolate">
+    <section className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-10 sm:pb-14 overflow-hidden bg-[#FEFBF2] flex flex-col items-center justify-between min-h-[580px] sm:min-h-[640px] md:min-h-[680px] lg:min-h-[720px] max-h-[850px] select-none isolate">
       
       {/* ======================================================== */}
       {/* 1. TOP EDITORIAL HERO HEADER & CALL TO ACTION            */}
@@ -146,26 +148,40 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
       {/* ======================================================== */}
       <div className="relative z-20 max-w-3xl mx-auto text-center px-4 sm:px-6 mt-8 sm:mt-0">
         
-        {/* Main Headline: Two-tone typography (Bold Black + Warm Taupe) */}
-        <h1 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal tracking-tight text-[#1A1612] leading-[1.14]">
-          Trusted by seekers <br className="hidden sm:inline" />
-          <span className="text-[#8F6E5B] font-light">from across sacred traditions</span>
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/95 border border-[#C59239]/30 text-[#0A4C83] text-[11px] font-dm font-bold uppercase tracking-widest mb-3 shadow-2xs">
+          <Sparkles className="w-3.5 h-3.5 text-[#FE7613]" />
+          <span>House of Sanatan &bull; Co-Creator Program</span>
+        </div>
+
+        {/* Main Headline: Two-tone typography (Deep Temple Ink + Wind Blue) */}
+        <h1 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal tracking-tight text-[#221508] leading-[1.14]">
+          Created with devotion <br className="hidden sm:inline" />
+          <span className="text-[#0A4C83] font-light">by our verified co-creators</span>
         </h1>
 
         {/* Subtitle */}
-        <p className="font-dm text-xs sm:text-sm text-[#8F6E5B] max-w-lg mx-auto mt-2 sm:mt-2.5 font-normal leading-relaxed">
-          Discover why sadhakas, pilgrims, and families across the globe trust House of Sanatan for authentic Vedic rituals, consecrated archives, and divine journeys.
+        <p className="font-dm text-xs sm:text-sm text-[#3D2619] max-w-lg mx-auto mt-2 sm:mt-2.5 font-normal leading-relaxed">
+          Partner with House of Sanatan to document sacred yatra packages, unbox consecrated products, and inspire millions across Bharat with sponsored expeditions and creator royalties.
         </p>
 
-        {/* Action Button: Sleek Black Pill with Arrow */}
-        <div className="mt-4 sm:mt-5 flex items-center justify-center">
+        {/* Action Button: Dual Actions (Apply as Co-Creator & Watch Reels) */}
+        <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={onApplyClick || onExploreClick}
+            className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#FE7613] to-[#FE7613] text-white hover:bg-[#e0650d] transition-all duration-300 shadow-[0_6px_20px_rgba(254,118,19,0.35)] hover:shadow-[0_10px_25px_rgba(254,118,19,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer text-xs sm:text-sm font-dm font-bold"
+          >
+            <span>Apply to Co-Create</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          </button>
+
           <button
             type="button"
             onClick={onExploreClick}
-            className="group inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 rounded-full bg-[#1A1612] text-white hover:bg-[#C7833D] transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer text-xs sm:text-sm font-dm font-semibold"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#221508] hover:bg-[#FEFBF2] border border-[#C59239]/30 hover:border-[#C59239] shadow-2xs hover:shadow-xs active:scale-95 transition-all cursor-pointer text-xs sm:text-sm font-dm font-semibold"
           >
-            <span>Read Sacred Stories</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            <span>Watch Creator Reels</span>
           </button>
         </div>
 
@@ -183,8 +199,8 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Soft edge fade masks for seamless horizontal visual bleeding */}
-        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 md:w-32 bg-gradient-to-r from-[#FFF8E7] via-[#FFF8E7]/70 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-[#FFF8E7] via-[#FFF8E7]/70 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 md:w-32 bg-gradient-to-r from-[#FEFBF2] via-[#FEFBF2]/70 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-[#FEFBF2] via-[#FEFBF2]/70 to-transparent z-10 pointer-events-none" />
 
         {/* Arc Track Elements */}
         {DEVOTEE_ITEMS.map((item, index) => {
@@ -223,7 +239,7 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
               }}
             >
               {/* Devotee Card */}
-              <div className="relative w-28 sm:w-36 md:w-42 lg:w-46 aspect-[4/4.8] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border-2 border-white/95 shadow-[0_12px_28px_rgba(26,22,18,0.1)] hover:shadow-[0_20px_45px_rgba(199,131,61,0.22)] hover:border-[#B08A4A] transition-all duration-400 hover:scale-108 cursor-pointer">
+              <div className="relative w-28 sm:w-36 md:w-42 lg:w-46 aspect-[4/4.8] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border-2 border-white/95 shadow-[0_12px_28px_rgba(34,21,8,0.08)] hover:shadow-[0_20px_45px_rgba(197,146,57,0.25)] hover:border-[#C59239] transition-all duration-400 hover:scale-108 cursor-pointer">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -232,14 +248,14 @@ export const MediaHeroLoopSection: React.FC<MediaHeroLoopSectionProps> = ({
                 />
 
                 {/* Subtle Amber Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2.5 sm:p-3.5 text-white">
-                  <span className="font-dm text-[11px] sm:text-xs font-bold text-[#D9C6A8] leading-tight">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2.5 sm:p-3.5 text-white">
+                  <span className="font-dm text-[11px] sm:text-xs font-bold text-[#E4B968] leading-tight">
                     {item.name}
                   </span>
                   <span className="font-dm text-[9px] sm:text-[10px] text-white/80 line-clamp-1">
                     {item.role} &bull; {item.location}
                   </span>
-                  <p className="font-dm text-[8px] sm:text-[9px] text-[#F7F1E5]/90 line-clamp-2 mt-0.5 italic">
+                  <p className="font-dm text-[8px] sm:text-[9px] text-[#FEFBF2]/90 line-clamp-2 mt-0.5 italic">
                     "{item.quote}"
                   </p>
                 </div>

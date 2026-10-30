@@ -123,7 +123,7 @@ export function ScrollSplitCard({
       {/* ======================================================== */}
       {/* MOBILE EXPERIENCE (< md): Swiss Editorial Pill Headline */}
       {/* ======================================================== */}
-      <div className="block md:hidden w-full bg-[#F7F1E5] px-5 py-12 text-left select-none">
+      <div className="block md:hidden w-full bg-[#FEFBF2] px-5 py-12 text-left select-none">
         
         {/* 2-Line Headline with Staggered Word Show-Up Animation & HOS Palette */}
         <motion.div 
@@ -137,7 +137,7 @@ export function ScrollSplitCard({
               transition: { staggerChildren: 0.07, delayChildren: 0.05 },
             },
           }}
-          className="font-cormorant font-semibold text-[#8F6E5B] text-3xl min-[380px]:text-4xl min-[440px]:text-5xl leading-[1.1] tracking-tight whitespace-nowrap mb-6"
+          className="font-cormorant font-semibold text-[#221508] text-3xl min-[380px]:text-4xl min-[440px]:text-5xl leading-[1.1] tracking-tight whitespace-nowrap mb-6"
         >
           {/* Line 1: The breadth of [the house] */}
           <div className="flex items-center flex-nowrap gap-1.5 min-[380px]:gap-2">
@@ -154,8 +154,8 @@ export function ScrollSplitCard({
                   }
                 }}
                 whileHover={{ y: -2 }}
-                style={{ color: "#8F6E5B" }}
-                className="inline-block text-[#8F6E5B] transition-colors duration-300 cursor-default"
+                style={{ color: "#221508" }}
+                className="inline-block text-[#221508] transition-colors duration-300 cursor-default"
               >
                 {word}
               </motion.span>
@@ -172,7 +172,7 @@ export function ScrollSplitCard({
                 }
               }}
               whileTap={{ scale: 0.96 }}
-              className="relative inline-flex items-center px-2.5 min-[380px]:px-3 py-0.5 rounded-full bg-gradient-to-r from-[#C7833D] to-[#B08A4A] text-[#F7F1E5] shadow-[0_3px_12px_rgba(199,131,61,0.3)] overflow-hidden text-[0.85em] font-dm font-bold shrink-0"
+              className="relative inline-flex items-center px-2.5 min-[380px]:px-3 py-0.5 rounded-full bg-[#FE7613] text-white shadow-[0_3px_12px_rgba(254,118,19,0.3)] overflow-hidden text-[0.85em] font-dm font-bold shrink-0"
             >
               <span className="relative z-10">the house</span>
               <motion.span 
@@ -198,8 +198,8 @@ export function ScrollSplitCard({
                   }
                 }}
                 whileHover={{ y: -2 }}
-                style={{ color: "#8F6E5B" }}
-                className="inline-block text-[#8F6E5B] transition-colors duration-300 cursor-default"
+                style={{ color: "#221508" }}
+                className="inline-block text-[#221508] transition-colors duration-300 cursor-default"
               >
                 {word}
               </motion.span>
@@ -215,7 +215,7 @@ export function ScrollSplitCard({
                 }
               }}
               whileTap={{ scale: 0.96 }}
-              className="inline-flex items-center px-2.5 min-[380px]:px-3 py-0.5 rounded-full border-1.5 min-[380px]:border-2 border-[#66705A] text-[#66705A] active:bg-[#66705A] active:text-[#F7F1E5] transition-colors duration-200 text-[0.85em] font-dm font-bold shrink-0"
+              className="inline-flex items-center px-2.5 min-[380px]:px-3 py-0.5 rounded-full border-1.5 min-[380px]:border-2 border-[#607427] text-[#607427] active:bg-[#607427] active:text-white transition-colors duration-200 text-[0.85em] font-dm font-bold shrink-0"
             >
               into dharma.
             </motion.span>
@@ -224,7 +224,7 @@ export function ScrollSplitCard({
         </motion.div>
 
         {/* Mobile Divine Image Banner */}
-        <div className="w-full max-w-sm mx-auto h-48 rounded-2xl overflow-hidden border border-[#B08A4A]/50 mb-8 shadow-xl">
+        <div className="w-full max-w-sm mx-auto h-48 rounded-2xl overflow-hidden border border-[#C59239]/50 mb-8 shadow-xl">
           <img
             src={imageSrc}
             alt={imageAlt || "Lord Krishna Sacred Ascension"}
@@ -236,22 +236,22 @@ export function ScrollSplitCard({
           {activeCards.map((card, i) => (
             <div
               key={card.id || i}
-              className="relative rounded-2xl overflow-hidden border border-[#B08A4A]/40 p-6 flex flex-col justify-between shadow-[0_12px_28px_rgba(70,45,30,0.25)]"
+              className="relative rounded-2xl overflow-hidden border border-[#C59239]/40 p-6 flex flex-col justify-between shadow-[0_12px_28px_rgba(70,45,30,0.25)]"
               style={{ backgroundColor: card.bgColor }}
             >
               <div className="flex items-center justify-between gap-2 mb-4">
-                <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-[#B08A4A]/25 to-black/60 border border-[#B08A4A]/50 text-[#D9C6A8]">
-                  {card.icon || <Sparkles className="w-5 h-5 text-[#D9C6A8]" />}
+                <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-[#C59239]/25 to-black/60 border border-[#C59239]/50 text-[#E4B968]">
+                  {card.icon || <Sparkles className="w-5 h-5 text-[#E4B968]" />}
                 </div>
                 {card.badge && (
-                  <span className="text-[10px] font-dm font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-black/60 border border-[#B08A4A]/30 text-[#F7F1E5]">
+                  <span className="text-[10px] font-dm font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-black/60 border border-[#C59239]/30 text-[#FEFBF2]">
                     {card.badge}
                   </span>
                 )}
               </div>
 
               <div>
-                <span className="text-[10px] font-dm tracking-[0.2em] uppercase text-[#D9C6A8] font-semibold block mb-1">
+                <span className="text-[10px] font-dm tracking-[0.2em] uppercase text-[#E4B968] font-semibold block mb-1">
                   {card.subtitle || `Gateway 0${i + 1}`}
                 </span>
                 <h3 className="font-cormorant text-2xl font-semibold text-white mb-2">
@@ -268,10 +268,10 @@ export function ScrollSplitCard({
                   e.stopPropagation();
                   if (card.onAction) card.onAction();
                 }}
-                className="w-full inline-flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-[#B08A4A] to-[#C7833D] hover:from-[#C7833D] hover:to-[#B08A4A] text-[#F7F1E5] hover:text-white font-dm font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer border border-[#B08A4A]/40"
+                className="w-full inline-flex items-center justify-between px-4 py-3 rounded-xl bg-[#FE7613] hover:bg-[#e0650d] text-white font-dm font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer border border-[#FE7613]/40"
               >
                 <span>{card.actionLabel || "Explore"}</span>
-                <ArrowUpRight className="w-4 h-4 text-[#F7F1E5]" />
+                <ArrowUpRight className="w-4 h-4 text-white" />
               </button>
             </div>
           ))}
@@ -284,14 +284,14 @@ export function ScrollSplitCard({
       <div
         ref={containerRef}
         className={cn(
-          "hidden md:block relative min-h-[440vh] w-full bg-[#F7F1E5]",
+          "hidden md:block relative min-h-[440vh] w-full bg-[#FEFBF2]",
           className
         )}
       >
         {/* Ambient background sanctuary glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[550px] bg-[#D9C6A8]/30 rounded-full blur-[170px] pointer-events-none" />
-        <div className="absolute bottom-1/3 left-1/4 w-[600px] h-[450px] bg-[#C7833D]/15 rounded-full blur-[150px] pointer-events-none" />
-        <div className="absolute top-2/3 right-1/4 w-[500px] h-[400px] bg-[#B08A4A]/20 rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[550px] bg-[#C59239]/15 rounded-full blur-[170px] pointer-events-none" />
+        <div className="absolute bottom-1/3 left-1/4 w-[600px] h-[450px] bg-[#FE7613]/10 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-2/3 right-1/4 w-[500px] h-[400px] bg-[#0A4C83]/10 rounded-full blur-[160px] pointer-events-none" />
 
         {/* Pinned Sticky Viewport: Remains fixed throughout the entire sequence */}
         <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden px-4 py-6">
@@ -311,7 +311,7 @@ export function ScrollSplitCard({
                   transition: { staggerChildren: 0.08, delayChildren: 0.05 },
                 },
               }}
-              className="font-cormorant font-semibold text-[#8F6E5B] text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[76px] leading-[1.05] tracking-tight whitespace-nowrap"
+              className="font-cormorant font-semibold text-[#221508] text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[76px] leading-[1.05] tracking-tight whitespace-nowrap"
             >
               {/* Line 1: The breadth of [the house] */}
               <div className="flex items-center flex-nowrap gap-x-2.5 sm:gap-x-3.5">
@@ -327,8 +327,8 @@ export function ScrollSplitCard({
                       }
                     }}
                     whileHover={{ y: -3, scale: 1.03 }}
-                    style={{ color: "#8F6E5B" }}
-                    className="inline-block text-[#8F6E5B] transition-colors duration-300 cursor-default"
+                    style={{ color: "#221508" }}
+                    className="inline-block text-[#221508] transition-colors duration-300 cursor-default"
                   >
                     {word}
                   </motion.span>
@@ -347,7 +347,7 @@ export function ScrollSplitCard({
                   }}
                   whileHover={{ scale: 1.05, y: -2, rotate: -0.5 }}
                   whileTap={{ scale: 0.97 }}
-                  className="relative inline-flex items-center px-3.5 sm:px-5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#C7833D] text-[#F7F1E5] shadow-[0_4px_16px_rgba(199,131,61,0.32)] overflow-hidden cursor-pointer select-none transition-shadow duration-300 hover:shadow-[0_6px_22px_rgba(199,131,61,0.45)] text-[0.82em] font-dm font-bold tracking-tight shrink-0"
+                  className="relative inline-flex items-center px-3.5 sm:px-5 py-0.5 sm:py-1 rounded-full bg-[#FE7613] text-white shadow-[0_4px_16px_rgba(254,118,19,0.32)] overflow-hidden cursor-pointer select-none transition-shadow duration-300 hover:shadow-[0_6px_22px_rgba(254,118,19,0.45)] text-[0.82em] font-dm font-bold tracking-tight shrink-0"
                 >
                   <span className="relative z-10 drop-shadow-xs">
                     the house
@@ -376,8 +376,8 @@ export function ScrollSplitCard({
                       }
                     }}
                     whileHover={{ y: -3, scale: 1.03 }}
-                    style={{ color: "#8F6E5B" }}
-                    className="inline-block text-[#8F6E5B] transition-colors duration-300 cursor-default"
+                    style={{ color: "#221508" }}
+                    className="inline-block text-[#221508] transition-colors duration-300 cursor-default"
                   >
                     {word}
                   </motion.span>
@@ -396,7 +396,7 @@ export function ScrollSplitCard({
                   }}
                   whileHover={{ scale: 1.05, y: -2, rotate: 0.5 }}
                   whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center px-3.5 sm:px-5 py-0.5 sm:py-1 rounded-full border-2 sm:border-[2.5px] border-[#66705A] text-[#66705A] hover:bg-[#66705A] hover:text-[#F7F1E5] shadow-xs hover:shadow-[0_6px_20px_rgba(102,112,90,0.25)] transition-all duration-300 cursor-pointer select-none text-[0.82em] font-dm font-bold tracking-tight shrink-0"
+                  className="inline-flex items-center px-3.5 sm:px-5 py-0.5 sm:py-1 rounded-full border-2 sm:border-[2.5px] border-[#607427] text-[#607427] hover:bg-[#607427] hover:text-white shadow-xs hover:shadow-[0_6px_20px_rgba(96,116,39,0.25)] transition-all duration-300 cursor-pointer select-none text-[0.82em] font-dm font-bold tracking-tight shrink-0"
                 >
                   into dharma.
                 </motion.span>
@@ -490,13 +490,13 @@ export function ScrollSplitCard({
                   <motion.div
                     className={cn(
                       "absolute inset-0 overflow-hidden flex flex-col justify-between p-5 sm:p-6 [backface-visibility:hidden] will-change-transform transform-gpu",
-                      "border border-[#B08A4A]/40 transition-all duration-300",
+                      "border border-[#C59239]/40 transition-all duration-300",
                       "shadow-[0_20px_50px_rgba(0,0,0,0.4)]",
-                      "group-hover:border-[#D9C6A8] group-hover:shadow-[0_25px_60px_rgba(176,138,74,0.35)]"
+                      "group-hover:border-[#C59239] group-hover:shadow-[0_25px_60px_rgba(197,146,57,0.35)]"
                     )}
                     style={{
                       backgroundColor: card.bgColor,
-                      color: card.textColor || "#F7F1E5",
+                      color: card.textColor || "#FEFBF2",
                       transform: "rotateY(180deg)",
                       zIndex: 1,
                       borderRadius: cardRadius,
@@ -507,25 +507,25 @@ export function ScrollSplitCard({
                     <div
                       className="pointer-events-none absolute inset-0 opacity-15 mix-blend-overlay"
                       style={{
-                        backgroundImage: `radial-gradient(circle at 50% 50%, rgba(176,138,74,0.3) 0%, transparent 80%)`,
+                        backgroundImage: `radial-gradient(circle at 50% 50%, rgba(197,146,57,0.3) 0%, transparent 80%)`,
                       }}
                     />
 
                     {/* Card Header: Icon & Badge */}
                     <div className="relative z-10">
                       <div className="flex items-center justify-between gap-2 mb-3">
-                        <div className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#B08A4A]/25 to-black/60 border border-[#B08A4A]/50 text-[#D9C6A8] shadow-[0_4px_16px_rgba(176,138,74,0.25)] group-hover:scale-110 group-hover:border-[#D9C6A8] transition-all duration-300">
-                          {card.icon || <Sparkles className="w-5 h-5 text-[#D9C6A8]" />}
+                        <div className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#C59239]/25 to-black/60 border border-[#C59239]/50 text-[#E4B968] shadow-[0_4px_16px_rgba(197,146,57,0.25)] group-hover:scale-110 group-hover:border-[#C59239] transition-all duration-300">
+                          {card.icon || <Sparkles className="w-5 h-5 text-[#E4B968]" />}
                         </div>
 
                         {card.badge && (
-                          <span className="text-[10px] font-dm font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-black/50 border border-[#B08A4A]/30 text-[#F7F1E5]">
+                          <span className="text-[10px] font-dm font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-black/50 border border-[#C59239]/30 text-[#FEFBF2]">
                             {card.badge}
                           </span>
                         )}
                       </div>
 
-                      <span className="text-[10px] sm:text-[11px] font-dm tracking-[0.2em] uppercase text-[#D9C6A8] font-semibold block mb-0.5">
+                      <span className="text-[10px] sm:text-[11px] font-dm tracking-[0.2em] uppercase text-[#E4B968] font-semibold block mb-0.5">
                         {card.subtitle || `Gateway 0${i + 1}`}
                       </span>
                       <h3 className="font-cormorant text-2xl sm:text-3xl font-semibold leading-tight text-white mb-2">
@@ -541,17 +541,17 @@ export function ScrollSplitCard({
                     </div>
 
                     {/* Card Footer: Interactive CTA Button */}
-                    <div className="relative z-10 pt-3 border-t border-[#B08A4A]/20">
+                    <div className="relative z-10 pt-3 border-t border-[#C59239]/20">
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           if (card.onAction) card.onAction();
                         }}
-                        className="w-full group/btn inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-[#B08A4A] to-[#C7833D] hover:from-[#C7833D] hover:to-[#B08A4A] text-[#F7F1E5] hover:text-white font-dm font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer border border-[#B08A4A]/40"
+                        className="w-full group/btn inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#FE7613] hover:bg-[#e0650d] text-white font-dm font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer border border-[#FE7613]/40"
                       >
                         <span>{card.actionLabel || "Explore"}</span>
-                        <ArrowUpRight className="w-4 h-4 text-[#F7F1E5] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        <ArrowUpRight className="w-4 h-4 text-white group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                       </button>
                     </div>
                   </motion.div>

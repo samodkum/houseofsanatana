@@ -31,13 +31,13 @@ export const ScrapbookConnectSection: React.FC<ScrapbookConnectSectionProps> = (
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-16 sm:py-24 px-4 sm:px-8 select-none">
+    <section className="relative w-full overflow-hidden bg-[#FEFBF2] py-16 sm:py-24 px-4 sm:px-8 select-none">
       
       {/* Subtle paper grain texture pattern */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-40 mix-blend-multiply"
         style={{
-          backgroundImage: `radial-gradient(#D6CEBE 0.75px, transparent 0.75px), radial-gradient(#D6CEBE 0.75px, #FFF8E7 0.75px)`,
+          backgroundImage: `radial-gradient(#D6CEBE 0.75px, transparent 0.75px), radial-gradient(#D6CEBE 0.75px, #FEFBF2 0.75px)`,
           backgroundSize: '30px 30px',
           backgroundPosition: '0 0, 15px 15px'
         }}
@@ -57,12 +57,12 @@ export const ScrapbookConnectSection: React.FC<ScrapbookConnectSectionProps> = (
           <div className="lg:col-span-7 flex flex-col items-start lg:pl-10 z-20 max-w-xl">
             
             {/* Title: "let's connect" in elegant lowercase serif */}
-            <h2 className="font-cormorant text-5xl sm:text-6xl md:text-[68px] font-light text-[#1F1B18] tracking-tight leading-[1.05] mb-5">
+            <h2 className="font-cormorant text-5xl sm:text-6xl md:text-[68px] font-light text-[#221508] tracking-tight leading-[1.05] mb-5">
               let's connect
             </h2>
 
             {/* Conversational editorial paragraph */}
-            <p className="font-dm text-xs sm:text-[13px] md:text-sm text-[#4A423B] leading-relaxed max-w-lg mb-6">
+            <p className="font-dm text-xs sm:text-[13px] md:text-sm text-[#3D2619] leading-relaxed max-w-lg mb-6">
               We don't just believe in the art of travelling and recording, but collecting,
               personalising, making something count and making something truly yours.
               We stand by our values — connect with us to collaborate, share archival discoveries, or craft your journey.
@@ -72,7 +72,7 @@ export const ScrapbookConnectSection: React.FC<ScrapbookConnectSectionProps> = (
             <button
               type="button"
               onClick={() => setIsContactModalOpen(true)}
-              className="py-1.5 px-6 rounded-full border border-[#3A332C]/40 hover:border-[#1A1612] bg-transparent hover:bg-[#1A1612] text-[#3A332C] hover:text-white font-dm text-xs sm:text-[13px] transition-all duration-300 cursor-pointer active:scale-95 shadow-2xs"
+              className="py-1.5 px-6 rounded-full border border-[#C59239]/40 hover:border-[#FE7613] bg-transparent hover:bg-[#FE7613] text-[#221508] hover:text-white font-dm text-xs sm:text-[13px] transition-all duration-300 cursor-pointer active:scale-95 shadow-2xs"
             >
               contact
             </button>
@@ -244,36 +244,36 @@ export const ScrapbookConnectSection: React.FC<ScrapbookConnectSectionProps> = (
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 15 }}
-              className="relative w-full max-w-lg bg-[#FAF7F0] rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#D9CDB8] text-[#1A1612]"
+              className="relative w-full max-w-lg bg-[#FEFBF2] rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#C59239]/40 text-[#221508]"
             >
               {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setIsContactModalOpen(false)}
-                className="absolute top-5 right-5 w-8 h-8 rounded-full bg-stone-200/80 hover:bg-[#1A1612] text-stone-700 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="absolute top-5 right-5 w-8 h-8 rounded-full bg-stone-200/80 hover:bg-[#221508] text-stone-700 hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
 
               <div className="mb-6">
-                <span className="font-script text-2xl text-[#E05244] block">
+                <span className="font-script text-2xl text-[#FE7613] block">
                   Write to House of Sanatan
                 </span>
-                <h3 className="font-cormorant text-3xl font-light text-[#1F1B18] tracking-tight">
+                <h3 className="font-cormorant text-3xl font-light text-[#221508] tracking-tight">
                   let's connect
                 </h3>
-                <p className="font-dm text-xs text-stone-600 mt-1">
+                <p className="font-dm text-xs text-[#3D2619] mt-1">
                   Whether sharing an ancient manuscript, inquiring about sacred yatras, or exploring collaborations.
                 </p>
               </div>
 
               {submitted ? (
                 <div className="py-10 text-center space-y-3">
-                  <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto animate-bounce" />
-                  <h4 className="font-cormorant text-2xl font-bold text-[#1A1612]">
+                  <CheckCircle2 className="w-12 h-12 text-[#607427] mx-auto animate-bounce" />
+                  <h4 className="font-cormorant text-2xl font-bold text-[#221508]">
                     Message Received
                   </h4>
-                  <p className="font-dm text-xs text-stone-600 max-w-xs mx-auto">
+                  <p className="font-dm text-xs text-[#3D2619] max-w-xs mx-auto">
                     Thank you for connecting with us. Our archivist team will reply with reverence shortly.
                   </p>
                 </div>
@@ -289,7 +289,7 @@ export const ScrapbookConnectSection: React.FC<ScrapbookConnectSectionProps> = (
                       value={nameInput}
                       onChange={(e) => setNameInput(e.target.value)}
                       placeholder="e.g. Radhika Sharma"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D9CDB8] text-xs font-dm text-[#1A1612] focus:outline-none focus:border-[#1A1612]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#C59239]/40 text-xs font-dm text-[#221508] focus:outline-none focus:border-[#FE7613]"
                     />
                   </div>
 
@@ -303,7 +303,7 @@ export const ScrapbookConnectSection: React.FC<ScrapbookConnectSectionProps> = (
                       value={emailInput}
                       onChange={(e) => setEmailInput(e.target.value)}
                       placeholder="your.email@example.com"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D9CDB8] text-xs font-dm text-[#1A1612] focus:outline-none focus:border-[#1A1612]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#C59239]/40 text-xs font-dm text-[#221508] focus:outline-none focus:border-[#FE7613]"
                     />
                   </div>
 
@@ -317,17 +317,17 @@ export const ScrapbookConnectSection: React.FC<ScrapbookConnectSectionProps> = (
                       value={messageInput}
                       onChange={(e) => setMessageInput(e.target.value)}
                       placeholder="Share what's on your mind or what you wish to create..."
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D9CDB8] text-xs font-dm text-[#1A1612] focus:outline-none focus:border-[#1A1612]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#C59239]/40 text-xs font-dm text-[#221508] focus:outline-none focus:border-[#FE7613]"
                     />
                   </div>
 
                   <div className="pt-2 flex items-center justify-between">
-                    <span className="font-script text-base text-stone-500">
+                    <span className="font-script text-base text-[#C59239]">
                       namaste &amp; gratitude
                     </span>
                     <button
                       type="submit"
-                      className="py-2.5 px-6 rounded-full bg-[#1A1612] hover:bg-[#332A22] text-white font-dm text-xs font-semibold tracking-wide flex items-center gap-2 cursor-pointer transition-all active:scale-95"
+                      className="py-2.5 px-6 rounded-full bg-[#FE7613] hover:bg-[#e0650d] text-white font-dm text-xs font-semibold tracking-wide flex items-center gap-2 cursor-pointer transition-all active:scale-95"
                     >
                       <span>Send Note</span>
                       <Send className="w-3.5 h-3.5" />

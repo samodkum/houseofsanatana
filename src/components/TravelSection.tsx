@@ -4,7 +4,7 @@ import { TRAVEL_PACKAGES } from '../data/mockData';
 import { YatraPackage } from '../types/homepage';
 import { YatraModal } from './YatraModal';
 import { TiltCard } from './unlumen-ui/tilt-card';
-import { Compass, Sparkles, ArrowRight, X, Clock, MapPin } from 'lucide-react';
+import { Sparkles, ArrowRight, X, Clock, MapPin } from 'lucide-react';
 
 /** Luxury Pilgrimage Yatra Airplane (3/4 Banking Perspective with Both Wings Visible & Pearl-Ivory Livery) */
 function HorizontalYatraAirplane({ className = "w-28 sm:w-34 h-14 sm:h-16" }: { className?: string }) {
@@ -91,8 +91,8 @@ function HorizontalYatraAirplane({ className = "w-28 sm:w-34 h-14 sm:h-16" }: { 
           strokeLinejoin="round"
         />
         {/* Sacred Tail Emblem */}
-        <circle cx="18" cy="9" r="3.6" fill="#8F6E5B" stroke="#705B4C" strokeWidth="0.8" />
-        <circle cx="18" cy="9" r="1.6" fill="#F7F1E5" />
+        <circle cx="18" cy="9" r="3.6" fill="#C59239" stroke="#705B4C" strokeWidth="0.8" />
+        <circle cx="18" cy="9" r="1.6" fill="#FEFBF2" />
 
         {/* Near Elevator */}
         <path
@@ -115,7 +115,7 @@ function HorizontalYatraAirplane({ className = "w-28 sm:w-34 h-14 sm:h-16" }: { 
 
         {/* Refined Taupe & Copper Cheatline (Livery Stripe) */}
         <path d="M 22 33 Q 85 35 156 33" stroke="#705B4C" strokeWidth="1.4" strokeLinecap="round" />
-        <path d="M 26 35 Q 85 37 150 35" stroke="#C7833D" strokeWidth="0.8" strokeLinecap="round" />
+        <path d="M 26 35 Q 85 37 150 35" stroke="#C59239" strokeWidth="0.8" strokeLinecap="round" />
 
         {/* Sleek Wraparound Cockpit Glass */}
         <path
@@ -151,8 +151,8 @@ function HorizontalYatraAirplane({ className = "w-28 sm:w-34 h-14 sm:h-16" }: { 
 
         {/* Near Jet Turbine Engine */}
         <rect x="66" y="48" width="28" height="10" rx="5" fill="url(#engineNacelle)" stroke="#705B4C" strokeWidth="1" />
-        <ellipse cx="94" cy="53" rx="3" ry="5" fill="#18181B" stroke="#8F6E5B" strokeWidth="0.8" />
-        <line x1="70" y1="53" x2="88" y2="53" stroke="#8F6E5B" strokeWidth="0.75" />
+        <ellipse cx="94" cy="53" rx="3" ry="5" fill="#18181B" stroke="#C59239" strokeWidth="0.8" />
+        <line x1="70" y1="53" x2="88" y2="53" stroke="#C59239" strokeWidth="0.75" />
       </g>
     </svg>
   );
@@ -187,9 +187,9 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
     title: 'Starting Yatra',
     sanskrit: '॥ आरम्भ यात्रा ॥',
     colorName: 'Ivory Base',
-    hex: '#F7F1E5',
+    hex: '#FEFBF2',
     isLight: true,
-    accentBorder: '#B08A4A',
+    accentBorder: '#C59239',
     tag: 'Base Departure'
   },
   {
@@ -197,10 +197,10 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
     stopNumber: 1,
     title: 'Puri Jagannath Dham',
     sanskrit: '॥ भागीरथी सलिल ॥',
-    colorName: 'Sand Beige',
-    hex: '#D9C6A8',
-    isLight: true,
-    accentBorder: '#B08A4A',
+    colorName: 'Water Blue',
+    hex: '#3DB3E4',
+    isLight: false,
+    accentBorder: '#C59239',
     tag: 'Stop 01 • Puri'
   },
   {
@@ -208,10 +208,10 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
     stopNumber: 2,
     title: 'Kailash Mansarovar Yatra',
     sanskrit: '॥ अनन्त वायु ॥',
-    colorName: 'Soft Sage Olive',
-    hex: '#66705A',
+    colorName: 'Wind Blue',
+    hex: '#0A4C83',
     isLight: false,
-    accentBorder: '#D9C6A8',
+    accentBorder: '#3DB3E4',
     tag: 'Stop 02 • Kailash'
   },
   {
@@ -219,10 +219,10 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
     stopNumber: 3,
     title: 'Kolkata Kali Darshan',
     sanskrit: '॥ दिव्य कुङ्कुम ॥',
-    colorName: 'Taupe Brown',
-    hex: '#343C42',
+    colorName: 'Ruby Red',
+    hex: '#98555E',
     isLight: false,
-    accentBorder: '#B08A4A',
+    accentBorder: '#C59239',
     tag: 'Stop 03 • Kolkata'
   },
   {
@@ -230,10 +230,10 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
     stopNumber: 4,
     title: 'Kamakhya Shakti Peeth',
     sanskrit: '॥ पावक अग्नि ॥',
-    colorName: 'Muted Saffron',
-    hex: '#C7833D',
+    colorName: 'Fire Orange',
+    hex: '#FE7613',
     isLight: false,
-    accentBorder: '#D9C6A8',
+    accentBorder: '#C59239',
     tag: 'Stop 04 • Kamakhya'
   },
   {
@@ -241,10 +241,10 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
     stopNumber: 5,
     title: 'Khatu Shyam - Vrindavan',
     sanskrit: '॥ तुलसी दल ॥',
-    colorName: 'Soft Sage Olive',
-    hex: '#66705A',
+    colorName: 'Mountain Green',
+    hex: '#607427',
     isLight: false,
-    accentBorder: '#B08A4A',
+    accentBorder: '#C59239',
     tag: 'Stop 05 • Vrindavan'
   },
   {
@@ -252,10 +252,10 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
     stopNumber: 6,
     title: 'All Sacred Yatras & Circuits',
     sanskrit: '॥ सुवर्ण तेजः ॥',
-    colorName: 'Antique Gold',
-    hex: '#B08A4A',
+    colorName: 'Sacred Gold',
+    hex: '#C59239',
     isLight: false,
-    accentBorder: '#F7F1E5',
+    accentBorder: '#FEFBF2',
     tag: 'Grand Consecration'
   }
 ];
@@ -364,19 +364,19 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
     const unsubscribe = smoothProgress.on("change", (latest) => {
       let stage = 0;
       if (latest < 0.045) {
-        stage = 0; // Starting point before scrolling: Base Ivory (#F7F1E5)
+        stage = 0; // Starting point before scrolling: Base Ivory (#FEFBF2)
       } else if (latest < 0.16) {
-        stage = 1; // Stop 1 (Puri Jagannath): Sand Beige (#D9C6A8)
+        stage = 1; // Stop 1 (Puri Jagannath): Water Blue (#3DB3E4)
       } else if (latest < 0.33) {
-        stage = 2; // Stop 2 (Kailash Mansarovar): Soft Sage Olive (#66705A)
+        stage = 2; // Stop 2 (Kailash Mansarovar): Wind Blue (#0A4C83)
       } else if (latest < 0.51) {
-        stage = 3; // Stop 3 (Kolkata Kali Darshan): Taupe Brown (#343C42)
+        stage = 3; // Stop 3 (Kolkata Kali Darshan): Ruby Red (#98555E)
       } else if (latest < 0.69) {
-        stage = 4; // Stop 4 (Kamakhya Shakti Peeth): Muted Saffron (#C7833D)
+        stage = 4; // Stop 4 (Kamakhya Shakti Peeth): Fire Orange (#FE7613)
       } else if (latest < 0.88) {
-        stage = 5; // Stop 5 (Khatu Shyam - Vrindavan): Soft Sage Olive (#66705A)
+        stage = 5; // Stop 5 (Khatu Shyam - Vrindavan): Mountain Green (#607427)
       } else {
-        stage = 6; // Final Station (All Packages): Antique Gold (#B08A4A)
+        stage = 6; // Final Station (All Packages): Sacred Gold (#C59239)
       }
       if (stage !== lastStage) {
         lastStage = stage;
@@ -393,7 +393,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
   return (
     <section
       id="travel-packages"
-      className="relative w-full bg-[#F7F1E5] select-none"
+      className="relative w-full bg-[#FEFBF2] select-none"
     >
       {/* Anchor alias for #travel */}
       <div id="travel" className="absolute top-0 left-0 pointer-events-none" />
@@ -402,24 +402,12 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
       {/* 1. SECTION HEADING: BOLD POSTER WITH SANATANA MOTIFS     */}
       {/* Inspired by bold typography intertwined with sacred icons*/}
       {/* ======================================================== */}
-      <div className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-[#F7F1E5] text-center overflow-hidden select-none">
+      <div className="relative w-full pt-6 sm:pt-10 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 bg-[#FEFBF2] text-center overflow-hidden select-none">
         {/* Sacred Ambient Background Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#B08A4A]/15 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#C59239]/15 rounded-full blur-[140px] pointer-events-none" />
 
         <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center">
           
-          {/* Eyebrow Inscription */}
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#8F6E5B]/10 border border-[#8F6E5B]/20 text-[#8F6E5B] text-xs font-dm font-semibold tracking-widest uppercase mb-6 shadow-xs"
-          >
-            <Compass className="w-3.5 h-3.5 text-[#8F6E5B]" />
-            <span>॥ अनन्त तीर्थ यात्रा ॥ &bull; REIMAGINING PILGRIMAGE</span>
-          </motion.div>
-
           {/* ==================================================== */}
           {/* BOLD 3-LINE POSTER HERO                              */}
           {/* ==================================================== */}
@@ -434,11 +422,11 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                 transition: { staggerChildren: 0.07, delayChildren: 0.05 },
               },
             }}
-            className="relative w-full max-w-5xl my-2 sm:my-4 flex flex-col items-center select-none"
+            className="relative w-full max-w-5xl mt-0 mb-2 sm:mb-4 flex flex-col items-center select-none"
           >
             {/* ----------------- LINE 1: WHO SAYS + CIRCULAR SEAL ----------------- */}
             <div className="relative flex items-center justify-center gap-3 sm:gap-6 flex-wrap z-10">
-              <div className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.88] uppercase flex items-center gap-3 sm:gap-5">
+              <div className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.88] uppercase flex items-center gap-3 sm:gap-5">
                 {["WHO", "SAYS"].map((word, i) => (
                   <motion.span 
                     key={i}
@@ -451,7 +439,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                         transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } 
                       }
                     }}
-                    whileHover={{ scale: 1.05, y: -6, color: "#8F6E5B" }}
+                    whileHover={{ scale: 1.05, y: -6, color: "#C59239" }}
                     className="inline-block cursor-pointer transition-colors"
                   >
                     {word}
@@ -467,7 +455,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                 transition={{ type: "spring", stiffness: 280, damping: 18, delay: 0.3 }}
                 className="relative inline-block shrink-0 cursor-pointer group z-20 ml-2 sm:ml-4 -mt-2 sm:-mt-4 md:-mt-6"
               >
-                <div className="relative w-22 h-22 sm:w-28 sm:h-28 md:w-34 md:h-34 lg:w-38 lg:h-38 drop-shadow-[0_16px_35px_rgba(143,110,91,0.38)] transition-transform duration-300 group-hover:scale-108">
+                <div className="relative w-22 h-22 sm:w-28 sm:h-28 md:w-34 md:h-34 lg:w-38 lg:h-38 drop-shadow-[0_16px_35px_rgba(10,76,131,0.3)] transition-transform duration-300 group-hover:scale-108">
                   
                   {/* 1. Rotating Outer Celestial Starburst & Compass Text Ring */}
                   <motion.svg
@@ -487,14 +475,14 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                     {/* 8-Pointed Subtle Orbiting Star Ticks */}
                     {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
                       <g key={`star-tick-${angle}`} transform={`rotate(${angle} 100 100)`}>
-                        <polygon points="100,6 102.5,12 100,10 97.5,12" fill="#C7833D" />
+                        <polygon points="100,6 102.5,12 100,10 97.5,12" fill="#FE7613" />
                       </g>
                     ))}
 
                     {/* Circular Rotating Pilgrimage Text: Sanatana Dham Yatras */}
                     <text
-                      fill="#8F6E5B"
-                      className="font-dm font-bold text-[9.5px] uppercase tracking-[0.22em]"
+                      fill="#C59239"
+                      className="font-montserrat font-bold text-[9.5px] uppercase tracking-[0.22em]"
                     >
                       <textPath
                         href="#travelYatraCirclePath"
@@ -508,7 +496,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                   {/* 2. Static Inner Sacred Himalayan Mandir & Compass Rose Medallion */}
                   <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full select-none">
                     {/* Outer 8-Pointed Celestial Compass Star Points */}
-                    <g fill="#B08A4A" opacity="0.9">
+                    <g fill="#C59239" opacity="0.95">
                       <polygon points="100,22 108,54 100,50 92,54" />
                       <polygon points="100,178 108,146 100,150 92,146" />
                       <polygon points="22,100 54,92 50,100 54,108" />
@@ -520,11 +508,11 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                     </g>
 
                     {/* Inner Circular Solid Medallion */}
-                    <circle cx="100" cy="100" r="64" fill="#8F6E5B" stroke="#B08A4A" strokeWidth="2.5" />
-                    <circle cx="100" cy="100" r="59" fill="none" stroke="#D9C6A8" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
+                    <circle cx="100" cy="100" r="64" fill="#0A4C83" stroke="#C59239" strokeWidth="2.5" />
+                    <circle cx="100" cy="100" r="59" fill="none" stroke="#3DB3E4" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.7" />
 
                     {/* Rising Surya Teertha Sun Rays Background */}
-                    <g stroke="#C7833D" strokeWidth="1" opacity="0.5" strokeLinecap="round">
+                    <g stroke="#FE7613" strokeWidth="1" opacity="0.65" strokeLinecap="round">
                       <line x1="100" y1="100" x2="68" y2="60" />
                       <line x1="100" y1="100" x2="84" y2="52" />
                       <line x1="100" y1="100" x2="100" y2="48" />
@@ -535,40 +523,40 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                     {/* Sacred Himalayan Mountain Peak Silhouette */}
                     <path
                       d="M 52,132 L 80,95 L 98,112 L 122,86 L 148,132 Z"
-                      fill="#765846"
-                      opacity="0.8"
+                      fill="#607427"
+                      opacity="0.85"
                     />
 
                     {/* Sacred Himalayan Temple Shikhara & Spire */}
-                    <g fill="#F7F1E5" stroke="#B08A4A" strokeWidth="0.8">
+                    <g fill="#FEFBF2" stroke="#C59239" strokeWidth="0.8">
                       {/* Kalasha Finial & Fluttering Saffron Flag (Dhwaja) */}
-                      <path d="M 100,56 L 100,66" stroke="#D9C6A8" strokeWidth="1.5" />
-                      <polygon points="100,57 113,62 100,67" fill="#C7833D" stroke="none" />
-                      <circle cx="100" cy="67" r="2.5" fill="#D9C6A8" />
+                      <path d="M 100,56 L 100,66" stroke="#C59239" strokeWidth="1.5" />
+                      <polygon points="100,57 113,62 100,67" fill="#FE7613" stroke="none" />
+                      <circle cx="100" cy="67" r="2.5" fill="#C59239" />
                       
                       {/* Stepped Curvilinear Shikhara Spire */}
-                      <path d="M 100,68 C 94,76 90,88 88,104 L 112,104 C 110,88 106,76 100,68 Z" fill="#F7F1E5" />
+                      <path d="M 100,68 C 94,76 90,88 88,104 L 112,104 C 110,88 106,76 100,68 Z" fill="#FEFBF2" />
                       
                       {/* Shikhara Horizontal Ribs */}
-                      <line x1="94" y1="78" x2="106" y2="78" stroke="#8F6E5B" strokeWidth="0.8" />
-                      <line x1="91" y1="88" x2="109" y2="88" stroke="#8F6E5B" strokeWidth="0.8" />
-                      <line x1="89" y1="96" x2="111" y2="96" stroke="#8F6E5B" strokeWidth="0.8" />
+                      <line x1="94" y1="78" x2="106" y2="78" stroke="#C59239" strokeWidth="0.8" />
+                      <line x1="91" y1="88" x2="109" y2="88" stroke="#C59239" strokeWidth="0.8" />
+                      <line x1="89" y1="96" x2="111" y2="96" stroke="#C59239" strokeWidth="0.8" />
 
                       {/* Garbhagriha / Mandapa Base */}
-                      <rect x="82" y="104" width="36" height="26" rx="1.5" fill="#F7F1E5" />
+                      <rect x="82" y="104" width="36" height="26" rx="1.5" fill="#FEFBF2" />
                       
                       {/* Temple Arched Sanctum Doorway */}
-                      <path d="M 94,130 L 94,115 C 94,110 106,110 106,115 L 106,130 Z" fill="#332C25" stroke="none" />
-                      <circle cx="100" cy="116" r="2" fill="#C7833D" />
+                      <path d="M 94,130 L 94,115 C 94,110 106,110 106,115 L 106,130 Z" fill="#051C2C" stroke="none" />
+                      <circle cx="100" cy="116" r="2" fill="#FE7613" />
 
                       {/* Temple Plinth Foundation Steps */}
-                      <rect x="76" y="130" width="48" height="4" rx="1" fill="#D9C6A8" />
-                      <rect x="72" y="134" width="56" height="4" rx="1" fill="#B08A4A" />
+                      <rect x="76" y="130" width="48" height="4" rx="1" fill="#DEBEAB" />
+                      <rect x="72" y="134" width="56" height="4" rx="1" fill="#C59239" />
                     </g>
 
                     {/* Small Sparkling Celestial Star Accents */}
-                    <circle cx="68" cy="74" r="1.5" fill="#D9C6A8" opacity="0.9" />
-                    <circle cx="132" cy="72" r="1.8" fill="#D9C6A8" opacity="0.9" />
+                    <circle cx="68" cy="74" r="1.5" fill="#E4B968" opacity="0.9" />
+                    <circle cx="132" cy="72" r="1.8" fill="#E4B968" opacity="0.9" />
                   </svg>
 
                 </div>
@@ -587,13 +575,13 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                     transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } 
                   }
                 }}
-                whileHover={{ scale: 1.06, y: -6 }}
-                className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold tracking-[-0.02em] leading-[0.88] uppercase inline-block cursor-pointer text-[#8F6E5B]"
+                whileHover={{ scale: 1.06, y: -6, color: "#C59239" }}
+                className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold tracking-[-0.02em] leading-[0.88] uppercase inline-block cursor-pointer text-[#221508] transition-colors"
               >
                 PILGRIMAGE
               </motion.span>
 
-              <div className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.88] uppercase flex items-center gap-2 sm:gap-4">
+              <div className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.88] uppercase flex items-center gap-2 sm:gap-4">
                 {["IS", "JUST"].map((word, i) => (
                   <motion.span 
                     key={i}
@@ -606,7 +594,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                         transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } 
                       }
                     }}
-                    whileHover={{ scale: 1.05, y: -6, color: "#8F6E5B" }}
+                    whileHover={{ scale: 1.05, y: -6, color: "#C59239" }}
                     className="inline-block cursor-pointer transition-colors"
                   >
                     {word}
@@ -617,7 +605,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
 
             {/* ----------------- LINE 3: FOR THE ELDERS? ----------------- */}
             <div className="relative flex items-center justify-center gap-3 sm:gap-6 flex-wrap z-10">
-              <div className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.88] uppercase inline-flex items-baseline select-none gap-2 sm:gap-4">
+              <div className="font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.88] uppercase inline-flex items-baseline select-none gap-2 sm:gap-4">
                 {["FOR", "THE"].map((word, i) => (
                   <motion.span 
                     key={i}
@@ -630,7 +618,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                         transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } 
                       }
                     }}
-                    whileHover={{ scale: 1.05, y: -6, color: "#8F6E5B" }}
+                    whileHover={{ scale: 1.05, y: -6, color: "#C59239" }}
                     className="inline-block cursor-pointer transition-colors"
                   >
                     {word}
@@ -647,13 +635,13 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                       transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } 
                     }
                   }}
-                  whileHover={{ scale: 1.08, y: -6, color: "#8F6E5B" }}
-                  className="inline-block text-[#8F6E5B] cursor-pointer transition-colors"
+                  whileHover={{ scale: 1.08, y: -6, color: "#C59239" }}
+                  className="inline-block text-[#221508] cursor-pointer transition-colors"
                 >
                   ELDERS
                 </motion.span>
                 
-                {/* Bouncing Animated Question Mark */}
+                {/* Bouncing Animated Question Mark in Fire Orange */}
                 <motion.span 
                   variants={{
                     hidden: { opacity: 0, scale: 0, y: 20 },
@@ -674,8 +662,8 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                     repeat: Infinity, 
                     ease: "easeInOut" 
                   }}
-                  whileHover={{ scale: 1.35, rotate: 22, color: "#8F6E5B" }}
-                  className="text-[#8F6E5B] inline-block ml-0.5 origin-bottom cursor-pointer transition-colors"
+                  whileHover={{ scale: 1.35, rotate: 22, color: "#FE7613" }}
+                  className="text-[#FE7613] inline-block ml-0.5 origin-bottom cursor-pointer transition-colors"
                 >
                   ?
                 </motion.span>
@@ -690,7 +678,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 sm:mt-8 font-dm text-sm sm:text-base md:text-lg text-[#8F6E5B]/85 font-medium leading-relaxed max-w-2xl mx-auto"
+            className="mt-6 sm:mt-8 font-dm text-sm sm:text-base md:text-lg text-[#221508] font-semibold leading-relaxed max-w-2xl mx-auto"
           >
             ॥ तीर्थात सुखम् ॥ Reimagining Bharat&apos;s sacred Dham yatras with luxury multi-gen transport, reserved VIP Garbhagriha darshans &amp; certified Vedic scholars.
           </motion.p>
@@ -802,21 +790,6 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                 }}
                 className="absolute -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto filter drop-shadow-[0_14px_28px_rgba(112,91,76,0.35)] will-change-transform transform-gpu"
               >
-                {/* Floating Flight Tag Badge */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-md bg-[#241306] border border-[#f59e0b]/80 text-[10px] font-dm font-semibold text-[#fde68a] uppercase tracking-wider shadow-2xl flex items-center gap-1.5 pointer-events-none">
-                  <span 
-                    className="w-2 h-2 rounded-full animate-ping"
-                    style={{ backgroundColor: currentStageConfig.hex }}
-                  />
-                  <span>
-                    {activeStage === 0 
-                      ? 'Yatra Flight' 
-                      : activeStage <= 5 
-                        ? `Stop 0${activeStage}` 
-                        : 'Destination'}
-                  </span>
-                </div>
-
                 {/* Horizontal Airplane Logo */}
                 <div className="relative group cursor-pointer hover:scale-105 transition-transform duration-300">
                   <HorizontalYatraAirplane className="w-28 sm:w-34 h-14 sm:h-16" />
@@ -849,11 +822,13 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                       <div
                         className={`flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-300 shadow-xl ${
                           isCurrent
-                            ? 'bg-[#b45309] border-[#fde047] scale-125 shadow-[0_0_20px_rgba(245,158,11,0.95)]'
-                            : 'bg-[#1b1007] border-[#d49a3f]/80'
+                            ? 'bg-[#FE7613] border-[#FEFBF2] scale-125 shadow-[0_0_20px_rgba(254,118,19,0.95)]'
+                            : 'bg-[#FEFBF2] border-[#C59239] shadow-md'
                         }`}
                       >
-                        <span className="font-cormorant text-[13px] font-semibold text-[#fde047]">
+                        <span className={`font-cormorant text-[13px] font-bold ${
+                          isCurrent ? 'text-white' : 'text-[#221508]'
+                        }`}>
                           0{stop.stopNumber}
                         </span>
                       </div>
@@ -869,10 +844,13 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                         imageSrc={pkg.image}
                         imageAlt={pkg.title}
                         ctaLabel="View More Details"
-                        onSelect={() => setInspectYatra(pkg)}
+                        onSelect={() => {
+                          window.location.hash = `yatra-${pkg.id}`;
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
                         className={
                           isCurrent
-                            ? 'ring-2 ring-[#f59e0b] shadow-[0_25px_50px_rgba(245,158,11,0.35)] scale-[1.03]'
+                            ? 'ring-2 ring-[#FE7613] shadow-[0_25px_50px_rgba(254,118,19,0.35)] scale-[1.03]'
                             : ''
                         }
                       />
@@ -896,14 +874,16 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                 <div className="absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 z-30 flex items-center justify-center">
                   <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-300 shadow-xl ${
                     activeStage >= 6
-                      ? 'bg-[#b45309] border-[#fde047] scale-125 shadow-[0_0_20px_rgba(245,158,11,0.95)]'
-                      : 'bg-[#1b1007] border-[#d49a3f]/80'
+                      ? 'bg-[#FE7613] border-[#FEFBF2] scale-125 shadow-[0_0_20px_rgba(254,118,19,0.95)]'
+                      : 'bg-[#FEFBF2] border-[#C59239] shadow-md'
                   }`}>
-                    <Sparkles className="w-3.5 h-3.5 text-[#fde047]" />
+                    <Sparkles className={`w-3.5 h-3.5 ${
+                      activeStage >= 6 ? 'text-white' : 'text-[#C59239]'
+                    }`} />
                   </div>
                 </div>
 
-                {/* Non-Square Rectangular Luxury CTA Card */}
+                {/* Non-Square Rectangular Luxury CTA Card (Light Sacred Ivory) */}
                 <div
                   onClick={() => {
                     if (onViewAllYatras) {
@@ -912,37 +892,37 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                       setShowAllPackagesModal(true);
                     }
                   }}
-                  className={`relative w-[290px] sm:w-[320px] p-5 rounded-2xl bg-gradient-to-br from-[#343C42] via-[#7D5E4C] to-[#694D3D] border-2 border-[#B08A4A]/50 hover:border-[#D9C6A8] shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_25px_60px_rgba(51,44,37,0.5)] transition-all duration-300 group cursor-pointer flex flex-col justify-between select-none ${
+                  className={`relative w-[290px] sm:w-[320px] p-5 rounded-2xl bg-gradient-to-b from-[#FEFBF2] via-[#FDF9F0] to-[#F5EEDD] border-2 border-[#C59239] shadow-[0_20px_45px_rgba(34,21,8,0.22)] hover:shadow-[0_25px_60px_rgba(197,146,57,0.35)] transition-all duration-300 group cursor-pointer flex flex-col justify-between select-none ${
                     activeStage >= 6
-                      ? 'ring-2 ring-[#B08A4A] shadow-[0_25px_50px_rgba(176,138,74,0.35)] scale-[1.03]'
+                      ? 'ring-2 ring-[#FE7613] shadow-[0_25px_50px_rgba(254,118,19,0.35)] scale-[1.03]'
                       : ''
                   }`}
                 >
                   {/* Glowing background ambient gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#C7833D]/15 via-[#B08A4A]/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#FE7613]/10 via-[#C59239]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
 
                   {/* Top Tag & Sacred Counter */}
                   <div className="relative z-10 flex items-center justify-between mb-3">
-                    <span className="px-2.5 py-1 rounded-full bg-[#66705A]/30 border border-[#66705A]/60 text-[#D9C6A8] text-[10px] font-dm font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                      <Sparkles className="w-3 h-3 text-[#D9C6A8]" />
+                    <span className="px-2.5 py-1 rounded-full bg-[#C59239]/15 border border-[#C59239]/40 text-[#3D2619] text-[10px] font-dm font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs">
+                      <Sparkles className="w-3 h-3 text-[#FE7613]" />
                       <span>Full Catalog</span>
                     </span>
-                    <span className="text-[10px] font-dm font-bold text-[#D9C6A8] uppercase tracking-widest">
+                    <span className="text-[10px] font-dm font-bold text-[#C59239] uppercase tracking-widest">
                       20+ Yatras
                     </span>
                   </div>
 
                   {/* Main Title & Teaser */}
                   <div className="relative z-10 mb-4">
-                    <h3 className="font-cormorant text-2xl sm:text-3xl font-semibold text-[#F7F1E5] group-hover:text-[#D9C6A8] transition-colors leading-tight mb-2">
+                    <h3 className="font-cormorant text-2xl sm:text-3xl font-bold text-[#221508] group-hover:text-[#FE7613] transition-colors leading-tight mb-2">
                       View All Packages
                     </h3>
-                    <p className="font-dm text-xs text-[#D9C6A8]/80 leading-relaxed">
+                    <p className="font-dm text-xs text-[#3D2619]/85 leading-relaxed">
                       Explore all 4 Dhams, 12 Jyotirlingas & 51 Shaktipeeth circuits across Bharat with VIP Darshan.
                     </p>
                   </div>
 
-                  {/* CTA Button in Muted Saffron & Antique Gold */}
+                  {/* CTA Button in Fire Orange */}
                   <button
                     type="button"
                     onClick={(e) => {
@@ -953,10 +933,10 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                         setShowAllPackagesModal(true);
                       }
                     }}
-                    className="relative z-10 w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#C7833D] hover:brightness-110 text-[#F7F1E5] font-dm font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-black/40 group-hover:scale-[1.02] active:scale-95 border border-[#D9C6A8]/40 cursor-pointer"
+                    className="relative z-10 w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#FE7613] via-[#FE8D3B] to-[#FE7613] hover:brightness-110 text-white font-dm font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md shadow-[#FE7613]/25 group-hover:scale-[1.02] active:scale-95 border border-[#FE7613]/30 cursor-pointer"
                   >
                     <span>View All Packages</span>
-                    <ArrowRight className="w-4 h-4 text-[#F7F1E5] group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -1049,7 +1029,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                       <span>{pkg.durationDays}D/{pkg.durationNights}N</span>
                     </span>
                     <span className="inline-flex items-center gap-1 text-[11px] font-dm font-bold text-[#fde047] group-hover:translate-x-0.5 transition-transform">
-                      <span>Itinerary</span>
+                      <span>Book Now</span>
                       <ArrowRight className="w-3 h-3" />
                     </span>
                   </div>

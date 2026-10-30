@@ -98,9 +98,9 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
         cx.clip();
       }
       const g = cx.createRadialGradient(W * 0.5, H * 0.55, 0, W * 0.5, H * 0.55, Math.max(H, W) * 0.75);
-      g.addColorStop(0, '#D48E44');
-      g.addColorStop(0.5, '#C7833D');
-      g.addColorStop(1, '#8C521B');
+      g.addColorStop(0, '#0A4C83');
+      g.addColorStop(0.5, '#073863');
+      g.addColorStop(1, '#221508');
       cx.fillStyle = g;
       cx.fillRect(-W * 2, -H * 2, W * 5, H * 5);
 
@@ -116,7 +116,7 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
         }
         cx.save();
         cx.globalAlpha = s.a * 0.85;
-        cx.fillStyle = '#F7F1E5';
+        cx.fillStyle = '#FEFBF2';
         cx.beginPath();
         cx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         cx.fill();
@@ -176,9 +176,9 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
     const drawLine = (alpha: number) => {
       cx.save();
       cx.globalAlpha = alpha;
-      cx.strokeStyle = '#F7F1E5';
+      cx.strokeStyle = '#E4B968';
       cx.lineWidth = 2.4;
-      cx.shadowColor = '#D9C6A8';
+      cx.shadowColor = '#FE7613';
       cx.shadowBlur = 16;
       cx.beginPath();
       curvyPath();
@@ -299,20 +299,20 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[99999] w-full h-full overflow-hidden bg-[#8C521B] pointer-events-auto select-none"
+      className="fixed inset-0 z-[99999] w-full h-full overflow-hidden bg-[#221508] pointer-events-auto select-none"
       style={{
-        background: 'radial-gradient(circle at 50% 55%, #D48E44 0%, #C7833D 50%, #8C521B 100%)',
+        background: 'radial-gradient(circle at 50% 55%, #0A4C83 0%, #073863 50%, #221508 100%)',
         fontFamily: "'Cinzel', 'Georgia', serif"
       }}
     >
       <style>{`
         @keyframes logoGlow {
           0%, 100% {
-            box-shadow: 0 0 16px rgba(247, 241, 229, 0.4), 0 0 32px rgba(217, 198, 168, 0.3);
+            box-shadow: 0 0 16px rgba(254, 251, 242, 0.4), 0 0 32px rgba(197, 146, 57, 0.3);
             transform: scale(1);
           }
           50% {
-            box-shadow: 0 0 32px rgba(247, 241, 229, 0.85), 0 0 60px rgba(217, 198, 168, 0.6);
+            box-shadow: 0 0 32px rgba(254, 251, 242, 0.85), 0 0 60px rgba(254, 118, 19, 0.6);
             transform: scale(1.04);
           }
         }
@@ -328,7 +328,7 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
       >
         {/* Sacred Circular Logo */}
         <div 
-          className="relative mb-4 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-[#D9C6A8]/80 flex items-center justify-center p-0.5 bg-[#1A1612]/40"
+          className="relative mb-4 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-[#C59239]/80 flex items-center justify-center p-0.5 bg-[#221508]/40"
           style={{
             animation: 'logoGlow 3s ease-in-out infinite'
           }}
@@ -341,13 +341,13 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
         </div>
 
         <div
-          className="text-2xl sm:text-3xl md:text-4xl text-[#F7F1E5] uppercase tracking-[4px] sm:tracking-[7px] md:tracking-[9px] font-semibold text-center pl-1 sm:pl-2"
+          className="text-2xl sm:text-3xl md:text-4xl text-[#FEFBF2] uppercase tracking-[4px] sm:tracking-[7px] md:tracking-[9px] font-semibold text-center pl-1 sm:pl-2"
           style={{ fontFamily: "'Cinzel', 'Georgia', serif" }}
         >
           House Of Sanatana
         </div>
 
-        <div className="text-[10px] sm:text-[11px] md:text-xs tracking-[4px] sm:tracking-[6px] text-[#F7F1E5]/90 uppercase mt-2 font-medium text-center">
+        <div className="text-[10px] sm:text-[11px] md:text-xs tracking-[4px] sm:tracking-[6px] text-[#FEFBF2]/90 uppercase mt-2 font-medium text-center">
           Welcomes You
         </div>
 
@@ -355,27 +355,27 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
         <div
           className="w-28 sm:w-36 h-[1px] my-5"
           style={{
-            background: 'linear-gradient(90deg, transparent, rgba(247, 241, 229, 0.7), transparent)'
+            background: 'linear-gradient(90deg, transparent, rgba(228, 185, 104, 0.7), transparent)'
           }}
         />
 
         {/* Four Pillars: Dharma, Satya, Karma, Seva */}
         <div className="flex items-center gap-6 sm:gap-8 md:gap-10">
           <div className="flex flex-col items-center">
-            <span className="text-sm sm:text-base text-[#F7F1E5] mb-1">☀</span>
-            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#F7F1E5] uppercase font-medium">Dharma</span>
+            <span className="text-sm sm:text-base text-[#FE7613] mb-1">☀</span>
+            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#FEFBF2] uppercase font-medium">Dharma</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-sm sm:text-base text-[#D9C6A8] mb-1">✦</span>
-            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#F7F1E5] uppercase font-medium">Satya</span>
+            <span className="text-sm sm:text-base text-[#E4B968] mb-1">✦</span>
+            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#FEFBF2] uppercase font-medium">Satya</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-sm sm:text-base text-[#66705A] mb-1">✿</span>
-            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#F7F1E5] uppercase font-medium">Karma</span>
+            <span className="text-sm sm:text-base text-[#607427] mb-1">✿</span>
+            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#FEFBF2] uppercase font-medium">Karma</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-sm sm:text-base text-[#D9C6A8] mb-1">☽</span>
-            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#F7F1E5] uppercase font-medium">Seva</span>
+            <span className="text-sm sm:text-base text-[#3DB3E4] mb-1">☽</span>
+            <span className="text-[8px] sm:text-[9px] tracking-[2px] text-[#FEFBF2] uppercase font-medium">Seva</span>
           </div>
         </div>
       </div>
@@ -388,13 +388,13 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
         <div className="w-full h-[2px] bg-black/25 overflow-hidden rounded-full">
           <div
             ref={pfRef}
-            className="h-full bg-gradient-to-r from-[#D9C6A8] to-[#F7F1E5] transition-all duration-75"
-            style={{ width: '0%', boxShadow: '0 0 10px #F7F1E5' }}
+            className="h-full bg-gradient-to-r from-[#FE7613] to-[#E4B968] transition-all duration-75"
+            style={{ width: '0%', boxShadow: '0 0 10px #FE7613' }}
           />
         </div>
         <div
           ref={pnRef}
-          className="mt-2.5 text-[10px] sm:text-[11px] tracking-[3px] text-[#F7F1E5] text-center font-mono font-medium"
+          className="mt-2.5 text-[10px] sm:text-[11px] tracking-[3px] text-[#FEFBF2] text-center font-mono font-medium"
         >
           0%
         </div>
@@ -403,7 +403,7 @@ export function SanatanaLoader({ onStartReveal, onComplete }: SanatanaLoaderProp
       {/* Bottom Mantra Strip */}
       <div
         ref={mtRef}
-        className="absolute bottom-5 sm:bottom-6 w-full text-center text-[7.5px] sm:text-[8.5px] tracking-[3px] text-[#F7F1E5]/80 uppercase pointer-events-none transition-opacity duration-300 px-4"
+        className="absolute bottom-5 sm:bottom-6 w-full text-center text-[7.5px] sm:text-[8.5px] tracking-[3px] text-[#FEFBF2]/80 uppercase pointer-events-none transition-opacity duration-300 px-4"
       >
         Dharma · Satya · Karma · Seva · Sanskriti
       </div>

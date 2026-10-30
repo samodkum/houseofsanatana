@@ -225,9 +225,9 @@ export const InteractiveBook: React.FC<InteractiveBookProps> = ({
       </motion.div>
 
       {/* Helpful Interactive Hint Under Book */}
-      <div className="mt-8 flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#26201B]/80 border border-[#D9C6A8]/40 backdrop-blur-md shadow-sm pointer-events-none">
-        <span className="w-2 h-2 rounded-full bg-[#C7833D] animate-ping" />
-        <span className="text-[11px] font-dm font-semibold text-[#D9C6A8] tracking-wider uppercase">
+      <div className="mt-8 flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#221508]/85 border border-[#C59239]/40 backdrop-blur-md shadow-sm pointer-events-none">
+        <span className="w-2 h-2 rounded-full bg-[#FE7613] animate-ping" />
+        <span className="text-[11px] font-dm font-semibold text-[#E4B968] tracking-wider uppercase">
           {flippedCount === 0
             ? 'Click Book To Open Sacred Compendium'
             : flippedCount < totalLeaves

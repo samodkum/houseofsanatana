@@ -38,6 +38,7 @@ import {
 } from '../data/travelData';
 import { YatraPackage } from '../types/homepage';
 import { YatraModal } from './YatraModal';
+import { YatraDetailPage } from './YatraDetailPage';
 import { SunIcon } from './SunIcon';
 import { Footer } from './Footer';
 import { HeaderActionButtons } from './HeaderActionButtons';
@@ -105,25 +106,17 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
     }
   };
 
-  const handleSelectPlaceFromMap = (yatraId: string, circuit: YatraCircuitType) => {
-    setSearchQuery('');
-    setSelectedCircuit('all');
-    setHighlightedPackageId(yatraId);
-    setTimeout(() => setHighlightedPackageId(null), 3500);
+  const handleSelectYatra = (yatra: YatraPackage) => {
+    setSelectedYatra(yatra);
+    window.location.hash = `yatra-${yatra.id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-    const catalogSec = document.getElementById('catalog');
-    if (catalogSec) {
-      catalogSec.scrollIntoView({ behavior: 'smooth' });
+  const handleSelectPlaceFromMap = (yatraId: string, circuit?: YatraCircuitType) => {
+    const pkg = EXPANDED_TRAVEL_PACKAGES.find(p => p.id === yatraId);
+    if (pkg) {
+      handleSelectYatra(pkg);
     }
-
-    setTimeout(() => {
-      const targetCard = document.getElementById(`package-${yatraId}`);
-      if (targetCard && packagesScrollRef.current) {
-        const containerLeft = packagesScrollRef.current.getBoundingClientRect().left;
-        const cardLeft = targetCard.getBoundingClientRect().left;
-        packagesScrollRef.current.scrollBy({ left: cardLeft - containerLeft - 30, behavior: 'smooth' });
-      }
-    }, 400);
   };
 
   // Custom Bespoke Pilgrimage Planner State
@@ -138,7 +131,6 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
   });
   const [customSubmitted, setCustomSubmitted] = useState(false);
 
-
   // Toast feedback
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -147,7 +139,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Synchronize hash routing with yatra modal
+  // Synchronize hash routing with yatra detail page
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash;
@@ -156,7 +148,10 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         const found = EXPANDED_TRAVEL_PACKAGES.find(p => p.id === yatraId);
         if (found) {
           setSelectedYatra(found);
+          return;
         }
+      } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages') {
+        setSelectedYatra(null);
       }
     };
     handleHash();
@@ -222,7 +217,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
   const handleOpenFeaturedYatra = () => {
     const pkg = EXPANDED_TRAVEL_PACKAGES.find(p => p.id === currentFeatured.yatraId);
     if (pkg) {
-      setSelectedYatra(pkg);
+      handleSelectYatra(pkg);
     }
   };
 
@@ -232,8 +227,49 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
     showToast('Your Bespoke Yatra request has been sanctified. Our Acharya will call you shortly.');
   };
 
+  // ========================================================
+  // CONDITIONAL RENDER: DEDICATED FULL TRAVEL PACKAGE PAGE
+  // (Identical pattern to ProductDetailPage on Sanatana Mall)
+  // ========================================================
+  if (selectedYatra) {
+    return (
+      <YatraDetailPage
+        yatra={selectedYatra}
+        onBackToYatras={() => {
+          setSelectedYatra(null);
+          window.location.hash = 'travel';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onSelectRelatedYatra={(relYatra) => {
+          handleSelectYatra(relYatra);
+        }}
+        onNavigateHome={onNavigateHome}
+        onNavigateMall={onNavigateMall}
+        onOpenCart={onOpenCart}
+        onOpenWishlist={onOpenWishlist}
+        onOpenAccount={onOpenAccount}
+        cartCount={cartCount}
+        wishlistCount={wishlistCount}
+        isWishlisted={wishlistIds.has(selectedYatra.id)}
+        onToggleWishlist={(id) => {
+          setWishlistIds(prev => {
+            const next = new Set(prev);
+            if (next.has(id)) {
+              next.delete(id);
+              showToast('Removed from sacred wishlist');
+            } else {
+              next.add(id);
+              showToast('Saved to your sacred wishlist ♡');
+            }
+            return next;
+          });
+        }}
+      />
+    );
+  }
+
   return (
-    <div className="relative w-full min-h-screen bg-[#F7F1E5] text-[#8F6E5B] overflow-x-clip font-dm select-none">
+    <div className="relative w-full min-h-screen bg-[#FEFBF2] text-[#221508] overflow-x-clip font-dm select-none">
       
       {/* ======================================================== */}
       {/* 100% SMOOTH FILLET TABBED FOLDER CONTOURS (SVG DEFS)    */}
@@ -274,11 +310,11 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 md:pt-36 lg:pt-16 pb-12 sm:pb-16 px-4 sm:px-8 max-w-6xl mx-auto flex flex-col items-center text-center">
         
         {/* Ambient Warm Vedic Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-b from-[#D9C6A8]/20 via-[#C7833D]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-b from-[#C59239]/20 via-[#FE7613]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
 
         {/* --- FLOATING CIRCULAR VIGNETTES (Exact Match to User Reference - Laptop Only) --- */}
         {/* Left Upper Bubble: Sacred Turquoise Lake & Himalayan Reflection */}
-        <div className="absolute left-8 lg:left-20 top-10 w-16 lg:w-20 h-16 lg:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
+        <div className="absolute left-8 lg:left-20 top-10 w-16 lg:w-20 h-16 lg:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#C59239]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=300&auto=format&fit=crop"
             alt="Sacred Lake"
@@ -287,7 +323,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         </div>
 
         {/* Left Lower Bubble: Misty Sacred Cedar Valley */}
-        <div className="absolute left-28 lg:left-40 top-40 w-13 lg:w-16 h-13 lg:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
+        <div className="absolute left-28 lg:left-40 top-40 w-13 lg:w-16 h-13 lg:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#C59239]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=300&auto=format&fit=crop"
             alt="Misty Valleys"
@@ -296,7 +332,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         </div>
 
         {/* Right Upper Bubble: Azure High-Altitude Glacier Peak */}
-        <div className="absolute right-8 lg:right-20 top-12 w-16 lg:w-20 h-16 lg:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
+        <div className="absolute right-8 lg:right-20 top-12 w-16 lg:w-20 h-16 lg:h-20 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#C59239]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=300&auto=format&fit=crop"
             alt="Glacier Sanctum"
@@ -305,7 +341,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         </div>
 
         {/* Right Lower Bubble: Consecrated Golden Canyon Shrine */}
-        <div className="absolute right-28 lg:right-40 top-40 w-13 lg:w-16 h-13 lg:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#D9C6A8]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
+        <div className="absolute right-28 lg:right-40 top-40 w-13 lg:w-16 h-13 lg:h-16 rounded-full overflow-hidden border-2 border-white shadow-[0_8px_25px_rgba(38,32,27,0.12)] ring-4 ring-[#C59239]/25 transition-transform duration-500 hover:scale-110 z-10 hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300&auto=format&fit=crop"
             alt="Desert Canyon Sanctum"
@@ -315,13 +351,13 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
 
         {/* --- MAIN HERO HEADLINE (Exact Cadence & Typography) --- */}
         <div className="relative z-10 max-w-3xl mx-auto">
-          <h1 className="font-montserrat text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#26201B] tracking-tight leading-[1.12]">
+          <h1 className="font-montserrat text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#221508] tracking-tight leading-[1.12]">
             Let's Make Our Journey<br />
             Sacred & Divine!
           </h1>
 
           {/* Subtitle */}
-          <p className="font-dm text-xs sm:text-sm md:text-base text-[#8F6E5B] max-w-xl mx-auto mt-4 sm:mt-5 font-normal leading-relaxed">
+          <p className="font-dm text-xs sm:text-sm md:text-base text-[#3D2619] max-w-xl mx-auto mt-4 sm:mt-5 font-normal leading-relaxed">
             We curate consecrated Himalayan kora, VIP temple sanctum access, and high-altitude luxury charters guided by authentic Vedic scholars.
           </p>
 
@@ -334,7 +370,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                 const el = isLaptop ? (document.getElementById('bharat-map-section') || document.getElementById('catalog')) : document.getElementById('catalog');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-6 py-2.5 rounded-full bg-white border border-[#26201B] hover:bg-[#26201B] hover:text-[#F7F1E5] text-[#26201B] font-dm text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-xs transition-all duration-300 group cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-white border border-[#C59239] hover:bg-[#0A4C83] hover:border-[#0A4C83] hover:text-[#FEFBF2] text-[#221508] font-dm text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-xs transition-all duration-300 group cursor-pointer"
             >
               <span className="hidden lg:inline">Explore Bharat Map & Yatras</span>
               <span className="lg:hidden">Explore Sacred Yatras</span>
@@ -352,9 +388,9 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
               const el = document.getElementById('catalog');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] bg-white border border-[#D9C6A8]/70 shadow-[0_10px_30px_rgba(38,32,27,0.06)] hover:shadow-[0_18px_40px_rgba(38,32,27,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
+            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] bg-white border border-[#C59239]/40 shadow-[0_10px_30px_rgba(38,32,27,0.06)] hover:shadow-[0_18px_40px_rgba(197,146,57,0.18)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
           >
-            <span className="font-montserrat font-extrabold text-3xl sm:text-4xl md:text-5xl text-[#26201B] tracking-tight group-hover:scale-105 transition-transform duration-300">
+            <span className="font-montserrat font-extrabold text-3xl sm:text-4xl md:text-5xl text-[#221508] tracking-tight group-hover:scale-105 transition-transform duration-300">
               We
             </span>
           </div>
@@ -365,7 +401,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
               const el = document.getElementById('catalog');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] overflow-hidden relative shadow-[0_10px_30px_rgba(38,32,27,0.08)] hover:shadow-[0_18px_40px_rgba(38,32,27,0.15)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
+            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] overflow-hidden relative shadow-[0_10px_30px_rgba(38,32,27,0.08)] hover:shadow-[0_18px_40px_rgba(197,146,57,0.22)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
           >
             <img
               src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop"
@@ -378,16 +414,16 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
             </span>
           </div>
 
-          {/* Capsule 3: "→" (Brand Warm Saffron Accent Capsule) */}
+          {/* Capsule 3: "→" (Fire Orange / Temple Gold Accent Capsule) */}
           <div 
             onClick={() => {
               const el = document.getElementById('catalog');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] bg-[#E8B84B] hover:bg-[#D9A030] shadow-[0_12px_32px_rgba(232,184,75,0.35)] hover:shadow-[0_18px_45px_rgba(232,184,75,0.5)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
+            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] bg-gradient-to-br from-[#FE7613] to-[#C59239] hover:from-[#e0650e] hover:to-[#C59239] shadow-[0_12px_32px_rgba(254,118,19,0.35)] hover:shadow-[0_18px_45px_rgba(254,118,19,0.5)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
           >
             <svg 
-              className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-[#26201B] transition-transform duration-300 group-hover:translate-x-2.5" 
+              className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-[#FEFBF2] transition-transform duration-300 group-hover:translate-x-2.5" 
               viewBox="0 0 24 24" 
               fill="none" 
               stroke="currentColor" 
@@ -406,7 +442,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
               const el = document.getElementById('catalog');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] overflow-hidden relative shadow-[0_10px_30px_rgba(38,32,27,0.08)] hover:shadow-[0_18px_40px_rgba(38,32,27,0.15)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
+            className="group h-36 sm:h-44 md:h-52 rounded-[36px] sm:rounded-[48px] md:rounded-[56px] overflow-hidden relative shadow-[0_10px_30px_rgba(38,32,27,0.08)] hover:shadow-[0_18px_40px_rgba(197,146,57,0.22)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center cursor-pointer select-none"
           >
             <img
               src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop"
@@ -430,20 +466,20 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
       <section className="py-12 sm:py-18 px-4 sm:px-8 max-w-7xl mx-auto">
         
         {/* Section Header matching Image 2 */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 pb-6 border-b border-[#D9C6A8]/70">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 pb-6 border-b border-[#C59239]/20">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-[#D9C6A8] shadow-xs mb-3">
-              <span className="font-dm text-[11px] font-bold text-[#8F6E5B] uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-[#C59239]/40 shadow-xs mb-3">
+              <span className="font-dm text-[11px] font-bold text-[#C59239] uppercase tracking-wider">
                 ॥ दिव्य सौविध्यम् ॥ &bull; SACRED PRIVILEGES
               </span>
             </div>
 
-            <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#26201B] leading-tight">
+            <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#221508] leading-tight">
               Take A Tour Of Our Sacred Facilities
             </h2>
           </div>
 
-          <p className="font-dm text-xs sm:text-sm text-[#8F6E5B]/85 max-w-md font-normal leading-relaxed">
+          <p className="font-dm text-xs sm:text-sm text-[#3D2619] max-w-md font-normal leading-relaxed">
             Reserve an escort for focused sadhana, VIP temple access, private helicopter charters, luxury Himalayan ashram suites, and pure satvik gastronomy.
           </p>
         </div>
@@ -507,7 +543,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                     </span>
 
                     {/* White Circular Arrow Button */}
-                    <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-white text-[#26201B] flex items-center justify-center font-bold shadow-md group-hover:bg-[#C7833D] group-hover:text-white transition-colors duration-300">
+                    <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-white text-[#221508] flex items-center justify-center font-bold shadow-md group-hover:bg-[#FE7613] group-hover:text-white transition-colors duration-300">
                       <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
@@ -522,7 +558,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                     {isSpread ? (
                       <div className="mt-1.5 sm:mt-2">
                         <div className="p-2 xs:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl bg-white/15 backdrop-blur-md border border-white/20 max-w-xl">
-                          <p className="font-dm text-[10px] xs:text-xs text-[#F7F1E5]/95 line-clamp-2 leading-relaxed">
+                          <p className="font-dm text-[10px] xs:text-xs text-[#FEFBF2]/95 line-clamp-2 leading-relaxed">
                             {facility.description}
                           </p>
                         </div>
@@ -531,14 +567,14 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                           <span className="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[8px] xs:text-[9px] sm:text-[10px] font-dm line-clamp-1">
                             {facility.subtitle}
                           </span>
-                          <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-dm font-bold text-[#D9C6A8] flex items-center gap-1 group-hover:text-white transition-colors shrink-0">
+                          <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-dm font-bold text-[#E4B968] flex items-center gap-1 group-hover:text-white transition-colors shrink-0">
                             Explore ➔
                           </span>
                         </div>
                       </div>
                     ) : (
                       <div className="mt-1">
-                        <span className="font-dm text-[10px] xs:text-xs text-[#D9C6A8] line-clamp-1">
+                        <span className="font-dm text-[10px] xs:text-xs text-[#E4B968] line-clamp-1">
                           {facility.subtitle}
                         </span>
                       </div>
@@ -605,7 +641,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                     </span>
 
                     {/* White Circular Arrow Button */}
-                    <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-white text-[#26201B] flex items-center justify-center font-bold shadow-md group-hover:bg-[#C7833D] group-hover:text-white transition-colors duration-300">
+                    <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-white text-[#221508] flex items-center justify-center font-bold shadow-md group-hover:bg-[#FE7613] group-hover:text-white transition-colors duration-300">
                       <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
@@ -620,7 +656,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                     {isSpread ? (
                       <div className="mt-1.5 sm:mt-2">
                         <div className="p-2 xs:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl bg-white/15 backdrop-blur-md border border-white/20 max-w-xl">
-                          <p className="font-dm text-[10px] xs:text-xs text-[#F7F1E5]/95 line-clamp-2 leading-relaxed">
+                          <p className="font-dm text-[10px] xs:text-xs text-[#FEFBF2]/95 line-clamp-2 leading-relaxed">
                             {facility.description}
                           </p>
                         </div>
@@ -629,14 +665,14 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                           <span className="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[8px] xs:text-[9px] sm:text-[10px] font-dm line-clamp-1">
                             {facility.subtitle}
                           </span>
-                          <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-dm font-bold text-[#D9C6A8] flex items-center gap-1 group-hover:text-white transition-colors shrink-0">
+                          <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-dm font-bold text-[#E4B968] flex items-center gap-1 group-hover:text-white transition-colors shrink-0">
                             Explore ➔
                           </span>
                         </div>
                       </div>
                     ) : (
                       <div className="mt-1">
-                        <span className="font-dm text-[10px] xs:text-xs text-[#D9C6A8] line-clamp-1">
+                        <span className="font-dm text-[10px] xs:text-xs text-[#E4B968] line-clamp-1">
                           {facility.subtitle}
                         </span>
                       </div>
@@ -673,14 +709,14 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-1.5 text-xs font-dm font-bold text-[#C7833D] uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 text-xs font-dm font-bold text-[#0A4C83] uppercase tracking-wider mb-2">
             <Compass className="w-3.5 h-3.5" />
             <span>॥ सर्व तीर्थ सूची ॥ COMPLETE EXPEDITION DIRECTORY</span>
           </div>
-          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#26201B]">
+          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#221508]">
             Choose Your Sacred Circuit
           </h2>
-          <p className="font-dm text-xs sm:text-sm text-[#8F6E5B]/80 mt-1">
+          <p className="font-dm text-xs sm:text-sm text-[#3D2619] mt-1">
             Filter by geographic circuit, pilgrimage duration, and season departure.
           </p>
         </div>
@@ -696,13 +732,13 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                 onClick={() => setSelectedCircuit(circuit.id)}
                 className={`group relative px-4 py-2 rounded-full text-xs font-dm font-bold transition-all cursor-pointer flex items-center gap-2 border ${
                   isSelected
-                    ? 'bg-[#26201B] border-[#26201B] text-[#F7F1E5] shadow-md scale-105'
-                    : 'bg-white/80 border-[#D9C6A8] text-[#8F6E5B] hover:border-[#B08A4A] hover:bg-white'
+                    ? 'bg-[#0A4C83] border-[#0A4C83] text-[#FEFBF2] shadow-md scale-105'
+                    : 'bg-white/80 border-[#C59239]/40 text-[#3D2619] hover:border-[#0A4C83] hover:bg-white'
                 }`}
               >
                 <span>{circuit.label}</span>
                 <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  isSelected ? 'bg-[#C7833D] text-white' : 'bg-[#D9C6A8]/40 text-[#8F6E5B]'
+                  isSelected ? 'bg-[#FE7613] text-white' : 'bg-[#C59239]/20 text-[#3D2619]'
                 }`}>
                   {circuit.count}
                 </span>
@@ -711,78 +747,13 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
           })}
         </div>
 
-        {/* Search, Duration & Sort Bar */}
-        <div className="bg-white/90 border border-[#D9C6A8] rounded-2xl p-4 mb-8 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
-          
-          {/* Search Input */}
-          <div className="relative w-full md:w-80">
-            <Search className="w-4 h-4 text-[#8F6E5B]/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by deity, temple, or city..."
-              className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#F7F1E5]/70 border border-[#D9C6A8]/70 focus:border-[#C7833D] text-xs text-[#8F6E5B] outline-none font-dm"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#8F6E5B]/50 hover:text-[#8F6E5B]"
-              >
-                ×
-              </button>
-            )}
-          </div>
-
-          {/* Duration Filters */}
-          <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-            <span className="text-xs font-dm font-semibold text-[#8F6E5B]/70 mr-1 shrink-0">Duration:</span>
-            {[
-              { id: 'all', label: 'All' },
-              { id: 'short', label: '3-4 Days' },
-              { id: 'medium', label: '5-8 Days' },
-              { id: 'long', label: '9+ Days (Kailash)' },
-            ].map((d) => (
-              <button
-                key={d.id}
-                type="button"
-                onClick={() => setSelectedDuration(d.id as any)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-dm font-medium shrink-0 transition-all cursor-pointer ${
-                  selectedDuration === d.id
-                    ? 'bg-[#C7833D] text-white font-bold'
-                    : 'bg-[#F7F1E5] text-[#8F6E5B] hover:bg-[#D9C6A8]/30'
-                }`}
-              >
-                {d.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Sort Dropdown */}
-          <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-            <span className="text-xs font-dm font-semibold text-[#8F6E5B]/70 shrink-0">Sort:</span>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-3 py-1.5 rounded-xl bg-[#F7F1E5] border border-[#D9C6A8] text-xs font-dm text-[#8F6E5B] outline-none cursor-pointer"
-            >
-              <option value="featured">Most Sacred & Featured</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="rating">Seeker Rating (5.0★)</option>
-              <option value="duration">Duration (Days)</option>
-            </select>
-          </div>
-
-        </div>
 
         {/* Curvy Colored Section Background containing 2-Row Horizontal Scroll Grid */}
         {filteredYatras.length === 0 ? (
-          <div className="text-center py-16 px-4 bg-white/60 rounded-3xl border border-[#D9C6A8]">
-            <Compass className="w-12 h-12 text-[#B08A4A] mx-auto mb-3 opacity-60" />
-            <h3 className="font-cormorant text-2xl font-bold text-[#8F6E5B]">No Sacred Expeditions Found</h3>
-            <p className="font-dm text-xs text-[#8F6E5B]/70 mt-1 max-w-md mx-auto">
+          <div className="text-center py-16 px-4 bg-white/60 rounded-3xl border border-[#C59239]/30">
+            <Compass className="w-12 h-12 text-[#C59239] mx-auto mb-3 opacity-60" />
+            <h3 className="font-cormorant text-2xl font-bold text-[#221508]">No Sacred Expeditions Found</h3>
+            <p className="font-dm text-xs text-[#3D2619]/70 mt-1 max-w-md mx-auto">
               We couldn't find yatras matching your filter criteria. Try resetting the filters or inquire about a custom bespoke pilgrimage.
             </p>
             <button
@@ -792,18 +763,18 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                 setSelectedDuration('all');
                 setSearchQuery('');
               }}
-              className="mt-4 px-5 py-2 rounded-full bg-[#C7833D] text-white font-dm text-xs font-bold"
+              className="mt-4 px-5 py-2 rounded-full bg-[#FE7613] text-white font-dm text-xs font-bold hover:bg-[#e0650d] transition-colors"
             >
               Reset All Filters
             </button>
           </div>
         ) : (
           <motion.div 
-            initial={{ opacity: 0, y: 45, scale: 0.97 }}
+            initial={{ opacity: 0, y: 35, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative rounded-[36px] sm:rounded-[48px] p-4 sm:p-6 md:p-8 border border-[#D4B086] bg-gradient-to-br from-[#F5E2C8] via-[#EED4B6] to-[#E3C29E] shadow-[0_16px_45px_rgba(38,32,27,0.08)] transition-all"
+            viewport={{ once: false, amount: 0.08 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative rounded-[32px] sm:rounded-[44px] p-3.5 sm:p-5 md:p-6 border-0 bg-gradient-to-br from-[#FDF1D7] via-[#F7DEAF] to-[#ECC378] shadow-[0_20px_50px_rgba(197,146,57,0.22)] transition-all overflow-hidden"
           >
             
             {/* Floating Left Flanking Arrow on Carousel Edge */}
@@ -811,13 +782,13 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
               initial={{ opacity: 0, scale: 0.6 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: false }}
-              transition={{ duration: 0.4, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
               type="button"
               onClick={() => scrollPackagesHorizontally('left')}
-              className="flex absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 sm:w-12 h-11 sm:h-12 rounded-full bg-white/95 hover:bg-[#26201B] text-[#5E4B3E] hover:text-white border border-[#D9C6A8] hover:border-[#26201B] shadow-xl items-center justify-center cursor-pointer active:scale-90 transition-all backdrop-blur-xs"
+              className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-11 h-10 sm:h-11 rounded-full bg-white/95 hover:bg-[#0A4C83] text-[#0A4C83] hover:text-[#FEFBF2] border border-[#C59239]/30 hover:border-[#0A4C83] shadow-lg items-center justify-center cursor-pointer active:scale-90 transition-all backdrop-blur-xs"
               aria-label="Scroll expeditions left"
             >
-              <ChevronLeft className="w-5 sm:w-6 h-5 sm:h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </motion.button>
 
             {/* Floating Right Flanking Arrow on Carousel Edge */}
@@ -825,19 +796,19 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
               initial={{ opacity: 0, scale: 0.6 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: false }}
-              transition={{ duration: 0.4, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
               type="button"
               onClick={() => scrollPackagesHorizontally('right')}
-              className="flex absolute -right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 sm:w-12 h-11 sm:h-12 rounded-full bg-white/95 hover:bg-[#26201B] text-[#5E4B3E] hover:text-white border border-[#D9C6A8] hover:border-[#26201B] shadow-xl items-center justify-center cursor-pointer active:scale-90 transition-all backdrop-blur-xs"
+              className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-11 h-10 sm:h-11 rounded-full bg-white/95 hover:bg-[#0A4C83] text-[#0A4C83] hover:text-[#FEFBF2] border border-[#C59239]/30 hover:border-[#0A4C83] shadow-lg items-center justify-center cursor-pointer active:scale-90 transition-all backdrop-blur-xs"
               aria-label="Scroll expeditions right"
             >
-              <ChevronRight className="w-5 sm:w-6 h-5 sm:h-6" />
+              <ChevronRight className="w-5 h-5" />
             </motion.button>
 
             {/* 2-Row Horizontal Scroll Grid */}
             <div
               ref={packagesScrollRef}
-              className="grid grid-rows-2 grid-flow-col auto-cols-[300px] sm:auto-cols-[340px] md:auto-cols-[380px] gap-4 sm:gap-6 overflow-x-auto scroll-smooth py-2 px-1 sm:px-2 no-scrollbar snap-x snap-mandatory"
+              className="grid grid-rows-2 grid-flow-col auto-cols-[275px] sm:auto-cols-[305px] md:auto-cols-[330px] gap-3 sm:gap-4 overflow-x-auto scroll-smooth py-1 px-0.5 sm:px-1.5 no-scrollbar [&::-webkit-scrollbar]:hidden snap-x snap-mandatory"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {filteredYatras.map((yatra, idx) => {
@@ -846,23 +817,24 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                   <motion.div
                     key={yatra.id}
                     id={`package-${yatra.id}`}
-                    initial={{ opacity: 0, y: 35, scale: 0.93 }}
+                    initial={{ opacity: 0, y: 25, scale: 0.95 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: false, amount: 0.05 }}
                     transition={{ 
-                      duration: 0.6, 
-                      delay: Math.min((idx % 6) * 0.07 + 0.08, 0.45), 
+                      duration: 0.5, 
+                      delay: Math.min((idx % 6) * 0.05 + 0.05, 0.35), 
                       ease: [0.22, 1, 0.36, 1] 
                     }}
-                    whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                    className={`group relative bg-white/95 rounded-3xl overflow-hidden transition-all duration-500 flex flex-col justify-between snap-start w-full ${
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    onClick={() => handleSelectYatra(yatra)}
+                    className={`group relative bg-white/95 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between snap-start w-full cursor-pointer ${
                       isTargetHighlighted
-                        ? 'border-2 border-[#E8B84B] ring-4 ring-[#E8B84B] shadow-[0_0_35px_rgba(232,184,75,0.8)] scale-[1.02] z-30'
-                        : 'border border-[#D9C6A8] hover:border-[#B08A4A] shadow-[0_8px_25px_rgba(51,44,37,0.06)] hover:shadow-[0_18px_40px_rgba(51,44,37,0.14)]'
+                        ? 'border-2 border-[#FE7613] ring-3 ring-[#FE7613]/40 shadow-[0_0_25px_rgba(254,118,19,0.4)] scale-[1.01] z-30'
+                        : 'border border-[#C59239]/25 hover:border-[#C59239] shadow-[0_4px_16px_rgba(34,21,8,0.06)] hover:shadow-[0_12px_28px_rgba(34,21,8,0.12)]'
                     }`}
                   >
                   {/* Image Section */}
-                  <div className="relative w-full h-44 sm:h-48 overflow-hidden bg-black/10">
+                  <div className="relative w-full h-32 sm:h-36 overflow-hidden bg-black/10">
                     <img
                       src={yatra.image}
                       alt={yatra.title}
@@ -871,98 +843,84 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
 
                     {/* Top Badge */}
                     {yatra.badge && (
-                      <div className="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-[#26201B]/85 border border-[#B08A4A]/50 text-[#D9C6A8] text-[9px] font-dm font-bold uppercase tracking-wider backdrop-blur-xs">
+                      <div className="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-[#221508]/85 border border-[#C59239]/50 text-[#E4B968] text-[9px] font-dm font-bold uppercase tracking-wider backdrop-blur-xs">
                         {yatra.badge}
                       </div>
                     )}
 
                     {/* Duration Tag */}
-                    <div className="absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-full bg-white/95 text-[#332C25] text-[10px] font-dm font-bold flex items-center gap-1 shadow-xs">
-                      <Clock className="w-3 h-3 text-[#C7833D]" />
+                    <div className="absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-full bg-[#FEFBF2]/95 text-[#221508] text-[10px] font-dm font-bold flex items-center gap-1 shadow-xs border border-[#C59239]/20">
+                      <Clock className="w-3 h-3 text-[#FE7613]" />
                       <span>{yatra.durationDays}D / {yatra.durationNights}N</span>
                     </div>
 
                     {/* Rating Pill */}
-                    <div className="absolute bottom-2.5 left-2.5 z-10 px-2 py-0.5 rounded-full bg-black/70 text-white text-[10px] font-dm font-semibold flex items-center gap-1 backdrop-blur-xs">
+                    <div className="absolute bottom-2.5 left-2.5 z-10 px-2 py-0.5 rounded-full bg-[#221508]/80 text-[#FEFBF2] text-[10px] font-dm font-semibold flex items-center gap-1 backdrop-blur-xs border border-white/10">
                       <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
                       <span>{yatra.rating.toFixed(2)}</span>
-                      <span className="text-white/60">({yatra.reviewsCount})</span>
+                      <span className="text-[#FEFBF2]/70">({yatra.reviewsCount})</span>
                     </div>
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                  <div className="p-3 sm:p-3.5 flex-1 flex flex-col justify-between">
                     <div>
                       {/* Location */}
-                      <div className="flex items-center gap-1 text-[11px] font-dm text-[#C7833D] font-medium mb-1">
-                        <MapPin className="w-3 h-3" />
+                      <div className="flex items-center gap-1 text-[11px] font-dm text-[#0A4C83] font-semibold mb-1">
+                        <MapPin className="w-3 h-3 text-[#0A4C83]" />
                         <span>Starts from {yatra.startLocation}</span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-cormorant text-xl sm:text-2xl font-bold text-[#26201B] group-hover:text-[#C7833D] transition-colors leading-tight line-clamp-1">
+                      <h3 className="font-cormorant text-lg sm:text-xl font-bold text-[#221508] group-hover:text-[#0A4C83] transition-colors leading-tight line-clamp-1">
                         {yatra.title}
                       </h3>
 
                       {/* Subtitle */}
-                      <p className="font-dm text-xs text-[#8F6E5B]/80 mt-1 line-clamp-2 leading-relaxed">
+                      <p className="font-dm text-xs text-[#3D2619]/80 mt-1 line-clamp-1 leading-snug">
                         {yatra.subtitle}
                       </p>
 
-                      {/* Key Highlights */}
-                      <div className="mt-3 space-y-1 pt-2.5 border-t border-[#D9C6A8]/60">
-                        {yatra.highlights.slice(0, 2).map((h, i) => (
-                          <div key={i} className="flex items-start gap-1.5 text-xs font-dm text-[#332C25]/85">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#66705A] shrink-0 mt-0.5" />
-                            <span className="line-clamp-1 text-[11px] sm:text-xs">{h}</span>
-                          </div>
-                        ))}
+                      {/* Key Highlight (Single compact line) */}
+                      <div className="mt-2 pt-2 border-t border-[#C59239]/20 flex items-center gap-1.5 text-xs font-dm text-[#221508]/85">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#607427] shrink-0" />
+                        <span className="line-clamp-1">{yatra.highlights[0]}</span>
                       </div>
 
                       {/* Next Batch Departure Dates */}
-                      <div className="mt-3 p-2 rounded-xl bg-[#F7F1E5]/80 border border-[#D9C6A8]/70 flex items-center justify-between text-[10px] sm:text-[11px] font-dm">
-                        <span className="text-[#8F6E5B]/70 flex items-center gap-1 font-medium">
-                          <Calendar className="w-3 h-3 text-[#B08A4A]" />
-                          <span>Next Batch:</span>
+                      <div className="mt-2 px-2.5 py-1.5 rounded-xl bg-white/80 border border-[#C59239]/20 flex items-center justify-between text-[11px] font-dm">
+                        <span className="text-[#3D2619]/70 flex items-center gap-1 font-medium">
+                          <Calendar className="w-3 h-3 text-[#C59239]" />
+                          <span>Next:</span>
                         </span>
-                        <span className="font-semibold text-[#26201B]">
+                        <span className="font-semibold text-[#221508]">
                           {yatra.nextBatches[0]}
                         </span>
                       </div>
                     </div>
 
                     {/* Price & Action Row */}
-                    <div className="mt-3.5 pt-3 border-t border-[#D9C6A8] flex items-center justify-between gap-2">
+                    <div className="mt-2.5 pt-2.5 border-t border-[#C59239]/20 flex items-center justify-between gap-2">
                       <div>
-                        <span className="block text-[9px] font-dm text-[#8F6E5B]/70 uppercase tracking-wider">
-                          All-Inclusive Pass
+                        <span className="block text-[9px] font-dm text-[#3D2619]/60 uppercase tracking-wider leading-none">
+                          All-Inclusive
                         </span>
-                        <span className="font-cormorant text-xl sm:text-2xl font-bold text-[#26201B]">
+                        <span className="font-cormorant text-lg sm:text-xl font-bold text-[#221508] leading-tight">
                           ₹{yatra.pricePerPerson.toLocaleString()}
                         </span>
-                        <span className="text-[9px] font-dm text-[#8F6E5B]/60 block -mt-0.5">
-                          per seeker
-                        </span>
                       </div>
 
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedYatra(yatra)}
-                          className="px-3 py-1.5 rounded-xl bg-[#D9C6A8]/30 hover:bg-[#D9C6A8]/60 border border-[#D9C6A8] text-xs font-dm font-semibold text-[#26201B] transition-all cursor-pointer"
-                        >
-                          Itinerary
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => setSelectedYatra(yatra)}
-                          className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#C7833D] to-[#B08A4A] hover:from-[#B08A4A] hover:to-[#C7833D] text-[#F7F1E5] text-xs font-dm font-bold shadow-xs cursor-pointer active:scale-95 transition-all flex items-center gap-1"
-                        >
-                          <span>Reserve</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSelectYatra(yatra);
+                        }}
+                        className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#FE7613] to-[#FE8D3B] hover:from-[#FE8D3B] hover:to-[#FE7613] text-white text-xs font-dm font-bold shadow-xs cursor-pointer active:scale-95 transition-all flex items-center gap-1.5"
+                      >
+                        <span>Book Now</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </div>
                   </motion.div>
@@ -982,13 +940,10 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
         
         {/* Editorial Typography Header (Outside the curvy frame) */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 border border-[#D9C6A8] text-[#C7833D] text-xs font-dm font-bold tracking-widest uppercase mb-3 shadow-xs">
-            <span>॥ सङ्कल्प सेवा ॥ &bull; BESPOKE PILGRIMAGE CONCIERGE</span>
-          </div>
-          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#26201B] leading-tight">
+          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#221508] leading-tight">
             Design a Custom Private Family or Senior Yatra
           </h2>
-          <p className="font-dm text-xs sm:text-sm md:text-base text-[#8F6E5B] max-w-2xl mx-auto mt-2.5 font-normal leading-relaxed">
+          <p className="font-dm text-xs sm:text-sm md:text-base text-[#3D2619]/80 max-w-2xl mx-auto mt-2.5 font-normal leading-relaxed">
             Tailored dates, dedicated helicopter charters, private wheelchair/palanquin escorts for elderly parents, and priest-conducted Vedic Hawan rituals.
           </p>
         </div>
@@ -999,18 +954,18 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="relative rounded-[36px] sm:rounded-[48px] p-6 sm:p-10 md:p-12 border border-[#B08A4A]/40 bg-gradient-to-br from-[#2E2620] via-[#26201B] to-[#1C1713] text-[#F7F1E5] shadow-[0_20px_55px_rgba(38,32,27,0.16)] overflow-hidden"
+          className="relative rounded-[36px] sm:rounded-[48px] p-6 sm:p-10 md:p-12 border border-[#C59239]/40 bg-gradient-to-br from-[#073863] via-[#0A4C83] to-[#042442] text-[#FEFBF2] shadow-[0_20px_55px_rgba(10,76,131,0.25)] overflow-hidden"
         >
           
-          {/* Subtle Ambient Radial Gold Glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#C7833D]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#B08A4A]/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Subtle Ambient Radial Glow */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#C59239]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FE7613]/15 rounded-full blur-3xl pointer-events-none" />
 
           {/* Subtle Watermark Grid */}
           <div 
             className="absolute inset-0 pointer-events-none opacity-5"
             style={{
-              backgroundImage: `radial-gradient(circle at 50% 50%, #F7F1E5 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(circle at 50% 50%, #FEFBF2 1px, transparent 1px)`,
               backgroundSize: '28px 28px'
             }}
           />
@@ -1018,19 +973,19 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
           <div className="relative z-10 max-w-4xl mx-auto">
             {customSubmitted ? (
               <div className="text-center py-10 px-4">
-                <div className="w-16 h-16 rounded-full bg-[#66705A]/30 text-[#D9C6A8] flex items-center justify-center mx-auto mb-4 border border-[#66705A]">
-                  <CheckCircle2 className="w-8 h-8 text-[#D9C6A8]" />
+                <div className="w-16 h-16 rounded-full bg-[#607427]/30 text-[#E4B968] flex items-center justify-center mx-auto mb-4 border border-[#607427]">
+                  <CheckCircle2 className="w-8 h-8 text-[#E4B968]" />
                 </div>
-                <h3 className="font-cormorant text-2xl sm:text-3xl font-bold text-[#F7F1E5]">
+                <h3 className="font-cormorant text-2xl sm:text-3xl font-bold text-[#FEFBF2]">
                   Sacred Custom Pilgrimage Inquiry Received
                 </h3>
-                <p className="mt-2 font-dm text-sm text-[#D9C6A8] max-w-md mx-auto">
+                <p className="mt-2 font-dm text-sm text-[#FEFBF2]/85 max-w-md mx-auto">
                   Namaste, <strong className="text-white">{customForm.name || 'Devotee'}</strong>. Our Senior Yatra Acharya is preparing your customized pilgrimage proposal with all VIP conveniences and will call you within 4 hours.
                 </p>
                 <button
                   type="button"
                   onClick={() => setCustomSubmitted(false)}
-                  className="mt-6 px-6 py-2.5 rounded-full bg-[#C7833D] text-white font-dm font-semibold text-xs tracking-wider uppercase cursor-pointer hover:bg-[#B08A4A] transition-colors"
+                  className="mt-6 px-6 py-2.5 rounded-full bg-[#FE7613] hover:bg-[#FE8D3B] text-white font-dm font-semibold text-xs tracking-wider uppercase cursor-pointer transition-colors shadow-md"
                 >
                   Plan Another Journey
                 </button>
@@ -1041,37 +996,37 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                 {/* Row 1: Circuit & Travelers */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-dm font-bold text-[#D9C6A8] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-dm font-bold text-[#E4B968] uppercase tracking-wider mb-2">
                       1. Desired Pilgrimage Circuit
                     </label>
                     <select
                       value={customForm.circuit}
                       onChange={(e) => setCustomForm({ ...customForm, circuit: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#D9C6A8]/50 focus:border-[#C7833D] text-sm text-[#F7F1E5] outline-none font-dm cursor-pointer"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#E4B968]/30 focus:border-[#FE7613] text-sm text-[#FEFBF2] outline-none font-dm cursor-pointer"
                     >
-                      <option value="Himalayan & Kailash" className="bg-[#26201B]">Himalayan & Kailash (Kedarnath, Badrinath, Mansarovar)</option>
-                      <option value="Char Dham & Puri" className="bg-[#26201B]">Char Dham & East (Puri Jagannath, Konark)</option>
-                      <option value="51 Shakti Peethas" className="bg-[#26201B]">51 Shakti Peethas (Kamakhya, Kalighat, Tarapith)</option>
-                      <option value="Braj & Rajasthan" className="bg-[#26201B]">Braj & Rajasthan (Khatu Shyam, Vrindavan, Salasar)</option>
-                      <option value="12 Jyotirlingas" className="bg-[#26201B]">12 Jyotirlingas (Kashi Vishwanath, Somnath, Mahakal)</option>
-                      <option value="South Dravidian Corridors" className="bg-[#26201B]">South Temples (Rameshwaram, Madurai, Tirupati)</option>
+                      <option value="Himalayan & Kailash" className="bg-[#073863] text-white">Himalayan & Kailash (Kedarnath, Badrinath, Mansarovar)</option>
+                      <option value="Char Dham & Puri" className="bg-[#073863] text-white">Char Dham & East (Puri Jagannath, Konark)</option>
+                      <option value="51 Shakti Peethas" className="bg-[#073863] text-white">51 Shakti Peethas (Kamakhya, Kalighat, Tarapith)</option>
+                      <option value="Braj & Rajasthan" className="bg-[#073863] text-white">Braj & Rajasthan (Khatu Shyam, Vrindavan, Salasar)</option>
+                      <option value="12 Jyotirlingas" className="bg-[#073863] text-white">12 Jyotirlingas (Kashi Vishwanath, Somnath, Mahakal)</option>
+                      <option value="South Dravidian Corridors" className="bg-[#073863] text-white">South Temples (Rameshwaram, Madurai, Tirupati)</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-dm font-bold text-[#D9C6A8] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-dm font-bold text-[#E4B968] uppercase tracking-wider mb-2">
                       2. Travel Party Composition
                     </label>
                     <select
                       value={customForm.travelers}
                       onChange={(e) => setCustomForm({ ...customForm, travelers: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#D9C6A8]/50 focus:border-[#C7833D] text-sm text-[#F7F1E5] outline-none font-dm cursor-pointer"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#E4B968]/30 focus:border-[#FE7613] text-sm text-[#FEFBF2] outline-none font-dm cursor-pointer"
                     >
-                      <option value="Elderly Parents (Senior Care)" className="bg-[#26201B]">Elderly Parents (Requires Ground/Heli Assistance)</option>
-                      <option value="Family with Children" className="bg-[#26201B]">Family with Children (Comfort & Leisure Focus)</option>
-                      <option value="Couple Sadhana" className="bg-[#26201B]">Couple Sadhana (Private Rituals & Quiet Stays)</option>
-                      <option value="Solo Spiritual Seeker" className="bg-[#26201B]">Solo Spiritual Seeker (Intensive Sadhana)</option>
-                      <option value="Group Sangha (8+ Devotees)" className="bg-[#26201B]">Group Sangha (8+ Devotees)</option>
+                      <option value="Elderly Parents (Senior Care)" className="bg-[#073863] text-white">Elderly Parents (Requires Ground/Heli Assistance)</option>
+                      <option value="Family with Children" className="bg-[#073863] text-white">Family with Children (Comfort & Leisure Focus)</option>
+                      <option value="Couple Sadhana" className="bg-[#073863] text-white">Couple Sadhana (Private Rituals & Quiet Stays)</option>
+                      <option value="Solo Spiritual Seeker" className="bg-[#073863] text-white">Solo Spiritual Seeker (Intensive Sadhana)</option>
+                      <option value="Group Sangha (8+ Devotees)" className="bg-[#073863] text-white">Group Sangha (8+ Devotees)</option>
                     </select>
                   </div>
                 </div>
@@ -1079,23 +1034,23 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                 {/* Row 2: Travel Timing & Privileges */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-dm font-bold text-[#D9C6A8] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-dm font-bold text-[#E4B968] uppercase tracking-wider mb-2">
                       3. Preferred Shubh Muhurat Month
                     </label>
                     <select
                       value={customForm.travelMonth}
                       onChange={(e) => setCustomForm({ ...customForm, travelMonth: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#D9C6A8]/50 focus:border-[#C7833D] text-sm text-[#F7F1E5] outline-none font-dm cursor-pointer"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#E4B968]/30 focus:border-[#FE7613] text-sm text-[#FEFBF2] outline-none font-dm cursor-pointer"
                     >
-                      <option value="Upcoming Shubh Muhurat (Next 30-60 Days)" className="bg-[#26201B]">Upcoming Shubh Muhurat (Next 30-60 Days)</option>
-                      <option value="Navratri / Diwali Festival Batch" className="bg-[#26201B]">Navratri / Diwali Festival Batch</option>
-                      <option value="Summer 2026 Himalayan Window" className="bg-[#26201B]">Summer 2026 Himalayan Window (May - June)</option>
-                      <option value="Autumn / Winter 2026" className="bg-[#26201B]">Autumn / Winter 2026 (Oct - Dec)</option>
+                      <option value="Upcoming Shubh Muhurat (Next 30-60 Days)" className="bg-[#073863] text-white">Upcoming Shubh Muhurat (Next 30-60 Days)</option>
+                      <option value="Navratri / Diwali Festival Batch" className="bg-[#073863] text-white">Navratri / Diwali Festival Batch</option>
+                      <option value="Summer 2026 Himalayan Window" className="bg-[#073863] text-white">Summer 2026 Himalayan Window (May - June)</option>
+                      <option value="Autumn / Winter 2026" className="bg-[#073863] text-white">Autumn / Winter 2026 (Oct - Dec)</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-dm font-bold text-[#D9C6A8] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-dm font-bold text-[#E4B968] uppercase tracking-wider mb-2">
                       4. Essential Sacred Comforts
                     </label>
                     <input
@@ -1103,7 +1058,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                       value={customForm.specialNeeds}
                       onChange={(e) => setCustomForm({ ...customForm, specialNeeds: e.target.value })}
                       placeholder="e.g. Helicopter shuttle, Oxygen support, Personal priest"
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#D9C6A8]/50 focus:border-[#C7833D] text-sm text-[#F7F1E5] outline-none font-dm"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-[#E4B968]/30 focus:border-[#FE7613] text-sm text-[#FEFBF2] outline-none font-dm placeholder:text-[#FEFBF2]/40"
                     />
                   </div>
                 </div>
@@ -1111,52 +1066,52 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
                 {/* Row 3: Devotee Contact Details */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2">
                   <div>
-                    <label className="block text-xs font-dm text-[#D9C6A8] mb-1">Devotee Full Name *</label>
+                    <label className="block text-xs font-dm text-[#E4B968] mb-1">Devotee Full Name *</label>
                     <input
                       type="text"
                       required
                       value={customForm.name}
                       onChange={(e) => setCustomForm({ ...customForm, name: e.target.value })}
                       placeholder="e.g. Dr. Anand Mohan"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-[#D9C6A8]/50 focus:border-[#C7833D] text-sm text-[#F7F1E5] outline-none font-dm"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-[#E4B968]/30 focus:border-[#FE7613] text-sm text-[#FEFBF2] outline-none font-dm placeholder:text-[#FEFBF2]/40"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-dm text-[#D9C6A8] mb-1">WhatsApp / Phone *</label>
+                    <label className="block text-xs font-dm text-[#E4B968] mb-1">WhatsApp / Phone *</label>
                     <input
                       type="tel"
                       required
                       value={customForm.phone}
                       onChange={(e) => setCustomForm({ ...customForm, phone: e.target.value })}
                       placeholder="+91 98765 43210"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-[#D9C6A8]/50 focus:border-[#C7833D] text-sm text-[#F7F1E5] outline-none font-dm"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-[#E4B968]/30 focus:border-[#FE7613] text-sm text-[#FEFBF2] outline-none font-dm placeholder:text-[#FEFBF2]/40"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-dm text-[#D9C6A8] mb-1">Email Address *</label>
+                    <label className="block text-xs font-dm text-[#E4B968] mb-1">Email Address *</label>
                     <input
                       type="email"
                       required
                       value={customForm.email}
                       onChange={(e) => setCustomForm({ ...customForm, email: e.target.value })}
                       placeholder="anand@example.com"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-[#D9C6A8]/50 focus:border-[#C7833D] text-sm text-[#F7F1E5] outline-none font-dm"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-[#E4B968]/30 focus:border-[#FE7613] text-sm text-[#FEFBF2] outline-none font-dm placeholder:text-[#FEFBF2]/40"
                     />
                   </div>
                 </div>
 
                 {/* Submit Row */}
                 <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10">
-                  <div className="flex items-center gap-2 text-xs text-[#D9C6A8]">
-                    <ShieldCheck className="w-4 h-4 text-[#C7833D]" />
+                  <div className="flex items-center gap-2 text-xs text-[#E4B968]">
+                    <ShieldCheck className="w-4 h-4 text-[#FE7613]" />
                     <span>Free personalized consultation &bull; Zero spam guarantee</span>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-[#C7833D] to-[#B08A4A] hover:from-[#B08A4A] hover:to-[#C7833D] text-[#F7F1E5] font-dm font-bold text-xs uppercase tracking-wider shadow-lg transition-all cursor-pointer active:scale-95 flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-[#FE7613] to-[#FE8D3B] hover:from-[#FE8D3B] hover:to-[#FE7613] text-white font-dm font-bold text-xs uppercase tracking-wider shadow-[0_4px_16px_rgba(254,118,19,0.35)] transition-all cursor-pointer active:scale-95 flex items-center justify-center gap-2"
                   >
                     <Send className="w-4 h-4" />
                     <span>Request Bespoke Yatra Proposal</span>
@@ -1172,17 +1127,9 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
       {/* ======================================================== */}
       {/* 10. LUXURY FOOTER                                        */}
       {/* ======================================================== */}
-      <Footer />
+      <Footer onNavigateAccount={onOpenAccount} />
 
-      {/* ======================================================== */}
-      {/* 11. DAY-BY-DAY ITINERARY & BOOKING MODAL (YatraModal)    */}
-      {/* ======================================================== */}
-      {selectedYatra && (
-        <YatraModal
-          yatra={selectedYatra}
-          onClose={() => setSelectedYatra(null)}
-        />
-      )}
+
 
       {/* Facility Detail Modal */}
       {activeFacility && (
@@ -1191,13 +1138,13 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
           onClick={() => setActiveFacility(null)}
         >
           <div 
-            className="relative w-full max-w-xl bg-[#F7F1E5] border border-[#B08A4A] rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
+            className="relative w-full max-w-xl bg-[#FEFBF2] border border-[#C59239]/40 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setActiveFacility(null)}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 border border-[#D9C6A8] flex items-center justify-center text-[#8F6E5B] hover:text-black cursor-pointer"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 border border-[#C59239]/30 flex items-center justify-center text-[#221508] hover:text-[#FE7613] cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -1206,24 +1153,24 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
               <img src={activeFacility.image} alt={activeFacility.title} className="w-full h-full object-cover" />
             </div>
 
-            <span className="text-[11px] font-dm font-bold text-[#C7833D] uppercase tracking-wider">
+            <span className="text-[11px] font-dm font-bold text-[#0A4C83] uppercase tracking-wider">
               {activeFacility.subtitle}
             </span>
-            <h3 className="font-cormorant text-2xl font-bold text-[#26201B] mt-0.5">
+            <h3 className="font-cormorant text-2xl font-bold text-[#221508] mt-0.5">
               {activeFacility.title}
             </h3>
-            <p className="font-dm text-xs sm:text-sm text-[#8F6E5B]/85 mt-2 leading-relaxed">
+            <p className="font-dm text-xs sm:text-sm text-[#3D2619]/85 mt-2 leading-relaxed">
               {activeFacility.description}
             </p>
 
-            <div className="mt-4 pt-3 border-t border-[#D9C6A8]">
-              <span className="block text-xs font-dm font-bold text-[#26201B] uppercase mb-2">
+            <div className="mt-4 pt-3 border-t border-[#C59239]/25">
+              <span className="block text-xs font-dm font-bold text-[#221508] uppercase mb-2">
                 Sanctuary Inclusions:
               </span>
               <div className="grid grid-cols-2 gap-2">
                 {activeFacility.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-1.5 text-xs font-dm text-[#332C25]">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#66705A]" />
+                  <div key={i} className="flex items-center gap-1.5 text-xs font-dm text-[#221508]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#607427]" />
                     <span>{f}</span>
                   </div>
                 ))}
@@ -1233,7 +1180,7 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
             <button
               type="button"
               onClick={() => setActiveFacility(null)}
-              className="mt-6 w-full py-2.5 rounded-xl bg-[#26201B] text-[#F7F1E5] font-dm text-xs font-bold uppercase tracking-wider"
+              className="mt-6 w-full py-2.5 rounded-xl bg-[#0A4C83] hover:bg-[#073863] text-[#FEFBF2] font-dm text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors shadow-sm"
             >
               Close Privileges
             </button>
@@ -1243,8 +1190,8 @@ export const TravelPackagePage: React.FC<TravelPackagePageProps> = ({
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto bg-[#F7F1E5] border border-[#D9C6A8] text-[#8F6E5B] px-6 py-3 rounded-2xl shadow-[0_15px_40px_rgba(51,44,37,0.2)] backdrop-blur-md flex items-center gap-3 animate-bounce">
-          <span className="text-[#C7833D]">✦</span>
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto bg-[#FEFBF2] border border-[#C59239] text-[#221508] px-6 py-3 rounded-2xl shadow-[0_15px_40px_rgba(34,21,8,0.2)] backdrop-blur-md flex items-center gap-3 animate-bounce">
+          <span className="text-[#FE7613]">✦</span>
           <span className="font-dm text-xs sm:text-sm font-semibold tracking-wide">
             {toastMessage}
           </span>

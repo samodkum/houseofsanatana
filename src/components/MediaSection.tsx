@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Eye, X, ChevronLeft, ChevronRight, Film } from 'lucide-react';
+import { Sparkles, Eye, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface MediaItem {
   id: string;
@@ -221,7 +221,7 @@ function SyncScrollSliderRow({
                 mass: 0.8 
               }}
               onClick={() => onItemClick(item, index, rowIndex)}
-              className="group relative cursor-pointer overflow-hidden shadow-[0_8px_20px_rgba(34,21,8,0.1)] sm:shadow-[0_12px_28px_rgba(34,21,8,0.12)] hover:shadow-[0_20px_40px_rgba(176,138,74,0.22)] border border-[#B08A4A]/40 select-none shrink-0 w-[190px] xs:w-[215px] sm:w-[320px] h-[120px] xs:h-[135px] sm:h-[200px] rounded-2xl sm:rounded-[22px]"
+              className="group relative cursor-pointer overflow-hidden shadow-[0_8px_20px_rgba(34,21,8,0.1)] sm:shadow-[0_12px_28px_rgba(34,21,8,0.12)] hover:shadow-[0_20px_40px_rgba(197,146,57,0.25)] border border-[#C59239]/40 select-none shrink-0 w-[190px] xs:w-[215px] sm:w-[320px] h-[120px] xs:h-[135px] sm:h-[200px] rounded-2xl sm:rounded-[22px]"
             >
               {/* Image */}
               <img
@@ -235,18 +235,18 @@ function SyncScrollSliderRow({
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none transition-opacity duration-300 group-hover:opacity-90" />
 
               {/* Top Category Badge */}
-              <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[8.5px] sm:text-[10px] font-dm font-bold text-[#D9C6A8] uppercase tracking-wider shadow-xs">
+              <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[8.5px] sm:text-[10px] font-dm font-bold text-[#E4B968] uppercase tracking-wider shadow-xs">
                 {item.category}
               </div>
 
               {/* Hover Action Pill */}
-              <div className="absolute top-2 sm:top-3 right-2 sm:right-3 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/80 backdrop-blur-md text-[#8F6E5B] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 shadow-md">
+              <div className="absolute top-2 sm:top-3 right-2 sm:right-3 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/80 backdrop-blur-md text-[#FE7613] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 shadow-md">
                 <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </div>
 
               {/* Bottom Caption */}
               <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 z-10 text-white">
-                <h4 className="font-cormorant text-xs sm:text-lg font-semibold leading-tight line-clamp-1 group-hover:text-[#D9C6A8] transition-colors">
+                <h4 className="font-cormorant text-xs sm:text-lg font-semibold leading-tight line-clamp-1 group-hover:text-[#E4B968] transition-colors">
                   {item.title}
                 </h4>
                 <p className="font-dm text-[9.5px] sm:text-[11px] text-stone-300 line-clamp-1 mt-0.5">
@@ -320,39 +320,56 @@ export const MediaSection: React.FC = () => {
   return (
     <section
       id="media"
-      className="relative w-full py-12 sm:py-28 bg-[#F7F1E5] text-[#8F6E5B] overflow-hidden select-none"
+      className="relative w-full py-12 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
+      {/* Sacred River Ghats Dawn Panorama Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/sacred_ghats_bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-center scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(254,251,242,0.7) 0%, rgba(254,251,242,0.14) 20%, rgba(254,251,242,0.14) 80%, rgba(254,251,242,0.78) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 mix-blend-color"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220,155,65,0.14) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+
       {/* Subtle Sacred Geometry Texture Background */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, #8F6E5B 1.2px, transparent 1.2px)`,
+          backgroundImage: `radial-gradient(circle at 50% 50%, #C59239 1.2px, transparent 1.2px)`,
           backgroundSize: '28px 28px'
         }}
       />
 
       {/* Sacred Background Ambient Glows */}
-      <div className="absolute top-1/3 left-1/4 w-[600px] h-[400px] bg-[#B08A4A]/12 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[400px] bg-[#C7833D]/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-[600px] h-[400px] bg-[#C59239]/12 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[400px] bg-[#FE7613]/10 rounded-full blur-[160px] pointer-events-none" />
 
       {/* Header Container */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8 sm:mb-16">
         
-        {/* Eyebrow Inscription */}
-        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#8F6E5B]/10 border border-[#8F6E5B]/20 text-[#8F6E5B] text-[11px] sm:text-xs font-dm font-bold tracking-widest uppercase mb-3 sm:mb-5 shadow-xs">
-          <Film className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#8F6E5B]" />
-          <span>॥ दृश्य दर्शनम् ॥ &bull; SACRED VISUAL CHRONICLES</span>
-        </div>
-
         {/* Main Title */}
-        <h2 className="font-cormorant text-3xl sm:text-6xl md:text-7xl font-semibold text-[#8F6E5B] tracking-tight leading-[0.92] uppercase">
+        <h2 className="font-cormorant text-3xl sm:text-6xl md:text-7xl font-semibold text-[#221508] tracking-tight leading-[0.92] uppercase">
           SANATANA MEDIA
         </h2>
-        <div className="mt-0.5 sm:mt-1 font-cormorant text-2xl sm:text-5xl md:text-6xl font-semibold text-[#8F6E5B] tracking-tight leading-[0.95] uppercase">
+        <div className="mt-0.5 sm:mt-1 font-cormorant text-2xl sm:text-5xl md:text-6xl font-semibold text-[#221508] tracking-tight leading-[0.95] uppercase">
           LIVING DEVOTION &amp; YATRA
         </div>
 
-        <p className="mt-3 sm:mt-5 font-dm text-xs sm:text-base text-[#8F6E5B]/80 font-normal leading-relaxed max-w-2xl mx-auto">
+        <p className="mt-3 sm:mt-5 font-dm text-xs sm:text-base text-[#221508] font-medium leading-relaxed max-w-2xl mx-auto">
           Immerse yourself in authentic darshans, Himalayan high-altitude expeditions, Vedic artisans at work, and sacred temple rituals across Bharat.
         </p>
       </div>
@@ -439,7 +456,7 @@ export const MediaSection: React.FC = () => {
                   {/* Modal Bottom Inscription Bar */}
                   <div className="p-4 sm:p-5 bg-gradient-to-t from-black via-black/90 to-black/40 border-t border-white/10 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                      <span className="text-[10px] font-dm font-bold uppercase tracking-widest text-[#D9C6A8] px-2.5 py-0.5 rounded-full bg-[#B08A4A]/30 border border-[#B08A4A]/50 inline-block mb-1">
+                      <span className="text-[10px] font-dm font-bold uppercase tracking-widest text-[#E4B968] px-2.5 py-0.5 rounded-full bg-[#C59239]/25 border border-[#C59239]/50 inline-block mb-1">
                         {activeMedia.category}
                       </span>
                       <h3 className="font-cormorant text-xl sm:text-2xl font-semibold text-white">
@@ -451,7 +468,7 @@ export const MediaSection: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-2 text-stone-400 text-xs font-dm">
-                      <Sparkles className="w-3.5 h-3.5 text-[#B08A4A]" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#FE7613]" />
                       <span>House of Sanatan Archive</span>
                     </div>
                   </div>

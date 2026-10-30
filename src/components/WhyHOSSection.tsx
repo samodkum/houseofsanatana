@@ -25,64 +25,94 @@ export interface BrandColor {
 
 export const BRAND_COLORS: BrandColor[] = [
   {
-    id: 'ivory',
-    name: 'Ivory',
-    sanskrit: '॥ पवित्र श्वेत ॥',
-    element: 'Sattva Shanti (Pristine Foundation Base)',
-    hex: '#F7F1E5',
-    rgb: [247, 241, 229],
-    isLight: true,
-    tints: ['#F7F1E5', '#F1E8D5', '#EADFC5', '#E2D5B4', '#DAC9A2'],
-  },
-  {
-    id: 'sand',
-    name: 'Sand Beige',
-    sanskrit: '॥ सिकता वर्ण ॥',
-    element: 'Dhara Kanti (Warm Earth & Riverbank Sands)',
-    hex: '#D9C6A8',
-    rgb: [217, 198, 168],
-    isLight: true,
-    tints: ['#D9C6A8', '#E2D3BC', '#EAE0D0', '#F2ECE3', '#F9F7F4'],
-  },
-  {
-    id: 'sage',
-    name: 'Soft Sage Olive',
-    sanskrit: '॥ तुलसी अरण्य ॥',
-    element: 'Prakriti Dhama (Sacred Groves & Himalayan Bilva)',
-    hex: '#66705A',
-    rgb: [102, 112, 90],
-    isLight: false,
-    tints: ['#3F4637', '#525B48', '#66705A', '#848F76', '#A3AC98'],
-  },
-  {
-    id: 'saffron',
-    name: 'Muted Saffron',
-    sanskrit: '॥ कुङ्कुम अग्नि ॥',
-    element: 'Yajna Jwala (Vedic Fire & Saffron Tilak)',
-    hex: '#C7833D',
-    rgb: [199, 131, 61],
-    isLight: false,
-    tints: ['#8A541F', '#A86B2B', '#C7833D', '#D79E62', '#E7B988'],
-  },
-  {
     id: 'gold',
-    name: 'Antique Gold',
+    name: 'Temple Gold',
     sanskrit: '॥ पुरातन सुवर्ण ॥',
     element: 'Surya Tejas (Sacred Temple Finials & Pure Brass)',
-    hex: '#B08A4A',
-    rgb: [176, 138, 74],
+    hex: '#C59239',
+    rgb: [197, 146, 57],
     isLight: false,
-    tints: ['#795B2A', '#947239', '#B08A4A', '#C4A56E', '#D7BE93'],
+    tints: ['#C59239', '#D3A85B', '#E1BE7D', '#ECD5A4', '#F6EBCF'],
   },
   {
-    id: 'taupe',
-    name: 'Taupe Brown',
-    sanskrit: '॥ भस्म अङ्गार ॥',
-    element: 'Agni Bhasma (Grounding Temple Silence & Deep Wood)',
-    hex: '#8F6E5B',
-    rgb: [143, 110, 91],
+    id: 'ivory',
+    name: 'Sacred Ivory',
+    sanskrit: '॥ पवित्र श्वेत ॥',
+    element: 'Sattva Shanti (Pristine Foundation Base)',
+    hex: '#FEFBF2',
+    rgb: [254, 251, 242],
+    isLight: true,
+    tints: ['#FEFBF2', '#FBF6E5', '#F8F1D8', '#F5ECCB', '#F2E7BE'],
+  },
+  {
+    id: 'ruby',
+    name: 'Ruby Red',
+    sanskrit: '॥ दिव्य कुङ्कुम ॥',
+    element: 'Shakti Sankalpa (Consecrated Temple Vermilion)',
+    hex: '#98555E',
+    rgb: [152, 85, 94],
     isLight: false,
-    tints: ['#5E4537', '#765846', '#8F6E5B', '#A88A77', '#C2A795'],
+    tints: ['#51000F', '#742A35', '#98555E', '#BE838A', '#E4B8BD'],
+  },
+  {
+    id: 'water-blue',
+    name: 'Water Blue',
+    sanskrit: '॥ पावन गङ्गा जल ॥',
+    element: 'Ganga Jal (Purifying Sacred River & Clarity)',
+    hex: '#3DB3E4',
+    rgb: [61, 179, 228],
+    isLight: false,
+    tints: ['#3DB3E4', '#64C2E9', '#8BCFF0', '#B2DCF5', '#D9ECF9'],
+  },
+  {
+    id: 'wind-blue',
+    name: 'Wind Blue',
+    sanskrit: '॥ अनन्त व्योम ॥',
+    element: 'Vayu & Akasha (Infinite Space & Cosmic Devotion)',
+    hex: '#0A4C83',
+    rgb: [10, 76, 131],
+    isLight: false,
+    tints: ['#073863', '#0A4C83', '#3B709C', '#6C94B5', '#CEDBE6'],
+  },
+  {
+    id: 'lotus-pink',
+    name: 'Lotus Pink',
+    sanskrit: '॥ पद्म कमल ॥',
+    element: 'Lakshmi Kamala (Devotion, Grace & Blossoming)',
+    hex: '#C23053',
+    rgb: [194, 48, 83],
+    isLight: false,
+    tints: ['#C23053', '#CE5975', '#DB8398', '#E7ACBA', '#F3D6DD'],
+  },
+  {
+    id: 'leaf-green',
+    name: 'Mountain/Leaf Green',
+    sanskrit: '॥ तुलसी दल ॥',
+    element: 'Prakriti Aradhana (Bilva, Tulsi & Himalayan Flora)',
+    hex: '#607427',
+    rgb: [96, 116, 39],
+    isLight: false,
+    tints: ['#607427', '#809052', '#A0AC7D', '#C0C7A9', '#DFE3D4'],
+  },
+  {
+    id: 'fire-orange',
+    name: 'Fire Orange',
+    sanskrit: '॥ पावक अग्नि ॥',
+    element: 'Yajna Agni (Blazing Marigold & Purification)',
+    hex: '#FE7613',
+    rgb: [254, 118, 19],
+    isLight: true,
+    tints: ['#FE7613', '#FE9142', '#FEAD71', '#FFC8A1', '#FFE4D0'],
+  },
+  {
+    id: 'mountain-brown',
+    name: 'Mountain Brown',
+    sanskrit: '॥ शैल मृत्तिका ॥',
+    element: 'Prithvi Dhara (Terracotta Clay & Holy Mountain Soil)',
+    hex: '#AC5D2C',
+    rgb: [172, 93, 44],
+    isLight: false,
+    tints: ['#AC5D2C', '#BD7D56', '#CD9E80', '#DEBEAB', '#EEDFD5'],
   }
 ];
 
@@ -133,17 +163,17 @@ const PILLARS: PillarCard[] = [
       { label: 'Muhurat Accuracy', value: '100%' },
       { label: 'Pilgrim Care', value: '24/7' }
     ],
-    brandColor: BRAND_COLORS[5], // Taupe Brown (#8F6E5B)
+    brandColor: BRAND_COLORS[2], // Ruby Red (#98555E)
     cardStyle: {
-      bg: 'bg-[#8F6E5B]',
-      text: 'text-[#F7F1E5]',
-      taglineText: 'text-[#D9C6A8]',
-      descText: 'text-[#D9C6A8]/90',
-      badgeBg: 'bg-[#765846]',
-      badgeText: 'text-[#B08A4A]',
-      border: 'border-[#B08A4A]/60 hover:border-[#D9C6A8]',
-      glow: 'shadow-[0_20px_45px_rgba(143,110,91,0.5),0_0_25px_rgba(176,138,74,0.3)]',
-      panelBg: 'bg-gradient-to-br from-[#8F6E5B] via-[#7D5E4C] to-[#694D3D]',
+      bg: 'bg-[#98555E]',
+      text: 'text-[#FEFBF2]',
+      taglineText: 'text-[#E4B968]',
+      descText: 'text-[#FEFBF2]/90',
+      badgeBg: 'bg-[#51000F]',
+      badgeText: 'text-[#E4B968]',
+      border: 'border-[#E4B968]/50 hover:border-[#FEFBF2]',
+      glow: 'shadow-[0_20px_45px_rgba(152,85,94,0.45),0_0_25px_rgba(197,146,57,0.3)]',
+      panelBg: 'bg-gradient-to-br from-[#98555E] via-[#742A35] to-[#51000F]',
     },
     initialRotate: -7
   },
@@ -164,17 +194,17 @@ const PILLARS: PillarCard[] = [
       { label: 'Purity Tested', value: '100%' },
       { label: 'Scripture Citations', value: 'Rigveda / Agamas' }
     ],
-    brandColor: BRAND_COLORS[2], // Soft Sage Olive (#66705A)
+    brandColor: BRAND_COLORS[4], // Wind Blue (#0A4C83)
     cardStyle: {
-      bg: 'bg-[#66705A]',
-      text: 'text-[#F7F1E5]',
-      taglineText: 'text-[#D9C6A8]',
-      descText: 'text-[#F7F1E5]/90',
-      badgeBg: 'bg-[#525B48]',
-      badgeText: 'text-[#D9C6A8]',
-      border: 'border-[#848F76] hover:border-[#D9C6A8]',
-      glow: 'shadow-[0_20px_45px_rgba(102,112,90,0.5),0_0_25px_rgba(217,198,168,0.25)]',
-      panelBg: 'bg-gradient-to-br from-[#66705A] via-[#5A634F] to-[#48503E]',
+      bg: 'bg-[#0A4C83]',
+      text: 'text-[#FEFBF2]',
+      taglineText: 'text-[#3DB3E4]',
+      descText: 'text-[#FEFBF2]/90',
+      badgeBg: 'bg-[#073863]',
+      badgeText: 'text-[#3DB3E4]',
+      border: 'border-[#3DB3E4]/50 hover:border-[#FEFBF2]',
+      glow: 'shadow-[0_20px_45px_rgba(10,76,131,0.45),0_0_25px_rgba(61,179,228,0.3)]',
+      panelBg: 'bg-gradient-to-br from-[#0A4C83] via-[#083E6B] to-[#073863]',
     },
     initialRotate: 4
   },
@@ -195,17 +225,17 @@ const PILLARS: PillarCard[] = [
       { label: 'Active Devotees', value: '25,000+' },
       { label: 'Family Immersion', value: 'Multi-gen' }
     ],
-    brandColor: BRAND_COLORS[3], // Muted Saffron (#C7833D)
+    brandColor: BRAND_COLORS[7], // Fire Orange (#FE7613)
     cardStyle: {
-      bg: 'bg-[#C7833D]',
-      text: 'text-[#F7F1E5]',
-      taglineText: 'text-[#F7F1E5]',
-      descText: 'text-[#F7F1E5]/95',
-      badgeBg: 'bg-[#A86B2B]',
-      badgeText: 'text-[#F7F1E5]',
-      border: 'border-[#D79E62] hover:border-[#F7F1E5]',
-      glow: 'shadow-[0_20px_45px_rgba(199,131,61,0.5),0_0_25px_rgba(215,158,98,0.35)]',
-      panelBg: 'bg-gradient-to-br from-[#C7833D] via-[#B87532] to-[#A36425]',
+      bg: 'bg-[#FE7613]',
+      text: 'text-[#FEFBF2]',
+      taglineText: 'text-[#FEFBF2]',
+      descText: 'text-[#FEFBF2]/95',
+      badgeBg: 'bg-[#D65F08]',
+      badgeText: 'text-[#FEFBF2]',
+      border: 'border-[#FEAD71] hover:border-[#FEFBF2]',
+      glow: 'shadow-[0_20px_45px_rgba(254,118,19,0.45),0_0_25px_rgba(254,173,113,0.35)]',
+      panelBg: 'bg-gradient-to-br from-[#FE7613] via-[#E66207] to-[#CC5300]',
     },
     initialRotate: -3
   },
@@ -226,17 +256,17 @@ const PILLARS: PillarCard[] = [
       { label: 'Artisan Lineage', value: '5 Generations' },
       { label: 'Consecrated', value: 'Vedic Peethams' }
     ],
-    brandColor: BRAND_COLORS[4], // Antique Gold (#B08A4A)
+    brandColor: BRAND_COLORS[6], // Mountain/Leaf Green (#607427)
     cardStyle: {
-      bg: 'bg-[#B08A4A]',
-      text: 'text-[#F7F1E5]',
-      taglineText: 'text-[#F7F1E5]',
-      descText: 'text-[#F7F1E5]/90',
-      badgeBg: 'bg-[#947239]',
-      badgeText: 'text-[#F7F1E5]',
-      border: 'border-[#C4A56E]/60 hover:border-[#F7F1E5]',
-      glow: 'shadow-[0_20px_45px_rgba(176,138,74,0.45),0_0_25px_rgba(215,190,147,0.3)]',
-      panelBg: 'bg-gradient-to-br from-[#B08A4A] via-[#9F7A3C] to-[#86632B]',
+      bg: 'bg-[#607427]',
+      text: 'text-[#FEFBF2]',
+      taglineText: 'text-[#C0C7A9]',
+      descText: 'text-[#FEFBF2]/90',
+      badgeBg: 'bg-[#4A5A1E]',
+      badgeText: 'text-[#FEFBF2]',
+      border: 'border-[#C0C7A9]/60 hover:border-[#FEFBF2]',
+      glow: 'shadow-[0_20px_45px_rgba(96,116,39,0.45),0_0_25px_rgba(192,199,169,0.3)]',
+      panelBg: 'bg-gradient-to-br from-[#607427] via-[#506120] to-[#3E4C19]',
     },
     initialRotate: 6
   }
@@ -266,7 +296,7 @@ const VedicSanctumSeal = ({ className = "w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-
           />
         </defs>
         <text
-          fill="#A87C3A"
+          fill="#C59239"
           className="font-dm font-bold text-[10.5px] uppercase tracking-[0.22em]"
         >
           <textPath
@@ -280,10 +310,10 @@ const VedicSanctumSeal = ({ className = "w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-
 
       {/* 2. Static Inner Medallion & Lotus (Completely Stable) */}
       <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full select-none">
-        <circle cx="100" cy="100" r="69" fill="#B08A4A" />
-        <g fill="#F7F1E5" transform="translate(100, 100) scale(0.68) translate(-100, -100)">
+        <circle cx="100" cy="100" r="69" fill="#C59239" />
+        <g fill="#FEFBF2" transform="translate(100, 100) scale(0.68) translate(-100, -100)">
           <path d="M 100,42 C 116,68 120,96 100,122 C 80,96 84,68 100,42 Z" />
-          <path d="M 100,58 C 109,75 111,94 100,108 C 89,94 91,75 100,58 Z" fill="#B08A4A" />
+          <path d="M 100,58 C 109,75 111,94 100,108 C 89,94 91,75 100,58 Z" fill="#C59239" />
           <path d="M 100,122 C 82,108 72,82 81,58 C 92,72 98,96 100,122 Z" />
           <path d="M 100,122 C 118,108 128,82 119,58 C 108,72 102,96 100,122 Z" />
           <path d="M 100,122 C 72,116 54,92 60,68 C 76,82 88,104 100,122 Z" />
@@ -341,8 +371,31 @@ export const WhyHOSSection: React.FC = () => {
       id="why-hos" 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full py-20 sm:py-28 bg-[#F7F1E5] text-[#8F6E5B] overflow-hidden select-none transition-colors duration-500"
+      className="relative w-full py-20 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none transition-colors duration-500"
     >
+      {/* Sacred Temple Panorama Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/sacred_temple_bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-[center_30%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(254,251,242,0.7) 0%, rgba(254,251,242,0.14) 20%, rgba(254,251,242,0.12) 80%, rgba(254,251,242,0.78) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 mix-blend-color"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220,155,65,0.14) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+
       {/* ======================================================== */}
       {/* 1. INTERACTIVE CURSOR SPOTLIGHT ON IVORY BASE            */}
       {/* Dynamically radiates the selected / hovered brand color! */}
@@ -371,17 +424,17 @@ export const WhyHOSSection: React.FC = () => {
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.035]"
         style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, #8F6E5B 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle at 50% 50%, #C59239 1px, transparent 1px)`,
           backgroundSize: '32px 32px'
         }}
       />
 
       {/* Background Sacred Patterns in Empty Margins - 100% Fully Visible & Uncropped */}
-      <div className="absolute top-16 -left-10 lg:left-4 xl:left-8 pointer-events-none opacity-55 hidden lg:block">
-        <TempleArchitectureLine size={300} color="#705B4C" />
+      <div className="absolute top-16 -left-10 lg:left-4 xl:left-8 pointer-events-none opacity-40 hidden lg:block">
+        <TempleArchitectureLine size={300} color="#C59239" />
       </div>
-      <div className="absolute bottom-8 sm:bottom-12 -left-6 sm:left-2 lg:left-6 xl:left-10 pointer-events-none opacity-55 hidden lg:block z-0">
-        <LotusLineArt size={300} color="#705B4C" className="-rotate-6" />
+      <div className="absolute bottom-8 sm:bottom-12 -left-6 sm:left-2 lg:left-6 xl:left-10 pointer-events-none opacity-40 hidden lg:block z-0">
+        <LotusLineArt size={300} color="#C59239" className="-rotate-6" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -405,7 +458,7 @@ export const WhyHOSSection: React.FC = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: false, amount: 0.15 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-cormorant text-[11.5vw] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase"
+                  className="font-cormorant text-[11.5vw] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.92] uppercase"
                 >
                   WHY CHOOSE
                 </motion.h2>
@@ -416,7 +469,7 @@ export const WhyHOSSection: React.FC = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: false, amount: 0.15 }}
                   transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-cormorant text-[11.5vw] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase"
+                  className="font-cormorant text-[11.5vw] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.92] uppercase"
                 >
                   HOUSE OF
                 </motion.h2>
@@ -428,7 +481,7 @@ export const WhyHOSSection: React.FC = () => {
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: false, amount: 0.15 }}
                     transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-cormorant text-[11.5vw] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.92] uppercase shrink-0"
+                    className="font-cormorant text-[11.5vw] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.92] uppercase shrink-0"
                   >
                     SANATANA?
                   </motion.h2>
@@ -445,7 +498,7 @@ export const WhyHOSSection: React.FC = () => {
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: false, amount: 0.15 }}
                     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-cormorant sm:text-[7vw] md:text-[6vw] lg:text-[76px] xl:text-[90px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.95] uppercase"
+                    className="font-cormorant sm:text-[7vw] md:text-[6vw] lg:text-[76px] xl:text-[90px] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.95] uppercase"
                   >
                     WHY CHOOSE
                   </motion.h2>
@@ -458,7 +511,7 @@ export const WhyHOSSection: React.FC = () => {
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: false, amount: 0.15 }}
                     transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-cormorant sm:text-[7vw] md:text-[6vw] lg:text-[76px] xl:text-[90px] font-semibold text-[#8F6E5B] tracking-[-0.02em] leading-[0.95] uppercase shrink-0"
+                    className="font-cormorant sm:text-[7vw] md:text-[6vw] lg:text-[76px] xl:text-[90px] font-semibold text-[#221508] tracking-[-0.02em] leading-[0.95] uppercase shrink-0"
                   >
                     HOUSE OF SANATANA?
                   </motion.h2>
@@ -485,13 +538,13 @@ export const WhyHOSSection: React.FC = () => {
             
             {/* GIANT BACKGROUND TYPOGRAPHY WATERMARK */}
             <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none select-none overflow-hidden">
-              <span className="font-dm font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight text-[#8F6E5B]/[0.05] leading-none uppercase text-center block">
+              <span className="font-dm font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight text-[#221508]/[0.05] leading-none uppercase text-center block">
                 WHY CHOOSE
               </span>
-              <span className="font-dm font-extrabold text-3xl sm:text-5xl md:text-6xl lg:text-[68px] tracking-tight text-[#8F6E5B]/[0.05] leading-none uppercase text-center block mt-1">
+              <span className="font-dm font-extrabold text-3xl sm:text-5xl md:text-6xl lg:text-[68px] tracking-tight text-[#221508]/[0.05] leading-none uppercase text-center block mt-1">
                 HOUSE OF SANATANA
               </span>
-              <span className="font-sanskrit text-[#8F6E5B]/[0.06] text-2xl sm:text-4xl font-bold tracking-widest mt-2">
+              <span className="font-sanskrit text-[#C59239]/[0.15] text-2xl sm:text-4xl font-bold tracking-widest mt-2">
                 ॥ सत्यं धर्म सनातन ॥
               </span>
             </div>
@@ -502,7 +555,6 @@ export const WhyHOSSection: React.FC = () => {
                 const isHovered = hoveredCardId === pillar.id;
                 const isSelected = activePillar.id === pillar.id;
                 const style = pillar.cardStyle;
-                const isWaterBlue = pillar.brandColor.id === 'water-blue';
 
                 // Responsive positioning: tighter cluster on mobile so all cards stay in-screen, standard layout on desktop
                 const positionClasses = [
@@ -540,7 +592,7 @@ export const WhyHOSSection: React.FC = () => {
                     }}
                     className={`absolute ${positionClasses} w-[180px] sm:w-[240px] p-4 sm:p-6 rounded-2xl cursor-pointer select-none transition-shadow duration-300 border ${style.bg} ${style.border} ${
                       isSelected || isHovered
-                        ? `${style.glow} ring-2 ring-[#B08A4A]`
+                        ? `${style.glow} ring-2 ring-[#C59239]`
                         : 'shadow-[0_12px_28px_rgba(34,21,8,0.18)]'
                     }`}
                   >
@@ -552,21 +604,21 @@ export const WhyHOSSection: React.FC = () => {
                     {/* Bottom Title & Serial Bracket (e.g. [ 01 ] Thoughtful Planning) */}
                     <div className="pt-2.5 sm:pt-3 border-t border-white/20 flex flex-col gap-0.5 sm:gap-1">
                       <div className="flex items-center gap-1.5 sm:gap-2">
-                        <span className="font-dm font-bold text-[11px] sm:text-xs text-[#F7F1E5]">
+                        <span className="font-dm font-bold text-[11px] sm:text-xs text-[#FEFBF2]">
                           [{pillar.number}]
                         </span>
                         <h4 className={`font-cormorant text-xs sm:text-base font-semibold ${style.text} tracking-wide leading-tight`}>
                           {pillar.title}
                         </h4>
                       </div>
-                      <span className="font-sanskrit text-[9px] sm:text-[10px] text-[#D9C6A8] font-semibold">
+                      <span className="font-sanskrit text-[9px] sm:text-[10px] text-[#E4B968] font-semibold">
                         {pillar.sanskrit}
                       </span>
                     </div>
 
                     {/* Active Corner Color Beacon */}
                     {(isSelected || isHovered) && (
-                      <div className="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-[#B08A4A] animate-pulse shadow-md" />
+                      <div className="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-[#C59239] animate-pulse shadow-md" />
                     )}
                   </motion.div>
                 );
@@ -583,11 +635,11 @@ export const WhyHOSSection: React.FC = () => {
             
             {/* Top Section Descriptive Note */}
             <div className="space-y-3">
-              <p className="font-dm text-xs sm:text-sm text-[#8F6E5B]/80 leading-relaxed font-normal">
+              <p className="font-dm text-xs sm:text-sm text-[#221508] leading-relaxed font-medium">
                 We unite eternal Vedic Agamic wisdom with meticulous planning to create sacred offerings and pilgrimages that elevate your spiritual life.
               </p>
               
-              <div className="inline-flex items-center gap-2 text-xs font-dm font-bold text-[#C7833D] uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 text-xs font-dm font-bold text-[#FE7613] uppercase tracking-widest">
                 <span>[ ॥ चतुर्विध स्तम्भाः ॥ THE 4 PILLARS ]</span>
               </div>
             </div>
@@ -611,12 +663,12 @@ export const WhyHOSSection: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   
-                  <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs border border-white/20 text-[10px] font-dm font-bold text-[#F7F1E5] uppercase">
+                  <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs border border-white/20 text-[10px] font-dm font-bold text-[#FEFBF2] uppercase">
                     Pillar [{activePillar.number}]
                   </div>
 
                   <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
-                    <span className="font-sanskrit text-xs text-[#D9C6A8] font-bold">
+                    <span className="font-sanskrit text-xs text-[#E4B968] font-bold">
                       {activePillar.sanskrit}
                     </span>
                     <span className="text-[10px] font-dm text-stone-300 font-medium">
@@ -634,7 +686,7 @@ export const WhyHOSSection: React.FC = () => {
                 </p>
 
                 {/* Description */}
-                <p className={`font-dm text-xs leading-relaxed mb-5 ${activePillar.cardStyle.descText} font-normal`}>
+                <p className={`font-dm text-xs leading-relaxed mb-5 ${activePillar.cardStyle.descText} font-medium`}>
                   {activePillar.description}
                 </p>
 
@@ -642,7 +694,7 @@ export const WhyHOSSection: React.FC = () => {
                 <div className="space-y-2 mb-5">
                   {activePillar.highlights.map((h, i) => (
                     <div key={i} className="flex items-center gap-2 text-[11px] font-dm">
-                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#B08A4A]" />
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#C59239]" />
                       <span className="font-medium">{h}</span>
                     </div>
                   ))}
@@ -652,10 +704,10 @@ export const WhyHOSSection: React.FC = () => {
                 <div className="pt-4 border-t border-white/20 flex items-center justify-between">
                   {activePillar.metrics.map((m, mi) => (
                     <div key={mi} className="text-left">
-                      <div className="font-dm font-bold text-sm sm:text-base text-[#F7F1E5]">
+                      <div className="font-dm font-bold text-sm sm:text-base text-[#FEFBF2]">
                         {m.value}
                       </div>
-                      <div className="font-dm text-[10px] uppercase tracking-wider text-[#D9C6A8]">
+                      <div className="font-dm text-[10px] uppercase tracking-wider text-[#E4B968]">
                         {m.label}
                       </div>
                     </div>
@@ -663,7 +715,7 @@ export const WhyHOSSection: React.FC = () => {
                   
                   <a
                     href="#travel"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#B08A4A] hover:bg-[#C7833D] text-[#F7F1E5] font-dm font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#C59239] hover:bg-[#FE7613] text-[#FEFBF2] font-dm font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
                   >
                     <span>Explore</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -673,8 +725,8 @@ export const WhyHOSSection: React.FC = () => {
             </AnimatePresence>
 
             {/* Bottom Descriptive Caption */}
-            <p className="font-dm text-xs text-[#8F6E5B]/80 leading-relaxed font-normal">
-              Every ritual samagri kit, brass vigraha, and Himalayan yatra is consecrated to uphold the uncompromising sanctity of Sanatana Dharma. <span className="text-[#C7833D] font-bold">[ 01-04 ]</span>
+            <p className="font-dm text-xs text-[#3D2619] leading-relaxed font-normal">
+              Every ritual samagri kit, brass vigraha, and Himalayan yatra is consecrated to uphold the uncompromising sanctity of Sanatana Dharma. <span className="text-[#FE7613] font-bold">[ 01-04 ]</span>
             </p>
 
           </div>

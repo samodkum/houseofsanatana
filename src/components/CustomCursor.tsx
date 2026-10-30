@@ -126,8 +126,8 @@ export const CustomCursor: React.FC = () => {
           {/* Outer Thick White Rounded Contour + Solid Pitch Black Arrow Body */}
           <path
             d="M 6 6 L 27 16.5 L 17.5 20 L 11.5 28.5 L 6 6 Z"
-            fill="#8F6E5B"
-            stroke="#F7F1E5"
+            fill="#221508"
+            stroke="#FEFBF2"
             strokeWidth="4.5"
             strokeLinejoin="round"
             strokeLinecap="round"

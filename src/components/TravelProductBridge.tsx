@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
-import { Sparkles, ArrowDown } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { AbstractLotusPetals, TempleArchitectureLine } from './ui/SacredPatterns';
 
 export const TravelProductBridge: React.FC = () => {
@@ -25,13 +25,29 @@ export const TravelProductBridge: React.FC = () => {
     <section
       ref={containerRef}
       id="travel-to-product-bridge"
-      className="relative w-full bg-[#F7F1E5] overflow-hidden select-none flex items-center justify-center pt-14 pb-6 sm:pt-18 sm:pb-8 lg:pt-20 lg:pb-10 px-4 sm:px-8 lg:px-16"
+      className="relative w-full bg-[#FEFBF2] overflow-hidden select-none flex items-center justify-center pt-14 pb-6 sm:pt-18 sm:pb-8 lg:pt-20 lg:pb-10 px-4 sm:px-8 lg:px-16"
     >
+      {/* Sacred River Ghats Sunrise Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/sacred_ghats_bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-center scale-[1.02] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(254,251,242,0.75) 0%, rgba(254,251,242,0.18) 25%, rgba(254,251,242,0.18) 75%, rgba(254,251,242,0.8) 100%)',
+          }}
+        />
+      </div>
+
       {/* Background Subtle Grid Texture */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(#8F6E5B 1.5px, transparent 1.5px)',
+          backgroundImage: 'radial-gradient(#C59239 1.5px, transparent 1.5px)',
           backgroundSize: '28px 28px'
         }}
       />
@@ -46,24 +62,10 @@ export const TravelProductBridge: React.FC = () => {
           style={{ y: textY }}
           className="lg:col-span-7 flex flex-col justify-center relative z-20"
         >
-          {/* Subtle Temple Architecture Line Drawing Watermark behind heading (Reduced size) */}
-          <div className="absolute -top-10 sm:-top-16 left-1/2 -translate-x-1/2 sm:left-8 sm:translate-x-0 pointer-events-none opacity-15 sm:opacity-20 z-0 select-none overflow-visible">
-            <TempleArchitectureLine size={320} color="#705B4C" className="w-[280px] sm:w-[380px] md:w-[460px] h-auto" />
+          {/* Subtle Temple Architecture Line Drawing Watermark behind heading */}
+          <div className="absolute -top-10 sm:-top-16 left-1/2 -translate-x-1/2 sm:left-8 sm:translate-x-0 pointer-events-none opacity-20 z-0 select-none overflow-visible">
+            <TempleArchitectureLine size={320} color="#C59239" className="w-[280px] sm:w-[380px] md:w-[460px] h-auto" />
           </div>
-
-          {/* Eyebrow Label */}
-          <motion.div 
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 inline-flex items-center gap-2 mb-4"
-          >
-            <span className="px-3 py-1 rounded-full bg-[#8F6E5B]/10 border border-[#8F6E5B]/20 text-[#8F6E5B] text-[10px] sm:text-xs font-dm font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#8F6E5B]" />
-              <span>॥ तीर्थात मन्दिरम् ॥ &bull; FROM YATRA TO SANCTUM</span>
-            </span>
-          </motion.div>
 
           {/* Main Giant Stacked Typography with Staggered Entrance Animation */}
           <motion.div 
@@ -87,13 +89,13 @@ export const TravelProductBridge: React.FC = () => {
                   visible: { 
                     opacity: 1, 
                     y: 0, 
-                    scale: 1,
+                    scale: 1, 
                     transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } 
                   }
                 }}
                 className="flex items-baseline gap-3 sm:gap-4 flex-wrap"
               >
-                <h2 className="font-cormorant font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[104px] text-[#8F6E5B] leading-[0.88] uppercase tracking-[-0.02em]">
+                <h2 className="font-cormorant font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[104px] text-[#221508] leading-[0.88] uppercase tracking-[-0.02em]">
                   {lineText}
                 </h2>
               </motion.div>
@@ -108,8 +110,8 @@ export const TravelProductBridge: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 mt-4 sm:mt-5 flex items-center gap-3"
           >
-            <p className="font-dm text-sm sm:text-base md:text-lg font-medium text-[#8F6E5B]/85 tracking-tight">
-              ॥ पवित्र पूजा सामग्री ॥ Handcrafted ritual essentials & temple-consecrated pooja chests.
+            <p className="font-montserrat text-sm sm:text-base md:text-lg font-medium text-[#3D2619] tracking-tight">
+              ॥ पवित्र पूजा सामग्री ॥ Handcrafted ritual essentials &amp; temple-consecrated pooja chests.
             </p>
           </motion.div>
 
@@ -119,7 +121,7 @@ export const TravelProductBridge: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.5, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 mt-5 inline-flex items-center gap-2 text-xs font-dm font-bold uppercase tracking-widest text-[#C7833D]"
+            className="relative z-10 mt-5 inline-flex items-center gap-2 text-xs font-montserrat font-bold uppercase tracking-widest text-[#FE7613]"
           >
             <span>Explore The Collection Below</span>
             <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
@@ -128,12 +130,11 @@ export const TravelProductBridge: React.FC = () => {
 
         {/* ======================================================== */}
         {/* RIGHT 5 COLS: ENLARGED ABSTRACT LOTUS PETALS MOTIF        */}
-        {/* (Visible only on desktop/laptop lg+, removed on mobile)   */}
         {/* ======================================================== */}
         <div className="hidden lg:flex lg:col-span-5 relative items-center justify-end">
           <motion.div
             style={{ y: lotusY }}
-            className="w-full flex items-center justify-end p-2 sm:p-4 translate-x-2 sm:translate-x-6 drop-shadow-[0_20px_45px_rgba(102,112,90,0.18)]"
+            className="w-full flex items-center justify-end p-2 sm:p-4 translate-x-2 sm:translate-x-6 drop-shadow-[0_20px_45px_rgba(194,48,83,0.22)]"
           >
             <AbstractLotusPetals size={500} className="w-full max-w-[440px] sm:max-w-[500px] h-auto" />
           </motion.div>

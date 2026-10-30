@@ -141,7 +141,7 @@ export const ProductFocusCarousel: React.FC<ProductFocusCarouselProps> = ({
       <div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[400px] rounded-full blur-[140px] pointer-events-none transition-all duration-700 ease-out opacity-30"
         style={{
-          backgroundColor: activeProduct?.bgColor || '#C7833D',
+          backgroundColor: activeProduct?.bgColor || '#FE7613',
         }}
       />
 
@@ -198,8 +198,8 @@ export const ProductFocusCarousel: React.FC<ProductFocusCarouselProps> = ({
             onClick={() => navigateTo(idx)}
             className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
               idx === activeIndex 
-                ? 'w-8 bg-[#C7833D]' 
-                : 'w-2 bg-[#D9C6A8]/70 hover:bg-[#B08A4A]'
+                ? 'w-8 bg-[#FE7613]' 
+                : 'w-2 bg-[#C59239]/40 hover:bg-[#C59239]'
             }`}
             aria-label={`Go to ${p.title}`}
           />
@@ -335,13 +335,13 @@ function ProductCard({
             {/* Badges inside inner image box */}
             <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-1 z-10">
               {/* Origin Dham Badge */}
-              <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/65 backdrop-blur-md text-[10px] font-dm font-medium text-[#F7F1E5] border border-white/20">
-                <MapPin className="w-2.5 h-2.5 text-[#D9C6A8]" />
+              <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/65 backdrop-blur-md text-[10px] font-dm font-medium text-[#FEFBF2] border border-white/20">
+                <MapPin className="w-2.5 h-2.5 text-[#E4B968]" />
                 <span className="truncate max-w-[130px]">{product.consecratedAt}</span>
               </div>
 
               {/* Discount Tag */}
-              <span className="px-2 py-0.5 rounded-full bg-white/95 backdrop-blur-xs text-[#26201B] font-dm text-[10px] font-bold shadow-xs">
+              <span className="px-2 py-0.5 rounded-full bg-white/95 backdrop-blur-xs text-[#221508] font-dm text-[10px] font-bold shadow-xs">
                 {discountPercent}% OFF
               </span>
             </div>
@@ -354,10 +354,10 @@ function ProductCard({
                   e.stopPropagation();
                   onInspect(product);
                 }}
-                className="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-white/90 text-[#26201B] hover:bg-white flex items-center justify-center cursor-pointer shadow-md transition-all active:scale-95 z-20"
+                className="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-white/90 text-[#221508] hover:bg-white flex items-center justify-center cursor-pointer shadow-md transition-all active:scale-95 z-20"
                 aria-label="Inspect items"
               >
-                <Eye className="w-3.5 h-3.5 text-[#26201B]" />
+                <Eye className="w-3.5 h-3.5 text-[#221508]" />
               </button>
             )}
           </div>
@@ -480,9 +480,9 @@ function ProductCard({
                     };
                     onAddToCart(asPoojaKit);
                   }}
-                  className="flex-1 py-2.5 px-4 rounded-xl font-dm font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md bg-white text-[#26201B] hover:bg-[#F7F1E5] active:scale-95 transition-all"
+                  className="flex-1 py-2.5 px-4 rounded-xl font-dm font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md bg-white text-[#221508] hover:bg-[#FEFBF2] active:scale-95 transition-all"
                 >
-                  <ShoppingBag className="w-3.5 h-3.5 text-[#C7833D]" />
+                  <ShoppingBag className="w-3.5 h-3.5 text-[#FE7613]" />
                   <span>Add to Basket</span>
                 </button>
 
@@ -532,7 +532,7 @@ function ArrowButton({
       type="button"
       onClick={onClick}
       aria-label={ariaLabel}
-      className={`absolute ${direction === 'left' ? 'left-3 sm:left-8' : 'right-3 sm:right-8'} top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-[#26201B] border border-[#D9C6A8] flex items-center justify-center cursor-pointer shadow-[0_6px_20px_rgba(51,44,37,0.18)] z-20 transition-all duration-200 hover:scale-110 active:scale-95`}
+      className={`absolute ${direction === 'left' ? 'left-3 sm:left-8' : 'right-3 sm:right-8'} top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-[#221508] border border-[#C59239]/40 flex items-center justify-center cursor-pointer shadow-[0_6px_20px_rgba(34,21,8,0.14)] z-20 transition-all duration-200 hover:scale-110 active:scale-95`}
     >
       <svg
         width="20"

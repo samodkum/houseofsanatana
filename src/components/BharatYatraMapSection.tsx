@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Compass } from 'lucide-react';
 import { YatraPackage } from '../types/homepage';
 import { EXPANDED_TRAVEL_PACKAGES, YatraCircuitType } from '../data/travelData';
 import cleanBharatMapImg from '../../clean_bharat_map.png';
@@ -117,7 +116,7 @@ export const BHARAT_11_YATRAS: BharatMapYatraPin[] = [
     duration: '4D / 3N',
     price: 21500,
     deity: 'Maa Kamakhya Devi',
-    image: 'https://images.unsplash.com/photo-1590076215667-875d4ef2d7ee?auto=format&fit=crop&w=400&q=80'
+    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=400&q=80'
   },
   {
     id: 'rameshwaram-madurai-south',
@@ -173,7 +172,7 @@ export const BHARAT_11_YATRAS: BharatMapYatraPin[] = [
     duration: '11D / 10N',
     price: 58000,
     deity: 'Devi Adishakti Mahamaya',
-    image: 'https://images.unsplash.com/photo-1590076215667-875d4ef2d7ee?auto=format&fit=crop&w=400&q=80'
+    image: 'https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=400&q=80'
   }
 ];
 
@@ -291,6 +290,21 @@ function useTransparentCleanMap(sourceUrl: string) {
           }
         }
 
+        // Harmonize map pixel colors with warm burnt brownish parchment
+        for (let i = 0; i < totalPixels; i++) {
+          if (!visited[i] && data[i * 4 + 3] > 0) {
+            const r = data[i * 4];
+            const g = data[i * 4 + 1];
+            const b = data[i * 4 + 2];
+            // Enrich warm golden-amber tones and soften cool blues in lighter areas
+            if (r > 160 && g > 150) {
+              data[i * 4] = Math.min(255, Math.round(r * 1.02));
+              data[i * 4 + 1] = Math.min(255, Math.round(g * 0.98));
+              data[i * 4 + 2] = Math.max(0, Math.round(b * 0.86));
+            }
+          }
+        }
+
         ctx.putImageData(imgData, 0, 0);
         const resultUrl = canvas.toDataURL('image/png');
         if (!isCancelled) {
@@ -339,51 +353,108 @@ export function BharatYatraMapSection({
   }, []);
 
   const handlePlaceClick = (pin: BharatMapYatraPin) => {
+    window.location.hash = `yatra-${pin.id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const found = EXPANDED_TRAVEL_PACKAGES.find(p => p.id === pin.id);
+    if (found && onSelectYatra) {
+      onSelectYatra(found);
+      return;
+    }
     if (onSelectPlace) {
       onSelectPlace(pin.id, pin.circuit);
-    } else {
-      if (onFilterCircuit) {
-        onFilterCircuit(pin.circuit);
-      }
-      const el = document.getElementById(`package-${pin.id}`) || document.getElementById('catalog');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      return;
     }
   };
 
   return (
-    <section id="bharat-map-section" className="w-full py-8 sm:py-14 px-4 sm:px-6 flex flex-col items-center justify-center select-none">
+    <section
+      id="bharat-map-section"
+      className="relative w-full py-16 sm:py-24 px-4 sm:px-6 flex flex-col items-center justify-center select-none overflow-hidden bg-[#FEFBF2]"
+    >
+      {/* 1. Grand Celestial "SANATAN" Horizon Typography Watermark */}
+      <motion.div
+        initial={{ opacity: 0.16, scale: 0.98 }}
+        animate={{
+          opacity: [0.15, 0.23, 0.15],
+          scale: [0.99, 1.015, 0.99],
+          y: [0, -6, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1360px] px-6 pointer-events-none z-0 flex items-center justify-center select-none"
+      >
+        <img
+          src="/sanatan-hero-typography.png"
+          alt="SANATAN"
+          className="w-full h-auto object-contain select-none filter drop-shadow-[0_4px_30px_rgba(197,146,57,0.45)] drop-shadow-[0_15px_45px_rgba(34,21,8,0.08)]"
+        />
+      </motion.div>
+
+      {/* 2. Concentric Vedic Astrolabe Sacred Geometry Rings */}
+      <div className="absolute top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] sm:w-[780px] md:w-[860px] h-[680px] sm:h-[780px] md:h-[860px] rounded-full pointer-events-none z-0 flex items-center justify-center">
+        {/* Outer delicate ring */}
+        <div className="absolute inset-0 rounded-full border border-[#C59239]/20" />
+        {/* Rotating dashed planetary orbit ring */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 180, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-8 sm:inset-10 rounded-full border border-dashed border-[#C59239]/25"
+        />
+        {/* Inner golden orbit ring */}
+        <div className="absolute inset-20 sm:inset-24 rounded-full border border-[#C59239]/15" />
+        {/* Radiant Solar Backlight Halo */}
+        <div
+          className="absolute inset-12 sm:inset-16 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(228, 185, 104, 0.24) 0%, rgba(197, 146, 57, 0.11) 45%, rgba(254, 118, 19, 0.03) 70%, transparent 80%)',
+            filter: 'blur(34px)',
+          }}
+        />
+      </div>
+
+      {/* Top & Bottom Soft Fade */}
+      <div className="absolute top-0 inset-x-0 h-16 pointer-events-none z-1 bg-gradient-to-b from-[#FEFBF2] to-transparent" />
+      <div className="absolute bottom-0 inset-x-0 h-16 pointer-events-none z-1 bg-gradient-to-t from-[#FEFBF2] to-transparent" />
       
-      {/* Centered Minimalist Title */}
-      <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/85 border border-[#D9C6A8] text-[#C7833D] text-[11px] font-dm font-bold tracking-widest uppercase mb-2 shadow-2xs">
-          <Compass className="w-3.5 h-3.5 text-[#B08A4A]" />
-          <span>॥ भारत दिव्य यात्रा मञ्च ॥ &bull; SACRED PILGRIMAGE MAP</span>
+      {/* Centered Antique Manuscript Title */}
+      <div className="relative z-10 text-center max-w-2xl mx-auto mb-6 sm:mb-10">
+        <div className="flex items-center justify-center gap-2.5 mb-2">
+          <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#C59239] to-[#E4B968]" />
+          <span className="font-montserrat text-[10px] sm:text-[11px] font-bold tracking-[0.28em] text-[#C59239] uppercase">
+            ॥ पावन भारतवर्ष यात्रा ॥
+          </span>
+          <span className="w-8 h-[1px] bg-gradient-to-l from-transparent via-[#C59239] to-[#E4B968]" />
         </div>
-        <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#26201B] leading-tight">
+        <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-bold text-[#221508] leading-tight tracking-wide drop-shadow-[0_1px_1px_rgba(255,245,225,0.5)]">
           11 Divine Journeys Across Bharat
         </h2>
-        <p className="font-dm text-xs sm:text-sm text-[#8F6E5B] mt-1.5">
+        <p className="font-dm text-xs sm:text-sm font-semibold text-[#3D2619] mt-1.5 tracking-wide">
           Tap any sacred destination to view its dedicated travel package below
         </p>
       </div>
 
-      {/* Centered Transparent Indian Map Container */}
-      <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-3xl aspect-square mx-auto flex items-center justify-center">
+      {/* Centered Antique Indian Map Container */}
+      <div className="relative z-10 w-full max-w-xl sm:max-w-2xl lg:max-w-3xl aspect-square mx-auto flex items-center justify-center">
         
-        {/* Clean Vintage Indian Map Artwork */}
+        {/* Clean Antique Indian Map Artwork Floating over Celestial Watermark */}
         {cleanSrc ? (
           <img
             src={cleanSrc}
-            alt="Clean Antique Map of Bharat"
+            alt="Sacred Map of Bharat"
             className={`w-full h-full object-contain select-none transition-all duration-500 ${
-              isReady ? 'opacity-100 drop-shadow-[0_15px_32px_rgba(38,32,27,0.15)]' : 'opacity-0'
+              isReady ? 'opacity-100' : 'opacity-0'
             }`}
+            style={{
+              mixBlendMode: 'multiply',
+              filter: 'contrast(1.18) brightness(1.06) sepia(0.18) drop-shadow(0 20px 35px rgba(35,14,4,0.45))',
+            }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full border-2 border-[#C7833D] border-t-transparent animate-spin" />
+            <div className="w-8 h-8 rounded-full border-2 border-[#FE7613] border-t-transparent animate-spin" />
           </div>
         )}
 
@@ -422,14 +493,17 @@ export function BharatYatraMapSection({
                     <img
                       src={pin.image}
                       alt={pin.title}
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=400&q=80';
+                      }}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                     />
                   </div>
                 </div>
 
                 {/* Elegant Rounded Yatra Pill Card directly under circle */}
-                <div className={`-mt-1 sm:-mt-1.5 min-w-[82px] sm:min-w-[105px] md:min-w-[120px] max-w-[115px] sm:max-w-[138px] md:max-w-[155px] px-2 sm:px-2.5 py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#2A1D13] via-[#1E140C] to-[#140D07] border border-[#B08A4A]/80 shadow-[0_5px_16px_rgba(0,0,0,0.48)] text-center transition-all duration-300 ${
-                  isHovered ? 'border-[#E8B84B] shadow-[0_0_20px_rgba(232,184,75,0.6)] bg-gradient-to-b from-[#3A281A] via-[#2A1D13] to-[#1C130B]' : ''
+                <div className={`-mt-1 sm:-mt-1.5 min-w-[82px] sm:min-w-[105px] md:min-w-[120px] max-w-[115px] sm:max-w-[138px] md:max-w-[155px] px-2 sm:px-2.5 py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#2A1D13] via-[#1E140C] to-[#140D07] border border-[#C59239]/80 shadow-[0_5px_16px_rgba(0,0,0,0.48)] text-center transition-all duration-300 ${
+                  isHovered ? 'border-[#E4B968] shadow-[0_0_20px_rgba(197,146,57,0.6)] bg-gradient-to-b from-[#3A281A] via-[#2A1D13] to-[#1C130B]' : ''
                 }`}>
                   {/* Temple / Yatra Title */}
                   <span className="block text-[7.5px] sm:text-[8.5px] md:text-[9.5px] font-dm font-black text-white tracking-wide leading-tight line-clamp-1 uppercase">
@@ -442,10 +516,10 @@ export function BharatYatraMapSection({
                   </span>
 
                   {/* Triangular Pin Pointer Tip */}
-                  <div className="w-0 h-0 border-l-[3.5px] sm:border-l-[4px] border-l-transparent border-r-[3.5px] sm:border-r-[4px] border-r-transparent border-t-[4px] sm:border-t-[4.5px] border-t-[#B08A4A] mx-auto mt-0.5" />
+                  <div className="w-0 h-0 border-l-[3.5px] sm:border-l-[4px] border-l-transparent border-r-[3.5px] sm:border-r-[4px] border-r-transparent border-t-[4px] sm:border-t-[4.5px] border-t-[#C59239] mx-auto mt-0.5" />
                 </div>
 
-                {/* Floating Rich Tooltip on Hover (Laptop Only) */}
+                {/* Floating Rich Interactive Tooltip on Hover (Laptop Only) */}
                 {isLaptop && (
                   <AnimatePresence>
                     {isHovered && (
@@ -453,23 +527,45 @@ export function BharatYatraMapSection({
                         initial={{ opacity: 0, y: 10, scale: 0.92 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 6, scale: 0.95 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 px-3.5 py-2 rounded-xl bg-[#26201B]/95 text-white border border-[#E8B84B] text-center shadow-2xl pointer-events-none whitespace-nowrap z-50 backdrop-blur-md"
+                        transition={{ duration: 0.16 }}
+                        className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 px-4 py-3 rounded-2xl bg-[#1A1612]/98 text-white border border-[#E8B84B] text-center shadow-[0_20px_50px_rgba(0,0,0,0.85)] pointer-events-auto whitespace-nowrap z-50 backdrop-blur-xl min-w-[210px] before:content-[''] before:absolute before:top-full before:left-0 before:w-full before:h-4"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePlaceClick(pin);
+                        }}
                       >
-                        <div className="font-dm font-bold text-xs text-[#F5D061] flex items-center justify-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#E8B84B]" />
-                          <span>{pin.title}</span>
+                        {/* Sacred Title & Sanskrit */}
+                        <div className="font-cormorant font-bold text-sm text-[#E4B968] tracking-wide">
+                          {pin.sanskrit}
                         </div>
-                        <div className="text-[10px] text-white/80 font-dm flex items-center justify-center gap-1.5 mt-0.5">
-                          <span>{pin.state}</span>
-                          <span>&bull;</span>
-                          <span>{pin.duration}</span>
-                          <span>&bull;</span>
-                          <span className="text-[#EED4B6] font-semibold">₹{pin.price.toLocaleString()}</span>
+                        <div className="font-dm font-black text-xs text-white tracking-wide mt-0.5">
+                          {pin.title}
                         </div>
-                        <div className="text-[9.5px] text-[#E8B84B] font-dm font-bold mt-1">
-                          Click to view travel package ➔
+
+                        {/* Deity & State */}
+                        <div className="text-[10px] text-[#E4B968]/90 font-dm mt-1 max-w-[200px] truncate mx-auto">
+                          {pin.deity}
                         </div>
+
+                        {/* Quick Stats: Duration & Price */}
+                        <div className="flex items-center justify-center gap-2 mt-1.5 py-1 px-2.5 rounded-lg bg-white/10 border border-white/10 text-[10px] font-dm">
+                          <span className="text-white/80">{pin.duration}</span>
+                          <span className="text-[#C59239]">&bull;</span>
+                          <span className="text-[#FE7613] font-bold">₹{pin.price.toLocaleString()}</span>
+                        </div>
+
+                        {/* Clickable CTA Button: "View More ➔" */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePlaceClick(pin);
+                          }}
+                          className="mt-2.5 w-full py-1.5 px-3 rounded-xl bg-[#FE7613] hover:bg-[#e0650d] text-white font-dm font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer"
+                        >
+                          <span>View More</span>
+                          <span className="text-xs">➔</span>
+                        </button>
                       </motion.div>
                     )}
                   </AnimatePresence>

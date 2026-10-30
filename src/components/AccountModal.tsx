@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, User, Crown, ShieldCheck, ShoppingBag, Heart, Calendar, Phone, ArrowRight, ExternalLink, Package } from 'lucide-react';
+import { X, User, Crown, ShieldCheck, ShoppingBag, Heart, Calendar, Phone, ArrowRight, ExternalLink } from 'lucide-react';
 import { SunIcon } from './SunIcon';
 
 interface AccountModalProps {
@@ -8,8 +8,7 @@ interface AccountModalProps {
   onClose: () => void;
   onOpenWishlist: () => void;
   onOpenCart: () => void;
-  onOpenOrders?: () => void;
-  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join' | 'orders') => void;
+  onNavigatePage?: (page: 'home' | 'mall' | 'travel' | 'join') => void;
   cartCount?: number;
   wishlistCount?: number;
 }
@@ -19,7 +18,6 @@ export const AccountModal: React.FC<AccountModalProps> = ({
   onClose,
   onOpenWishlist,
   onOpenCart,
-  onOpenOrders,
   onNavigatePage,
   cartCount = 0,
   wishlistCount = 0,
@@ -43,36 +41,36 @@ export const AccountModal: React.FC<AccountModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-lg bg-[#FAF6EE] rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.35)] border border-[#DECDB8] overflow-hidden z-10 text-[#26201B]"
+            className="relative w-full max-w-lg bg-[#FEFBF2] rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.35)] border border-[#C59239]/30 overflow-hidden z-10 text-[#221508]"
           >
             {/* Header Banner */}
-            <div className="relative p-6 sm:p-7 bg-gradient-to-br from-[#26201B] via-[#332C25] to-[#1A1612] text-[#F7F1E5]">
+            <div className="relative p-6 sm:p-7 bg-gradient-to-br from-[#221508] via-[#332C25] to-[#1A1612] text-[#FEFBF2]">
               {/* Close Button */}
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Close profile modal"
-                className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-[#D9C6A8] hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-[#E4B968] hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
 
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#C7833D] to-[#B08A4A] p-0.5 shadow-lg flex items-center justify-center text-white">
-                  <div className="w-full h-full rounded-[14px] bg-[#26201B] flex items-center justify-center">
-                    <SunIcon className="w-7 h-7 text-[#D9C6A8]" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FE7613] to-[#C59239] p-0.5 shadow-lg flex items-center justify-center text-white">
+                  <div className="w-full h-full rounded-[14px] bg-[#221508] flex items-center justify-center">
+                    <SunIcon className="w-7 h-7 text-[#E4B968]" />
                   </div>
                 </div>
 
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#C7833D]/25 border border-[#C7833D]/40 text-[#D9C6A8] text-[10px] font-bold uppercase tracking-wider mb-1">
-                    <Crown className="w-3 h-3 text-[#C7833D]" />
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#C59239]/25 border border-[#C59239]/40 text-[#E4B968] text-[10px] font-bold uppercase tracking-wider mb-1">
+                    <Crown className="w-3 h-3 text-[#C59239]" />
                     <span>॥ कुल भूषण ॥ Gold Sangha Member</span>
                   </div>
                   <h3 className="font-cormorant font-bold text-2xl text-white">
                     Sacred Sadhaka Profile
                   </h3>
-                  <p className="text-xs text-[#D9C6A8]/80 font-mono">
+                  <p className="text-xs text-[#E4B968]/80 font-mono">
                     ID: HOS-SANATAN-2026-7842
                   </p>
                 </div>
@@ -90,16 +88,16 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                     onClose();
                     onOpenWishlist();
                   }}
-                  className="p-3.5 rounded-2xl bg-white border border-[#DECDB8] hover:border-[#58111A] text-left transition-all hover:shadow-xs group cursor-pointer"
+                  className="p-3.5 rounded-2xl bg-white border border-[#C59239]/25 hover:border-[#98555E] text-left transition-all hover:shadow-xs group cursor-pointer"
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">Wishlist</span>
-                    <Heart className="w-4 h-4 text-[#58111A] fill-[#58111A]" />
+                    <Heart className="w-4 h-4 text-[#98555E] fill-[#98555E]" />
                   </div>
-                  <span className="font-dm font-bold text-lg text-[#26201B] block">
+                  <span className="font-dm font-bold text-lg text-[#221508] block">
                     {wishlistCount} Offerings
                   </span>
-                  <span className="text-[11px] text-[#58111A] font-medium group-hover:underline">
+                  <span className="text-[11px] text-[#98555E] font-medium group-hover:underline">
                     View saved items &rarr;
                   </span>
                 </button>
@@ -110,62 +108,38 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                     onClose();
                     onOpenCart();
                   }}
-                  className="p-3.5 rounded-2xl bg-white border border-[#DECDB8] hover:border-[#C7833D] text-left transition-all hover:shadow-xs group cursor-pointer"
+                  className="p-3.5 rounded-2xl bg-white border border-[#C59239]/25 hover:border-[#FE7613] text-left transition-all hover:shadow-xs group cursor-pointer"
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">Sacred Basket</span>
-                    <ShoppingBag className="w-4 h-4 text-[#C7833D]" />
+                    <ShoppingBag className="w-4 h-4 text-[#FE7613]" />
                   </div>
-                  <span className="font-dm font-bold text-lg text-[#26201B] block">
+                  <span className="font-dm font-bold text-lg text-[#221508] block">
                     {cartCount} In Cart
                   </span>
-                  <span className="text-[11px] text-[#C7833D] font-medium group-hover:underline">
+                  <span className="text-[11px] text-[#FE7613] font-medium group-hover:underline">
                     Proceed to checkout &rarr;
                   </span>
                 </button>
               </div>
 
               {/* Devotional Status */}
-              <div className="p-4 rounded-2xl bg-[#EFE7D8]/80 border border-[#D9C6A8]/70">
+              <div className="p-4 rounded-2xl bg-[#C59239]/10 border border-[#C59239]/30">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-dm font-bold text-xs uppercase tracking-wider text-[#8F6E5B]">
+                  <span className="font-dm font-bold text-xs uppercase tracking-wider text-[#221508]">
                     Active Sankalpa & Sadhana
                   </span>
-                  <span className="text-[10px] font-bold text-[#66705A] bg-[#66705A]/15 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold text-[#607427] bg-[#607427]/15 px-2 py-0.5 rounded-full">
                     Consecrated Active
                   </span>
                 </div>
-                <p className="font-dm text-xs text-[#26201B] font-medium leading-relaxed">
+                <p className="font-dm text-xs text-[#3D2619] font-medium leading-relaxed">
                   Daily Brahma Muhurta Puja & Sandhya Vandana • Varanasi Peetham Offering scheduled
                 </p>
               </div>
 
               {/* Navigation Shortcuts */}
               <div className="space-y-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    if (onOpenOrders) {
-                      onOpenOrders();
-                    } else if (onNavigatePage) {
-                      onNavigatePage('orders');
-                    }
-                  }}
-                  className="w-full p-3.5 rounded-xl bg-gradient-to-r from-[#FAF6EE] to-[#F4EDE0] hover:from-[#F4EDE0] hover:to-[#EFE5D7] border border-[#C7833D]/50 flex items-center justify-between text-xs font-bold text-[#58111A] transition-all cursor-pointer shadow-xs group"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Package className="w-4 h-4 text-[#58111A]" />
-                    <span>My Sacred Orders & Yatras</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] text-[#C7833D] font-medium bg-[#C7833D]/10 px-2 py-0.5 rounded-md">
-                      Products & Travel
-                    </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#58111A] group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </button>
-
                 {onNavigatePage && (
                   <button
                     type="button"
@@ -173,10 +147,10 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                       onClose();
                       onNavigatePage('join');
                     }}
-                    className="w-full p-3 rounded-xl bg-white hover:bg-stone-50 border border-[#DECDB8] flex items-center justify-between text-xs font-bold text-[#26201B] transition-all cursor-pointer"
+                    className="w-full p-3 rounded-xl bg-white hover:bg-stone-50 border border-[#C59239]/25 flex items-center justify-between text-xs font-bold text-[#221508] transition-all cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
-                      <ShieldCheck className="w-4 h-4 text-[#C7833D]" />
+                      <ShieldCheck className="w-4 h-4 text-[#C59239]" />
                       <span>Digital Sanctum Pass & Daily Chants</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
@@ -190,11 +164,11 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                       onClose();
                       onNavigatePage('travel');
                     }}
-                    className="w-full p-3 rounded-xl bg-white hover:bg-stone-50 border border-[#DECDB8] flex items-center justify-between text-xs font-bold text-[#26201B] transition-all cursor-pointer"
+                    className="w-full p-3 rounded-xl bg-white hover:bg-stone-50 border border-[#C59239]/25 flex items-center justify-between text-xs font-bold text-[#221508] transition-all cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Calendar className="w-4 h-4 text-[#66705A]" />
-                      <span>Explore Sacred Yatras</span>
+                      <Calendar className="w-4 h-4 text-[#607427]" />
+                      <span>My Sacred Yatra Bookings</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
                   </button>
@@ -202,12 +176,12 @@ export const AccountModal: React.FC<AccountModalProps> = ({
               </div>
 
               {/* Help & Support Footer */}
-              <div className="pt-2 border-t border-[#DECDB8]/60 flex items-center justify-between text-[11px] text-[#8F6E5B]">
+              <div className="pt-2 border-t border-[#C59239]/20 flex items-center justify-between text-[11px] text-[#3D2619]/80">
                 <span className="inline-flex items-center gap-1.5">
-                  <Phone className="w-3 h-3 text-[#C7833D]" />
+                  <Phone className="w-3 h-3 text-[#C59239]" />
                   <span>24/7 Peetham Seva Helpline</span>
                 </span>
-                <span className="font-medium text-[#C7833D]">
+                <span className="font-medium text-[#C59239]">
                   support@houseofsanatan.com
                 </span>
               </div>

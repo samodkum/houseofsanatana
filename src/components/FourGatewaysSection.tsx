@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Compass, Package, Users, Hammer, ArrowRight, Sparkles } from 'lucide-react';
+import { Compass, Package, Users, Hammer, ArrowRight } from 'lucide-react';
 
 interface FourGatewaysSectionProps {
   onSelectStore: () => void;
@@ -44,9 +44,9 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
       subtitle: 'Sacred Yatras & Expeditions',
       description:
         'Bespoke spiritual odysseys to Kashi, Kedarnath, Char Dham & Kailash. Includes VIP sanctum darshans, private helicopter shuttles, and guided Vedic scholars.',
-      bgColor: '#66705A',
-      accentColor: '#D9C6A8',
-      icon: <Compass className="w-4 h-4 text-emerald-300" />,
+      bgColor: '#607427',
+      accentColor: '#C59239',
+      icon: <Compass className="w-4 h-4 text-emerald-200" />,
       image:
         'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=800&q=80',
       actionLabel: 'Explore Yatras',
@@ -58,16 +58,16 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
       id: 'mall',
       step: 'Gateway #02',
       category: 'VEDIC TREASURES',
-      title: 'Santana Mall',
+      title: 'Sanatana Mall',
       subtitle: 'Consecrated Temple Emporium',
       description:
         'Pure, lab-certified Vedic samagri, hand-cast Moradabad brass murtis, zero-residue Bhimseni camphor, and temple-consecrated ceremonial boxes.',
-      bgColor: '#C7833D',
-      accentColor: '#F7F1E5',
+      bgColor: '#51000F',
+      accentColor: '#C59239',
       icon: <Package className="w-4 h-4 text-amber-200" />,
       image:
         'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=800&q=80',
-      actionLabel: 'Enter Santana Mall',
+      actionLabel: 'Enter Sanatana Mall',
       action: onSelectStore,
       restingRotate: 1.8,
       restingY: -6,
@@ -80,9 +80,9 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
       subtitle: 'Vedic Sangha & Satsang',
       description:
         'Unite with a global fraternity of seekers. Attend daily sunrise Brahma Muhurta meditations, exclusive live temple darshans, and youth dharmic forums.',
-      bgColor: '#B08A4A',
-      accentColor: '#F7F1E5',
-      icon: <Users className="w-4 h-4 text-amber-200" />,
+      bgColor: '#0A4C83',
+      accentColor: '#3DB3E4',
+      icon: <Users className="w-4 h-4 text-sky-200" />,
       image:
         'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=800&q=80',
       actionLabel: 'Join Sacred Sangha',
@@ -98,9 +98,9 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
       subtitle: 'Artisans & Scholars Guild',
       description:
         'Empowering traditional shilpis, Sanskrit grammarians, sacred musicians, and temple architects to revive eternal crafts and build consecrated spaces together.',
-      bgColor: '#8F6E5B',
-      accentColor: '#D9C6A8',
-      icon: <Hammer className="w-4 h-4 text-amber-200" />,
+      bgColor: '#C23053',
+      accentColor: '#FE7613',
+      icon: <Hammer className="w-4 h-4 text-rose-200" />,
       image:
         'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
       actionLabel: 'Partner & Create',
@@ -111,25 +111,42 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
   ];
 
   return (
-    <section id="gateways" className="relative w-full bg-[#F7F1E5] py-20 lg:py-28 overflow-hidden select-none">
+    <section id="gateways" className="relative w-full bg-[#FEFBF2] py-20 lg:py-28 overflow-hidden select-none">
+      {/* Sacred Temple Panorama & Varanasi Ghats Sunrise Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/sacred_temple_bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-[center_25%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
+        />
+        {/* Soft edge blend at very top and bottom so it transitions smoothly with adjacent sections */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(254,251,242,0.7) 0%, rgba(254,251,242,0.12) 18%, rgba(254,251,242,0.06) 65%, rgba(254,251,242,0.78) 100%)',
+          }}
+        />
+        {/* Subtle warm golden ambient wash to boost vibrant temple tones */}
+        <div
+          className="absolute inset-0 mix-blend-color"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(220,155,65,0.15) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+
       {/* Ambient background sanctuary glows with GPU transform isolation */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[500px] bg-[#D9C6A8]/20 rounded-full blur-[140px] pointer-events-none transform-gpu" />
-      <div className="absolute bottom-10 left-10 w-[500px] h-[400px] bg-[#C7833D]/12 rounded-full blur-[120px] pointer-events-none transform-gpu" />
-      <div className="absolute top-10 right-10 w-[450px] h-[400px] bg-[#66705A]/12 rounded-full blur-[120px] pointer-events-none transform-gpu" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[500px] bg-[#3DB3E4]/10 rounded-full blur-[140px] pointer-events-none transform-gpu" />
+      <div className="absolute bottom-10 left-10 w-[500px] h-[400px] bg-[#FE7613]/10 rounded-full blur-[120px] pointer-events-none transform-gpu" />
+      <div className="absolute top-10 right-10 w-[450px] h-[400px] bg-[#607427]/10 rounded-full blur-[120px] pointer-events-none transform-gpu" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ======================================================== */}
         {/* SECTION HEADER: Swiss Editorial Headline & Subtitle     */}
         {/* ======================================================== */}
         <div className="w-full max-w-5xl mx-auto mb-10 sm:mb-14 select-none text-left">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-2 mb-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-[#8F6E5B]/25 text-[#8F6E5B] text-xs font-dm font-bold tracking-widest uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-[#C7833D]" />
-              <span>॥ चतुर्द्वारम् ॥ FOUR SACRED GATEWAYS</span>
-            </span>
-          </div>
-
           {/* 2-Line Headline with Snappy Word Reveal */}
           <motion.div
             initial="hidden"
@@ -142,7 +159,7 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
                 transition: { staggerChildren: 0.04, delayChildren: 0 },
               },
             }}
-            className="font-cormorant font-semibold text-[#8F6E5B] text-4xl sm:text-5xl md:text-6xl lg:text-[72px] leading-[1.05] tracking-tight whitespace-nowrap mb-4"
+            className="font-cormorant font-semibold text-[#221508] text-[clamp(2.05rem,8.4vw,2.35rem)] sm:text-4xl md:text-5xl lg:text-[68px] xl:text-[72px] leading-[1.08] tracking-tight whitespace-nowrap mb-4"
           >
             {/* Line 1: The breadth of [the house] */}
             <div className="flex items-center flex-nowrap gap-x-2 sm:gap-x-3.5">
@@ -157,13 +174,13 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
                       transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
                     },
                   }}
-                  className="inline-block text-[#8F6E5B] cursor-default"
+                  className="inline-block text-[#221508] cursor-default"
                 >
                   {word}
                 </motion.span>
               ))}
 
-              {/* Pill 1: Saffron Filled Capsule */}
+              {/* Pill 1: Fire Orange & Gold Filled Capsule */}
               <motion.span
                 variants={{
                   hidden: { opacity: 0, scale: 0.9, y: 14 },
@@ -174,7 +191,7 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
                     transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="relative inline-flex items-center px-3.5 sm:px-5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-[#C7833D] via-[#B08A4A] to-[#C7833D] text-[#F7F1E5] shadow-[0_4px_16px_rgba(199,131,61,0.32)] overflow-hidden select-none text-[0.82em] font-dm font-bold tracking-tight shrink-0"
+                className="relative inline-flex items-center px-2.5 sm:px-5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-[#FE7613] via-[#C59239] to-[#FE7613] text-[#FEFBF2] shadow-[0_4px_16px_rgba(254,118,19,0.35)] overflow-hidden select-none text-[0.78em] sm:text-[0.82em] font-montserrat font-bold tracking-tight shrink-0"
               >
                 <span className="relative z-10 drop-shadow-xs">the house</span>
                 <motion.span
@@ -198,13 +215,13 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
                       transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
                     },
                   }}
-                  className="inline-block text-[#8F6E5B] cursor-default"
+                  className="inline-block text-[#221508] cursor-default"
                 >
                   {word}
                 </motion.span>
               ))}
 
-              {/* Pill 2: Soft Sage Olive Capsule */}
+              {/* Pill 2: Mountain Green Outline Capsule */}
               <motion.span
                 variants={{
                   hidden: { opacity: 0, scale: 0.9, y: 14 },
@@ -215,14 +232,14 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
                     transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="inline-flex items-center px-3.5 sm:px-5 py-0.5 sm:py-1 rounded-full border-2 sm:border-[2.5px] border-[#66705A] text-[#66705A] hover:bg-[#66705A] hover:text-[#F7F1E5] transition-all duration-300 select-none text-[0.82em] font-dm font-bold tracking-tight shrink-0"
+                className="inline-flex items-center px-2.5 sm:px-5 py-0.5 sm:py-1 rounded-full border-2 sm:border-[2.5px] border-[#607427] text-[#607427] hover:bg-[#607427] hover:text-[#FEFBF2] transition-all duration-300 select-none text-[0.78em] sm:text-[0.82em] font-montserrat font-bold tracking-tight shrink-0"
               >
                 into dharma.
               </motion.span>
             </div>
           </motion.div>
 
-          <p className="font-dm text-sm sm:text-base text-[#8F6E5B]/85 max-w-2xl leading-relaxed">
+          <p className="font-montserrat text-sm sm:text-base text-[#221508] max-w-2xl leading-relaxed font-medium">
             Hover over each consecrated card to reveal the living dimensions of timeless Sanatana Dharma.
           </p>
         </div>
@@ -313,7 +330,7 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
                     {card.subtitle}
                   </p>
 
-                  <p className="font-dm text-xs text-white/85 leading-relaxed line-clamp-3">
+                  <p className="font-dm text-xs text-white/95 leading-relaxed line-clamp-3 font-medium">
                     {card.description}
                   </p>
                 </div>

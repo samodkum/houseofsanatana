@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronLeft, 
   ChevronRight, 
   Play, 
+  Pause,
   Sparkles, 
   Eye, 
   Share2, 
@@ -35,6 +36,7 @@ export interface PolaroidCard {
   views?: string;
   isVideo?: boolean;
   videoUrl?: string;
+  creator?: string;
 }
 
 export interface GalleryChapter {
@@ -45,317 +47,378 @@ export interface GalleryChapter {
   storyBody: string;
   locationBadge: string;
   thumbnail: string;
+  ctaText: string;
+  ctaSubtext?: string;
+  ctaService: 'travel' | 'mall';
   cards: PolaroidCard[];
 }
 
 export const GALLERY_CHAPTERS: GalleryChapter[] = [
   {
     id: 'kashi',
-    title: 'Sacred Kashi',
-    tagline: 'Varanasi',
-    storyHeading: 'A day in Kashi.',
-    storyBody: 'Varanasi offers profound stillness of timeless ghats, turquoise morning waters, sacred temple bells, and eternal reverberations of Shiva.',
-    locationBadge: 'Uttar Pradesh',
+    title: 'Kashi Moksha Yatra',
+    tagline: 'Varanasi Yatra Package',
+    storyHeading: 'Creator reels from Kashi.',
+    storyBody: 'Watch authentic creator reels documenting the 3-day Consecrated Kashi Moksha package—from private dawn bajra boats to priority Vishwanath Darshan and street walks.',
+    locationBadge: 'Varanasi Yatra Package • 3D / 2N',
     thumbnail: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=300&q=80',
+    ctaText: 'Film This Yatra with HOS',
+    ctaSubtext: 'Sponsored Stay, Priority Darshan & Creator Honorarium',
+    ctaService: 'travel',
     cards: [
       {
         id: 'kashi-1',
         chapterId: 'kashi',
-        title: 'Dawn on the Ganges',
-        location: 'Assi Ghat, Varanasi',
+        title: 'Dawn Ganga Aarti from Bajra',
+        location: 'Assi to Dashashwamedh',
         image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[3.5deg]',
         widthClass: 'w-[200px] sm:w-[240px] md:w-[260px]',
         heightClass: 'h-[270px] sm:h-[320px] md:h-[350px]',
         note: {
-          text: 'Lakes at 5 in the morning',
+          text: 'Exclusive VIP Bajra at 5 AM',
           position: 'top-center',
           arrowType: 'arc-down',
           customOffset: '-top-10 sm:-top-12 left-2'
         },
-        subtitle: 'Subah-e-Banaras morning boat ride on holy waters',
-        views: '184K'
+        subtitle: 'Creator Ayush reviewing the package dawn private boat itinerary',
+        views: '184K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        creator: '@ayush_travels'
       },
       {
         id: 'kashi-2',
         chapterId: 'kashi',
-        title: 'Turquoise River Waters',
-        location: 'Chet Singh Ghat',
+        title: 'Heritage Stay Room Tour',
+        location: 'BrijRama Palace Stay',
         image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[4.5deg]',
         widthClass: 'w-[190px] sm:w-[230px] md:w-[250px]',
         heightClass: 'h-[250px] sm:h-[300px] md:h-[330px]',
-        subtitle: 'Sacred riverbanks reflecting ancient stone bastions',
-        views: '142K'
+        subtitle: 'Unboxing room hospitality & sacred Welcome kit on our tour',
+        views: '142K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        creator: '@ayush_travels'
       },
       {
         id: 'kashi-3',
         chapterId: 'kashi',
-        title: 'Evening Akhand Jyot',
-        location: 'Dashashwamedh Ghat',
+        title: 'VIP Vishwanath Sparsh Darshan',
+        location: 'Kashi Vishwanath Corridor',
         image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[2.5deg]',
         widthClass: 'w-[210px] sm:w-[250px] md:w-[275px]',
         heightClass: 'h-[280px] sm:h-[330px] md:h-[365px]',
         note: {
-          text: 'Roadtrip to the Ghats',
+          text: 'Zero-queue sacred entry!',
           position: 'bottom-left',
           arrowType: 'curve-up-right',
           customOffset: '-bottom-12 sm:-bottom-14 -left-12 sm:-left-16'
         },
-        subtitle: 'Golden brass aarti lamps offered to Mother Ganga',
+        subtitle: 'Experiencing the sacred Rudrabhishek included with the tour',
         views: '320K',
         isVideo: true,
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        creator: '@kashi_creator_vlogs'
       },
       {
         id: 'kashi-4',
         chapterId: 'kashi',
-        title: 'Twilight Boat Crossing',
-        location: 'Panchganga Ghat',
+        title: 'Banarasi Thali Food Walk',
+        location: 'Old Vishwanath Gali',
         image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[3deg]',
         widthClass: 'w-[220px] sm:w-[260px] md:w-[280px]',
         heightClass: 'h-[260px] sm:h-[310px] md:h-[340px]',
         note: {
-          text: 'walking into the old city',
+          text: 'Curated culinaries & sweets',
           position: 'top-right',
           arrowType: 'curve-down-left',
           customOffset: '-top-11 sm:-top-13 right-0'
         },
-        subtitle: 'Narrow galis scented with sandalwood and fresh jasmine',
-        views: '210K'
+        subtitle: 'Guided tasting reel through 400-year-old traditional sweet makers',
+        views: '210K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        creator: '@ayush_travels'
       }
     ]
   },
   {
     id: 'kedarnath',
-    title: 'Kedarnath Sanctum',
-    tagline: 'Garhwal Himalayas',
-    storyHeading: 'Echoes of Kedarnath.',
-    storyBody: 'The high Himalayas unveil the sacred abode of Mahadev—crystalline glacial winds, stone sanctums carved in granite, and uninterrupted dhyana.',
-    locationBadge: 'Uttarakhand',
+    title: 'Kedarnath Heli Yatra',
+    tagline: 'Himalayan Luxury Pilgrimage',
+    storyHeading: 'Creator reels from Kedar.',
+    storyBody: 'Creator Priya shares real vlog reels of the Kedarnath Helicopter & Luxury Swiss Camp experience—from charter takeoff to fast-track sanctum darshan.',
+    locationBadge: 'Kedarnath Package • 4D / 3N Charter',
     thumbnail: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=300&q=80',
+    ctaText: 'Apply to Vlog Kedarnath Heli Yatra',
+    ctaSubtext: 'Sponsored Chopper Expedition, Alpine Camps & Production Support',
+    ctaService: 'travel',
     cards: [
       {
         id: 'kedar-1',
         chapterId: 'kedarnath',
-        title: 'Snow Peaks at First Light',
-        location: 'Kedar Dome, 6831m',
+        title: 'Helicopter Flight Over Valley',
+        location: 'Phata to Kedarnath Helipad',
         image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[4deg]',
         widthClass: 'w-[200px] sm:w-[240px] md:w-[265px]',
         heightClass: 'h-[270px] sm:h-[320px] md:h-[355px]',
         note: {
-          text: 'Glacial peak at 6 in the morning',
+          text: '7-minute scenic flight!',
           position: 'top-center',
           arrowType: 'arc-down',
           customOffset: '-top-10 sm:-top-12 left-1'
         },
-        subtitle: 'Golden sunrise piercing through Himalayan mist',
-        views: '275K'
+        subtitle: 'Priya filming the aerial views of snow-capped Garhwal glaciers',
+        views: '275K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        creator: '@priya_himalayan'
       },
       {
         id: 'kedar-2',
         chapterId: 'kedarnath',
-        title: 'Mandakini River Trail',
-        location: 'Gaurikund to Kedar',
+        title: 'Heated Luxury Alpine Camps',
+        location: 'Kedarnath Luxury Base',
         image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[3.5deg]',
         widthClass: 'w-[195px] sm:w-[235px] md:w-[255px]',
         heightClass: 'h-[255px] sm:h-[305px] md:h-[335px]',
-        subtitle: 'Roaring alpine streams flowing along the pilgrim path',
-        views: '190K'
+        subtitle: 'Reviewing hot water, oxygen setup & luxury bedding at 11,000 ft',
+        views: '190K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+        creator: '@priya_himalayan'
       },
       {
         id: 'kedar-3',
         chapterId: 'kedarnath',
-        title: 'Granite Temple Spire',
-        location: 'Jyotirlinga Sanctum',
+        title: 'VIP Gate Fast-Track Darshan',
+        location: 'Sanctum Jyotirlinga Gate',
         image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[3deg]',
         widthClass: 'w-[210px] sm:w-[250px] md:w-[275px]',
         heightClass: 'h-[280px] sm:h-[330px] md:h-[365px]',
         note: {
-          text: 'Trek through pine & snow',
+          text: 'Private Panditji escorted entry',
           position: 'bottom-left',
           arrowType: 'curve-up-right',
           customOffset: '-bottom-12 sm:-bottom-14 -left-10 sm:-left-14'
         },
-        subtitle: '8th-century stone masonry standing resilient against time',
-        views: '410K'
+        subtitle: 'Bypassing the 6-hour cold queue through our priority package pass',
+        views: '410K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+        creator: '@shiv_yatri'
       },
       {
         id: 'kedar-4',
         chapterId: 'kedarnath',
-        title: 'Evening Dhyana in Snow',
-        location: 'Bhairavnath Peak',
+        title: 'Pony & Palki Elder Assistance Reel',
+        location: 'Above Kedarnath Valley',
         image: 'https://images.unsplash.com/photo-1512290900672-1f55b99a099a?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[4deg]',
         widthClass: 'w-[215px] sm:w-[255px] md:w-[275px]',
         heightClass: 'h-[260px] sm:h-[310px] md:h-[340px]',
         note: {
-          text: 'silence under the stars',
+          text: 'Pony/Doli service tested',
           position: 'top-right',
           arrowType: 'curve-down-left',
           customOffset: '-top-11 sm:-top-13 right-2'
         },
-        subtitle: 'Pristine Himalayan night sky filled with cosmic constellations',
-        views: '230K'
+        subtitle: 'Reviewing our senior-friendly pony & palki arrangement for pilgrims',
+        views: '230K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
+        creator: '@priya_himalayan'
       }
     ]
   },
   {
     id: 'vrindavan',
-    title: 'Braj Bhumi',
-    tagline: 'Vrindavan',
-    storyHeading: 'A morning in Vrindavan.',
-    storyBody: 'Braj Bhumi vibrates with pure divine love, fragrant Kadamba groves, melodious flute chants, and consecrated seva across ancient temple courtyards.',
-    locationBadge: 'Braj Region',
+    title: 'Braj 84 Kos Circuit',
+    tagline: 'Mathura & Vrindavan Parikrama',
+    storyHeading: 'Creator reels from Braj.',
+    storyBody: 'Creator Mohit documents the 4-day Braj Chaurasi Kos Pilgrimage in reels—featuring private AC transport, VIP Bankey Bihari darshan slots, and ashram stays.',
+    locationBadge: 'Braj Yatra Package • 4D / 3N Full Circuit',
     thumbnail: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=300&q=80',
+    ctaText: 'Co-Create Braj Parikrama Reels',
+    ctaSubtext: 'Dedicated Chauffeur, Ashram Living & Content Honorarium',
+    ctaService: 'travel',
     cards: [
       {
         id: 'vrin-1',
         chapterId: 'vrindavan',
-        title: 'Sacred Gau Seva',
-        location: 'Vedic Goshala, Braj',
+        title: 'VIP Bankey Bihari Chhappan Bhog',
+        location: 'Vrindavan Dham',
         image: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[3.5deg]',
         widthClass: 'w-[200px] sm:w-[240px] md:w-[260px]',
         heightClass: 'h-[270px] sm:h-[320px] md:h-[350px]',
         note: {
-          text: 'Gomata seva at sunrise',
+          text: 'No-rush deity darshan',
           position: 'top-center',
           arrowType: 'arc-down',
           customOffset: '-top-10 sm:-top-12 left-1'
         },
-        subtitle: 'Feeding consecrated grass to gentle indigenous cows',
-        views: '350K'
+        subtitle: 'Creator Mohit reviewing the dedicated family escort darshan service',
+        views: '350K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        creator: '@mohit_braj_yatri'
       },
       {
         id: 'vrin-2',
         chapterId: 'vrindavan',
-        title: 'Yamuna Kalindi Ghat',
-        location: 'Kesi Ghat',
+        title: 'Yamuna Sunset Aarti on Private Boat',
+        location: 'Kesi Ghat to Vishram Ghat',
         image: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[4deg]',
         widthClass: 'w-[195px] sm:w-[235px] md:w-[255px]',
         heightClass: 'h-[250px] sm:h-[300px] md:h-[330px]',
-        subtitle: 'Golden morning light reflecting over quiet Yamuna ripples',
-        views: '165K'
+        subtitle: 'Exclusive floral diyas & Vedic pandits onboard for private havan',
+        views: '165K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        creator: '@mohit_braj_yatri'
       },
       {
         id: 'vrin-3',
         chapterId: 'vrindavan',
-        title: 'Braj Parikrama Trail',
-        location: 'Govardhan Hill',
+        title: 'E-Cart Govardhan Parikrama',
+        location: 'Govardhan Hill Trail',
         image: 'https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[2.5deg]',
         widthClass: 'w-[210px] sm:w-[250px] md:w-[275px]',
         heightClass: 'h-[280px] sm:h-[330px] md:h-[365px]',
         note: {
-          text: 'Parikrama with sandalwood tilak',
+          text: 'Comfortable E-cart 21km round',
           position: 'bottom-left',
           arrowType: 'curve-up-right',
           customOffset: '-bottom-12 sm:-bottom-14 -left-12 sm:-left-16'
         },
-        subtitle: 'Barefoot pilgrimage along the sacred dust of Radha Kund',
-        views: '290K'
+        subtitle: 'Testing our effortless 21km Parikrama vehicle designed for elders',
+        views: '290K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        creator: '@vrindavan_reels'
       },
       {
         id: 'vrin-4',
         chapterId: 'vrindavan',
-        title: 'Nidhivan Sanctum Lights',
-        location: 'Seva Kunj',
+        title: 'Radha Kund & Sacred Ashram Stay',
+        location: 'Govardhan Retreat',
         image: 'https://images.unsplash.com/photo-1608755728617-aefab37d2edd?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[3.5deg]',
         widthClass: 'w-[215px] sm:w-[255px] md:w-[275px]',
         heightClass: 'h-[260px] sm:h-[310px] md:h-[340px]',
         note: {
-          text: 'evening temple bells',
+          text: 'Pure satvik prasad buffet',
           position: 'top-right',
           arrowType: 'curve-down-left',
           customOffset: '-top-11 sm:-top-13 right-1'
         },
-        subtitle: 'Sacred tulsi groves resonating with joyful kirtan',
-        views: '195K'
+        subtitle: 'A review of the organic cow ghee meals and peaceful garden cottages',
+        views: '195K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        creator: '@mohit_braj_yatri'
       }
     ]
   },
   {
     id: 'chola',
-    title: 'Chola Heritage',
-    tagline: 'Thanjavur & Madurai',
-    storyHeading: 'The Chola Renaissance.',
-    storyBody: 'Centuries of sacred geometry, astronomical alignments, and master sculptors immortalized in granite spires that pierce the southern skies.',
-    locationBadge: 'Tamil Nadu',
+    title: 'Dakshin Grand Temple Circuit',
+    tagline: 'Madurai & Rameshwaram Package',
+    storyHeading: 'Creator reels from Tamil Nadu.',
+    storyBody: 'Creator Ananya captures the 6-day Divine South Package in immersive reels—including 22 holy wells bath, Madurai Meenakshi special entry, and beach transfers.',
+    locationBadge: 'South Temple Package • 6D / 5N Tour',
     thumbnail: 'https://images.unsplash.com/photo-1516117172878-fd2c41f4a759?auto=format&fit=crop&w=300&q=80',
+    ctaText: 'Film South Temple Circuits',
+    ctaSubtext: 'Dedicated Historian Guide, Coastal Stays & Creator Royalties',
+    ctaService: 'travel',
     cards: [
       {
         id: 'chola-1',
         chapterId: 'chola',
-        title: 'Brihadeeswara Granite Spire',
-        location: 'Thanjavur Big Temple',
+        title: '22 Holy Theerthams Snan Review',
+        location: 'Ramanathaswamy Temple',
         image: 'https://images.unsplash.com/photo-1516117172878-fd2c41f4a759?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[4deg]',
         widthClass: 'w-[205px] sm:w-[245px] md:w-[270px]',
         heightClass: 'h-[275px] sm:h-[325px] md:h-[360px]',
         note: {
-          text: 'Vimana shadowless at noon',
+          text: 'Guided ritual without rush',
           position: 'top-center',
           arrowType: 'arc-down',
           customOffset: '-top-10 sm:-top-12 left-2'
         },
-        subtitle: '80-tonne monolithic granite cupola installed in 1010 CE',
-        views: '380K'
+        subtitle: 'Creator Ananya reviewing our private guide assisting the 22-well snan',
+        views: '380K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+        creator: '@ananya_temples'
       },
       {
         id: 'chola-2',
         chapterId: 'chola',
-        title: 'Madurai Meenakshi Gopuram',
-        location: 'Madurai Sanctum',
+        title: 'Madurai Meenakshi Fast-Track Pass',
+        location: 'Madurai Gopuram Corridor',
         image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[3.5deg]',
         widthClass: 'w-[195px] sm:w-[235px] md:w-[255px]',
         heightClass: 'h-[250px] sm:h-[300px] md:h-[330px]',
-        subtitle: 'Thousands of stucco deities ascending into azure sky',
-        views: '240K'
+        subtitle: 'Exclusive special ticket counters and heritage archaeologist narration',
+        views: '240K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        creator: '@ananya_temples'
       },
       {
         id: 'chola-3',
         chapterId: 'chola',
-        title: 'Lost-Wax Panchaloha Bronze',
-        location: 'Swamimalai Guild',
+        title: 'Dhanushkodi Ram Setu Point Safari',
+        location: 'Land’s End, Rameshwaram',
         image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80',
         rotation: '-rotate-[3deg]',
         widthClass: 'w-[210px] sm:w-[250px] md:w-[275px]',
         heightClass: 'h-[280px] sm:h-[330px] md:h-[365px]',
         note: {
-          text: 'Panchaloha masterwork',
+          text: '4x4 Beach Cruiser ride',
           position: 'bottom-left',
           arrowType: 'curve-up-right',
           customOffset: '-bottom-12 sm:-bottom-14 -left-12 sm:-left-16'
         },
-        subtitle: 'Five-metal cosmic Nataraja sculpture consecrated in fire',
-        views: '315K'
+        subtitle: 'Our private offroad transfer along the pristine confluence of two seas',
+        views: '315K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
+        creator: '@south_yatra_logs'
       },
       {
         id: 'chola-4',
         chapterId: 'chola',
-        title: 'Stone Chariot at Sunset',
-        location: 'Hampi Vijayanagara',
+        title: 'Brihadeeswara Sunset Heritage Walk',
+        location: 'Thanjavur Palace & Temple',
         image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
         rotation: 'rotate-[4deg]',
         widthClass: 'w-[220px] sm:w-[260px] md:w-[280px]',
         heightClass: 'h-[260px] sm:h-[310px] md:h-[340px]',
         note: {
-          text: 'carvings of the sun',
+          text: 'Vedic history storytelling',
           position: 'top-right',
           arrowType: 'curve-down-left',
           customOffset: '-top-11 sm:-top-13 right-2'
         },
-        subtitle: 'Wheels aligned to equinox sunrises across centuries',
-        views: '260K'
+        subtitle: 'Tourists and creators enjoying golden hour acoustics in stone halls',
+        views: '260K',
+        isVideo: true,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+        creator: '@ananya_temples'
       }
     ]
   }
@@ -415,17 +478,27 @@ const HandDrawnArrow: React.FC<{ type: string; className?: string }> = ({ type, 
   }
 };
 
-interface MosaicGallerySectionProps {
+export interface MosaicGallerySectionProps {
   onSelectItem?: (item: PolaroidCard) => void;
+  onNavigateTravel?: () => void;
+  onNavigateMall?: () => void;
+  onNavigateJoin?: () => void;
 }
 
-export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSelectItem }) => {
+export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ 
+  onSelectItem,
+  onNavigateTravel,
+  onNavigateMall,
+  onNavigateJoin
+}) => {
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
   const [selectedCard, setSelectedCard] = useState<PolaroidCard | null>(null);
   const [toastText, setToastText] = useState<string | null>(null);
+  const [pausedCardIds, setPausedCardIds] = useState<Set<string>>(new Set());
   
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const chapterRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
   
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -438,17 +511,51 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
     setTimeout(() => setToastText(null), 2500);
   };
 
-  // Check scroll position to update active chapter in the scrubber
+  // Keep videos autoplaying smoothly unless paused by the user
+  useEffect(() => {
+    Object.entries(videoRefs.current).forEach(([id, vid]) => {
+      const videoEl = vid as HTMLVideoElement | null;
+      if (videoEl && !pausedCardIds.has(id)) {
+        videoEl.play().catch(() => {});
+      }
+    });
+  }, [pausedCardIds]);
+
+  // Click handler: videos pause on click, non-videos open lightbox
+  const handleCardClick = (card: PolaroidCard, e: React.MouseEvent) => {
+    if (card.isVideo && card.videoUrl) {
+      e.stopPropagation();
+      const vid = videoRefs.current[card.id];
+      if (!vid) return;
+
+      if (vid.paused) {
+        vid.play().catch(() => {});
+        setPausedCardIds((prev) => {
+          const next = new Set(prev);
+          next.delete(card.id);
+          return next;
+        });
+        triggerToast(`Playing • ${card.title}`);
+      } else {
+        vid.pause();
+        setPausedCardIds((prev) => new Set(prev).add(card.id));
+        triggerToast(`Paused • ${card.title}`);
+      }
+    } else {
+      setSelectedCard(card);
+    }
+  };
+
+  // Check scroll position to update active chapter in scrubber
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
     const { scrollLeft } = scrollContainerRef.current;
     
-    // Determine which chapter is in view
     let foundIndex = 0;
     GALLERY_CHAPTERS.forEach((chapter, idx) => {
       const el = chapterRefs.current[chapter.id];
       if (el) {
-        const offset = el.offsetLeft - scrollContainerRef.current!.offsetLeft - 300;
+        const offset = el.offsetLeft - 150;
         if (scrollLeft >= offset) {
           foundIndex = idx;
         }
@@ -464,15 +571,19 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
     return () => el.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Mouse wheel horizontal scroll
-  const handleWheel = (e: React.WheelEvent) => {
-    if (!scrollContainerRef.current) return;
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      scrollContainerRef.current.scrollLeft += e.deltaY * 0.9;
+  // Smooth scroll to a chapter when clicked from pill scrubber
+  const scrollToChapter = (chapterId: string) => {
+    const target = chapterRefs.current[chapterId];
+    if (target && scrollContainerRef.current) {
+      const containerLeft = scrollContainerRef.current.getBoundingClientRect().left;
+      const targetLeft = target.getBoundingClientRect().left;
+      const currentScroll = scrollContainerRef.current.scrollLeft;
+      const targetScroll = currentScroll + (targetLeft - containerLeft) - 60;
+      scrollContainerRef.current.scrollTo({ left: targetScroll, behavior: 'smooth' });
     }
   };
 
-  // Drag-to-scroll handlers
+  // Drag-to-scroll interaction
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollContainerRef.current) return;
     isDraggingRef.current = true;
@@ -492,11 +603,10 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
     isDraggingRef.current = false;
   };
 
-  const scrollToChapter = (chapterId: string, idx: number) => {
-    setActiveChapterIndex(idx);
-    const targetEl = chapterRefs.current[chapterId];
-    if (targetEl && scrollContainerRef.current) {
-      targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  // Wheel horizontal scroll support
+  const handleWheel = (e: React.WheelEvent) => {
+    if (scrollContainerRef.current && Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+      scrollContainerRef.current.scrollLeft += e.deltaY * 0.9;
     }
   };
 
@@ -506,19 +616,169 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
     }
   };
 
+  // Reusable Polaroid Card with Video Autoplay and Click-to-Pause
+  // Reusable Vertical Video Reel Card with Autoplay and Click-to-Pause
+  const renderPolaroidCard = (
+    card: PolaroidCard,
+    zIndexClass: string,
+    extraWrapperClass = ''
+  ) => {
+    const isPaused = pausedCardIds.has(card.id);
+
+    return (
+      <div
+        key={card.id}
+        onClick={(e) => handleCardClick(card, e)}
+        className={`relative ${zIndexClass} group cursor-pointer transition-transform duration-400 hover:z-40 hover:scale-105 ${card.rotation} ${extraWrapperClass}`}
+        title={isPaused ? 'Click to play reel' : 'Click to pause reel'}
+      >
+        {/* Floating Handwritten Note with Doodle Arrow */}
+        {card.note && (
+          <div className={`absolute ${card.note.customOffset || '-top-10 left-2'} z-30 pointer-events-none flex flex-col items-center whitespace-nowrap`}>
+            {card.note.position.startsWith('bottom') ? (
+              <>
+                <HandDrawnArrow type={card.note.arrowType} className="mb-0.5 opacity-85 text-[#221508]" />
+                <span className="font-script text-lg sm:text-xl md:text-2xl text-[#221508] tracking-wide font-medium drop-shadow-xs">
+                  {card.note.text}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="font-script text-lg sm:text-xl md:text-2xl text-[#221508] tracking-wide font-medium drop-shadow-xs">
+                  {card.note.text}
+                </span>
+                <HandDrawnArrow type={card.note.arrowType} className="mt-0.5 opacity-85 text-[#221508]" />
+              </>
+            )}
+          </div>
+        )}
+
+        {/* 9:16 Vertical Video Reel Phone Card */}
+        <div className="w-[195px] sm:w-[225px] md:w-[245px] h-[345px] sm:h-[400px] md:h-[435px] rounded-[24px] sm:rounded-[28px] p-2 sm:p-2.5 bg-white shadow-[0_16px_40px_rgba(0,0,0,0.16)] sm:shadow-[0_22px_50px_rgba(0,0,0,0.22)] border border-stone-200/70 transition-all duration-300 group-hover:shadow-[0_30px_65px_rgba(0,0,0,0.28)]">
+          <div 
+            className="w-full h-full rounded-[18px] sm:rounded-[22px] overflow-hidden bg-[#1A1612] relative select-none"
+            style={{
+              borderRadius: 'inherit',
+              WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+              maskImage: 'radial-gradient(white, black)',
+              overflow: 'hidden',
+              isolation: 'isolate'
+            }}
+          >
+            {/* Always mounted base poster so no white/black gap exists */}
+            <img
+              src={card.image}
+              alt={card.title}
+              className="absolute inset-0 w-full h-full object-cover select-none"
+              style={{ borderRadius: 'inherit' }}
+              loading="lazy"
+            />
+
+            {/* Autoplaying Loop Video */}
+            <video
+              ref={(el) => {
+                if (el) {
+                  videoRefs.current[card.id] = el;
+                  if (!pausedCardIds.has(card.id)) {
+                    el.play().catch(() => {});
+                  }
+                }
+              }}
+              src={card.videoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'}
+              poster={card.image}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              style={{
+                borderRadius: 'inherit',
+                WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+                maskImage: 'radial-gradient(white, black)'
+              }}
+            />
+
+            {/* Video Paused State Indicator */}
+            {isPaused && (
+              <div className="absolute inset-0 bg-black/45 backdrop-blur-[1.5px] flex flex-col items-center justify-center transition-all duration-300 pointer-events-none z-20">
+                <div className="w-12 h-12 rounded-full bg-white text-[#221508] flex items-center justify-center shadow-xl mb-1.5 transform group-hover:scale-110 transition-transform">
+                  <Play className="w-5 h-5 fill-current ml-0.5 text-[#FE7613]" />
+                </div>
+                <span className="text-[10px] font-dm font-bold text-white px-2.5 py-0.5 rounded-full bg-black/70 border border-white/20 shadow-xs">
+                  Paused &bull; Click to play
+                </span>
+              </div>
+            )}
+
+            {/* Top Reel Badges (Always Visible like Instagram/TikTok Reels) */}
+            <div className="absolute top-2.5 left-2.5 right-2.5 z-20 pointer-events-none flex items-center justify-between">
+              {/* Creator Pill */}
+              <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/65 backdrop-blur-md text-[9.5px] font-dm font-bold text-white border border-white/20 shadow-xs">
+                <span className="text-amber-400">✦</span>
+                <span className="truncate max-w-[100px]">{card.creator || '@sanatana_creator'}</span>
+              </div>
+
+              {/* Reel Live Pulse Badge */}
+              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[9px] font-dm text-amber-200 border border-amber-300/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Reel</span>
+              </div>
+            </div>
+
+            {/* Bottom Gradient & Reel Info Bar (Always visible with clear Reel branding) */}
+            <div className="absolute inset-x-0 bottom-0 p-3 pt-8 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-10 flex items-end justify-between text-white pointer-events-none">
+              <div className="min-w-0 pr-2">
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <span className="text-[9.5px] font-dm uppercase tracking-wider font-bold text-amber-300 truncate">
+                    {card.location}
+                  </span>
+                  {card.views && (
+                    <span className="text-[9px] font-dm text-white/70 flex items-center gap-0.5">
+                      &bull; {card.views}
+                    </span>
+                  )}
+                </div>
+                <h4 className="font-cormorant text-sm sm:text-base font-bold line-clamp-1 leading-snug text-white">
+                  {card.title}
+                </h4>
+                <span className="text-[8.5px] font-dm text-white/70 block mt-0.5 truncate">
+                  {isPaused ? '▶ Click to resume' : '❚❚ Click to pause'}
+                </span>
+              </div>
+
+              {/* Expand / Lightbox Button */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedCard(card);
+                }}
+                className="w-7 h-7 rounded-full bg-white/20 hover:bg-white text-white hover:text-black flex items-center justify-center transition-all cursor-pointer shadow-md shrink-0 backdrop-blur-xs pointer-events-auto active:scale-90"
+                title="Watch Fullscreen Reel"
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <section className="relative w-full py-12 sm:py-16 bg-[#FFF8E7] overflow-hidden select-none">
+    <section className="relative w-full py-12 sm:py-16 bg-[#FEFBF2] overflow-hidden select-none">
       
-      {/* 1. TOP MINIMAL HEADER BAR (Matching reference header layout) */}
+      {/* 1. TOP MINIMAL HEADER BAR */}
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-between mb-4 sm:mb-6">
         
         {/* Left: Playful Organic Icon / Script Mark */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[#EADCC8]/50 flex items-center justify-center text-[#A66E38]">
+          <div className="w-8 h-8 rounded-full bg-[#C59239]/20 flex items-center justify-center text-[#C59239]">
             <Sparkles className="w-4 h-4" />
           </div>
-          <span className="font-script text-2xl sm:text-3xl text-[#2C241E] tracking-tight">
-            Mosaic Gallery
+          <span className="font-script text-2xl sm:text-3xl text-[#221508] tracking-tight">
+            Creator Travel Reels
           </span>
         </div>
 
@@ -530,13 +790,13 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
               navigator.clipboard.writeText(window.location.href);
               triggerToast('Link copied to clipboard');
             }}
-            className="px-4 py-1.5 rounded-full bg-white/90 hover:bg-white text-[#4A3B32] hover:text-[#1A1612] text-xs font-dm font-medium border border-stone-200/90 shadow-2xs hover:shadow-xs transition-all cursor-pointer flex items-center gap-1.5 active:scale-95"
+            className="px-4 py-1.5 rounded-full bg-white/90 hover:bg-white text-[#3D2619] hover:text-[#221508] text-xs font-dm font-medium border border-[#C59239]/30 shadow-2xs hover:shadow-xs transition-all cursor-pointer flex items-center gap-1.5 active:scale-95"
           >
             <span>Share</span>
           </button>
 
           {/* User / House Avatar Pill */}
-          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#D9A05B] to-[#E8C58D] border-2 border-white shadow-2xs flex items-center justify-center text-white text-[10px] font-bold">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#FE7613] to-[#C59239] border-2 border-white shadow-2xs flex items-center justify-center text-white text-[10px] font-bold">
             ॐ
           </div>
         </div>
@@ -550,7 +810,7 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
         <button
           type="button"
           onClick={() => scrollByOffset(-480)}
-          className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/95 text-[#2C241E] shadow-[0_6px_20px_rgba(0,0,0,0.1)] border border-stone-200/80 hover:bg-[#2C241E] hover:text-white items-center justify-center transition-all cursor-pointer backdrop-blur-md active:scale-95"
+          className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/95 text-[#221508] shadow-[0_6px_20px_rgba(0,0,0,0.1)] border border-[#C59239]/30 hover:bg-[#221508] hover:text-white items-center justify-center transition-all cursor-pointer backdrop-blur-md active:scale-95"
           aria-label="Scroll Left"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -560,7 +820,7 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
         <button
           type="button"
           onClick={() => scrollByOffset(480)}
-          className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/95 text-[#2C241E] shadow-[0_6px_20px_rgba(0,0,0,0.1)] border border-stone-200/80 hover:bg-[#2C241E] hover:text-white items-center justify-center transition-all cursor-pointer backdrop-blur-md active:scale-95"
+          className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/95 text-[#221508] shadow-[0_6px_20px_rgba(0,0,0,0.1)] border border-[#C59239]/30 hover:bg-[#221508] hover:text-white items-center justify-center transition-all cursor-pointer backdrop-blur-md active:scale-95"
           aria-label="Scroll Right"
         >
           <ChevronRight className="w-5 h-5" />
@@ -588,186 +848,55 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
                 
                 {/* --- PHOTO CARDS GROUP (Left Cluster of 2-3 overlapping polaroids) --- */}
                 <div className="relative flex items-center -space-x-8 sm:-space-x-12 md:-space-x-16 py-8">
-                  
-                  {/* Card 1 */}
-                  {chapter.cards[0] && (
-                    <div 
-                      onClick={() => setSelectedCard(chapter.cards[0])}
-                      className={`relative z-10 group cursor-pointer transition-transform duration-400 hover:z-40 hover:scale-105 ${chapter.cards[0].rotation}`}
-                    >
-                      {/* Floating Handwritten Note with Doodle Arrow */}
-                      {chapter.cards[0].note && (
-                        <div className={`absolute ${chapter.cards[0].note.customOffset || '-top-10 left-2'} z-30 pointer-events-none flex flex-col items-center whitespace-nowrap`}>
-                          <span className="font-script text-lg sm:text-xl md:text-2xl text-[#3D312A] tracking-wide font-medium drop-shadow-xs">
-                            {chapter.cards[0].note.text}
-                          </span>
-                          <HandDrawnArrow type={chapter.cards[0].note.arrowType} className="mt-0.5 opacity-85 text-[#3D312A]" />
-                        </div>
-                      )}
-
-                      {/* Polaroid Photo Frame */}
-                      <div className={`${chapter.cards[0].widthClass || 'w-[230px]'} ${chapter.cards[0].heightClass || 'h-[310px]'} rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] sm:shadow-[0_22px_50px_rgba(0,0,0,0.18)] border border-stone-200/60 transition-all duration-300 group-hover:shadow-[0_28px_60px_rgba(0,0,0,0.25)]`}>
-                        <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-stone-100 relative">
-                          <img
-                            src={chapter.cards[0].image}
-                            alt={chapter.cards[0].title}
-                            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-700"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span className="text-[10px] font-dm uppercase tracking-wider block font-bold text-amber-200">
-                              {chapter.cards[0].location}
-                            </span>
-                            <span className="font-cormorant text-sm font-semibold line-clamp-1">
-                              {chapter.cards[0].title}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Card 2 (Overlapped slightly behind/adjacent) */}
-                  {chapter.cards[1] && (
-                    <div 
-                      onClick={() => setSelectedCard(chapter.cards[1])}
-                      className={`relative z-20 group cursor-pointer transition-transform duration-400 hover:z-40 hover:scale-105 ${chapter.cards[1].rotation}`}
-                    >
-                      <div className={`${chapter.cards[1].widthClass || 'w-[220px]'} ${chapter.cards[1].heightClass || 'h-[290px]'} rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] sm:shadow-[0_22px_50px_rgba(0,0,0,0.18)] border border-stone-200/60 transition-all duration-300 group-hover:shadow-[0_28px_60px_rgba(0,0,0,0.25)]`}>
-                        <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-stone-100 relative">
-                          <img
-                            src={chapter.cards[1].image}
-                            alt={chapter.cards[1].title}
-                            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-700"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span className="text-[10px] font-dm uppercase tracking-wider block font-bold text-amber-200">
-                              {chapter.cards[1].location}
-                            </span>
-                            <span className="font-cormorant text-sm font-semibold line-clamp-1">
-                              {chapter.cards[1].title}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Card 3 (Foreground tilted card with bottom note) */}
-                  {chapter.cards[2] && (
-                    <div 
-                      onClick={() => setSelectedCard(chapter.cards[2])}
-                      className={`relative z-30 group cursor-pointer transition-transform duration-400 hover:z-40 hover:scale-105 ${chapter.cards[2].rotation}`}
-                    >
-                      {/* Floating Handwritten Note at bottom */}
-                      {chapter.cards[2].note && (
-                        <div className={`absolute ${chapter.cards[2].note.customOffset || '-bottom-12 -left-12'} z-30 pointer-events-none flex flex-col items-center whitespace-nowrap`}>
-                          <HandDrawnArrow type={chapter.cards[2].note.arrowType} className="mb-0.5 opacity-85 text-[#3D312A]" />
-                          <span className="font-script text-lg sm:text-xl md:text-2xl text-[#3D312A] tracking-wide font-medium drop-shadow-xs">
-                            {chapter.cards[2].note.text}
-                          </span>
-                        </div>
-                      )}
-
-                      <div className={`${chapter.cards[2].widthClass || 'w-[240px]'} ${chapter.cards[2].heightClass || 'h-[330px]'} rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white shadow-[0_20px_45px_rgba(0,0,0,0.16)] sm:shadow-[0_26px_55px_rgba(0,0,0,0.2)] border border-stone-200/60 transition-all duration-300 group-hover:shadow-[0_30px_65px_rgba(0,0,0,0.28)]`}>
-                        <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-stone-100 relative">
-                          <img
-                            src={chapter.cards[2].image}
-                            alt={chapter.cards[2].title}
-                            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-700"
-                            loading="lazy"
-                          />
-                          
-                          {chapter.cards[2].isVideo && (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div className="w-11 h-11 rounded-full bg-white/90 text-[#2C241E] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                                <Play className="w-4 h-4 fill-current ml-0.5" />
-                              </div>
-                            </div>
-                          )}
-
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span className="text-[10px] font-dm uppercase tracking-wider block font-bold text-amber-200">
-                              {chapter.cards[2].location}
-                            </span>
-                            <span className="font-cormorant text-sm font-semibold line-clamp-1">
-                              {chapter.cards[2].title}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
+                  {chapter.cards[0] && renderPolaroidCard(chapter.cards[0], 'z-10')}
+                  {chapter.cards[1] && renderPolaroidCard(chapter.cards[1], 'z-20')}
+                  {chapter.cards[2] && renderPolaroidCard(chapter.cards[2], 'z-30')}
                 </div>
 
-                {/* --- EDITORIAL STORY BLOCK (Exact style of "A day in Whistler" in reference) --- */}
+                {/* --- EDITORIAL STORY BLOCK WITH DEDICATED SERVICE CTA --- */}
                 <div className="w-[280px] sm:w-[340px] md:w-[400px] shrink-0 text-left px-2 sm:px-4">
-                  <span className="text-[11px] sm:text-xs font-dm font-bold uppercase tracking-widest text-[#9E6E45] block mb-2">
+                  <span className="text-[11px] sm:text-xs font-dm font-bold uppercase tracking-widest text-[#C59239] block mb-2">
                     ✦ {chapter.locationBadge}
                   </span>
                   
-                  <h3 className="font-cormorant text-3xl sm:text-4xl md:text-[42px] font-medium text-[#241E1A] leading-[1.15] mb-3 tracking-tight">
+                  <h3 className="font-cormorant text-3xl sm:text-4xl md:text-[42px] font-medium text-[#221508] leading-[1.15] mb-3 tracking-tight">
                     {chapter.storyHeading}
                   </h3>
 
-                  <p className="font-cormorant text-lg sm:text-xl md:text-[22px] text-[#63574E] leading-[1.4] font-normal">
+                  <p className="font-cormorant text-lg sm:text-xl md:text-[22px] text-[#3D2619] leading-[1.4] font-normal">
                     {chapter.storyBody}
                   </p>
 
-                  <div className="mt-4 flex items-center gap-3">
+                  {/* Dedicated CTA Button Related to This Service */}
+                  <div className="mt-5 sm:mt-6 flex flex-col items-start gap-1.5">
                     <button
                       type="button"
-                      onClick={() => setSelectedCard(chapter.cards[0])}
-                      className="inline-flex items-center gap-1.5 text-xs font-dm font-semibold text-[#241E1A] hover:text-[#A66E38] transition-colors cursor-pointer group"
+                      onClick={() => {
+                        if (onNavigateJoin) {
+                          onNavigateJoin();
+                        } else if (chapter.ctaService === 'mall') {
+                          onNavigateMall?.();
+                        } else {
+                          onNavigateTravel?.();
+                        }
+                      }}
+                      className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#221508] hover:bg-[#FE7613] text-[#FEFBF2] text-xs font-dm font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 group cursor-pointer"
                     >
-                      <span>Explore {chapter.title}</span>
-                      <span className="group-hover:translate-x-1 transition-transform">→</span>
+                      <span>{chapter.ctaText}</span>
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#E4B968]" />
                     </button>
+                    {chapter.ctaSubtext && (
+                      <span className="text-[11px] font-dm text-[#3D2619] tracking-wide ml-1">
+                        ✦ {chapter.ctaSubtext}
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                {/* --- RIGHT PHOTO CARD (e.g. "walking into town" polaroid) --- */}
+                {/* --- RIGHT PHOTO CARD --- */}
                 {chapter.cards[3] && (
                   <div className="relative py-8">
-                    <div 
-                      onClick={() => setSelectedCard(chapter.cards[3])}
-                      className={`relative z-20 group cursor-pointer transition-transform duration-400 hover:z-40 hover:scale-105 ${chapter.cards[3].rotation}`}
-                    >
-                      {/* Floating Handwritten Note on top right */}
-                      {chapter.cards[3].note && (
-                        <div className={`absolute ${chapter.cards[3].note.customOffset || '-top-11 right-2'} z-30 pointer-events-none flex flex-col items-center whitespace-nowrap`}>
-                          <span className="font-script text-lg sm:text-xl md:text-2xl text-[#3D312A] tracking-wide font-medium drop-shadow-xs">
-                            {chapter.cards[3].note.text}
-                          </span>
-                          <HandDrawnArrow type={chapter.cards[3].note.arrowType} className="mt-0.5 opacity-85 text-[#3D312A]" />
-                        </div>
-                      )}
-
-                      <div className={`${chapter.cards[3].widthClass || 'w-[240px]'} ${chapter.cards[3].heightClass || 'h-[320px]'} rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] sm:shadow-[0_22px_50px_rgba(0,0,0,0.18)] border border-stone-200/60 transition-all duration-300 group-hover:shadow-[0_28px_60px_rgba(0,0,0,0.25)]`}>
-                        <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-stone-100 relative">
-                          <img
-                            src={chapter.cards[3].image}
-                            alt={chapter.cards[3].title}
-                            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-700"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span className="text-[10px] font-dm uppercase tracking-wider block font-bold text-amber-200">
-                              {chapter.cards[3].location}
-                            </span>
-                            <span className="font-cormorant text-sm font-semibold line-clamp-1">
-                              {chapter.cards[3].title}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    {renderPolaroidCard(chapter.cards[3], 'z-20')}
                   </div>
                 )}
 
@@ -780,7 +909,6 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
       </div>
 
 
-
       {/* 4. LIGHTBOX PREVIEW MODAL */}
       <AnimatePresence>
         {selectedCard && (
@@ -789,7 +917,7 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-3xl bg-[#1A1612] text-[#F7F1E5] rounded-3xl overflow-hidden border border-[#D9C6A8]/40 shadow-2xl"
+              className="relative w-full max-w-3xl bg-[#221508] text-[#FEFBF2] rounded-3xl overflow-hidden border border-[#C59239]/40 shadow-2xl"
             >
               <button
                 type="button"
@@ -818,7 +946,7 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
 
               <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-3 py-1 rounded-full bg-[#E03A2F]/20 text-[#E05244] text-xs font-dm font-bold uppercase tracking-wider">
+                  <span className="px-3 py-1 rounded-full bg-[#98555E]/20 text-[#FE7613] text-xs font-dm font-bold uppercase tracking-wider">
                     {selectedCard.location}
                   </span>
                   {selectedCard.views && (
@@ -838,7 +966,7 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
 
                 <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
                   <span className="text-xs text-white/60 font-dm">
-                    House of Sanatan Consecrated Visual Archives
+                    House of Sanatan • Sacred Yatra Package Creator Archives
                   </span>
                   <button
                     type="button"
@@ -847,7 +975,7 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
                       triggerToast('Link copied to clipboard');
                       setSelectedCard(null);
                     }}
-                    className="px-4 py-2 rounded-full bg-white text-[#1A1612] text-xs font-dm font-bold hover:bg-[#E03A2F] hover:text-white transition-all cursor-pointer"
+                    className="px-4 py-2 rounded-full bg-[#FE7613] hover:bg-[#e0650d] text-white text-xs font-dm font-bold transition-all cursor-pointer"
                   >
                     Share Archive
                   </button>
@@ -860,8 +988,8 @@ export const MosaicGallerySection: React.FC<MosaicGallerySectionProps> = ({ onSe
 
       {/* Toast Notification */}
       {toastText && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#1A1612] text-white px-5 py-2.5 rounded-full text-xs font-dm shadow-xl border border-[#D9C6A8]/40 flex items-center gap-2 animate-fadeIn">
-          <Check className="w-3.5 h-3.5 text-[#C7833D]" />
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#221508] text-white px-5 py-2.5 rounded-full text-xs font-dm shadow-xl border border-[#C59239]/40 flex items-center gap-2 animate-fadeIn pointer-events-none">
+          <Check className="w-3.5 h-3.5 text-[#FE7613]" />
           <span>{toastText}</span>
         </div>
       )}

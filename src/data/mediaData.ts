@@ -238,3 +238,234 @@ export const KNOWLEDGE_MEDIA_ITEMS: KnowledgeMediaItem[] = [
     tags: ['Bhagavad Gita', 'Karma Yoga', 'Krishna', 'Philosophy']
   }
 ];
+
+export interface CoCreatorReel {
+  id: string;
+  title: string;
+  creatorName: string;
+  creatorHandle: string;
+  creatorAvatar: string;
+  serviceCategory: 'yatras' | 'products' | 'rituals';
+  serviceCategoryLabel: string;
+  videoUrl: string;
+  thumbnail: string;
+  views: string;
+  likes: string;
+  duration: string;
+  featuredItemTitle: string;
+  featuredItemType: 'yatra' | 'product' | 'seva';
+  featuredItemId: string;
+  featuredBadge?: string;
+}
+
+export const CO_CREATOR_REELS: CoCreatorReel[] = [
+  // ==========================================
+  // SERVICE 1: SACRED YATRAS & EXPEDITIONS
+  // ==========================================
+  {
+    id: 'reel-kedar-heli',
+    title: '4:00 AM VIP Rudrabhishek & Heli Flight at Kedarnath Sanctum',
+    creatorName: 'Ananya Sharma',
+    creatorHandle: '@ananyavedic',
+    creatorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'yatras',
+    serviceCategoryLabel: 'Sacred Yatras',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80',
+    views: '342K',
+    likes: '28.4K',
+    duration: '0:58',
+    featuredItemTitle: 'Kedarnath & Badrinath Heli Yatra',
+    featuredItemType: 'yatra',
+    featuredItemId: 'kedarnath-badrinath-heli',
+    featuredBadge: 'VIP Heli Charter'
+  },
+  {
+    id: 'reel-puri-56bhog',
+    title: 'How 56 Bhog Mahaprasad is Cooked in Sacred Clay Pots at Puri',
+    creatorName: 'Rohit Mukherjee',
+    creatorHandle: '@rohit_yatri',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'yatras',
+    serviceCategoryLabel: 'Sacred Yatras',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80',
+    views: '520K',
+    likes: '46.1K',
+    duration: '0:45',
+    featuredItemTitle: 'Puri Jagannath Dham Tour',
+    featuredItemType: 'yatra',
+    featuredItemId: 'puri-jagannath-dham',
+    featuredBadge: 'Chappan Bhog VIP'
+  },
+  {
+    id: 'reel-kashi-sunrise',
+    title: 'Private Bajra Boat Sunrise on Holy Ganga at Assi Ghat',
+    creatorName: 'Vikas Trivedi',
+    creatorHandle: '@divinebharat',
+    creatorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'yatras',
+    serviceCategoryLabel: 'Sacred Yatras',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=600&q=80',
+    views: '280K',
+    likes: '24.9K',
+    duration: '0:52',
+    featuredItemTitle: 'Kashi Ayodhya Tour',
+    featuredItemType: 'yatra',
+    featuredItemId: 'kashi-vishwanath-varanasi',
+    featuredBadge: 'Ganga Bajra Included'
+  },
+  {
+    id: 'reel-kailash-snan',
+    title: 'Touching Turquoise Lake Mansarovar at 15,000 ft in Tibet',
+    creatorName: 'Aditi Rao',
+    creatorHandle: '@himalayanhiker',
+    creatorAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'yatras',
+    serviceCategoryLabel: 'Sacred Yatras',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+    views: '610K',
+    likes: '58.3K',
+    duration: '1:12',
+    featuredItemTitle: 'Kailash Mansarovar Parikrama',
+    featuredItemType: 'yatra',
+    featuredItemId: 'kailash-mansarovar-yatra',
+    featuredBadge: 'Sacred Kora'
+  },
+
+  // ==========================================
+  // SERVICE 2: CONSECRATED PRODUCTS & UNBOXING
+  // ==========================================
+  {
+    id: 'reel-brass-shivling',
+    title: 'Unboxing the Sacred Ashta Dhatu Narmadeshwar Shivling Kit',
+    creatorName: 'Priya Nambiar',
+    creatorHandle: '@vedicliving',
+    creatorAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'products',
+    serviceCategoryLabel: 'Consecrated Products',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&fit=crop&w=600&q=80',
+    views: '195K',
+    likes: '16.7K',
+    duration: '0:42',
+    featuredItemTitle: 'Ashta Dhatu Consecrated Shivling',
+    featuredItemType: 'product',
+    featuredItemId: 'prod-shivling',
+    featuredBadge: 'Prana Pratishtha'
+  },
+  {
+    id: 'reel-rudraksha-test',
+    title: 'Testing Real vs Fake 5-Mukhi Rudraksha with Lab Certificate',
+    creatorName: 'Karan Joshi',
+    creatorHandle: '@sanatanaseva',
+    creatorAvatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'products',
+    serviceCategoryLabel: 'Consecrated Products',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80',
+    views: '440K',
+    likes: '39.8K',
+    duration: '0:59',
+    featuredItemTitle: 'Certified Nepalese 108 Rudraksha',
+    featuredItemType: 'product',
+    featuredItemId: 'prod-rudraksha',
+    featuredBadge: 'Lab Certified'
+  },
+  {
+    id: 'reel-sambrani-dhoop',
+    title: 'Evening Temple Fragrance at Home: Pure Sambrani Dhoop Cups',
+    creatorName: 'Sneha Kulkarni',
+    creatorHandle: '@puja_pavitra',
+    creatorAvatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'products',
+    serviceCategoryLabel: 'Consecrated Products',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+    views: '215K',
+    likes: '18.2K',
+    duration: '0:38',
+    featuredItemTitle: 'Pure Guggul & Sambrani Charcoal Cups',
+    featuredItemType: 'product',
+    featuredItemId: 'prod-dhoop',
+    featuredBadge: 'Natural Resins'
+  },
+  {
+    id: 'reel-brass-thali',
+    title: 'Heirloom Pure Brass Hand-Engraved Royal Puja Thali Review',
+    creatorName: 'Arjun Bhatt',
+    creatorHandle: '@dharma_crafts',
+    creatorAvatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'products',
+    serviceCategoryLabel: 'Consecrated Products',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80',
+    views: '310K',
+    likes: '27.4K',
+    duration: '0:50',
+    featuredItemTitle: 'Pure Heavy Brass Royal Puja Thali',
+    featuredItemType: 'product',
+    featuredItemId: 'prod-thali',
+    featuredBadge: 'Heritage Brass'
+  },
+
+  // ==========================================
+  // SERVICE 3: VEDIC RITUALS & TEMPLE SEVAS
+  // ==========================================
+  {
+    id: 'reel-chandi-hawan',
+    title: '108 Sacred Herbs Chandi Hawan Conducted by Hereditary Sevayats',
+    creatorName: 'Pandit Ramesh Shastri',
+    creatorHandle: '@shastri_ji',
+    creatorAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'rituals',
+    serviceCategoryLabel: 'Vedic Rituals & Sevas',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+    views: '380K',
+    likes: '33.2K',
+    duration: '1:05',
+    featuredItemTitle: 'Maha Chandi Hawan & Sankalpa Seva',
+    featuredItemType: 'seva',
+    featuredItemId: 'seva-chandi',
+    featuredBadge: 'Live Streaming'
+  },
+  {
+    id: 'reel-elder-care',
+    title: 'How HOS Guided My 76-Year Old Dadi in Kedarnath With Pure Comfort',
+    creatorName: 'Megha Mathur',
+    creatorHandle: '@shraddhadharma',
+    creatorAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'rituals',
+    serviceCategoryLabel: 'Vedic Rituals & Sevas',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1512290900672-1f55b99a099a?auto=format&fit=crop&w=600&q=80',
+    views: '495K',
+    likes: '45.0K',
+    duration: '1:10',
+    featuredItemTitle: 'Special Darshan & Elder Care Support',
+    featuredItemType: 'seva',
+    featuredItemId: 'seva-elder',
+    featuredBadge: 'Elder Friendly'
+  },
+  {
+    id: 'reel-vedic-chant',
+    title: 'Pure Acoustic Resonance: Ghana Patha Recitation in Temple Sanctum',
+    creatorName: 'Acharya Sundaram',
+    creatorHandle: '@vedic_sound',
+    creatorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
+    serviceCategory: 'rituals',
+    serviceCategoryLabel: 'Vedic Rituals & Sevas',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=600&q=80',
+    views: '260K',
+    likes: '22.8K',
+    duration: '0:48',
+    featuredItemTitle: 'Vedic Shastra Chanting Seva',
+    featuredItemType: 'seva',
+    featuredItemId: 'seva-chant',
+    featuredBadge: '432Hz Tuning'
+  }
+];

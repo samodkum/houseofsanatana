@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
-import { Sparkles, Sun, ArrowRight } from 'lucide-react';
+import { Sun, ArrowRight } from 'lucide-react';
 import { LotusLineArt, DividerOrnamental, TempleArchitectureLine } from './ui/SacredPatterns';
 
 interface TheHouseSectionProps {
@@ -22,7 +22,7 @@ const BlockRevealLine: React.FC<BlockLineProps> = ({
   delay = 0,
   children,
   className = '',
-  blockColor = 'linear-gradient(90deg, #B08A4A, #D9C6A8, #C7833D)',
+  blockColor = 'linear-gradient(90deg, #C59239, #E4B968, #FE7613)',
 }) => {
   return (
     <div className={`relative inline-block overflow-hidden py-1 px-2 my-0.5 sm:my-1 will-change-transform ${className}`}>
@@ -84,11 +84,11 @@ const ScrollWord: React.FC<ScrollWordProps> = ({
   children,
   progress,
   range,
-  activeColor = '#8F6E5B',
-  dimColor = 'rgba(143, 110, 91, 0.10)',
+  activeColor = '#221508',
+  dimColor = 'rgba(34, 21, 8, 0.12)',
 }) => {
-  // Ghosted state (0.10) to fully revealed state (1.0) with subtle y-lift
-  const opacity = useTransform(progress, range, [0.10, 1]);
+  // Ghosted state (0.12) to fully revealed state (1.0) with subtle y-lift
+  const opacity = useTransform(progress, range, [0.12, 1]);
   const color = useTransform(progress, range, [dimColor, activeColor]);
   const y = useTransform(progress, range, [4, 0]);
 
@@ -118,8 +118,8 @@ const ScrollRevealSentence: React.FC<ScrollRevealSentenceProps> = ({
   startRange,
   endRange,
   className = '',
-  activeColor = '#8F6E5B',
-  dimColor = 'rgba(143, 110, 91, 0.10)',
+  activeColor = '#221508',
+  dimColor = 'rgba(34, 21, 8, 0.12)',
 }) => {
   const words = text.split(' ');
   const step = (endRange - startRange) / Math.max(words.length, 1);
@@ -159,11 +159,11 @@ const WavyTextReveal: React.FC<WavyTextRevealProps> = ({ paragraphs, isTriggered
   let globalWordIndex = 0;
 
   return (
-    <div className="space-y-4 font-dm text-base sm:text-lg md:text-[19px] leading-relaxed font-normal mb-12 text-center max-w-3xl">
+    <div className="space-y-4 font-dm text-base sm:text-lg md:text-[19px] leading-relaxed font-semibold mb-12 text-center max-w-3xl">
       {paragraphs.map((para, pIdx) => {
         const words = para.split(' ');
         return (
-          <p key={pIdx} className="text-[#8F6E5B]">
+          <p key={pIdx} className="text-[#221508]">
             {words.map((word, wIdx) => {
               const currentIdx = globalWordIndex++;
               return (
@@ -220,8 +220,8 @@ const ShlokaScrollSection: React.FC = () => {
       const complete = latest >= 0.38;
       if (complete !== lastComplete) {
         lastComplete = complete;
-        setIsShlokaComplete(complete);
       }
+      setIsShlokaComplete(complete);
     });
     return () => unsubscribe();
   }, [smoothProgress]);
@@ -235,22 +235,38 @@ const ShlokaScrollSection: React.FC = () => {
   return (
     <div 
       ref={sectionRef}
-      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#F7F1E5] text-[#8F6E5B] overflow-hidden select-none"
+      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
-      <div className="max-w-4xl mx-auto flex flex-col items-center justify-center text-center relative">
+      {/* Sacred Temple Mandapa Hall Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/sacred_mandapa_bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-center scale-[1.01] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(254,251,242,0.75) 0%, rgba(254,251,242,0.2) 25%, rgba(254,251,242,0.2) 75%, rgba(254,251,242,0.8) 100%)',
+          }}
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto flex flex-col items-center justify-center text-center relative z-10">
         {/* Sacred Temple Architecture Line Drawing Watermark Background */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-25 z-0 flex items-center justify-center">
-          <TempleArchitectureLine size={520} color="#705B4C" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20 z-0 flex items-center justify-center">
+          <TempleArchitectureLine size={520} color="#C59239" />
         </div>
 
 
         {/* Top Brand Label Centered */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-8 h-[2px] bg-[#B08A4A]" />
-          <span className="font-dm text-xs uppercase tracking-[0.24em] text-[#8F6E5B]/80 font-bold">
+          <div className="w-8 h-[2px] bg-[#C59239]" />
+          <span className="font-dm text-xs uppercase tracking-[0.24em] text-[#C59239] font-bold">
             HOUSE OF SANATANA
           </span>
-          <div className="w-8 h-[2px] bg-[#B08A4A]" />
+          <div className="w-8 h-[2px] bg-[#C59239]" />
         </div>
 
         {/* Sacred Rig Vedic Shloka Centered with High-Contrast Word Reveal */}
@@ -261,8 +277,8 @@ const ShlokaScrollSection: React.FC = () => {
               progress={smoothProgress}
               startRange={0.0}
               endRange={0.14}
-              activeColor="#8F6E5B"
-              dimColor="rgba(143, 110, 91, 0.10)"
+              activeColor="#221508"
+              dimColor="rgba(34, 21, 8, 0.12)"
             />
           </div>
           <div className="mb-2.5">
@@ -271,8 +287,8 @@ const ShlokaScrollSection: React.FC = () => {
               progress={smoothProgress}
               startRange={0.14}
               endRange={0.28}
-              activeColor="#8F6E5B"
-              dimColor="rgba(143, 110, 91, 0.10)"
+              activeColor="#221508"
+              dimColor="rgba(34, 21, 8, 0.12)"
             />
           </div>
           <div>
@@ -281,19 +297,19 @@ const ShlokaScrollSection: React.FC = () => {
               progress={smoothProgress}
               startRange={0.28}
               endRange={0.42}
-              activeColor="#8F6E5B"
-              dimColor="rgba(143, 110, 91, 0.10)"
+              activeColor="#221508"
+              dimColor="rgba(34, 21, 8, 0.12)"
             />
           </div>
         </div>
 
         {/* Attribution Tag Centered */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-8 h-[1.5px] bg-[#B08A4A]" />
-          <span className="font-dm text-xs uppercase tracking-[0.22em] text-[#B08A4A] font-bold">
+          <div className="w-8 h-[1.5px] bg-[#C59239]" />
+          <span className="font-dm text-xs uppercase tracking-[0.22em] text-[#C59239] font-bold">
             RIG VEDA 10.191
           </span>
-          <div className="w-8 h-[1.5px] bg-[#B08A4A]" />
+          <div className="w-8 h-[1.5px] bg-[#C59239]" />
         </div>
 
         {/* English Translation with 1-Second Smooth Wavy Animation */}
@@ -301,70 +317,6 @@ const ShlokaScrollSection: React.FC = () => {
           paragraphs={englishParagraphs}
           isTriggered={isShlokaComplete}
         />
-
-        {/* Bottom 4 Pillars Centered with Dividers */}
-        <motion.div 
-          initial={{ opacity: 0, y: 12 }}
-          animate={isShlokaComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-          transition={{ delay: 0.88, duration: 0.55, ease: 'easeOut' }}
-          className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-4 transition-opacity duration-300"
-        >
-          {/* Pillar 1 */}
-          <div className="flex items-center gap-2 pr-4 sm:border-r border-[#D9C6A8]/50">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#B08A4A]" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M12 3c-2.5 4-5 7-5 10a5 5 0 0 0 10 0c0-3-2.5-6-5-10z" />
-              <path d="M7 13c-2.5 0-4 1.5-4 3.5a4 4 0 0 0 7 2.5" />
-              <path d="M17 13c2.5 0 4 1.5 4 3.5a4 4 0 0 1-7 2.5" />
-            </svg>
-            <span className="font-dm text-xs font-bold uppercase tracking-wider text-[#8F6E5B]">
-              Togetherness
-            </span>
-          </div>
-
-          {/* Pillar 2 */}
-          <div className="flex items-center gap-2 pr-4 sm:border-r border-[#D9C6A8]/50">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#B08A4A]" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2" />
-              <path d="M12 20v2" />
-              <path d="m4.93 4.93 1.41 1.41" />
-              <path d="m17.66 17.66 1.41 1.41" />
-              <path d="M2 12h2" />
-              <path d="M20 12h2" />
-              <path d="m6.34 17.66-1.41 1.41" />
-              <path d="m19.07 4.93-1.41 1.41" />
-            </svg>
-            <span className="font-dm text-xs font-bold uppercase tracking-wider text-[#8F6E5B]">
-              Open Dialogue
-            </span>
-          </div>
-
-          {/* Pillar 3 */}
-          <div className="flex items-center gap-2 pr-4 sm:border-r border-[#D9C6A8]/50">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#B08A4A]" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M7 20h10" />
-              <path d="M10 20c0-4 2-7 5-8 0-4-3-7-7-7-2 4-1 8 2 15z" />
-              <path d="M15 12c-2.5 0-5 2-5 4" />
-            </svg>
-            <span className="font-dm text-xs font-bold uppercase tracking-wider text-[#8F6E5B]">
-              Shared Growth
-            </span>
-          </div>
-
-          {/* Pillar 4 */}
-          <div className="flex items-center gap-2">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#B08A4A]" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <circle cx="12" cy="12" r="9" />
-              <circle cx="12" cy="12" r="5" />
-              <circle cx="12" cy="12" r="1.5" />
-            </svg>
-            <span className="font-dm text-xs font-bold uppercase tracking-wider text-[#8F6E5B]">
-              A Brighter Tomorrow
-            </span>
-          </div>
-
-        </motion.div>
-
       </div>
     </div>
   );
@@ -444,48 +396,54 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
   }, [smoothProgress]);
 
   return (
-    <div id="the-house" className="relative w-full bg-[#F7F1E5]">
+    <div id="the-house" className="relative w-full bg-[#FEFBF2]">
       
       {/* ======================================================== */}
       {/* 0. PROMINENT SECTION HEADING (RIGHT ABOVE THE HOUSE)     */}
-      <div className="relative w-full pt-20 pb-10 sm:pt-24 sm:pb-12 px-4 sm:px-6 lg:px-8 bg-[#F7F1E5] text-[#8F6E5B] overflow-visible">
+      <div className="relative w-full pt-20 pb-10 sm:pt-24 sm:pb-12 px-4 sm:px-6 lg:px-8 bg-[#FEFBF2] text-[#221508] overflow-hidden">
+        {/* Sacred Mandapa Corridor Backdrop */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <img
+            src="/sacred_mandapa_bg.jpg"
+            alt=""
+            className="w-full h-full object-cover object-top scale-[1.01] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(254,251,242,0.75) 0%, rgba(254,251,242,0.18) 40%, rgba(254,251,242,0.8) 100%)',
+            }}
+          />
+        </div>
+
         {/* Background Sacred Patterns in Empty Margins - 100% Fully Visible & Uncropped */}
-        <div className="absolute top-1/2 -translate-y-1/2 -left-4 sm:left-2 lg:left-8 xl:left-14 pointer-events-none opacity-55 hidden md:block z-0">
-          <LotusLineArt size={280} color="#705B4C" className="-rotate-6" />
+        <div className="absolute top-1/2 -translate-y-1/2 -left-4 sm:left-2 lg:left-8 xl:left-14 pointer-events-none opacity-45 hidden md:block z-0">
+          <LotusLineArt size={280} color="#C59239" className="-rotate-6" />
         </div>
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
           
-          {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C7833D]/12 border border-[#C7833D]/30 text-[#C7833D] text-xs font-dm font-bold tracking-widest uppercase mb-4 shadow-xs">
-            <Sun className="w-3.5 h-3.5 text-[#C7833D]" />
-            <span>॥ सनातन कुलम् ॥ &bull; ABOUT THE HOUSE</span>
-          </div>
-
           {/* Main Section Heading */}
-          <h2 className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#8F6E5B] tracking-tight leading-tight">
+          <h2 className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#221508] tracking-tight leading-tight">
             The House: Story, Vision &amp; Mission
           </h2>
 
           {/* Subtitle & Narrative */}
-          <p className="mt-4 font-dm text-sm sm:text-base md:text-lg text-[#8F6E5B]/85 leading-relaxed max-w-3xl mx-auto font-normal">
+          <p className="mt-4 font-dm text-sm sm:text-base md:text-lg text-[#221508] leading-relaxed max-w-3xl mx-auto font-medium">
             A sacred sanctum founded to preserve pristine Vedic Agamic sanctity, empower devotee households across the world, and restore reverence to every holy ritual.
           </p>
 
           {/* Quick Header Action Links */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <div className="mt-8 flex items-center justify-center">
             <button
               type="button"
               onClick={onOpenAbout}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#B08A4A] via-[#C7833D] to-[#B08A4A] hover:brightness-110 text-white font-dm font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_4px_15px_rgba(176,138,74,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#C59239] via-[#FE7613] to-[#C59239] hover:brightness-110 text-white font-dm font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_4px_15px_rgba(197,146,57,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
               <span>Discover Full About Story</span>
               <ArrowRight className="w-4 h-4" />
             </button>
-            <span className="text-xs font-dm font-medium text-[#66705A] flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#B08A4A]" />
-              <span>Scroll down to enter the living sanctum</span>
-            </span>
           </div>
 
         </div>
@@ -501,9 +459,9 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
       {/* ======================================================== */}
       <section
         ref={containerRef}
-        className="relative w-full h-[200vh] bg-[#C7833D] text-[#F7F1E5] overflow-clip select-none"
+        className="relative w-full h-[200vh] bg-[#0A4C83] text-[#FEFBF2] overflow-clip select-none"
         style={{
-          background: 'linear-gradient(180deg, #C7833D 0%, #B87532 50%, #A46424 100%)'
+          background: 'linear-gradient(180deg, #105996 0%, #0A4C83 50%, #073863 100%)'
         }}
       >
         {/* TOP SACRED TEMPLE CREST / ORGANIC GOLDEN BORDER */}
@@ -517,11 +475,11 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
           >
             <path
               d="M0,0 L1440,0 L1440,32 C1200,85 960,15 720,68 C480,15 240,85 0,32 Z"
-              fill="#F7F1E5"
+              fill="#FEFBF2"
             />
             <path
               d="M0,32 C240,85 480,15 720,68 C960,15 1200,85 1440,32"
-              stroke="#B08A4A"
+              stroke="#C59239"
               strokeWidth="6"
               strokeOpacity="0.35"
               fill="none"
@@ -529,7 +487,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
             />
             <path
               d="M0,32 C240,85 480,15 720,68 C960,15 1200,85 1440,32"
-              stroke="#D9C6A8"
+              stroke="#E4B968"
               strokeWidth="2.4"
               fill="none"
             />
@@ -537,9 +495,9 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
 
           {/* Center Sacred Medallion Seal at top crest */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-            <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#8C521B] via-[#C7833D] to-[#8C521B] border border-[#D9C6A8]/70 shadow-[0_4px_20px_rgba(0,0,0,0.35),0_0_15px_rgba(199,131,61,0.5)] flex items-center gap-2 text-[#F7F1E5]">
-              <span className="font-sanskrit text-sm font-bold leading-none select-none text-[#F7F1E5]">ॐ</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D9C6A8] animate-pulse" />
+            <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#073863] via-[#0A4C83] to-[#073863] border border-[#C59239]/70 shadow-[0_4px_20px_rgba(0,0,0,0.35),0_0_15px_rgba(10,76,131,0.5)] flex items-center gap-2 text-[#FEFBF2]">
+              <span className="font-sanskrit text-sm font-bold leading-none select-none text-[#FEFBF2]">ॐ</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E4B968] animate-pulse" />
               <span className="font-dm text-[9px] sm:text-[10px] font-bold tracking-[0.2em] uppercase text-white">
                 ॥ सनातन कुलम् ॥
               </span>
@@ -547,11 +505,11 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
           </div>
         </div>
 
-        {/* Ambient Divine Golden Glow on Saffron Canvas */}
+        {/* Ambient Divine Golden Glow on Canvas */}
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(circle at 50% 30%, rgba(247, 241, 229, 0.22) 0%, transparent 60%), radial-gradient(circle at 50% 80%, rgba(176, 138, 74, 0.28) 0%, transparent 70%)'
+            background: 'radial-gradient(circle at 50% 30%, rgba(61, 179, 228, 0.22) 0%, transparent 60%), radial-gradient(circle at 50% 80%, rgba(197, 146, 57, 0.28) 0%, transparent 70%)'
           }}
         />
 
@@ -559,7 +517,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
         <div 
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] opacity-[0.08] pointer-events-none rounded-full"
           style={{
-            background: 'radial-gradient(circle, #F7F1E5 0%, transparent 70%)'
+            background: 'radial-gradient(circle, #3DB3E4 0%, transparent 70%)'
           }}
         />
 
@@ -576,34 +534,34 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
             }}
             className="hidden md:flex flex-col items-end justify-center w-[200px] lg:w-[280px] pr-3 sm:pr-4 text-right shrink-0 pointer-events-none absolute top-1/2 -translate-y-1/2 z-10 will-change-transform"
           >
-            <span className="font-sanskrit text-[#F7F1E5] text-xs tracking-widest block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-bold">
+            <span className="font-sanskrit text-[#C59239] text-xs tracking-widest block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-bold">
               ॥ सनातन कुलम् ॥
             </span>
             <h3 className="font-cormorant text-3xl lg:text-5xl font-semibold tracking-tight text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.35)] leading-none whitespace-nowrap">
               THE HOUSE
             </h3>
-            <span className="text-[11px] font-dm tracking-[0.2em] uppercase text-[#D9C6A8] font-semibold mt-1 whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            <span className="text-[11px] font-dm tracking-[0.2em] uppercase text-[#E4B968] font-semibold mt-1 whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
               EST. BHARAT 2026
             </span>
           </motion.div>
 
-          {/* CENTER ZOOM-REVEAL EXPANDING WINDOW (Soft Sage Layout) */}
+          {/* CENTER ZOOM-REVEAL EXPANDING WINDOW (Ruby Red Sanctum) */}
           <motion.div
             style={{
               width: widthTransform,
               height: heightTransform,
               borderRadius: borderRadius,
             }}
-            className="relative bg-[#66705A] overflow-hidden flex items-center justify-center shrink-0 z-20 group will-change-[width,height,border-radius] transform-gpu border-2 border-[#D9C6A8]/80 group-hover:border-[#F7F1E5] shadow-[0_0_50px_rgba(102,112,90,0.45),0_25px_60px_rgba(0,0,0,0.45)]"
+            className="relative bg-[#98555E] overflow-hidden flex items-center justify-center shrink-0 z-20 group will-change-[width,height,border-radius] transform-gpu border-2 border-[#C59239]/80 group-hover:border-[#FEFBF2] shadow-[0_0_50px_rgba(152,85,94,0.45),0_25px_60px_rgba(0,0,0,0.45)]"
           >
-            {/* Soft Sage Sanctuary Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#66705A] via-[#5A6350] to-[#4D5544] pointer-events-none" />
+            {/* Sacred Ruby Red Sanctum Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#98555E] via-[#854750] to-[#51000F] pointer-events-none" />
 
-            {/* Warm Divine Sand & Gold Aura Center */}
+            {/* Warm Divine Gold & Fire Aura Center */}
             <div 
               className="absolute inset-0 pointer-events-none opacity-30 mix-blend-screen"
               style={{
-                background: 'radial-gradient(circle at 50% 35%, rgba(217, 198, 168, 0.3) 0%, rgba(102, 112, 90, 0) 65%)'
+                background: 'radial-gradient(circle at 50% 35%, rgba(228, 185, 104, 0.3) 0%, rgba(152, 85, 94, 0) 65%)'
               }}
             />
 
@@ -627,13 +585,13 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
               className="relative z-20 w-full h-full p-6 sm:p-10 lg:p-14 flex flex-col justify-between overflow-y-auto"
             >
               {/* Top Bar: Sacred Badge & Lineage */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#D9C6A8]/30 pb-4">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F7F1E5]/15 border border-[#D9C6A8]/50 text-[#F7F1E5] text-xs font-dm font-bold tracking-widest uppercase">
-                  <Sun className="w-3.5 h-3.5 text-[#D9C6A8]" />
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#C59239]/30 pb-4">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEFBF2]/15 border border-[#C59239]/50 text-[#FEFBF2] text-xs font-dm font-bold tracking-widest uppercase">
+                  <Sun className="w-3.5 h-3.5 text-[#E4B968]" />
                   <span>॥ सनातन कुलम् ॥ &bull; THE LIVING SANCTUM</span>
                 </div>
 
-                <span className="text-xs font-dm text-[#D9C6A8] tracking-widest uppercase hidden sm:inline-block font-medium">
+                <span className="text-xs font-dm text-[#E4B968] tracking-widest uppercase hidden sm:inline-block font-medium">
                   Preserving Vedic Agamic Authenticity
                 </span>
               </div>
@@ -646,7 +604,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                 
                 {/* Sacred Ornamental Pattern Center Watermark */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 opacity-20 sm:opacity-25 flex items-center justify-center">
-                  <DividerOrnamental size={580} color="#D9C6A8" />
+                  <DividerOrnamental size={580} color="#C59239" />
                 </div>
                 
                 {/* Sanskrit Agamic Invocation Badge */}
@@ -654,10 +612,10 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                   <BlockRevealLine
                     isTriggered={isFit}
                     delay={0.10}
-                    blockColor="linear-gradient(90deg, #C7833D, #D9C6A8, #B08A4A)"
+                    blockColor="linear-gradient(90deg, #FE7613, #E4B968, #C59239)"
                     className="rounded-full"
                   >
-                    <span className="font-sanskrit text-[#D9C6A8] font-bold text-sm sm:text-base md:text-lg tracking-[0.25em] px-3 py-1 drop-shadow-sm">
+                    <span className="font-sanskrit text-[#E4B968] font-bold text-sm sm:text-base md:text-lg tracking-[0.25em] px-3 py-1 drop-shadow-sm">
                       ॥ सनातन धर्मस्य शाश्वत सत्यम् ॥
                     </span>
                   </BlockRevealLine>
@@ -668,7 +626,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                   <BlockRevealLine
                     isTriggered={isFit}
                     delay={0.28}
-                    blockColor="linear-gradient(90deg, #66705A, #D9C6A8, #C7833D)"
+                    blockColor="linear-gradient(90deg, #98555E, #C23053, #C59239)"
                   >
                     <h2 className="font-cormorant text-3xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
                       The Eternal Rhythm of Dharma
@@ -684,10 +642,10 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                     <BlockRevealLine
                       isTriggered={isFit}
                       delay={0.48}
-                      blockColor="linear-gradient(90deg, #B08A4A, #D9C6A8, #66705A)"
+                      blockColor="linear-gradient(90deg, #C59239, #E4B968, #FE7613)"
                     >
                       <span>
-                        <strong className="text-[#D9C6A8] font-semibold">Sanatana Dharma</strong> is the timeless cosmic order—uncreated, self-sustaining, and eternal.
+                        <strong className="text-[#E4B968] font-semibold">Sanatana Dharma</strong> is the timeless cosmic order—uncreated, self-sustaining, and eternal.
                       </span>
                     </BlockRevealLine>
                   </div>
@@ -697,7 +655,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                     <BlockRevealLine
                       isTriggered={isFit}
                       delay={0.68}
-                      blockColor="linear-gradient(90deg, #C7833D, #F7F1E5, #B08A4A)"
+                      blockColor="linear-gradient(90deg, #FE7613, #FEFBF2, #C59239)"
                     >
                       <span>
                         A sacred way of existence honoring the divine pulse of life across creation.
@@ -710,10 +668,10 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                     <BlockRevealLine
                       isTriggered={isFit}
                       delay={0.88}
-                      blockColor="linear-gradient(90deg, #B08A4A, #D9C6A8, #C7833D)"
+                      blockColor="linear-gradient(90deg, #C59239, #E4B968, #98555E)"
                     >
                       <span>
-                        <strong className="text-[#D9C6A8] font-semibold">The House of Sanatan</strong> was consecrated to restore this pristine Vedic sanctity.
+                        <strong className="text-[#E4B968] font-semibold">The House of Sanatan</strong> was consecrated to restore this pristine Vedic sanctity.
                       </span>
                     </BlockRevealLine>
                   </div>
@@ -723,7 +681,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                     <BlockRevealLine
                       isTriggered={isFit}
                       delay={1.08}
-                      blockColor="linear-gradient(90deg, #66705A, #D9C6A8, #B08A4A)"
+                      blockColor="linear-gradient(90deg, #607427, #E4B968, #C59239)"
                     >
                       <span>
                         Reviving peetham-energized offerings, unadulterated samagri, and serene pilgrimages.
@@ -736,9 +694,9 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                     <BlockRevealLine
                       isTriggered={isFit}
                       delay={1.28}
-                      blockColor="linear-gradient(90deg, #C7833D, #D9C6A8, #66705A)"
+                      blockColor="linear-gradient(90deg, #0A4C83, #3DB3E4, #C59239)"
                     >
-                      <span className="text-[#F7F1E5]">
+                      <span className="text-[#FEFBF2]">
                         Preserving sacred Agamic authenticity without dilution for modern generations.
                       </span>
                     </BlockRevealLine>
@@ -754,16 +712,16 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                 initial={{ opacity: 0, y: 15 }}
                 animate={isFit ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ delay: 1.48, duration: 0.35 }}
-                className="pt-2 sm:pt-5 pb-5 sm:pb-0 -translate-y-3 sm:translate-y-0 border-t border-[#D9C6A8]/30 flex items-center justify-center max-w-5xl mx-auto w-full"
+                className="pt-2 sm:pt-5 pb-5 sm:pb-0 -translate-y-3 sm:translate-y-0 border-t border-[#C59239]/30 flex items-center justify-center max-w-5xl mx-auto w-full"
               >
                 {/* LINK TO ABOUT BUTTON */}
                 <button
                   type="button"
                   onClick={onOpenAbout}
-                  className="w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-5 sm:px-10 py-2 sm:py-3.5 rounded-full bg-gradient-to-r from-[#B08A4A] via-[#C7833D] to-[#B08A4A] hover:from-[#C7833D] hover:to-[#B08A4A] text-[#F7F1E5] font-dm font-bold text-[11px] sm:text-sm tracking-wider uppercase shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-[#D9C6A8] -translate-y-1 sm:translate-y-0"
+                  className="w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-5 sm:px-10 py-2 sm:py-3.5 rounded-full bg-gradient-to-r from-[#C59239] via-[#FE7613] to-[#C59239] hover:from-[#E4B968] hover:to-[#C59239] text-[#221508] font-dm font-bold text-[11px] sm:text-sm tracking-wider uppercase shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-[#E4B968] -translate-y-1 sm:translate-y-0"
                 >
                   <span>Discover Full Story &amp; About Us</span>
-                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F7F1E5]" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#221508]" />
                 </button>
               </motion.div>
 
@@ -780,13 +738,13 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
             }}
             className="hidden md:flex flex-col items-start justify-center w-[200px] lg:w-[280px] pl-3 sm:pl-4 text-left shrink-0 pointer-events-none absolute top-1/2 -translate-y-1/2 z-10 will-change-transform"
           >
-            <span className="font-sanskrit text-[#F7F1E5] text-xs tracking-widest block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-bold">
+            <span className="font-sanskrit text-[#C59239] text-xs tracking-widest block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-bold">
               ॥ दृष्टिः सङ्कल्पश्च ॥
             </span>
             <h3 className="font-cormorant text-3xl lg:text-5xl font-semibold tracking-tight text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.35)] leading-none whitespace-nowrap">
               OUR SANCTUM
             </h3>
-            <span className="text-[11px] font-dm tracking-[0.2em] uppercase text-[#D9C6A8] font-semibold mt-1 whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            <span className="text-[11px] font-dm tracking-[0.2em] uppercase text-[#E4B968] font-semibold mt-1 whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
               VISION &bull; MISSION
             </span>
           </motion.div>
@@ -804,11 +762,11 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
           >
             <path
               d="M0,96 L1440,96 L1440,64 C1200,11 960,81 720,28 C480,81 240,11 0,64 Z"
-              fill="#F7F1E5"
+              fill="#FEFBF2"
             />
             <path
               d="M0,64 C240,11 480,81 720,28 C960,81 1200,11 1440,64"
-              stroke="#B08A4A"
+              stroke="#C59239"
               strokeWidth="6"
               strokeOpacity="0.35"
               fill="none"
@@ -816,7 +774,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
             />
             <path
               d="M0,64 C240,11 480,81 720,28 C960,81 1200,11 1440,64"
-              stroke="#D9C6A8"
+              stroke="#E4B968"
               strokeWidth="2.4"
               fill="none"
             />
@@ -824,9 +782,9 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
 
           {/* Center Sacred Seal at bottom crest */}
           <div className="absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 flex items-center justify-center pointer-events-auto">
-            <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#8C521B] via-[#C7833D] to-[#8C521B] border border-[#D9C6A8]/70 shadow-[0_4px_20px_rgba(0,0,0,0.35),0_0_15px_rgba(199,131,61,0.5)] flex items-center gap-2 text-[#F7F1E5]">
-              <span className="font-sanskrit text-sm font-bold leading-none select-none text-[#F7F1E5]">ॐ</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D9C6A8] animate-pulse" />
+            <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#073863] via-[#0A4C83] to-[#073863] border border-[#C59239]/70 shadow-[0_4px_20px_rgba(0,0,0,0.35),0_0_15px_rgba(10,76,131,0.5)] flex items-center gap-2 text-[#FEFBF2]">
+              <span className="font-sanskrit text-sm font-bold leading-none select-none text-[#FEFBF2]">ॐ</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E4B968] animate-pulse" />
               <span className="font-dm text-[9px] sm:text-[10px] font-bold tracking-[0.2em] uppercase text-white">
                 ॥ दृष्टिः सङ्कल्पश्च ॥
               </span>

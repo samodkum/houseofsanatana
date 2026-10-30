@@ -25,11 +25,9 @@ import { JoinHOSPage, MainJoinWay } from './components/JoinHOSPage';
 import { KnowledgeMediaPage } from './components/KnowledgeMediaPage';
 import { HeaderActionButtons } from './components/HeaderActionButtons';
 import { WishlistDrawer } from './components/WishlistDrawer';
-import { AccountModal } from './components/AccountModal';
-import { OrdersPage } from './pages/account/orders';
-import { AccountCallbackPage } from './pages/account/callback';
 import { openShopifyAccount } from './lib/shopify';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
+import { AccountPage } from './pages/AccountPage';
 
 import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
 
@@ -38,13 +36,37 @@ const VIDEO_URL = heroVideo;
 // The 8 letters of SANATANA
 const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
 
+const shouldShowInitialLoader = () => {
+  if (typeof window === 'undefined') return false;
+  const path = window.location.pathname.toLowerCase();
+  const hash = window.location.hash.toLowerCase();
+  const search = window.location.search.toLowerCase();
+
+  // NEVER show intro on customer account or when returning from logout
+  if (
+    path === '/account' || 
+    hash === '#account' || 
+    search.includes('logged_out') || 
+    search.includes('logout')
+  ) {
+    return false;
+  }
+
+  // Intro plays when landing on the website or reloading the website
+  return true;
+};
+
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'orders'>('home');
-  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'mall' | 'travel' | 'join' | 'media' | 'account'>(() => {
+    if (typeof window !== 'undefined' && (window.location.pathname === '/account' || window.location.hash === '#account')) {
+      return 'account';
+    }
+    return 'home';
+  });
   const [joinPathway, setJoinPathway] = useState<MainJoinWay>('join-hos');
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [isLoading, setIsLoading] = useState(() => shouldShowInitialLoader());
+  const [isRevealed, setIsRevealed] = useState(() => !shouldShowInitialLoader());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCommunityModalOpen, setIsCommunityModalOpen] = useState(false);
   const [isCoCreateModalOpen, setIsCoCreateModalOpen] = useState(false);
@@ -110,123 +132,113 @@ export default function App() {
     showToast(`Added ${product.title} to sacred basket`);
   };
 
-  // Sync routing on mount, popstate and back/forward without '#'
+  // Sync hash and pathname routing on mount, hashchange, and popstate
   useEffect(() => {
     const syncRoute = () => {
-      // Prioritize clean pathname, fallback to legacy hash if present
-      const rawPath = window.location.pathname.toLowerCase().replace(/^\/+/, '');
-      const rawHash = window.location.hash.toLowerCase().replace(/^#+/, '');
-      const route = rawPath || rawHash;
+      const pathname = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
 
-      if (
-        route === 'mall' ||
-        route === 'santana-mall' ||
-        route === 'sanatana-mall' ||
-        route === 'shop' ||
-        route.startsWith('product-')
-      ) {
+      if (pathname === '/account' || hash === '#account') {
+        setCurrentPage('account');
+      } else if (hash === '#mall' || hash === '#santana-mall' || hash === '#sanatana-mall' || hash === '#shop' || hash.startsWith('#product-')) {
         setCurrentPage('mall');
-      } else if (
-        route === 'travel' ||
-        route === 'yatras' ||
-        route === 'travel-packages' ||
-        route === 'travel-page' ||
-        route.startsWith('yatra-')
-      ) {
+      } else if (hash === '#travel' || hash === '#yatras' || hash === '#travel-packages' || hash === '#travel-page' || hash.startsWith('#yatra-')) {
         setCurrentPage('travel');
-      } else if (
-        route === 'join' ||
-        route === 'join-sanatana' ||
-        route === 'join-hos' ||
-        route === 'sangha' ||
-        route === 'partnership' ||
-        route === 'partner' ||
-        route === 'co-creator' ||
-        route === 'cocreate' ||
-        route === 'creator'
-      ) {
+      } else if (hash === '#join' || hash === '#join-sanatana' || hash === '#join-hos' || hash === '#sangha' || hash === '#partnership' || hash === '#partner' || hash === '#co-creator' || hash === '#cocreate' || hash === '#creator') {
         setCurrentPage('join');
-        if (route === 'partnership' || route === 'partner') setJoinPathway('partnership');
-        else if (route === 'co-creator' || route === 'cocreate' || route === 'creator') setJoinPathway('co-creator');
+        if (hash === '#partnership' || hash === '#partner') setJoinPathway('partnership');
+        else if (hash === '#co-creator' || hash === '#cocreate' || hash === '#creator') setJoinPathway('co-creator');
         else setJoinPathway('join-hos');
-      } else if (
-        route === 'media' ||
-        route === 'knowledge' ||
-        route === 'sanatana-media' ||
-        route === 'media-listing' ||
-        route === 'media-sanctum'
-      ) {
+      } else if (hash === '#media' || hash === '#knowledge' || hash === '#sanatana-media' || hash === '#media-listing' || hash === '#media-sanctum') {
         setCurrentPage('media');
-      } else if (
-        route === 'orders' ||
-        route === 'my-orders' ||
-        route === 'customer-orders' ||
-        route === 'account-orders' ||
-        route === 'account'
-      ) {
-        setCurrentPage('orders');
       } else {
         setCurrentPage('home');
       }
-
-      // If there's an unwanted '#' in the address bar, strip it out cleanly
-      if (window.location.hash) {
-        const cleanPath = route ? `/${route}` : '/';
-        window.history.replaceState(null, '', cleanPath);
-      }
     };
-
     syncRoute();
-    window.addEventListener('popstate', syncRoute);
     window.addEventListener('hashchange', syncRoute);
+    window.addEventListener('popstate', syncRoute);
     return () => {
-      window.removeEventListener('popstate', syncRoute);
       window.removeEventListener('hashchange', syncRoute);
+      window.removeEventListener('popstate', syncRoute);
     };
   }, []);
 
-  // Clean Page navigation helpers without '#'
-  const navigateToOrders = () => {
-    setCurrentPage('orders');
-    window.history.pushState({ page: 'orders' }, '', '/orders');
+  // Page navigation helpers
+  const navigateToAccount = () => {
+    if (window.location.pathname !== '/account') {
+      window.history.pushState({}, '', '/account');
+    }
+    setCurrentPage('account');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToMall = () => {
+    if (window.location.pathname === '/account') {
+      window.history.pushState({}, '', '/#santana-mall');
+    } else {
+      window.location.hash = 'santana-mall';
+    }
     setCurrentPage('mall');
-    window.history.pushState({ page: 'mall' }, '', '/mall');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToTravel = () => {
+    if (window.location.pathname === '/account') {
+      window.history.pushState({}, '', '/#travel');
+    } else {
+      window.location.hash = 'travel';
+    }
     setCurrentPage('travel');
-    window.history.pushState({ page: 'travel' }, '', '/travel');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToJoin = (pathway?: MainJoinWay) => {
     if (pathway) setJoinPathway(pathway);
+    if (window.location.pathname === '/account') {
+      window.history.pushState({}, '', pathway ? `/#${pathway}` : '/#join');
+    } else {
+      window.location.hash = pathway ? `#${pathway}` : '#join';
+    }
     setCurrentPage('join');
-    const path = pathway ? `/${pathway}` : '/join';
-    window.history.pushState({ page: 'join', pathway }, '', path);
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToMedia = () => {
+    if (window.location.pathname === '/account') {
+      window.history.pushState({}, '', '/#media');
+    } else {
+      window.location.hash = 'media';
+    }
     setCurrentPage('media');
-    window.history.pushState({ page: 'media' }, '', '/media');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const navigateToHome = (sectionId?: string) => {
+    if (window.location.pathname === '/account') {
+      window.history.pushState({}, '', sectionId ? `/#${sectionId}` : '/');
+    } else {
+      window.location.hash = sectionId ? `#${sectionId}` : '#home';
+    }
     setCurrentPage('home');
-    window.history.pushState({ page: 'home' }, '', '/');
     if (sectionId) {
       setTimeout(() => scrollToSection(sectionId), 250);
     } else {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   };
+
+  // Handle post-logout redirect without triggering intro screen
+  useEffect(() => {
+    try {
+      sessionStorage.removeItem('hos_intro_loader_completed');
+    } catch {}
+
+    if (typeof window !== 'undefined' && (window.location.search.includes('logged_out') || window.location.search.includes('logout'))) {
+      window.history.replaceState({}, '', '/');
+      showToast('You have been signed out safely.');
+    }
+  }, []);
 
   // Show toast notification helper
   const showToast = (message: string) => {
@@ -380,10 +392,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-[#F7F1E5] text-[#8F6E5B] overflow-x-clip font-dm">
+    <div className="relative w-full min-h-screen bg-[#FEFBF2] text-[#221508] overflow-x-clip font-montserrat">
       
-      {/* Sanatana Sacred Loader Screen */}
-      {isLoading && (
+      {/* Sanatana Sacred Loader Screen: ONLY on initial site open and NEVER on /account */}
+      {isLoading && currentPage !== 'account' && (
         <SanatanaLoader 
           onStartReveal={handleStartReveal}
           onComplete={handleLoaderComplete} 
@@ -421,19 +433,29 @@ export default function App() {
             navigateToJoin();
           } else if (page === 'media') {
             navigateToMedia();
-          } else if (page === 'orders') {
-            navigateToOrders();
+          } else if (page === 'account') {
+            navigateToAccount();
           } else {
             navigateToHome(sectionId);
           }
         }}
       />
 
-      {window.location.pathname.startsWith('/account/callback') ? (
+      {currentPage === 'account' ? (
         /* ======================================================== */
-        /* SHOPIFY CUSTOMER ACCOUNT OAUTH CALLBACK HANDLER         */
+        /* CUSTOM SACRED SADHAKA ACCOUNT & ORDERS PAGE               */
         /* ======================================================== */
-        <AccountCallbackPage />
+        <AccountPage
+          onNavigateHome={() => navigateToHome('home')}
+          onNavigateMall={navigateToMall}
+          onNavigateTravel={navigateToTravel}
+          onNavigateJoin={() => navigateToJoin('join-hos')}
+          onNavigateMedia={navigateToMedia}
+          onOpenCart={() => setIsCartOpen(true)}
+          onOpenWishlist={() => setIsWishlistOpen(true)}
+          cartCount={totalCartCount}
+          wishlistCount={wishlistIds.size}
+        />
       ) : currentPage === 'mall' ? (
         /* ======================================================== */
         /* SANTANA MALL: CONSECRATED TEMPLE STORE PAGE (IVORY BASE) */
@@ -445,7 +467,7 @@ export default function App() {
           onOpenCart={() => setIsCartOpen(true)}
           cartCount={totalCartCount}
           isMenuOpen={isMenuOpen}
-          onOpenAccount={() => setIsAccountModalOpen(true)}
+          onOpenAccount={navigateToAccount}
         />
       ) : currentPage === 'travel' ? (
         /* ======================================================== */
@@ -456,7 +478,7 @@ export default function App() {
           onNavigateMall={navigateToMall}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={() => setIsAccountModalOpen(true)}
+          onOpenAccount={navigateToAccount}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           isMenuOpen={isMenuOpen}
@@ -471,7 +493,7 @@ export default function App() {
           onNavigateTravel={navigateToTravel}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={() => setIsAccountModalOpen(true)}
+          onOpenAccount={navigateToAccount}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           initialPathway={joinPathway}
@@ -487,19 +509,10 @@ export default function App() {
           onNavigateJoin={navigateToJoin}
           onOpenCart={() => setIsCartOpen(true)}
           onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenAccount={() => setIsAccountModalOpen(true)}
+          onOpenAccount={navigateToAccount}
           cartCount={totalCartCount}
           wishlistCount={wishlistIds.size}
           isMenuOpen={isMenuOpen}
-        />
-      ) : currentPage === 'orders' ? (
-        /* ======================================================== */
-        /* SACRED ORDERS & YATRAS: CUSTOMER ORDERS PAGE             */
-        /* ======================================================== */
-        <OrdersPage
-          onBack={() => navigateToHome('home')}
-          onExploreProducts={navigateToMall}
-          onExploreTravel={navigateToTravel}
         />
       ) : (
         <>
@@ -510,7 +523,7 @@ export default function App() {
               cartCount={totalCartCount}
               onOpenWishlist={() => setIsWishlistOpen(true)}
               onOpenCart={() => setIsCartOpen(true)}
-              onOpenAccount={() => setIsAccountModalOpen(true)}
+              onOpenAccount={navigateToAccount}
               isHero={isHeroSection}
             />
           </div>
@@ -554,13 +567,13 @@ export default function App() {
 
             {/* Top Sacred Shloka & Om Symbol (Desktop / Laptop only) */}
             <div 
-              className={`hidden md:flex absolute top-[2.5%] md:top-[3%] inset-x-0 z-10 flex-col items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
+              className={`hidden md:flex absolute top-[2.5%] md:top-[3%] inset-x-0 z-25 flex-col items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
             >
               {/* Om Symbol */}
               <div 
-                className="font-sanskrit text-2xl sm:text-3xl md:text-[38px] text-[#B08A4A] font-bold select-none leading-none"
+                className="font-sanskrit text-2xl sm:text-3xl md:text-[38px] text-[#C59239] font-bold select-none leading-none"
                 style={isRevealed ? {
-                  filter: 'drop-shadow(0 0 12px rgba(176, 138, 74, 0.45)) drop-shadow(0 2px 4px rgba(0,0,0,0.6))',
+                  filter: 'drop-shadow(0 0 16px rgba(197, 146, 57, 0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.8))',
                   animation: 'letterWaveIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards'
                 } : { opacity: 0 }}
               >
@@ -569,9 +582,9 @@ export default function App() {
 
               {/* Sanskrit Inscription: ॥ सत्यं धर्म सनातन ॥ */}
               <div 
-                className="font-sanskrit text-[10px] sm:text-xs md:text-[13px] text-[#D9C6A8] tracking-[0.08em] font-semibold select-none mt-1 md:mt-1.5 text-center"
+                className="font-sanskrit text-[10px] sm:text-xs md:text-[13px] text-[#FEFBF2] tracking-[0.08em] font-semibold select-none mt-1 md:mt-1.5 text-center"
                 style={isRevealed ? {
-                  filter: 'drop-shadow(0 0 10px rgba(176, 138, 74, 0.35)) drop-shadow(0 1px 3px rgba(0,0,0,0.7))',
+                  filter: 'drop-shadow(0 0 12px rgba(197, 146, 57, 0.45)) drop-shadow(0 1px 3px rgba(0,0,0,0.8))',
                   animation: 'letterWaveIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards'
                 } : { opacity: 0 }}
               >
@@ -585,7 +598,7 @@ export default function App() {
 
             {/* 1. Mobile & Tablet Layout (< md): Centered in the Sky with "HOUSE OF" Eyebrow */}
             <div 
-              className={`md:hidden absolute inset-x-0 top-[17%] sm:top-[20%] -translate-y-1/2 z-10 flex flex-col items-center justify-center pointer-events-none px-4 transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
+              className={`md:hidden absolute inset-x-0 top-[19%] sm:top-[22%] -translate-y-1/2 z-10 flex flex-col items-center justify-center pointer-events-none px-4 transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
             >
               {/* Subtle Celestial Aura */}
               <div 
@@ -602,129 +615,60 @@ export default function App() {
                   animation: 'letterWaveIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both'
                 } : { opacity: 0 }}
               >
-                <span className="w-7 h-[1px] bg-gradient-to-r from-transparent via-[#B08A4A] to-[#D9C6A8]" />
-                <span className="font-montserrat text-[10px] sm:text-[11px] font-extrabold tracking-[0.38em] text-[#D9C6A8] uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                <span className="w-7 h-[1px] bg-gradient-to-r from-transparent via-[#C59239] to-[#E4B968]" />
+                <span className="font-montserrat text-[10px] sm:text-[11px] font-extrabold tracking-[0.38em] text-[#E4B968] uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                   HOUSE OF
                 </span>
-                <span className="w-7 h-[1px] bg-gradient-to-l from-transparent via-[#B08A4A] to-[#D9C6A8]" />
+                <span className="w-7 h-[1px] bg-gradient-to-l from-transparent via-[#C59239] to-[#E4B968]" />
               </div>
 
-              {/* Grand SANATANA Wordmark */}
-              <div className="w-full flex items-center justify-center gap-1 sm:gap-2">
-                {LETTERS.map((char, idx) => {
-                  const entryDelay = 0.2 + idx * 0.08;
-                  return (
-                    <div
-                      key={`mob-char-${char}-${idx}`}
-                      className="flex items-center justify-center"
-                      style={isRevealed ? {
-                        animation: `letterWaveIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) ${entryDelay}s both`
-                      } : { opacity: 0 }}
-                    >
-                      <span
-                        className="font-montserrat font-black text-[10.5vw] sm:text-[9vw] leading-none select-none uppercase inline-block origin-center px-0.5 py-1"
-                        style={{
-                          transform: 'scaleY(1.15)',
-                          background: 'linear-gradient(180deg, #FFFFFF 0%, #F7F1E5 20%, #D9C6A8 50%, #B08A4A 85%, #332C25 100%)',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                          color: '#B08A4A',
-                          filter: 'drop-shadow(0 3px 8px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 20px rgba(176, 138, 74, 0.5))'
-                        }}
-                      >
-                        {char}
-                      </span>
-                    </div>
-                  );
-                })}
+              {/* Grand SANATANA Wordmark Asset */}
+              <div className="w-full flex items-center justify-center px-2">
+                <img 
+                  src="/sanatana-hero-typography.png"
+                  alt="SANATANA"
+                  className="w-full max-w-[92vw] h-auto object-contain select-none pointer-events-none"
+                  style={isRevealed ? {
+                    animation: 'letterWaveIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both',
+                    filter: 'drop-shadow(0 3px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 20px rgba(197, 146, 57, 0.45))'
+                  } : { opacity: 0 }}
+                />
               </div>
             </div>
 
-            {/* 2. Desktop Layout (>= md): Split-Wing with Corridor for Silhouette */}
+            {/* 2. Desktop Layout (>= md): Grand Celestial SANATAN Typography Asset */}
             <div 
               id="sanatana-sky-container"
-              className={`hidden md:flex absolute inset-x-0 top-[36%] -translate-y-1/2 z-10 items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
+              className={`hidden md:flex absolute inset-x-0 top-[39.5%] -translate-y-1/2 z-10 w-full items-center justify-center pointer-events-none transition-opacity duration-700 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
             >
-              <div 
-                className="w-full flex items-center justify-between px-3 sm:px-5 md:px-8 lg:px-11 xl:px-14 overflow-visible -translate-x-[1.2vw] sm:-translate-x-[1.5vw]"
+              <h1 
+                id="hero-sanatan-heading"
+                className="w-full py-12 flex items-center justify-center pointer-events-none m-0 p-0 border-none outline-none ring-0 select-none overflow-visible"
+                style={{
+                  '--cut-start': '41%',
+                  '--cut-end': '53%',
+                  WebkitMaskImage: 'linear-gradient(to right, #000 0%, #000 var(--cut-start, 41%), transparent calc(var(--cut-start, 41%) + 1.5%), transparent calc(var(--cut-end, 53%) - 1.5%), #000 var(--cut-end, 53%), #000 100%)',
+                  maskImage: 'linear-gradient(to right, #000 0%, #000 var(--cut-start, 41%), transparent calc(var(--cut-start, 41%) + 1.5%), transparent calc(var(--cut-end, 53%) - 1.5%), #000 var(--cut-end, 53%), #000 100%)',
+                } as CSSProperties}
               >
-                {/* Left Wing: S - A - N - A */}
-                <div className="flex-1 flex items-center justify-between overflow-visible">
-                  {LETTERS.slice(0, 4).map((char, idx) => {
-                    const entryDelay = idx * 0.12;
-                    const isPartiallyHiddenA = idx === 3;
-                    const maskStyle: CSSProperties = isPartiallyHiddenA
-                      ? {
-                          maskImage: 'linear-gradient(to right, #000 0%, #000 34%, rgba(0,0,0,0.3) 44%, transparent 56%)',
-                          WebkitMaskImage: 'linear-gradient(to right, #000 0%, #000 34%, rgba(0,0,0,0.3) 44%, transparent 56%)'
-                        }
-                      : {};
-
-                    return (
-                      <div
-                        key={`left-${char}-${idx}`}
-                        className="flex-1 flex items-center justify-center overflow-visible"
-                        style={isRevealed ? {
-                          ...maskStyle,
-                          animation: `letterWaveIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) ${entryDelay}s both`
-                        } : { ...maskStyle, opacity: 0 }}
-                      >
-                        <span
-                          className="font-montserrat font-black text-[12.8vw] md:text-[13.4vw] lg:text-[13.8vw] leading-[1.05] select-none uppercase inline-block origin-center px-1 sm:px-1.5 py-1"
-                          style={{
-                            transform: 'scaleY(1.18)',
-                            boxSizing: 'content-box',
-                            background: 'linear-gradient(180deg, #1A1612 0%, #26201B 45%, #332C25 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            color: '#332C25',
-                            filter: 'drop-shadow(0 3px 6px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 16px rgba(176, 138, 74, 0.35))'
-                          }}
-                        >
-                          {char}
-                        </span>
-                      </div>
-                    );
-                  })}
+                <div 
+                  className="w-[76vw] max-w-[1500px] flex items-center justify-center overflow-visible"
+                  style={isRevealed ? {
+                    animation: 'letterWaveIn 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                  } : { opacity: 0 }}
+                >
+                  <img 
+                    src="/sanatan-hero-typography.png" 
+                    alt="SANATAN"
+                    className="w-full h-auto object-contain select-none pointer-events-none"
+                    style={{
+                      filter: 'drop-shadow(0 4px 18px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 35px rgba(220, 155, 65, 0.35))',
+                    }}
+                  />
                 </div>
-
-                {/* Center spacing corridor where Krishna walks towards the horizon */}
-                <div className="w-[4.5vw] sm:w-[5vw] md:w-[5.5vw] lg:w-[6vw] shrink-0" />
-
-                {/* Right Wing: T - A - N - A */}
-                <div className="flex-1 flex items-center justify-between overflow-visible -translate-x-[1.2vw] sm:-translate-x-[1.5vw]">
-                  {LETTERS.slice(4, 8).map((char, idx) => {
-                    const globalIndex = idx + 4;
-                    const entryDelay = globalIndex * 0.12;
-
-                    return (
-                      <div
-                        key={`right-${char}-${idx}`}
-                        className="flex-1 flex items-center justify-center overflow-visible"
-                        style={isRevealed ? {
-                          animation: `letterWaveIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) ${entryDelay}s both`
-                        } : { opacity: 0 }}
-                      >
-                        <span
-                          className="font-montserrat font-black text-[12.8vw] md:text-[13.4vw] lg:text-[13.8vw] leading-[1.05] select-none uppercase inline-block origin-center px-1 sm:px-1.5 py-1"
-                          style={{
-                            transform: 'scaleY(1.18)',
-                            boxSizing: 'content-box',
-                            background: 'linear-gradient(180deg, #1A1612 0%, #26201B 45%, #332C25 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            color: '#332C25',
-                            filter: 'drop-shadow(0 3px 6px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 16px rgba(176, 138, 74, 0.35))'
-                          }}
-                        >
-                          {char}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              </h1>
             </div>
+
 
             {/* Mobile Bottom Scrim for crisp text contrast */}
             <div 
@@ -742,10 +686,10 @@ export default function App() {
             >
               {/* 2-line Sacred Micro-phrase (4 words) */}
               <div className="mb-2 text-right pointer-events-none">
-                <span className="block font-montserrat font-medium text-[9.5px] tracking-[0.2em] uppercase text-[#D9C6A8] drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                <span className="block font-montserrat font-medium text-[9.5px] tracking-[0.2em] uppercase text-[#E4B968] drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                   Where Sacred
                 </span>
-                <span className="block font-montserrat font-extrabold text-xs tracking-[0.08em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#F7F1E5] via-[#D9C6A8] to-[#B08A4A] drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-tight">
+                <span className="block font-montserrat font-extrabold text-xs tracking-[0.08em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#FEFBF2] via-[#E4B968] to-[#C59239] drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-tight">
                   Awakens Eternity
                 </span>
               </div>
@@ -754,21 +698,21 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(true)}
-                className="group relative inline-flex items-center gap-2.5 pl-2.5 pr-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#332C25]/95 via-[#26201B]/95 to-[#332C25]/95 border border-[#B08A4A]/70 hover:border-[#D9C6A8] shadow-[0_8px_25px_rgba(0,0,0,0.85),_0_0_15px_rgba(176,138,74,0.3)] backdrop-blur-md transition-all duration-300 cursor-pointer overflow-hidden active:scale-95"
+                className="group relative inline-flex items-center gap-2.5 pl-2.5 pr-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#1A1612]/95 via-[#26201B]/95 to-[#1A1612]/95 border border-[#C59239]/70 hover:border-[#E4B968] shadow-[0_8px_25px_rgba(0,0,0,0.85),_0_0_15px_rgba(197,146,57,0.3)] backdrop-blur-md transition-all duration-300 cursor-pointer overflow-hidden active:scale-95"
               >
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#B08A4A]/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#C59239]/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
 
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-[#C7833D] via-[#B08A4A] to-[#66705A] text-[#120a04] shadow-md group-hover:rotate-180 transition-transform duration-700">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-[#FE7613] via-[#C59239] to-[#0A4C83] text-[#120a04] shadow-md group-hover:rotate-180 transition-transform duration-700">
                   <SunIcon className="w-3.5 h-3.5 text-black" />
                 </div>
 
                 <div className="flex flex-col text-left justify-center">
-                  <span className="font-montserrat font-bold text-xs tracking-[0.04em] text-[#F7F1E5] group-hover:text-white transition-colors leading-none">
+                  <span className="font-montserrat font-bold text-xs tracking-[0.04em] text-[#FEFBF2] group-hover:text-white transition-colors leading-none">
                     Explore HOS
                   </span>
                 </div>
 
-                <div className="flex items-center justify-center w-5 h-5 rounded-full bg-[#26201B]/90 border border-[#B08A4A]/50 group-hover:border-[#F7F1E5] group-hover:translate-x-0.5 transition-all text-[#D9C6A8]">
+                <div className="flex items-center justify-center w-5 h-5 rounded-full bg-[#26201B]/90 border border-[#C59239]/50 group-hover:border-[#FEFBF2] group-hover:translate-x-0.5 transition-all text-[#C59239]">
                   <span className="text-[10px] leading-none">➔</span>
                 </div>
               </button>
@@ -779,33 +723,22 @@ export default function App() {
             {/* ======================================================== */}
             <div 
               id="hero-cta-section"
-              className={`hidden md:flex absolute right-8 md:right-12 lg:right-16 xl:right-20 top-[49%] sm:top-[51%] md:top-[53%] z-20 flex-col items-end text-right max-w-[380px] md:max-w-[440px] transition-all duration-700 ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+              className={`hidden md:flex absolute right-8 md:right-12 lg:right-16 xl:right-20 top-[49%] sm:top-[51%] md:top-[53%] z-25 flex-col items-end text-right max-w-[380px] md:max-w-[440px] transition-all duration-700 ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
               style={isRevealed ? {
                 animation: 'fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both'
               } : { opacity: 0 }}
             >
-              {/* Eyebrow with pulsing amber beacon */}
-              <div className="flex items-center justify-end gap-2 mb-2 sm:mb-2.5">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C7833D] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#B08A4A]" />
-                </span>
-                <span className="text-[10px] sm:text-[11px] font-montserrat font-bold tracking-[0.25em] text-[#B08A4A] uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-                  ॥ अनन्त यात्रा ॥ &bull; ETERNAL ODYSSEY
-                </span>
-              </div>
-
               {/* Clean Sub-heading */}
               <div className="mb-2 sm:mb-2.5">
-                <span className="font-montserrat font-medium text-xs sm:text-sm md:text-base tracking-[0.18em] uppercase text-[#D9C6A8] block mb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                <span className="font-montserrat font-medium text-xs sm:text-sm md:text-base tracking-[0.18em] uppercase text-[#FEFBF2] block mb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                   Where the Sacred
                 </span>
-                <h2 className="font-montserrat font-black text-xl sm:text-2xl md:text-[32px] tracking-[0.05em] uppercase leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#F7F1E5] via-[#D9C6A8] to-[#B08A4A] drop-shadow-[0_3px_18px_rgba(0,0,0,0.95)]">
+                <h2 className="font-montserrat font-black text-xl sm:text-2xl md:text-[32px] tracking-[0.05em] uppercase leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FEFBF2] via-[#E4B968] to-[#C59239] drop-shadow-[0_3px_18px_rgba(0,0,0,0.95)]">
                   Awakens Eternity
                 </h2>
               </div>
 
-              <p className="font-montserrat font-normal text-xs sm:text-[13px] text-[#D9C6A8]/90 mb-5 tracking-wide leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] max-w-[340px]">
+              <p className="font-montserrat font-normal text-xs sm:text-[13px] text-[#FEFBF2]/90 mb-5 tracking-wide leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] max-w-[340px]">
                 Step beyond the veil of time into the living sanctuary of timeless Dharma.
               </p>
 
@@ -814,21 +747,21 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsMenuOpen(true)}
-                  className="group relative inline-flex items-center gap-3.5 pl-3 pr-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#332C25]/95 via-[#26201B]/95 to-[#332C25]/95 border border-[#B08A4A]/70 hover:border-[#D9C6A8] shadow-[0_10px_30px_rgba(0,0,0,0.85),_0_0_20px_rgba(176,138,74,0.3)] hover:shadow-[0_10px_35px_rgba(0,0,0,0.9),_0_0_40px_rgba(176,138,74,0.55)] backdrop-blur-md transition-all duration-500 cursor-pointer overflow-hidden active:scale-95"
+                  className="group relative inline-flex items-center gap-3.5 pl-3 pr-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#1A1612]/95 via-[#26201B]/95 to-[#1A1612]/95 border border-[#C59239]/70 hover:border-[#E4B968] shadow-[0_10px_30px_rgba(0,0,0,0.85),_0_0_20px_rgba(197,146,57,0.35)] hover:shadow-[0_10px_35px_rgba(0,0,0,0.9),_0_0_40px_rgba(197,146,57,0.6)] backdrop-blur-md transition-all duration-500 cursor-pointer overflow-hidden active:scale-95"
                 >
-                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#B08A4A]/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#C59239]/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
 
-                  <div className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-[#C7833D] via-[#B08A4A] to-[#66705A] text-[#120a04] shadow-md group-hover:rotate-180 transition-transform duration-700">
+                  <div className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-[#FE7613] via-[#C59239] to-[#0A4C83] text-[#120a04] shadow-md group-hover:rotate-180 transition-transform duration-700">
                     <SunIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-black" />
                   </div>
 
                   <div className="flex flex-col text-left justify-center">
-                    <span className="font-montserrat font-bold text-xs sm:text-sm tracking-[0.05em] text-[#F7F1E5] group-hover:text-white transition-colors leading-none">
+                    <span className="font-montserrat font-bold text-xs sm:text-sm tracking-[0.05em] text-[#FEFBF2] group-hover:text-white transition-colors leading-none">
                       Explore HOS
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#26201B]/90 border border-[#B08A4A]/50 group-hover:border-[#F7F1E5] group-hover:translate-x-1 transition-all text-[#D9C6A8]">
+                  <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#26201B]/90 border border-[#C59239]/50 group-hover:border-[#FEFBF2] group-hover:translate-x-1 transition-all text-[#C59239]">
                     <span className="text-xs leading-none">➔</span>
                   </div>
                 </button>
@@ -897,7 +830,17 @@ export default function App() {
           {/* SECTION 10: LUXURY SACRED FOOTER                         */}
           {/* ======================================================== */}
           <div id="footer">
-            <Footer />
+            <Footer 
+              onNavigateAccount={navigateToAccount}
+              onNavigatePage={(page, sectionId) => {
+                if (page === 'mall') navigateToMall();
+                else if (page === 'travel') navigateToTravel();
+                else if (page === 'join') navigateToJoin();
+                else if (page === 'media') navigateToMedia();
+                else if (page === 'account') navigateToAccount();
+                else navigateToHome(sectionId);
+              }}
+            />
           </div>
         </>
       )}
@@ -920,10 +863,10 @@ export default function App() {
           type="button"
           onClick={() => setIsCartOpen(true)}
           aria-label="Open sacred basket"
-          className="fixed bottom-20 right-6 z-40 w-11 h-11 rounded-full bg-[#C7833D] hover:bg-[#B08A4A] text-white shadow-[0_10px_25px_rgba(199,131,61,0.35)] border border-[#D9C6A8] flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95"
+          className="fixed bottom-20 right-6 z-40 w-11 h-11 rounded-full bg-[#FE7613] hover:bg-[#E66207] text-white shadow-[0_10px_25px_rgba(254,118,19,0.35)] border border-[#C59239] flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95"
         >
           <ShoppingBag className="w-5 h-5" />
-          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#8F6E5B] text-[#F7F1E5] font-dm font-bold text-[10px] flex items-center justify-center border border-[#D9C6A8]">
+          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#98555E] text-[#FEFBF2] font-dm font-bold text-[10px] flex items-center justify-center border border-[#E4B968]">
             {totalCartCount}
           </span>
         </button>
@@ -950,24 +893,6 @@ export default function App() {
         onClose={() => setIsAboutModalOpen(false)}
       />
 
-      {/* Sacred Customer Account Modal */}
-      <AccountModal
-        isOpen={isAccountModalOpen}
-        onClose={() => setIsAccountModalOpen(false)}
-        onOpenWishlist={() => setIsWishlistOpen(true)}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenOrders={navigateToOrders}
-        onNavigatePage={(p) => {
-          if (p === 'orders') navigateToOrders();
-          else if (p === 'mall') navigateToMall();
-          else if (p === 'travel') navigateToTravel();
-          else if (p === 'join') navigateToJoin();
-          else navigateToHome();
-        }}
-        cartCount={totalCartCount}
-        wishlistCount={wishlistIds.size}
-      />
-
       {/* Slide-Over Wishlist Drawer (Unified across all pages) */}
       <WishlistDrawer
         isOpen={isWishlistOpen}
@@ -984,8 +909,8 @@ export default function App() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto bg-[#F7F1E5] border border-[#D9C6A8] text-[#8F6E5B] px-6 py-3 rounded-2xl shadow-[0_15px_40px_rgba(51,44,37,0.15)] backdrop-blur-md flex items-center gap-3 animate-bounce">
-          <span className="text-[#C7833D]">✦</span>
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto bg-[#FEFBF2] border border-[#C59239] text-[#221508] px-6 py-3 rounded-2xl shadow-[0_15px_40px_rgba(34,21,8,0.15)] backdrop-blur-md flex items-center gap-3 animate-bounce">
+          <span className="text-[#FE7613]">✦</span>
           <span className="font-dm text-xs sm:text-sm font-semibold tracking-wide">
             {toastMessage}
           </span>

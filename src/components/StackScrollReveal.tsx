@@ -37,7 +37,7 @@ export const DEFAULT_PRODUCT_CARDS: ProductStackCardItem[] = [
     originalPrice: 1999,
     rating: 4.9,
     reviewsCount: 428,
-    bgColor: '#C7833D',
+    bgColor: '#98555E',
     images: [
       'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?auto=format&fit=crop&w=900&q=80',
@@ -79,7 +79,7 @@ export const DEFAULT_PRODUCT_CARDS: ProductStackCardItem[] = [
     originalPrice: 4999,
     rating: 5.0,
     reviewsCount: 312,
-    bgColor: '#B08A4A',
+    bgColor: '#C59239',
     images: [
       'https://images.unsplash.com/photo-1605371924599-2d0365da1ae0?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1610737242371-5527fefca3ea?auto=format&fit=crop&w=900&q=80',
@@ -121,7 +121,7 @@ export const DEFAULT_PRODUCT_CARDS: ProductStackCardItem[] = [
     originalPrice: 3499,
     rating: 4.8,
     reviewsCount: 184,
-    bgColor: '#66705A',
+    bgColor: '#FE7613',
     images: [
       'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=900&q=80',
@@ -163,7 +163,7 @@ export const DEFAULT_PRODUCT_CARDS: ProductStackCardItem[] = [
     originalPrice: 2899,
     rating: 4.9,
     reviewsCount: 560,
-    bgColor: '#8F6E5B',
+    bgColor: '#607427',
     images: [
       'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80',
@@ -283,7 +283,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ card, transform, onAddToCart 
         className="relative w-full h-full rounded-b-[24px] sm:rounded-b-[32px] rounded-tr-[24px] sm:rounded-tr-[32px] rounded-tl-none overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.45)] border border-white/20 flex flex-col md:flex-row justify-between items-stretch"
       >
         {/* Soft contrast scrim for lighter pastel card shades */}
-        {(card.bgColor === '#D9C6A8' || card.bgColor === '#F7F1E5') && (
+        {card.bgColor === '#FEFBF2' && (
           <div className="absolute inset-0 bg-black/25 pointer-events-none z-0" />
         )}
 
@@ -312,7 +312,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ card, transform, onAddToCart 
             </div>
 
             {/* Description */}
-            <p className="font-dm text-xs sm:text-[13px] text-white/85 leading-relaxed font-normal mb-3 line-clamp-2 sm:line-clamp-3">
+            <p className="font-dm text-xs sm:text-[13px] text-white/95 leading-relaxed font-medium mb-3 line-clamp-2 sm:line-clamp-3">
               {card.description}
             </p>
 
@@ -476,7 +476,7 @@ const ViewAllCard: React.FC<ViewAllCardProps> = ({ transform, onViewAll }) => {
       {/* 1. TOP FOLDER TAB */}
       <div className="absolute -top-[36px] sm:-top-[40px] left-0 flex items-end pointer-events-auto z-20">
         <div
-          style={{ backgroundColor: '#C7833D' }}
+          style={{ backgroundColor: '#51000F' }}
           className="h-[37px] sm:h-[41px] px-5 sm:px-8 rounded-t-[16px] sm:rounded-t-[20px] flex items-center gap-2 border-t border-l border-white/20 shadow-[-3px_-4px_10px_rgba(0,0,0,0.15)]"
         >
           <span className="font-dm text-xs sm:text-[13px] font-bold text-amber-200 tracking-wider">
@@ -484,7 +484,7 @@ const ViewAllCard: React.FC<ViewAllCardProps> = ({ transform, onViewAll }) => {
           </span>
           <span className="text-white/40 text-xs hidden sm:inline">&bull;</span>
           <span className="font-dm text-[10px] sm:text-[11px] font-semibold text-white/70 uppercase tracking-widest hidden sm:inline">
-            Santana Mall
+            Sanatana Mall
           </span>
         </div>
 
@@ -493,7 +493,7 @@ const ViewAllCard: React.FC<ViewAllCardProps> = ({ transform, onViewAll }) => {
           <svg className="w-[20px] h-[20px]" viewBox="0 0 20 20" fill="none">
             <path
               d="M 0 0 C 0 11.0457 8.9543 20 20 20 L 0 20 Z"
-              fill="#C7833D"
+              fill="#51000F"
             />
             <path
               d="M 0 0 C 0 11.0457 8.9543 20 20 20"
@@ -509,7 +509,7 @@ const ViewAllCard: React.FC<ViewAllCardProps> = ({ transform, onViewAll }) => {
       <div
         className="relative w-full h-full rounded-b-[24px] sm:rounded-b-[32px] rounded-tr-[24px] sm:rounded-tr-[32px] rounded-tl-none overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.45)] border border-white/20 flex flex-col justify-between items-center text-center p-6 sm:p-10 md:p-12 select-none"
         style={{
-          backgroundColor: '#C7833D'
+          backgroundColor: '#51000F'
         }}
       >
         {/* Sacred Ornamental Watermark Center */}
@@ -529,11 +529,11 @@ const ViewAllCard: React.FC<ViewAllCardProps> = ({ transform, onViewAll }) => {
           <h3 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-semibold text-white tracking-tight leading-[1.1] mb-3 sm:mb-4 drop-shadow-md">
             Enter the Living Sanctum of{' '}
             <span className="text-amber-200">
-              Santana Mall
+              Sanatana Mall
             </span>
           </h3>
 
-          <p className="font-dm text-xs sm:text-sm md:text-[15px] text-white/90 leading-relaxed max-w-xl mx-auto mb-6 sm:mb-8 font-normal">
+          <p className="font-dm text-xs sm:text-sm md:text-[15px] text-white/95 leading-relaxed max-w-xl mx-auto mb-6 sm:mb-8 font-medium">
             Explore our complete treasury of lab-certified puja samagri, sacred brass murtis, pure camphor, energized yantras, and festival ceremonial boxes.
           </p>
 
@@ -547,7 +547,7 @@ const ViewAllCard: React.FC<ViewAllCardProps> = ({ transform, onViewAll }) => {
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
             
             <Grid3X3 className="w-4 h-4 sm:w-5 sm:h-5 text-stone-950" />
-            <span>Enter Santana Mall</span>
+            <span>Enter Sanatana Mall</span>
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-stone-950 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
@@ -704,18 +704,41 @@ export const StackScrollReveal: React.FC<StackScrollRevealProps> = ({
     <section
       ref={containerRef}
       id="stack-scroll-reveal"
-      className="relative w-full h-[500vh] bg-[#F7F1E5] select-none text-[#8F6E5B]"
+      className="relative w-full h-[500vh] bg-[#FEFBF2] select-none text-[#221508]"
     >
       {/* Sticky Viewport pinned firmly in place */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-6">
+        {/* Sacred Temple & River Ghats Background Backdrop */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <img
+            src="/sacred_temple_bg.jpg"
+            alt=""
+            className="w-full h-full object-cover object-[center_28%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(254,251,242,0.7) 0%, rgba(254,251,242,0.12) 20%, rgba(254,251,242,0.1) 80%, rgba(254,251,242,0.75) 100%)',
+            }}
+          />
+          <div
+            className="absolute inset-0 mix-blend-color"
+            style={{
+              background:
+                'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220,155,65,0.14) 0%, transparent 70%)',
+            }}
+          />
+        </div>
+
         {/* Subtle Decorative Background Auras */}
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#C7833D]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#B08A4A]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#0A4C83]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#C59239]/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* SACRED ORNAMENTAL SECTION DIVIDER ON ONE SIDE ONLY (Left side left empty) */}
         <div className="absolute right-0 top-0 bottom-0 w-[calc((100%-896px)/2)] pointer-events-none z-0 hidden lg:flex items-center justify-center px-4 xl:px-8 overflow-hidden">
           <div className="opacity-70 hover:opacity-90 transition-opacity duration-500">
-            <DividerOrnamental size={460} color="#705B4C" />
+            <DividerOrnamental size={460} color="#C59239" />
           </div>
         </div>
         

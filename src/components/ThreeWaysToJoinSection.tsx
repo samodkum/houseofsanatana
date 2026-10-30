@@ -5,7 +5,6 @@ import {
   Sparkles, 
   ArrowRight, 
   CheckCircle2, 
-  Compass,
   Hammer,
   HeartHandshake
 } from 'lucide-react';
@@ -46,9 +45,9 @@ export const JOIN_WAYS: JoinWay[] = [
     ctaText: 'Join Family Circle',
     ctaAction: 'community',
     image: 'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=1200&q=80',
-    accentColor: '#B08A4A',
-    accentBorder: '#D9C6A8',
-    hoverGlow: 'rgba(176, 138, 74, 0.25)',
+    accentColor: '#C59239',
+    accentBorder: '#E4B968',
+    hoverGlow: 'rgba(197, 146, 57, 0.25)',
     icon: <HeartHandshake className="w-5 h-5" />
   },
   {
@@ -67,9 +66,9 @@ export const JOIN_WAYS: JoinWay[] = [
     ctaText: 'Explore Open Roles',
     ctaAction: 'roles',
     image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80',
-    accentColor: '#66705A',
-    accentBorder: '#D9C6A8',
-    hoverGlow: 'rgba(102, 112, 90, 0.25)',
+    accentColor: '#0A4C83',
+    accentBorder: '#3DB3E4',
+    hoverGlow: 'rgba(10, 76, 131, 0.25)',
     icon: <Briefcase className="w-5 h-5" />
   },
   {
@@ -88,9 +87,9 @@ export const JOIN_WAYS: JoinWay[] = [
     ctaText: 'Become a Co-Creator',
     ctaAction: 'cocreate',
     image: 'https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=1200&q=80',
-    accentColor: '#C7833D',
-    accentBorder: '#B08A4A',
-    hoverGlow: 'rgba(199, 131, 61, 0.25)',
+    accentColor: '#FE7613',
+    accentBorder: '#FEAD71',
+    hoverGlow: 'rgba(254, 118, 19, 0.25)',
     icon: <Hammer className="w-5 h-5" />
   }
 ];
@@ -133,20 +132,43 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
   return (
     <section 
       id="three-ways-to-join"
-      className="relative w-full py-20 sm:py-28 bg-[#F7F1E5] text-[#8F6E5B] overflow-hidden select-none"
+      className="relative w-full py-20 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
+      {/* Sacred Temple Mandapa Corridor Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/sacred_mandapa_bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-center scale-[1.01] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(254,251,242,0.7) 0%, rgba(254,251,242,0.15) 20%, rgba(254,251,242,0.15) 80%, rgba(254,251,242,0.78) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 mix-blend-color"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220,155,65,0.14) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+
       {/* Subtle Sacred Geometry Texture Background */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, #8F6E5B 1.2px, transparent 1.2px)`,
+          backgroundImage: `radial-gradient(circle at 50% 50%, #C59239 1.2px, transparent 1.2px)`,
           backgroundSize: '28px 28px'
         }}
       />
 
       {/* Background Sacred Pattern in Empty Left Margin */}
-      <div className="absolute top-1/2 -translate-y-1/2 -left-6 lg:left-2 xl:left-8 pointer-events-none opacity-55 hidden md:block">
-        <DividerOrnamental size={460} color="#705B4C" />
+      <div className="absolute top-1/2 -translate-y-1/2 -left-6 lg:left-2 xl:left-8 pointer-events-none opacity-45 hidden md:block">
+        <DividerOrnamental size={460} color="#C59239" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -155,21 +177,15 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
         {/* SECTION HEADER: BOLD EDITORIAL POSTER STYLE              */}
         {/* ======================================================== */}
         <div className="mb-14 sm:mb-18 text-center max-w-4xl mx-auto">
-          {/* Eyebrow Inscription */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#8F6E5B]/10 border border-[#8F6E5B]/20 text-[#8F6E5B] text-xs font-dm font-bold tracking-widest uppercase mb-5 shadow-xs">
-            <Compass className="w-3.5 h-3.5 text-[#8F6E5B]" />
-            <span>॥ सङ्घ शक्तिः कलौ युगे ॥ &bull; THE SANATANA SANCTUM</span>
-          </div>
-
           {/* Main Giant Poster Typography */}
-          <h2 className="font-cormorant text-4xl sm:text-6xl md:text-7xl font-semibold text-[#8F6E5B] tracking-tight leading-[0.92] uppercase">
+          <h2 className="font-cormorant text-4xl sm:text-6xl md:text-7xl font-semibold text-[#221508] tracking-tight leading-[0.92] uppercase">
             THREE WAYS TO JOIN
           </h2>
-          <div className="mt-1 font-cormorant text-3xl sm:text-5xl md:text-6xl font-semibold text-[#8F6E5B] tracking-tight leading-[0.95] uppercase">
+          <div className="mt-1 font-cormorant text-3xl sm:text-5xl md:text-6xl font-semibold text-[#221508] tracking-tight leading-[0.95] uppercase">
             HOUSE OF SANATAN
           </div>
 
-          <p className="mt-5 font-dm text-sm sm:text-base text-[#8F6E5B]/80 font-normal leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-5 font-dm text-sm sm:text-base text-[#221508] font-medium leading-relaxed max-w-2xl mx-auto">
             Choose how you walk this sacred path—as a devoted family, a dharmic leader, or an artisanal co-creator restoring timeless Vedic heritage.
           </p>
         </div>
@@ -208,13 +224,13 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                 {!isActive && (
                   <div className="w-full h-full flex flex-col items-center justify-between py-5 px-1 text-white">
                     {/* Top Serial Number Pill */}
-                    <div className="w-7 h-7 rounded-full bg-black/25 backdrop-blur-xs border border-white/20 flex items-center justify-center font-dm font-bold text-[11px] text-[#F7F1E5]">
+                    <div className="w-7 h-7 rounded-full bg-black/25 backdrop-blur-xs border border-white/20 flex items-center justify-center font-dm font-bold text-[11px] text-[#FEFBF2]">
                       {way.serialNumber}
                     </div>
 
                     {/* Middle Vertical Text Label */}
                     <div className="flex-1 flex items-center justify-center my-3 overflow-hidden">
-                      <span className="font-cormorant font-bold text-xs sm:text-sm tracking-wider uppercase whitespace-nowrap -rotate-90 text-[#F7F1E5] drop-shadow-xs">
+                      <span className="font-cormorant font-bold text-xs sm:text-sm tracking-wider uppercase whitespace-nowrap -rotate-90 text-[#FEFBF2] drop-shadow-xs">
                         {way.title.split('/')[0].trim()}
                       </span>
                     </div>
@@ -240,11 +256,11 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
 
                     {/* Top Header Badge & Sanskrit */}
                     <div className="flex items-center justify-between gap-1.5 z-10">
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/25 backdrop-blur-xs border border-white/20 text-[9.5px] font-dm font-bold text-[#F7F1E5] uppercase tracking-wider">
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/25 backdrop-blur-xs border border-white/20 text-[9.5px] font-dm font-bold text-[#FEFBF2] uppercase tracking-wider">
                         <span>[{way.serialNumber}]</span>
                         <span className="line-clamp-1">{way.badge}</span>
                       </div>
-                      <span className="font-sanskrit text-[10.5px] font-bold text-[#D9C6A8] shrink-0">
+                      <span className="font-sanskrit text-[10.5px] font-bold text-[#E4B968] shrink-0">
                         {way.sanskrit}
                       </span>
                     </div>
@@ -252,22 +268,22 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                     {/* Middle Core Content: Title, Subtitle & Context Description */}
                     <div className="my-auto space-y-1.5 z-10">
                       <div>
-                        <h3 className="font-cormorant text-xl xs:text-2xl font-semibold leading-tight text-[#F7F1E5] uppercase">
+                        <h3 className="font-cormorant text-xl xs:text-2xl font-semibold leading-tight text-[#FEFBF2] uppercase">
                           {way.title}
                         </h3>
-                        <p className="font-cormorant text-xs text-[#D9C6A8] font-medium leading-tight">
+                        <p className="font-cormorant text-xs text-[#E4B968] font-medium leading-tight">
                           {way.subtitle}
                         </p>
                       </div>
 
                       {/* Informative Context Description */}
-                      <p className="font-dm text-[11px] text-white/90 leading-relaxed font-normal line-clamp-3">
+                      <p className="font-dm text-[11px] text-white/95 leading-relaxed font-medium line-clamp-3">
                         {way.description}
                       </p>
 
                       {/* Primary highlight bullet */}
-                      <div className="pt-0.5 flex items-start gap-1.5 text-[10px] font-dm text-[#F7F1E5]/95 leading-tight">
-                        <CheckCircle2 className="w-3 h-3 text-[#D9C6A8] shrink-0 mt-0.5" />
+                      <div className="pt-0.5 flex items-start gap-1.5 text-[10px] font-dm text-[#FEFBF2]/95 leading-tight">
+                        <CheckCircle2 className="w-3 h-3 text-[#E4B968] shrink-0 mt-0.5" />
                         <span className="line-clamp-1">{way.highlights[0]}</span>
                       </div>
                     </div>
@@ -279,7 +295,7 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                         e.stopPropagation();
                         handleAction(way.ctaAction);
                       }}
-                      className="w-full py-2.5 px-3.5 rounded-xl bg-[#F7F1E5] text-[#8F6E5B] font-dm font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform z-10 shrink-0 cursor-pointer"
+                      className="w-full py-2.5 px-3.5 rounded-xl bg-[#FEFBF2] text-[#221508] font-dm font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform z-10 shrink-0 cursor-pointer"
                     >
                       <span>{way.ctaText}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -344,7 +360,7 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
 
                       <span 
                         className={`font-dm font-bold text-xs sm:text-sm tracking-wider uppercase transition-colors duration-300 ${
-                          isActive ? 'text-[#8F6E5B]' : 'text-stone-500'
+                          isActive ? 'text-[#221508]' : 'text-stone-500'
                         }`}
                       >
                         [{way.serialNumber}] {way.badge}
@@ -354,7 +370,7 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                     <span 
                       className={`font-sanskrit text-xs sm:text-sm font-bold transition-all duration-300 px-2.5 py-0.5 rounded-full ${
                         isActive 
-                          ? 'bg-stone-100 text-[#C7833D]' 
+                          ? 'bg-amber-50 text-[#C59239]' 
                           : 'text-stone-400'
                       }`}
                     >
@@ -377,7 +393,7 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                   {/* Subtitle */}
                   <p 
                     className={`font-cormorant text-sm sm:text-base font-medium mt-1 transition-colors duration-300 ${
-                      isActive ? 'text-[#66705A]' : 'text-stone-400'
+                      isActive ? 'text-[#3D2619]' : 'text-stone-400'
                     }`}
                   >
                     {way.subtitle}
@@ -393,7 +409,7 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                         transition={{ duration: 0.35, ease: 'easeOut' }}
                         className="overflow-hidden"
                       >
-                        <p className="mt-3 font-dm text-xs sm:text-[13px] text-[#8F6E5B]/85 leading-relaxed font-normal">
+                        <p className="mt-3 font-dm text-xs sm:text-[13px] text-[#221508] leading-relaxed font-medium">
                           {way.description}
                         </p>
 
@@ -452,14 +468,14 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
 
                 {/* Top Corner Pill Badge */}
                 <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-[10px] sm:text-xs font-dm font-semibold uppercase tracking-wider flex items-center gap-1.5 shadow-md text-white">
-                  <Sparkles className="w-3.5 h-3.5 text-[#D9C6A8]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#E4B968]" />
                   <span>WAY {activeWay.serialNumber} &bull; {activeWay.badge}</span>
                 </div>
 
                 {/* Bottom Overlay Title */}
                 <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between text-white">
                   <div>
-                    <div className="font-sanskrit text-xs text-[#D9C6A8] font-bold">
+                    <div className="font-sanskrit text-xs text-[#E4B968] font-bold">
                       {activeWay.sanskrit}
                     </div>
                     <div className="font-cormorant text-xl sm:text-2xl font-semibold leading-tight drop-shadow-md">
@@ -478,7 +494,7 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                       key={i} 
                       className="flex items-start gap-2.5 text-[11px] sm:text-xs font-dm p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-white/15"
                     >
-                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#D9C6A8]" />
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#E4B968]" />
                       <span className="font-medium text-white/95 leading-tight">{h}</span>
                     </div>
                   ))}
@@ -488,14 +504,14 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
                 <button
                   type="button"
                   onClick={() => handleAction(activeWay.ctaAction)}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-[#F7F1E5] hover:bg-white text-[#8F6E5B] font-dm font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer border border-white/40 group"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-[#FEFBF2] hover:bg-white text-[#221508] font-dm font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer border border-white/40 group"
                 >
                   {activeWay.ctaAction === 'cocreate' ? (
-                    <Hammer className="w-4 h-4 text-[#C7833D]" />
+                    <Hammer className="w-4 h-4 text-[#FE7613]" />
                   ) : activeWay.ctaAction === 'roles' ? (
-                    <Briefcase className="w-4 h-4 text-[#66705A]" />
+                    <Briefcase className="w-4 h-4 text-[#0A4C83]" />
                   ) : (
-                    <HeartHandshake className="w-4 h-4 text-[#B08A4A]" />
+                    <HeartHandshake className="w-4 h-4 text-[#C59239]" />
                   )}
                   <span>{activeWay.ctaText}</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

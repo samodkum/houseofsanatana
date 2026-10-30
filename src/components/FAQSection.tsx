@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  HelpCircle, 
   Plus, 
   Minus, 
   Sparkles, 
@@ -101,24 +100,47 @@ export const FAQSection: React.FC = () => {
   return (
     <section 
       id="faqs"
-      className="relative w-full py-14 sm:py-28 bg-[#F7F1E5] text-[#8F6E5B] overflow-hidden select-none"
+      className="relative w-full py-14 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
+      {/* Sacred Temple & River Ghats Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/sacred_temple_bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-[center_28%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(254,251,242,0.7) 0%, rgba(254,251,242,0.14) 20%, rgba(254,251,242,0.14) 80%, rgba(254,251,242,0.78) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 mix-blend-color"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220,155,65,0.14) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+
       {/* Subtle Sacred Geometry Dot Grid */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, #8F6E5B 1.2px, transparent 1.2px)`,
+          backgroundImage: `radial-gradient(circle at 50% 50%, #C59239 1.2px, transparent 1.2px)`,
           backgroundSize: '28px 28px'
         }}
       />
 
       {/* Ambient Glows */}
-      <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none bg-[#B08A4A]/12" />
-      <div className="absolute bottom-1/4 -left-24 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none bg-[#C7833D]/10" />
+      <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none bg-[#C59239]/12" />
+      <div className="absolute bottom-1/4 -left-24 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none bg-[#FE7613]/10" />
 
       {/* Background Sacred Pattern in Empty Margin (Matching Product Layout) */}
-      <div className="absolute top-1/2 -translate-y-1/2 -right-6 lg:right-2 xl:right-8 pointer-events-none opacity-55 hidden md:block">
-        <DividerOrnamental size={460} color="#705B4C" />
+      <div className="absolute top-1/2 -translate-y-1/2 -right-6 lg:right-2 xl:right-8 pointer-events-none opacity-45 hidden md:block">
+        <DividerOrnamental size={460} color="#C59239" />
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -127,21 +149,15 @@ export const FAQSection: React.FC = () => {
         {/* SECTION HEADER                                           */}
         {/* ======================================================== */}
         <div className="mb-8 sm:mb-16 text-center max-w-3xl mx-auto">
-          {/* Eyebrow Inscription */}
-          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#8F6E5B]/10 border border-[#8F6E5B]/20 text-[#8F6E5B] text-[11px] sm:text-xs font-dm font-bold tracking-widest uppercase mb-3 sm:mb-5 shadow-xs">
-            <HelpCircle className="w-3.5 h-3.5 text-[#8F6E5B]" />
-            <span>॥ प्रश्नोत्तर संवाद् ॥ &bull; SACRED INQUIRY &amp; ANSWERS</span>
-          </div>
-
           {/* Main Title */}
-          <h2 className="font-cormorant text-3xl sm:text-6xl md:text-7xl font-semibold text-[#8F6E5B] tracking-tight leading-[0.92] uppercase">
+          <h2 className="font-cormorant text-3xl sm:text-6xl md:text-7xl font-semibold text-[#221508] tracking-tight leading-[0.92] uppercase">
             FREQUENTLY ASKED
           </h2>
-          <div className="mt-0.5 sm:mt-1 font-cormorant text-2xl sm:text-5xl md:text-6xl font-semibold text-[#8F6E5B] tracking-tight leading-[0.95] uppercase">
+          <div className="mt-0.5 sm:mt-1 font-cormorant text-2xl sm:text-5xl md:text-6xl font-semibold text-[#221508] tracking-tight leading-[0.95] uppercase">
             SACRED QUESTIONS
           </div>
 
-          <p className="mt-3 sm:mt-5 font-dm text-xs sm:text-base text-[#8F6E5B]/80 font-normal leading-relaxed">
+          <p className="mt-3 sm:mt-5 font-dm text-xs sm:text-base text-[#221508] font-medium leading-relaxed">
             Direct dialogue between earnest seekers and our Vedic Acharyas regarding purity, luxury yatras, and dharmic co-creation.
           </p>
 
@@ -154,8 +170,8 @@ export const FAQSection: React.FC = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-dm font-bold transition-all duration-200 cursor-pointer ${
                   selectedCategory === cat
-                    ? 'bg-[#B08A4A] text-[#F7F1E5] shadow-md scale-105'
-                    : 'bg-white border border-[#D9C6A8] text-[#8F6E5B]/80 hover:border-[#B08A4A] hover:bg-stone-50'
+                    ? 'bg-[#C59239] text-[#FEFBF2] shadow-md scale-105'
+                    : 'bg-white border border-[#E4B968] text-[#3D2619] hover:border-[#C59239] hover:bg-stone-50'
                 }`}
               >
                 {cat}
@@ -178,8 +194,8 @@ export const FAQSection: React.FC = () => {
                 layout
                 className={`rounded-2xl sm:rounded-3xl transition-all duration-300 overflow-hidden border ${
                   isOpen
-                    ? 'bg-white shadow-[0_12px_32px_rgba(51,44,37,0.08)] border-[#B08A4A]'
-                    : 'bg-white/80 hover:bg-white border-[#D9C6A8]/60 hover:border-[#B08A4A]/60 shadow-xs'
+                    ? 'bg-white shadow-[0_12px_32px_rgba(51,44,37,0.08)] border-[#C59239]'
+                    : 'bg-white/80 hover:bg-white border-[#E4B968]/60 hover:border-[#C59239]/60 shadow-xs'
                 }`}
               >
                 {/* ---------------------------------------------------- */}
@@ -190,23 +206,23 @@ export const FAQSection: React.FC = () => {
                   className="p-3.5 sm:p-6 cursor-pointer flex items-start sm:items-center gap-2.5 sm:gap-4 transition-colors select-none"
                 >
                   {/* Left Avatar: "YOU" / Seeker Pill */}
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl shrink-0 bg-[#D9C6A8]/20 border border-[#D9C6A8] text-[#8F6E5B] flex flex-col items-center justify-center shadow-xs">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl shrink-0 bg-[#E4B968]/20 border border-[#E4B968] text-[#221508] flex flex-col items-center justify-center shadow-xs">
                     <span className="font-dm font-bold text-[9px] sm:text-[10px] uppercase leading-none">YOU</span>
-                    <span className="font-cormorant text-[9px] sm:text-[10px] font-semibold text-[#B08A4A] leading-none mt-0.5">{faq.questionNumber}</span>
+                    <span className="font-cormorant text-[9px] sm:text-[10px] font-semibold text-[#C59239] leading-none mt-0.5">{faq.questionNumber}</span>
                   </div>
 
                   {/* Question Bubble & Title */}
                   <div className="flex-1">
                     <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
-                      <span className="px-1.5 sm:px-2 py-0.5 rounded-md bg-[#66705A]/10 text-[#66705A] text-[9px] sm:text-[10px] font-dm font-bold uppercase tracking-wider">
+                      <span className="px-1.5 sm:px-2 py-0.5 rounded-md bg-[#607427]/15 text-[#607427] text-[9px] sm:text-[10px] font-dm font-bold uppercase tracking-wider">
                         {faq.category}
                       </span>
-                      <span className="text-[10px] sm:text-xs font-sanskrit text-[#B08A4A] font-bold">
+                      <span className="text-[10px] sm:text-xs font-sanskrit text-[#C59239] font-bold">
                         {faq.sanskrit}
                       </span>
                     </div>
 
-                    <h3 className="font-cormorant text-base sm:text-xl font-semibold text-[#8F6E5B] leading-snug">
+                    <h3 className="font-cormorant text-base sm:text-xl font-semibold text-[#221508] leading-snug">
                       {faq.question}
                     </h3>
                   </div>
@@ -215,8 +231,8 @@ export const FAQSection: React.FC = () => {
                   <div 
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 shadow-xs ${
                       isOpen 
-                        ? 'bg-[#B08A4A] text-[#F7F1E5] rotate-180' 
-                        : 'bg-[#D9C6A8]/20 text-[#8F6E5B] hover:bg-[#D9C6A8]/40 hover:text-[#B08A4A]'
+                        ? 'bg-[#C59239] text-[#FEFBF2] rotate-180' 
+                        : 'bg-[#E4B968]/20 text-[#221508] hover:bg-[#E4B968]/40 hover:text-[#C59239]'
                     }`}
                   >
                     {isOpen ? <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
@@ -243,30 +259,30 @@ export const FAQSection: React.FC = () => {
                       <div className="p-3.5 sm:p-6 flex flex-col sm:flex-row items-start gap-3 sm:gap-6 bg-white">
                         
                         {/* Acharya Response Chat Bubble */}
-                        <div className="flex-1 rounded-2xl p-4 sm:p-6 bg-gradient-to-br from-[#C7833D] via-[#B08A4A] to-[#8F6A30] text-white border-2 border-[#D9C6A8]/60 shadow-[0_12px_32px_rgba(199,131,61,0.25)] relative">
+                        <div className="flex-1 rounded-2xl p-4 sm:p-6 bg-gradient-to-br from-[#98555E] via-[#742A35] to-[#51000F] text-white border-2 border-[#E4B968]/60 shadow-[0_12px_32px_rgba(152,85,94,0.35)] relative">
                           {/* Chat bubble tail pointing to Acharya */}
-                          <div className="hidden sm:block absolute -right-2 top-7 w-4 h-4 bg-[#B08A4A] border-t-2 border-r-2 border-[#D9C6A8]/60 rotate-45 transform" />
+                          <div className="hidden sm:block absolute -right-2 top-7 w-4 h-4 bg-[#742A35] border-t-2 border-r-2 border-[#E4B968]/60 rotate-45 transform" />
 
                           {/* Top Tag Pills */}
                           <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-3.5">
-                            <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/20 backdrop-blur-xs border border-white/30 text-[10px] sm:text-xs font-dm font-bold text-white uppercase tracking-wider shadow-xs">
-                              <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#D9C6A8]" />
+                            <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/25 backdrop-blur-xs border border-white/30 text-[10px] sm:text-xs font-dm font-bold text-white uppercase tracking-wider shadow-xs">
+                              <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#E4B968]" />
                               <span>Vedic Response &bull; House of Sanatan</span>
                             </div>
-                            <span className="text-[10px] sm:text-xs font-sanskrit text-white font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/20 backdrop-blur-xs border border-white/30 shadow-2xs">
+                            <span className="text-[10px] sm:text-xs font-sanskrit text-[#E4B968] font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/25 backdrop-blur-xs border border-white/30 shadow-2xs">
                               {faq.sanskrit}
                             </span>
                           </div>
 
                           {/* Answer Body Text */}
-                          <p className="font-dm text-xs sm:text-base text-white/95 leading-relaxed font-normal">
+                          <p className="font-dm text-xs sm:text-base text-white/95 leading-relaxed font-medium">
                             {faq.answer}
                           </p>
 
                           {/* Bottom Verification Footer */}
                           <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-white/20 flex items-center justify-between text-[11px] sm:text-xs font-dm">
                             <span className="flex items-center gap-1.5 font-medium text-white">
-                              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9C6A8]" />
+                              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#E4B968]" />
                               <span>Peetham Verified &bull; Consecrated Guidance</span>
                             </span>
                           </div>
@@ -274,7 +290,7 @@ export const FAQSection: React.FC = () => {
 
                         {/* Right Acharya Avatar Image & Title Badge */}
                         <div className="flex sm:flex-col items-center sm:items-center gap-2.5 sm:gap-3 shrink-0 self-start sm:self-center sm:w-36 text-left sm:text-center pt-0.5 sm:pt-0">
-                          <div className="relative w-11 h-11 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden border border-[#B08A4A]/60 shadow-xs group bg-stone-100">
+                          <div className="relative w-11 h-11 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden border border-[#C59239]/60 shadow-xs group bg-stone-100">
                             <img 
                               src={faq.acharyaAvatar} 
                               alt={faq.acharyaName}
@@ -283,10 +299,10 @@ export const FAQSection: React.FC = () => {
                           </div>
 
                           <div>
-                            <h4 className="font-cormorant font-semibold text-sm sm:text-lg text-[#8F6E5B] leading-tight">
+                            <h4 className="font-cormorant font-semibold text-sm sm:text-lg text-[#221508] leading-tight">
                               {faq.acharyaName}
                             </h4>
-                            <p className="font-dm text-[9px] sm:text-[10px] text-[#66705A] font-medium leading-tight mt-0.5">
+                            <p className="font-dm text-[9px] sm:text-[10px] text-[#607427] font-medium leading-tight mt-0.5">
                               {faq.acharyaRole}
                             </p>
                           </div>
@@ -304,24 +320,24 @@ export const FAQSection: React.FC = () => {
         {/* ======================================================== */}
         {/* BOTTOM HELP BANNER: ASK AN ACHARYA (FULLY COLOURED)      */}
         {/* ======================================================== */}
-        <div className="mt-8 sm:mt-14 p-5 sm:p-9 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#8F6E5B] via-[#7D5E4C] to-[#694D3D] border-2 border-[#B08A4A] shadow-[0_25px_60px_rgba(51,44,37,0.35)] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 text-center sm:text-left text-white relative overflow-hidden">
+        <div className="mt-8 sm:mt-14 p-5 sm:p-9 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0A4C83] via-[#083E6B] to-[#073863] border-2 border-[#C59239] shadow-[0_25px_60px_rgba(10,76,131,0.35)] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 text-center sm:text-left text-white relative overflow-hidden">
           
           {/* Subtle Golden Ambient Glow Inside Card */}
-          <div className="absolute -right-10 -top-10 w-64 h-64 bg-[#B08A4A]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -right-10 -top-10 w-64 h-64 bg-[#C59239]/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3.5 sm:gap-5 relative z-10">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#C7833D] to-[#B08A4A] text-[#F7F1E5] flex items-center justify-center shrink-0 shadow-lg">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#FE7613] to-[#C59239] text-[#FEFBF2] flex items-center justify-center shrink-0 shadow-lg">
               <MessageSquareQuote className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
             <div>
-              <div className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10px] font-dm font-bold uppercase tracking-widest text-[#D9C6A8] mb-0.5 sm:mb-1">
+              <div className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10px] font-dm font-bold uppercase tracking-widest text-[#E4B968] mb-0.5 sm:mb-1">
                 <Sparkles className="w-3 h-3" />
                 <span>DIRECT ACHARYA DESK</span>
               </div>
-              <h4 className="font-cormorant text-xl sm:text-3xl font-semibold text-[#F7F1E5] leading-tight">
+              <h4 className="font-cormorant text-xl sm:text-3xl font-semibold text-[#FEFBF2] leading-tight">
                 Have a specific question about your family puja or Yatra?
               </h4>
-              <p className="font-dm text-xs sm:text-sm text-[#D9C6A8]/90 mt-1 max-w-xl">
+              <p className="font-dm text-xs sm:text-sm text-[#FEFBF2]/90 mt-1 max-w-xl">
                 Speak directly with our Peetham Vedic Acharyas on WhatsApp for personalized spiritual &amp; astrological guidance.
               </p>
             </div>
@@ -331,7 +347,7 @@ export const FAQSection: React.FC = () => {
             href="https://wa.me/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#C7833D] to-[#B08A4A] hover:brightness-110 text-[#F7F1E5] font-dm font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_8px_25px_rgba(176,138,74,0.35)] hover:scale-105 transition-all duration-200 shrink-0 cursor-pointer relative z-10 border border-[#D9C6A8]/40"
+            className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#FE7613] to-[#C59239] hover:brightness-110 text-[#FEFBF2] font-dm font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_8px_25px_rgba(197,146,57,0.35)] hover:scale-105 transition-all duration-200 shrink-0 cursor-pointer relative z-10 border border-[#E4B968]/40"
           >
             <span>Ask an Acharya</span>
             <ArrowRight className="w-4 h-4" />
