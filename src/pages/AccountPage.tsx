@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { 
-  User, 
-  Package, 
-  Calendar, 
-  LogOut, 
-  ArrowLeft, 
-  ShoppingBag, 
-  ShieldCheck, 
+import {
+  User,
+  Package,
+  Calendar,
+  LogOut,
+  ArrowLeft,
+  ShoppingBag,
+  ShieldCheck,
   Sparkles,
   MapPin,
   Compass,
@@ -21,6 +21,7 @@ import {
   Heart
 } from 'lucide-react';
 import { SunIcon } from '../components/SunIcon';
+import { HOS_LOGO_URL } from '../lib/constants';
 
 interface OrderLineItem {
   title: string;
@@ -80,21 +81,21 @@ function isTravelTitle(title?: string): boolean {
   if (!title) return false;
   const lower = title.toLowerCase();
   const travelKeywords = [
-    'yatra', 
-    'expedition', 
-    'kailash', 
-    'chardham', 
-    'char dham', 
-    'shaktipeeth', 
-    'shakti peeth', 
-    'jyotirlinga', 
-    'braj', 
-    'varanasi', 
-    'kashi', 
-    'pilgrimage', 
-    'circuit', 
-    'tour', 
-    'sanctum pass', 
+    'yatra',
+    'expedition',
+    'kailash',
+    'chardham',
+    'char dham',
+    'shaktipeeth',
+    'shakti peeth',
+    'jyotirlinga',
+    'braj',
+    'varanasi',
+    'kashi',
+    'pilgrimage',
+    'circuit',
+    'tour',
+    'sanctum pass',
     'darshan pass',
     'mansarovar',
     'kedarnath',
@@ -113,7 +114,7 @@ function getOrderCategory(order: Order): 'travel' | 'product' {
   return hasTravel ? 'travel' : 'product';
 }
 
-export const AccountPage: React.FC<AccountPageProps> = ({ 
+export const AccountPage: React.FC<AccountPageProps> = ({
   onNavigateHome,
   onNavigateMall,
   onNavigateTravel,
@@ -148,7 +149,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
       try {
         setIsLoading(true);
         setError(null);
-        
+
         // Fetch customer data from Express backend proxy
         const res = await fetch('/api/customer', {
           credentials: 'include',
@@ -292,17 +293,17 @@ export const AccountPage: React.FC<AccountPageProps> = ({
     return 'Sadhaka';
   }, [customer]);
 
-  const filteredOrders = 
+  const filteredOrders =
     orderCategoryFilter === 'products' ? productOrders :
-    orderCategoryFilter === 'travel' ? travelOrders :
-    allOrders;
+      orderCategoryFilter === 'travel' ? travelOrders :
+        allOrders;
 
   return (
     <div className="min-h-screen bg-[#FEFBF2] text-[#221508] font-dm selection:bg-[#C59239]/20 selection:text-[#221508] pb-24">
       {/* Top Header Bar */}
       <header className="sticky top-0 z-30 bg-[#FEFBF2]/95 backdrop-blur-md border-b border-[#C59239]/30 px-4 sm:px-8 py-3.5 sm:py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
-          
+
           {/* Left: Clearance for floating Hamburger Menu (pl-14 sm:pl-16) + Smart Back Button */}
           <div className="flex items-center gap-2 pl-14 sm:pl-16">
             <button
@@ -324,17 +325,17 @@ export const AccountPage: React.FC<AccountPageProps> = ({
           </div>
 
           {/* Center Brand Identity */}
-          <div 
+          <div
             onClick={onNavigateHome}
             className="flex items-center gap-2.5 cursor-pointer select-none group"
             title="House of Sanatana Home"
           >
-            <img 
-              src="https://res.cloudinary.com/dzc1dckta/image/upload/v1790697704/HOS_logo_bpd1v5.jpg" 
+            <img
+              src={HOS_LOGO_URL}
               alt="House of Sanatana"
-              className="w-7 h-7 rounded-full object-cover border border-[#C59239]/40 shadow-xs group-hover:scale-105 transition-transform" 
+              className="w-8 h-8 rounded-full object-contain group-hover:scale-105 transition-transform"
             />
-            <span className="font-cormorant font-bold text-lg sm:text-xl text-[#221508] tracking-wide">
+            <span className="font-dm font-bold text-base sm:text-lg text-[#221508] tracking-tight">
               ॥ साधना खाता ॥
             </span>
           </div>
@@ -395,14 +396,14 @@ export const AccountPage: React.FC<AccountPageProps> = ({
       <main className="max-w-6xl mx-auto px-4 sm:px-8 pt-8 sm:pt-10">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-4">
-            <div className="w-12 h-12 rounded-full border-3 border-[#C59239]/20 border-t-[#C59239] animate-spin flex items-center justify-center overflow-hidden">
-              <img 
-                src="https://res.cloudinary.com/dzc1dckta/image/upload/v1790697704/HOS_logo_bpd1v5.jpg" 
-                alt="Loading" 
-                className="w-7 h-7 rounded-full object-cover" 
+            <div className="w-14 h-14 rounded-full border-3 border-[#C59239]/20 border-t-[#C59239] animate-spin flex items-center justify-center overflow-hidden">
+              <img
+                src={HOS_LOGO_URL}
+                alt="Loading"
+                className="w-8 h-8 rounded-full object-contain"
               />
             </div>
-            <p className="font-cormorant text-xl text-[#3D2619] italic">
+            <p className="font-dm text-sm sm:text-base text-[#3D2619]/80 font-medium">
               Loading your sacred profile & orders...
             </p>
           </div>
@@ -411,7 +412,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-700">
               <ShieldCheck className="w-6 h-6" />
             </div>
-            <h2 className="font-cormorant font-bold text-2xl text-[#98555E] mb-2">
+            <h2 className="font-dm font-bold text-xl text-[#98555E] mb-2">
               Unable to Retrieve Profile
             </h2>
             <p className="text-sm text-[#3D2619] mb-6 leading-relaxed">
@@ -435,14 +436,13 @@ export const AccountPage: React.FC<AccountPageProps> = ({
           </div>
         ) : (
           <div className="space-y-8">
-            
+
             {/* Feedback notification toast */}
             {nameSaveFeedback && (
-              <div className={`p-4 rounded-2xl border flex items-center gap-3 transition-all ${
-                nameSaveFeedback.type === 'success' 
-                  ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
-                  : 'bg-rose-50 border-rose-200 text-rose-800'
-              }`}>
+              <div className={`p-4 rounded-2xl border flex items-center gap-3 transition-all ${nameSaveFeedback.type === 'success'
+                ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                : 'bg-rose-50 border-rose-200 text-rose-800'
+                }`}>
                 {nameSaveFeedback.type === 'success' ? (
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                 ) : (
@@ -458,25 +458,25 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
               <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="flex items-center gap-5">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#C59239] to-[#E4B968] p-0.5 shadow-xl shrink-0 overflow-hidden">
-                    <img 
-                      src="https://res.cloudinary.com/dzc1dckta/image/upload/v1790697704/HOS_logo_bpd1v5.jpg" 
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#C59239] to-[#E4B968] p-0.5 shadow-xl shrink-0 overflow-hidden flex items-center justify-center bg-[#1A1612]/60">
+                    <img
+                      src={HOS_LOGO_URL}
                       alt="House of Sanatana Brand Logo"
-                      className="w-full h-full rounded-[14px] object-cover" 
+                      className="w-full h-full rounded-[14px] object-contain p-1"
                     />
                   </div>
 
                   <div>
                     <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#C59239]/25 border border-[#E4B968]/50 text-[#E4B968] text-[10px] font-bold uppercase tracking-widest mb-1.5">
-                      <img 
-                        src="https://res.cloudinary.com/dzc1dckta/image/upload/v1790697704/HOS_logo_bpd1v5.jpg" 
-                        alt="Logo" 
-                        className="w-3.5 h-3.5 rounded-full object-cover" 
+                      <img
+                        src={HOS_LOGO_URL}
+                        alt="Logo"
+                        className="w-3.5 h-3.5 rounded-full object-contain"
                       />
                       <span>॥ कुल भूषण ॥ Consecrated Sadhaka</span>
                     </div>
 
-                    <h1 className="font-cormorant font-bold text-3xl sm:text-4xl text-white">
+                    <h1 className="font-dm font-bold text-2xl sm:text-3xl text-white tracking-tight">
                       नमस्ते, {customerFriendlyName}
                     </h1>
 
@@ -520,11 +520,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveMainTab('orders')}
-                className={`relative pb-3 px-4 font-cormorant font-bold text-xl sm:text-2xl transition-all cursor-pointer flex items-center gap-2 ${
-                  activeMainTab === 'orders'
-                    ? 'text-[#221508]'
-                    : 'text-[#3D2619]/70 hover:text-[#221508]'
-                }`}
+                className={`relative pb-3 px-4 font-dm font-semibold text-base sm:text-lg transition-all cursor-pointer flex items-center gap-2 ${activeMainTab === 'orders'
+                  ? 'text-[#221508]'
+                  : 'text-[#3D2619]/70 hover:text-[#221508]'
+                  }`}
               >
                 <Package className="w-5 h-5 text-[#FE7613]" />
                 <span>My Orders & Bookings ({allOrders.length})</span>
@@ -536,11 +535,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveMainTab('profile')}
-                className={`relative pb-3 px-4 font-cormorant font-bold text-xl sm:text-2xl transition-all cursor-pointer flex items-center gap-2 ${
-                  activeMainTab === 'profile'
-                    ? 'text-[#221508]'
-                    : 'text-[#3D2619]/70 hover:text-[#221508]'
-                }`}
+                className={`relative pb-3 px-4 font-dm font-semibold text-base sm:text-lg transition-all cursor-pointer flex items-center gap-2 ${activeMainTab === 'profile'
+                  ? 'text-[#221508]'
+                  : 'text-[#3D2619]/70 hover:text-[#221508]'
+                  }`}
               >
                 <User className="w-5 h-5 text-[#0A4C83]" />
                 <span>Personal Profile & Details</span>
@@ -559,11 +557,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     <button
                       type="button"
                       onClick={() => setOrderCategoryFilter('all')}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                        orderCategoryFilter === 'all'
-                          ? 'bg-[#0A4C83] text-white shadow-xs'
-                          : 'text-[#3D2619]/80 hover:text-[#221508]'
-                      }`}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${orderCategoryFilter === 'all'
+                        ? 'bg-[#0A4C83] text-white shadow-xs'
+                        : 'text-[#3D2619]/80 hover:text-[#221508]'
+                        }`}
                     >
                       All Sacred Acquisitions ({allOrders.length})
                     </button>
@@ -571,11 +568,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     <button
                       type="button"
                       onClick={() => setOrderCategoryFilter('products')}
-                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                        orderCategoryFilter === 'products'
-                          ? 'bg-[#FE7613] text-white shadow-xs'
-                          : 'text-[#3D2619]/80 hover:text-[#221508]'
-                      }`}
+                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${orderCategoryFilter === 'products'
+                        ? 'bg-[#FE7613] text-white shadow-xs'
+                        : 'text-[#3D2619]/80 hover:text-[#221508]'
+                        }`}
                     >
                       <ShoppingBag className="w-3.5 h-3.5" />
                       <span>Temple Products ({productOrders.length})</span>
@@ -584,11 +580,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     <button
                       type="button"
                       onClick={() => setOrderCategoryFilter('travel')}
-                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                        orderCategoryFilter === 'travel'
-                          ? 'bg-[#607427] text-white shadow-xs'
-                          : 'text-[#3D2619]/80 hover:text-[#221508]'
-                      }`}
+                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${orderCategoryFilter === 'travel'
+                        ? 'bg-[#607427] text-white shadow-xs'
+                        : 'text-[#3D2619]/80 hover:text-[#221508]'
+                        }`}
                     >
                       <Compass className="w-3.5 h-3.5" />
                       <span>Sacred Yatras ({travelOrders.length})</span>
@@ -634,11 +629,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                           {/* Order Header */}
                           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#C59239]/20 pb-4 mb-4">
                             <div className="flex items-center gap-3">
-                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${
-                                isTravel 
-                                  ? 'bg-[#607427]/15 border-[#607427]/30 text-[#607427]' 
-                                  : 'bg-[#FE7613]/15 border-[#FE7613]/30 text-[#FE7613]'
-                              }`}>
+                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${isTravel
+                                ? 'bg-[#607427]/15 border-[#607427]/30 text-[#607427]'
+                                : 'bg-[#FE7613]/15 border-[#FE7613]/30 text-[#FE7613]'
+                                }`}>
                                 {isTravel ? <Compass className="w-5 h-5" /> : <Package className="w-5 h-5" />}
                               </div>
                               <div>
@@ -646,14 +640,11 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                                   <span className="font-dm font-bold text-base text-[#221508]">
                                     Order {order.name}
                                   </span>
-                                  {/* Category tag */}
-                                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                                    isTravel 
-                                      ? 'bg-[#607427]/15 text-[#607427] border border-[#607427]/30' 
-                                      : 'bg-[#FE7613]/15 text-[#FE7613] border border-[#FE7613]/30'
-                                  }`}>
-                                    {isTravel ? 'Sacred Yatra Booking' : 'Temple Product Offering'}
-                                  </span>
+                                  {isTravel && (
+                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider bg-[#607427]/15 text-[#607427] border border-[#607427]/30">
+                                      Sacred Yatra Booking
+                                    </span>
+                                  )}
                                 </div>
                                 <span className="text-xs text-[#3D2619]/70 flex items-center gap-1.5 mt-0.5">
                                   <Calendar className="w-3.5 h-3.5" />
@@ -665,24 +656,33 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                             {/* Status Badges */}
                             <div className="flex items-center gap-2">
                               <span
-                                className={`text-[11px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${
-                                  order.financialStatus === 'PAID'
-                                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                                    : 'bg-amber-50 text-amber-800 border-amber-200'
-                                }`}
+                                className={`text-[11px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${order.financialStatus === 'PAID'
+                                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                  : 'bg-amber-50 text-amber-800 border-amber-200'
+                                  }`}
                               >
                                 {order.financialStatus}
                               </span>
 
-                              <span
-                                className={`text-[11px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${
-                                  order.fulfillmentStatus === 'FULFILLED'
-                                    ? 'bg-[#607427]/15 text-[#607427] border-[#607427]/30'
-                                    : 'bg-stone-100 text-stone-700 border-stone-200'
-                                }`}
-                              >
-                                {order.fulfillmentStatus}
-                              </span>
+                              {/* Only show fulfillment/delivery status for physical products, never for experiential travel packages */}
+                              {isTravel ? (
+                                order.financialStatus === 'PAID' && (
+                                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider bg-[#0A4C83]/15 text-[#0A4C83] border-[#0A4C83]/30">
+                                    Confirmed Booking
+                                  </span>
+                                )
+                              ) : (
+                                order.fulfillmentStatus && (
+                                  <span
+                                    className={`text-[11px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${order.fulfillmentStatus === 'FULFILLED'
+                                      ? 'bg-[#607427]/15 text-[#607427] border-[#607427]/30'
+                                      : 'bg-stone-100 text-stone-700 border-stone-200'
+                                      }`}
+                                  >
+                                    {order.fulfillmentStatus}
+                                  </span>
+                                )
+                              )}
                             </div>
                           </div>
 
@@ -730,12 +730,12 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                       )}
                     </div>
 
-                    <h3 className="font-cormorant font-bold text-2xl text-[#221508] mb-2">
+                    <h3 className="font-dm font-bold text-lg sm:text-xl text-[#221508] mb-2">
                       {orderCategoryFilter === 'travel'
                         ? 'No Sacred Yatra Expeditions Booked'
                         : orderCategoryFilter === 'products'
-                        ? 'No Consecrated Temple Offerings Yet'
-                        : 'No Sacred Orders or Bookings Yet'}
+                          ? 'No Consecrated Temple Offerings Yet'
+                          : 'No Sacred Orders or Bookings Yet'}
                     </h3>
 
                     <p className="text-xs sm:text-sm text-[#3D2619]/80 max-w-md mx-auto mb-6 leading-relaxed">
@@ -751,12 +751,12 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             {/* TAB 2: PERSONAL PROFILE & SAVED ADDRESSES */}
             {activeMainTab === 'profile' && (
               <section className="space-y-6">
-                
+
                 {/* 1. Identity & Name Editing Card */}
                 <div className="bg-white rounded-3xl border border-[#C59239]/30 p-6 sm:p-8 shadow-xs">
                   <div className="flex items-center justify-between border-b border-[#C59239]/20 pb-4 mb-6">
                     <div>
-                      <h2 className="font-cormorant font-bold text-2xl text-[#221508]">
+                      <h2 className="font-dm font-bold text-lg sm:text-xl text-[#221508]">
                         Sadhaka Personal Identity
                       </h2>
                       <p className="text-xs text-[#3D2619]/80 mt-0.5">
@@ -894,7 +894,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 <div className="bg-white rounded-3xl border border-[#C59239]/30 p-6 sm:p-8 shadow-xs">
                   <div className="flex items-center justify-between border-b border-[#C59239]/20 pb-4 mb-6">
                     <div>
-                      <h2 className="font-cormorant font-bold text-2xl text-[#221508] flex items-center gap-2">
+                      <h2 className="font-dm font-bold text-lg sm:text-xl text-[#221508] flex items-center gap-2">
                         <Home className="w-5 h-5 text-[#C59239]" />
                         Saved Consecration & Delivery Address
                       </h2>
@@ -951,7 +951,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     /* Dignified Empty Address State */
                     <div className="p-6 rounded-2xl bg-[#FEFBF2] border border-dashed border-[#C59239]/40 text-center">
                       <MapPin className="w-8 h-8 text-[#C59239]/60 mx-auto mb-2" />
-                      <h4 className="font-cormorant font-bold text-lg text-[#221508] mb-1">
+                      <h4 className="font-dm font-bold text-base text-[#221508] mb-1">
                         No Saved Delivery Address on File
                       </h4>
                       <p className="text-xs text-[#3D2619]/80 max-w-md mx-auto mb-4 leading-relaxed">

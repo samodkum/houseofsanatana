@@ -7,7 +7,7 @@ import {
   Palette,
   Check
 } from 'lucide-react';
-import { TempleArchitectureLine, LotusLineArt } from './ui/SacredPatterns';
+import { TempleArchitectureLine } from './ui/SacredPatterns';
 
 // =====================================================================
 // OFFICIAL BRAND COLOR PALETTE (9 EXACT COLORS & TINT LADDERS)
@@ -143,25 +143,27 @@ export interface PillarCard {
     panelBg: string;
   };
   initialRotate: number;
+  actionLink?: string;
+  actionLabel?: string;
 }
 
 const PILLARS: PillarCard[] = [
   {
-    id: 'planning',
+    id: 'understand',
     number: '01',
-    sanskrit: '॥ सङ्कल्प योजना ॥',
-    title: 'Thoughtful Planning',
-    tagline: 'Astrological Muhurat Alignment & Flawless Pilgrimage Architecture',
-    description: 'Every ritual and yatra is engineered with zero guesswork. We calculate authentic Vedic muhurats, coordinate guaranteed temple tokens, and build acclimatized, stress-free itineraries so your devotion remains undisturbed.',
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+    sanskrit: '॥ ज्ञान बोध ॥',
+    title: 'Understand the Why',
+    tagline: 'From inherited customs to conscious understanding',
+    description: 'Why a diya? Why a mantra? Why a festival? Through cultural storytelling, learning experiences, practical guidance and digital tools in development, we seek to bring the meaning behind customs into focus. The aim is not simply to repeat a tradition, but to understand why it matters.',
+    image: 'https://images.unsplash.com/photo-1609342122563-a43ac8917a3a?auto=format&fit=crop&w=800&q=80',
     highlights: [
-      'Jyotish & Tithi-aligned ritual scheduling',
-      'VIP Garbhagriha coordination & zero-wait access',
-      'Altitude-acclimatized yatra pacing with medic on call'
+      'Knowledge',
+      'Guidance',
+      'Learning'
     ],
     metrics: [
-      { label: 'Muhurat Accuracy', value: '100%' },
-      { label: 'Pilgrim Care', value: '24/7' }
+      { label: 'Tradition to Truth', value: 'Conscious' },
+      { label: 'Medium', value: 'Story & Lore' }
     ],
     brandColor: BRAND_COLORS[2], // Ruby Red (#98555E)
     cardStyle: {
@@ -175,86 +177,26 @@ const PILLARS: PillarCard[] = [
       glow: 'shadow-[0_20px_45px_rgba(152,85,94,0.45),0_0_25px_rgba(197,146,57,0.3)]',
       panelBg: 'bg-gradient-to-br from-[#98555E] via-[#742A35] to-[#51000F]',
     },
-    initialRotate: -7
+    initialRotate: -7,
+    actionLink: '#explore',
+    actionLabel: 'Learn More'
   },
   {
-    id: 'information',
+    id: 'live',
     number: '02',
-    sanskrit: '॥ विशुद्ध ज्ञान ॥',
-    title: 'Clear Information',
-    tagline: 'Transparent Lineage, Authentic Vedic Scripts & Zero Ambiguity',
-    description: 'We believe sacred knowledge must be open and crystal clear. From 100% lab-verified ingredient disclosures to bilingual mantra manuals with pronunciation guides, you always know the exact meaning, source, and ritual purpose.',
-    image: 'https://images.unsplash.com/photo-1609342122563-a43ac8917a3a?auto=format&fit=crop&w=800&q=80',
-    highlights: [
-      '100% natural samagri sourcing certificate',
-      'Sanskrit stotras with word-by-word English translations',
-      'Transparent pricing & dakshina disclosures'
-    ],
-    metrics: [
-      { label: 'Purity Tested', value: '100%' },
-      { label: 'Scripture Citations', value: 'Rigveda / Agamas' }
-    ],
-    brandColor: BRAND_COLORS[4], // Wind Blue (#0A4C83)
-    cardStyle: {
-      bg: 'bg-[#0A4C83]',
-      text: 'text-[#FEFBF2]',
-      taglineText: 'text-[#3DB3E4]',
-      descText: 'text-[#FEFBF2]/90',
-      badgeBg: 'bg-[#073863]',
-      badgeText: 'text-[#3DB3E4]',
-      border: 'border-[#3DB3E4]/50 hover:border-[#FEFBF2]',
-      glow: 'shadow-[0_20px_45px_rgba(10,76,131,0.45),0_0_25px_rgba(61,179,228,0.3)]',
-      panelBg: 'bg-gradient-to-br from-[#0A4C83] via-[#083E6B] to-[#073863]',
-    },
-    initialRotate: 4
-  },
-  {
-    id: 'participation',
-    number: '03',
-    sanskrit: '॥ सार्थक सहभागिता ॥',
-    title: 'Meaningful Participation',
-    tagline: 'Direct Sacred Immersion & Hands-on Devotee Seva',
-    description: 'Devotion should never be a spectator sport. Our experiences empower every family member to actively hold the samidha, chant the sankalpa, offer ahutis, and partake directly in sanctified dharma traditions.',
-    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=80',
-    highlights: [
-      'Hands-on Havan kits configured for step-by-step family execution',
-      'Personalized live Sankalpa chanted in your Gotra and Nakshatra',
-      'Devotee Co-Creator Guild for artisans and Vedic researchers'
-    ],
-    metrics: [
-      { label: 'Active Devotees', value: '25,000+' },
-      { label: 'Family Immersion', value: 'Multi-gen' }
-    ],
-    brandColor: BRAND_COLORS[7], // Fire Orange (#FE7613)
-    cardStyle: {
-      bg: 'bg-[#FE7613]',
-      text: 'text-[#FEFBF2]',
-      taglineText: 'text-[#FEFBF2]',
-      descText: 'text-[#FEFBF2]/95',
-      badgeBg: 'bg-[#D65F08]',
-      badgeText: 'text-[#FEFBF2]',
-      border: 'border-[#FEAD71] hover:border-[#FEFBF2]',
-      glow: 'shadow-[0_20px_45px_rgba(254,118,19,0.45),0_0_25px_rgba(254,173,113,0.35)]',
-      panelBg: 'bg-gradient-to-br from-[#FE7613] via-[#E66207] to-[#CC5300]',
-    },
-    initialRotate: -3
-  },
-  {
-    id: 'presentation',
-    number: '04',
-    sanskrit: '॥ सात्विक प्रतिष्ठा ॥',
-    title: 'Careful Presentation',
-    tagline: 'Artisanal Consecration, Sacred Unboxing & Reverent Aesthetics',
-    description: 'We treat every sacred article with the utmost veneration. Packed in hand-crafted brassware, organic silk wraps, and fragrant sandalwood caskets, every kit is consecrated before departure to honor the deities you invite home.',
+    sanskrit: '॥ नित्य जीवन ॥',
+    title: 'Make the Sacred Part of Life',
+    tagline: 'From occasional rituals to everyday living',
+    description: 'Devotion belongs in ordinary days as much as grand celebrations. Sanatana Mall brings together puja kits, ritual essentials, festival collections, traditional craft and thoughtful gifting. With clearer information and convenient access, families - including those living abroad - can prepare with greater ease.',
     image: 'https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=800&q=80',
     highlights: [
-      'Consecrated at Kashi Vishwanath & Pashupatinath Peethams',
-      'Solid virgin brass, cast by 5th-generation Kumbakonam artisans',
-      'Sandalwood-infused eco-packaging with reusable sacred caskets'
+      'Sanatana Mall',
+      'Festivals',
+      'Gifting'
     ],
     metrics: [
-      { label: 'Artisan Lineage', value: '5 Generations' },
-      { label: 'Consecrated', value: 'Vedic Peethams' }
+      { label: 'Sanatana Mall', value: 'Everyday Rituals' },
+      { label: 'Reach', value: 'Global Families' }
     ],
     brandColor: BRAND_COLORS[6], // Mountain/Leaf Green (#607427)
     cardStyle: {
@@ -268,7 +210,75 @@ const PILLARS: PillarCard[] = [
       glow: 'shadow-[0_20px_45px_rgba(96,116,39,0.45),0_0_25px_rgba(192,199,169,0.3)]',
       panelBg: 'bg-gradient-to-br from-[#607427] via-[#506120] to-[#3E4C19]',
     },
-    initialRotate: 6
+    initialRotate: 4,
+    actionLink: '#products',
+    actionLabel: 'Shop Mall'
+  },
+  {
+    id: 'experience',
+    number: '03',
+    sanskrit: '॥ प्रत्यक्ष यात्रा ॥',
+    title: 'Experience What You Believe',
+    tagline: 'From knowing the sacred to standing before it',
+    description: 'There is a difference between reading of a sacred place and walking its path. Our curated yatras connect Jyotirlingas, Shakti Peethas, temples and spiritual destinations with story-led routes, arranged stays and travel coordination. The logistics are considered so the meaning of the journey can take centre stage.',
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+    highlights: [
+      'Sacred Yatras',
+      'Itineraries',
+      'Support'
+    ],
+    metrics: [
+      { label: 'Curated Yatras', value: 'Jyotirlingas & Peethas' },
+      { label: 'Pilgrim Care', value: 'End-to-End' }
+    ],
+    brandColor: BRAND_COLORS[4], // Wind Blue (#0A4C83)
+    cardStyle: {
+      bg: 'bg-[#0A4C83]',
+      text: 'text-[#FEFBF2]',
+      taglineText: 'text-[#3DB3E4]',
+      descText: 'text-[#FEFBF2]/90',
+      badgeBg: 'bg-[#073863]',
+      badgeText: 'text-[#3DB3E4]',
+      border: 'border-[#3DB3E4]/50 hover:border-[#FEFBF2]',
+      glow: 'shadow-[0_20px_45px_rgba(10,76,131,0.45),0_0_25px_rgba(61,179,228,0.3)]',
+      panelBg: 'bg-gradient-to-br from-[#0A4C83] via-[#083E6B] to-[#073863]',
+    },
+    initialRotate: -3,
+    actionLink: '#travel',
+    actionLabel: 'Explore Yatras'
+  },
+  {
+    id: 'contribute',
+    number: '04',
+    sanskrit: '॥ सह सृजन ॥',
+    title: "Find Your Place. Shape What's Next.",
+    tagline: 'From visitor to contributor',
+    description: "The House does not end at a purchase or pilgrimage. Join for community updates and events; collaborate through volunteering, business and cultural initiatives; or explore Co-Create. Eligible creator challenges, paid campaigns and potential long-term collaborations open pathways for people to help carry the culture forward.",
+    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=80',
+    highlights: [
+      'Join',
+      'Partnerships',
+      'Co-Create'
+    ],
+    metrics: [
+      { label: 'Community', value: 'Events & Seva' },
+      { label: 'Collaborate', value: 'Creator & Co-Create' }
+    ],
+    brandColor: BRAND_COLORS[7], // Fire Orange (#FE7613)
+    cardStyle: {
+      bg: 'bg-[#FE7613]',
+      text: 'text-[#FEFBF2]',
+      taglineText: 'text-[#FEFBF2]',
+      descText: 'text-[#FEFBF2]/95',
+      badgeBg: 'bg-[#D65F08]',
+      badgeText: 'text-[#FEFBF2]',
+      border: 'border-[#FEAD71] hover:border-[#FEFBF2]',
+      glow: 'shadow-[0_20px_45px_rgba(254,118,19,0.45),0_0_25px_rgba(254,173,113,0.35)]',
+      panelBg: 'bg-gradient-to-br from-[#FE7613] via-[#E66207] to-[#CC5300]',
+    },
+    initialRotate: 6,
+    actionLink: '#community',
+    actionLabel: 'Join & Co-Create'
   }
 ];
 
@@ -373,18 +383,18 @@ export const WhyHOSSection: React.FC = () => {
       onMouseMove={handleMouseMove}
       className="relative w-full py-20 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none transition-colors duration-500"
     >
-      {/* Sacred Temple Panorama Backdrop */}
+      {/* Sacred Temple Art Backdrop */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src="/sacred_temple_bg.jpg"
+          src="https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-01_at_12.00.36.jpg?v=1793704003"
           alt=""
-          className="w-full h-full object-cover object-[center_30%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
+          className="w-full h-full object-cover object-center scale-[1.01] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(254,251,242,0.7) 0%, rgba(254,251,242,0.14) 20%, rgba(254,251,242,0.12) 80%, rgba(254,251,242,0.78) 100%)',
+              'linear-gradient(180deg, rgba(254,251,242,0.72) 0%, rgba(254,251,242,0.18) 20%, rgba(254,251,242,0.18) 80%, rgba(254,251,242,0.8) 100%)',
           }}
         />
         <div
@@ -432,9 +442,6 @@ export const WhyHOSSection: React.FC = () => {
       {/* Background Sacred Patterns in Empty Margins - 100% Fully Visible & Uncropped */}
       <div className="absolute top-16 -left-10 lg:left-4 xl:left-8 pointer-events-none opacity-40 hidden lg:block">
         <TempleArchitectureLine size={300} color="#C59239" />
-      </div>
-      <div className="absolute bottom-8 sm:bottom-12 -left-6 sm:left-2 lg:left-6 xl:left-10 pointer-events-none opacity-40 hidden lg:block z-0">
-        <LotusLineArt size={300} color="#C59239" className="-rotate-6" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -521,6 +528,34 @@ export const WhyHOSSection: React.FC = () => {
               </div>
 
             </div>
+
+            {/* Subtitle & Narrative introduction from user */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 sm:mt-8 pt-6 border-t border-[#C59239]/25 flex flex-col gap-4"
+            >
+              <h3 className="font-cormorant text-2xl sm:text-3xl md:text-4xl font-semibold text-[#98555E] tracking-tight leading-snug">
+                One House. A Journey That Grows With You.
+              </h3>
+
+              <p className="max-w-3xl font-dm text-sm sm:text-base text-[#3D2619]/90 leading-relaxed font-normal">
+                A tradition this profound deserves more than scattered information, complicated rituals, uncertain travel arrangements and disconnected experiences. House of Sanatana connects knowledge, sacred living, spiritual journeys and community in one growing ecosystem — from the first question to the opportunity to contribute.
+              </p>
+
+              {/* 4 Pillars Flow / Breadcrumb track */}
+              <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 font-dm text-[11px] sm:text-xs font-bold tracking-[0.2em] text-[#FE7613] uppercase">
+                <span className="px-3 py-1 rounded-full bg-[#FE7613]/10 border border-[#FE7613]/25 text-[#FE7613]">UNDERSTAND</span>
+                <span className="text-[#C59239]/50 font-normal">/</span>
+                <span className="px-3 py-1 rounded-full bg-[#FE7613]/10 border border-[#FE7613]/25 text-[#FE7613]">LIVE</span>
+                <span className="text-[#C59239]/50 font-normal">/</span>
+                <span className="px-3 py-1 rounded-full bg-[#FE7613]/10 border border-[#FE7613]/25 text-[#FE7613]">EXPERIENCE</span>
+                <span className="text-[#C59239]/50 font-normal">/</span>
+                <span className="px-3 py-1 rounded-full bg-[#FE7613]/10 border border-[#FE7613]/25 text-[#FE7613]">CONTRIBUTE</span>
+              </div>
+            </motion.div>
           </div>
         </div>
 
@@ -635,13 +670,12 @@ export const WhyHOSSection: React.FC = () => {
             
             {/* Top Section Descriptive Note */}
             <div className="space-y-3">
-              <p className="font-dm text-xs sm:text-sm text-[#221508] leading-relaxed font-medium">
-                We unite eternal Vedic Agamic wisdom with meticulous planning to create sacred offerings and pilgrimages that elevate your spiritual life.
-              </p>
-              
               <div className="inline-flex items-center gap-2 text-xs font-dm font-bold text-[#FE7613] uppercase tracking-widest">
                 <span>[ ॥ चतुर्विध स्तम्भाः ॥ THE 4 PILLARS ]</span>
               </div>
+              <p className="font-dm text-xs sm:text-sm text-[#221508] leading-relaxed font-medium">
+                One unified ecosystem connecting knowledge, everyday rituals, sacred yatras, and active community co-creation.
+              </p>
             </div>
 
             {/* Active Featured Card Spotlight Box */}
@@ -654,27 +688,14 @@ export const WhyHOSSection: React.FC = () => {
                 transition={{ duration: 0.3 }}
                 className={`p-6 sm:p-7 rounded-3xl ${activePillar.cardStyle.panelBg} ${activePillar.cardStyle.text} border ${activePillar.cardStyle.border} ${activePillar.cardStyle.glow} relative overflow-hidden`}
               >
-                {/* Decorative image preview header */}
-                <div className="relative w-full h-32 sm:h-36 rounded-2xl overflow-hidden mb-5 border border-white/20 shadow-md">
-                  <img 
-                    src={activePillar.image} 
-                    alt={activePillar.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                  
-                  <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs border border-white/20 text-[10px] font-dm font-bold text-[#FEFBF2] uppercase">
+                {/* Pillar Header Badge & Sanskrit */}
+                <div className="flex items-center justify-between pb-4 mb-5 border-b border-white/20">
+                  <span className="px-3 py-1 rounded-full bg-black/30 backdrop-blur-xs border border-white/20 text-[11px] font-dm font-bold text-[#FEFBF2] uppercase tracking-wider">
                     Pillar [{activePillar.number}]
-                  </div>
-
-                  <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
-                    <span className="font-sanskrit text-xs text-[#E4B968] font-bold">
-                      {activePillar.sanskrit}
-                    </span>
-                    <span className="text-[10px] font-dm text-stone-300 font-medium">
-                      Peetham Verified
-                    </span>
-                  </div>
+                  </span>
+                  <span className="font-sanskrit text-sm text-[#E4B968] font-bold tracking-wide">
+                    {activePillar.sanskrit}
+                  </span>
                 </div>
 
                 {/* Title & Tagline */}
@@ -691,12 +712,15 @@ export const WhyHOSSection: React.FC = () => {
                 </p>
 
                 {/* Highlights tags */}
-                <div className="space-y-2 mb-5">
+                <div className="flex flex-wrap gap-2 mb-5">
                   {activePillar.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-[11px] font-dm">
-                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#C59239]" />
-                      <span className="font-medium">{h}</span>
-                    </div>
+                    <span 
+                      key={i} 
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/25 backdrop-blur-xs border border-white/20 text-[10.5px] font-dm font-bold text-[#FEFBF2] tracking-wider uppercase"
+                    >
+                      <Sparkles className="w-3 h-3 text-[#E4B968]" />
+                      {h}
+                    </span>
                   ))}
                 </div>
 
@@ -714,10 +738,10 @@ export const WhyHOSSection: React.FC = () => {
                   ))}
                   
                   <a
-                    href="#travel"
+                    href={activePillar.actionLink || "#travel"}
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#C59239] hover:bg-[#FE7613] text-[#FEFBF2] font-dm font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
                   >
-                    <span>Explore</span>
+                    <span>{activePillar.actionLabel || "Explore"}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -726,7 +750,7 @@ export const WhyHOSSection: React.FC = () => {
 
             {/* Bottom Descriptive Caption */}
             <p className="font-dm text-xs text-[#3D2619] leading-relaxed font-normal">
-              Every ritual samagri kit, brass vigraha, and Himalayan yatra is consecrated to uphold the uncompromising sanctity of Sanatana Dharma. <span className="text-[#FE7613] font-bold">[ 01-04 ]</span>
+              The House does not end at a purchase or pilgrimage — join, collaborate, and help carry the culture forward. <span className="text-[#FE7613] font-bold">[ 01-04 ]</span>
             </p>
 
           </div>

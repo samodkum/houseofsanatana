@@ -112,10 +112,10 @@ export const FourGatewaysSection: React.FC<FourGatewaysSectionProps> = ({
 
   return (
     <section id="gateways" className="relative w-full bg-[#FEFBF2] py-20 lg:py-28 overflow-hidden select-none">
-      {/* Sacred Temple Panorama & Varanasi Ghats Sunrise Backdrop */}
+      {/* Sacred Temple Panorama Backdrop */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src="/sacred_temple_bg.jpg"
+          src="https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-01_at_12.00.36.jpg?v=1793704003"
           alt=""
           className="w-full h-full object-cover object-[center_25%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
         />

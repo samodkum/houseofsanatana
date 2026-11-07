@@ -45,6 +45,7 @@ export interface MallProduct {
   fullDesc: string;
   idealFor: string;
   weightGrams: number;
+  variantId?: string;
   inStock: boolean;
   material: MallMaterialType;
   occasion: MallOccasionType;

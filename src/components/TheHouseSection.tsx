@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import { Sun, ArrowRight } from 'lucide-react';
-import { LotusLineArt, DividerOrnamental, TempleArchitectureLine } from './ui/SacredPatterns';
+import { DividerOrnamental, TempleArchitectureLine } from './ui/SacredPatterns';
 
 interface TheHouseSectionProps {
   onOpenAbout?: () => void;
@@ -237,10 +237,10 @@ const ShlokaScrollSection: React.FC = () => {
       ref={sectionRef}
       className="relative w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
-      {/* Sacred Temple Mandapa Hall Backdrop */}
+      {/* Sacred Temple Art Backdrop */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src="/sacred_mandapa_bg.jpg"
+          src="https://cdn.shopify.com/s/files/1/0794/4516/4163/files/cd14bd3d-e66c-4ae0-a8d4-21230213433f.png?v=1794025032"
           alt=""
           className="w-full h-full object-cover object-center scale-[1.01] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
         />
@@ -248,7 +248,14 @@ const ShlokaScrollSection: React.FC = () => {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(254,251,242,0.75) 0%, rgba(254,251,242,0.2) 25%, rgba(254,251,242,0.2) 75%, rgba(254,251,242,0.8) 100%)',
+              'linear-gradient(180deg, rgba(254,251,242,0.72) 0%, rgba(254,251,242,0.18) 18%, rgba(254,251,242,0.18) 82%, rgba(254,251,242,0.8) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 mix-blend-color"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220,155,65,0.14) 0%, transparent 70%)',
           }}
         />
       </div>
@@ -401,58 +408,37 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
       {/* ======================================================== */}
       {/* 0. PROMINENT SECTION HEADING (RIGHT ABOVE THE HOUSE)     */}
       <div className="relative w-full pt-20 pb-10 sm:pt-24 sm:pb-12 px-4 sm:px-6 lg:px-8 bg-[#FEFBF2] text-[#221508] overflow-hidden">
-        {/* Sacred Mandapa Corridor Backdrop */}
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <img
-            src="/sacred_mandapa_bg.jpg"
-            alt=""
-            className="w-full h-full object-cover object-top scale-[1.01] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(180deg, rgba(254,251,242,0.75) 0%, rgba(254,251,242,0.18) 40%, rgba(254,251,242,0.8) 100%)',
-            }}
-          />
-        </div>
-
-        {/* Background Sacred Patterns in Empty Margins - 100% Fully Visible & Uncropped */}
-        <div className="absolute top-1/2 -translate-y-1/2 -left-4 sm:left-2 lg:left-8 xl:left-14 pointer-events-none opacity-45 hidden md:block z-0">
-          <LotusLineArt size={280} color="#C59239" className="-rotate-6" />
-        </div>
-
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          
-          {/* Main Section Heading */}
-          <h2 className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#221508] tracking-tight leading-tight">
-            The House: Story, Vision &amp; Mission
-          </h2>
+            
+            {/* Main Section Heading */}
+            <h2 className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#221508] tracking-tight leading-tight">
+              A House Built on Heritage. Designed for the Future.
+            </h2>
 
-          {/* Subtitle & Narrative */}
-          <p className="mt-4 font-dm text-sm sm:text-base md:text-lg text-[#221508] leading-relaxed max-w-3xl mx-auto font-medium">
-            A sacred sanctum founded to preserve pristine Vedic Agamic sanctity, empower devotee households across the world, and restore reverence to every holy ritual.
-          </p>
+            {/* Subtitle & Narrative */}
+            <p className="mt-4 font-dm text-sm sm:text-base md:text-lg text-[#221508] leading-relaxed max-w-3xl mx-auto font-medium">
+              Sanatana Dharma has shaped civilisations with timeless wisdom. House of Sanatana unites faith, culture, knowledge, commerce, and innovation under one global ecosystem.
+            </p>
 
-          {/* Quick Header Action Links */}
-          <div className="mt-8 flex items-center justify-center">
-            <button
-              type="button"
-              onClick={onOpenAbout}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#C59239] via-[#FE7613] to-[#C59239] hover:brightness-110 text-white font-dm font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_4px_15px_rgba(197,146,57,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
-            >
-              <span>Discover Full About Story</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {/* Quick Header Action Links */}
+            <div className="mt-8 flex items-center justify-center">
+              <button
+                type="button"
+                onClick={onOpenAbout}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#C59239] via-[#FE7613] to-[#C59239] hover:brightness-110 text-white font-dm font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_4px_15px_rgba(197,146,57,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                <span>Discover Full About Story</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
           </div>
-
         </div>
-      </div>
 
-      {/* ======================================================== */}
-      {/* 0.5 SACRED RIG VEDA SHLOKA WITH FRAMER SCROLL REVEAL TEXT */}
-      {/* ======================================================== */}
-      <ShlokaScrollSection />
+        {/* ======================================================== */}
+        {/* 0.5 SACRED RIG VEDA SHLOKA WITH FRAMER SCROLL REVEAL TEXT */}
+        {/* ======================================================== */}
+        <ShlokaScrollSection />
 
       {/* ======================================================== */}
       {/* 1. PINNING SCROLL-ZOOM LIVING SANCTUM CONTAINER          */}
@@ -588,11 +574,11 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#C59239]/30 pb-4">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEFBF2]/15 border border-[#C59239]/50 text-[#FEFBF2] text-xs font-dm font-bold tracking-widest uppercase">
                   <Sun className="w-3.5 h-3.5 text-[#E4B968]" />
-                  <span>॥ सनातन कुलम् ॥ &bull; THE LIVING SANCTUM</span>
+                  <span>॥ सनातन कुलम् ॥ &bull; A TIMELESS WAY FORWARD</span>
                 </div>
 
                 <span className="text-xs font-dm text-[#E4B968] tracking-widest uppercase hidden sm:inline-block font-medium">
-                  Preserving Vedic Agamic Authenticity
+                  Heritage &bull; Innovation &bull; Community
                 </span>
               </div>
 
@@ -616,7 +602,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                     className="rounded-full"
                   >
                     <span className="font-sanskrit text-[#E4B968] font-bold text-sm sm:text-base md:text-lg tracking-[0.25em] px-3 py-1 drop-shadow-sm">
-                      ॥ सनातन धर्मस्य शाश्वत सत्यम् ॥
+                      ॥ सत्यं ज्ञानम् अनन्तं ब्रह्म ॥
                     </span>
                   </BlockRevealLine>
                 </div>
@@ -629,7 +615,7 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                     blockColor="linear-gradient(90deg, #98555E, #C23053, #C59239)"
                   >
                     <h2 className="font-cormorant text-3xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
-                      The Eternal Rhythm of Dharma
+                      A House Built on Heritage. Designed for the Future.
                     </h2>
                   </BlockRevealLine>
                 </div>
@@ -645,12 +631,12 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                       blockColor="linear-gradient(90deg, #C59239, #E4B968, #FE7613)"
                     >
                       <span>
-                        <strong className="text-[#E4B968] font-semibold">Sanatana Dharma</strong> is the timeless cosmic order—uncreated, self-sustaining, and eternal.
+                        <strong className="text-[#E4B968] font-semibold">Sanatana Dharma</strong> has shaped civilisations, carrying profound wisdom that endures across generations.
                       </span>
                     </BlockRevealLine>
                   </div>
 
-                  {/* Line 2: The living sacred flame */}
+                  {/* Line 2: Heritage in the future */}
                   <div>
                     <BlockRevealLine
                       isTriggered={isFit}
@@ -658,12 +644,12 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                       blockColor="linear-gradient(90deg, #FE7613, #FEFBF2, #C59239)"
                     >
                       <span>
-                        A sacred way of existence honoring the divine pulse of life across creation.
+                        This sacred heritage deserves more than preservation — it deserves a vital place in the future.
                       </span>
                     </BlockRevealLine>
                   </div>
 
-                  {/* Line 3: The House of Sanatan genesis */}
+                  {/* Line 3: The unified ecosystem */}
                   <div>
                     <BlockRevealLine
                       isTriggered={isFit}
@@ -671,33 +657,20 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
                       blockColor="linear-gradient(90deg, #C59239, #E4B968, #98555E)"
                     >
                       <span>
-                        <strong className="text-[#E4B968] font-semibold">The House of Sanatan</strong> was consecrated to restore this pristine Vedic sanctity.
+                        We are building a global ecosystem uniting <strong className="text-[#E4B968] font-semibold">faith, culture, commerce, and innovation</strong> under one House.
                       </span>
                     </BlockRevealLine>
                   </div>
 
-                  {/* Line 4: Pure samagri & consecrations */}
+                  {/* Line 4: Lived with conviction */}
                   <div>
                     <BlockRevealLine
                       isTriggered={isFit}
                       delay={1.08}
                       blockColor="linear-gradient(90deg, #607427, #E4B968, #C59239)"
                     >
-                      <span>
-                        Reviving peetham-energized offerings, unadulterated samagri, and serene pilgrimages.
-                      </span>
-                    </BlockRevealLine>
-                  </div>
-
-                  {/* Line 5: Uncompromised modern bridge */}
-                  <div>
-                    <BlockRevealLine
-                      isTriggered={isFit}
-                      delay={1.28}
-                      blockColor="linear-gradient(90deg, #0A4C83, #3DB3E4, #C59239)"
-                    >
                       <span className="text-[#FEFBF2]">
-                        Preserving sacred Agamic authenticity without dilution for modern generations.
+                        Where traditions are not simply inherited, but understood, experienced, and carried forward with conviction.
                       </span>
                     </BlockRevealLine>
                   </div>
@@ -711,16 +684,16 @@ export const TheHouseSection: React.FC<TheHouseSectionProps> = ({ onOpenAbout })
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={isFit ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                transition={{ delay: 1.48, duration: 0.35 }}
+                transition={{ delay: 1.28, duration: 0.35 }}
                 className="pt-2 sm:pt-5 pb-5 sm:pb-0 -translate-y-3 sm:translate-y-0 border-t border-[#C59239]/30 flex items-center justify-center max-w-5xl mx-auto w-full"
               >
                 {/* LINK TO ABOUT BUTTON */}
                 <button
                   type="button"
                   onClick={onOpenAbout}
-                  className="w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-5 sm:px-10 py-2 sm:py-3.5 rounded-full bg-gradient-to-r from-[#C59239] via-[#FE7613] to-[#C59239] hover:from-[#E4B968] hover:to-[#C59239] text-[#221508] font-dm font-bold text-[11px] sm:text-sm tracking-wider uppercase shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-[#E4B968] -translate-y-1 sm:translate-y-0"
+                  className="w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-6 sm:px-10 py-2.5 sm:py-3.5 rounded-full bg-gradient-to-r from-[#C59239] via-[#FE7613] to-[#C59239] hover:from-[#E4B968] hover:to-[#C59239] text-[#221508] font-dm font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer border border-[#E4B968] -translate-y-1 sm:translate-y-0"
                 >
-                  <span>Discover Full Story &amp; About Us</span>
+                  <span>Read Full Story &amp; About Us</span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#221508]" />
                 </button>
               </motion.div>

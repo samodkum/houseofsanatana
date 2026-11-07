@@ -102,7 +102,7 @@ export const POOJA_KITS: PoojaKit[] = [
 export const TRAVEL_PACKAGES: YatraPackage[] = [
   {
     id: 'puri-jagannath-dham',
-    title: 'Puri Jagannath Dham',
+    title: 'Puri Jagannath',
     subtitle: 'Sacred Mahaprasad, Snana Bedi & Konark Sun Temple Divine Corridor',
     circuit: 'east',
     durationDays: 4,
@@ -110,7 +110,7 @@ export const TRAVEL_PACKAGES: YatraPackage[] = [
     pricePerPerson: 18500,
     rating: 4.97,
     reviewsCount: 432,
-    image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=800&q=80',
+    image: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/01_Puri_Jagannath.png?v=1794019640',
     badge: 'Chappan Bhog VIP',
     startLocation: 'Bhubaneswar / Puri',
     nextBatches: ['Oct 15, 2026', 'Nov 08, 2026', 'Dec 12, 2026'],
@@ -136,8 +136,115 @@ export const TRAVEL_PACKAGES: YatraPackage[] = [
     ]
   },
   {
+    id: 'khatu-shyam-vrindavan',
+    title: 'Khatu Shyam - Vrindavan',
+    subtitle: 'Sheesh Ke Daani Khatu Naresh, Salasar Balaji & Braj Bankey Bihari',
+    circuit: 'braj',
+    durationDays: 5,
+    durationNights: 4,
+    pricePerPerson: 22800,
+    rating: 4.99,
+    reviewsCount: 710,
+    image: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/02_Khatu_Shyam_Vrindavan.png?v=1794019665',
+    badge: 'VIP Charan Darshan',
+    startLocation: 'Jaipur / Delhi',
+    nextBatches: ['Oct 18, 2026', 'Nov 12, 2026', 'Dec 08, 2026'],
+    highlights: [
+      'VIP Charan Darshan at Khatu Shyam Ji Mandir with Nishan Yatra blessing',
+      'Pre-dawn Mangla & Shringar Darshan at Bankey Bihari Temple, Vrindavan',
+      'Evening Laser & Light Darshan at Prem Mandir & private Yamuna boat aarti',
+      'Salasar Balaji Siddha Peeth special laddu bhog and hawan sankalpa'
+    ],
+    inclusions: [
+      'VIP Passes for Khatu & Bankey Bihari',
+      'Private Yamuna River Aarti Boat',
+      'Heritage Havelis in Rajasthan & Braj',
+      'Pure Satvik Marwari & Brajwasi Cuisine',
+      'Luxury AC Chauffeur Coach',
+      'Consecrated Khatu Itra & Mor Pankh Kit'
+    ],
+    itinerary: [
+      { day: 1, title: 'Jaipur to Sacred Khatu Dham', description: 'Pickup from Jaipur airport/station, scenic drive to Khatu. Evening VIP Darshan of Sheesh Ke Daani and holy Shyam Kund snan.', stay: 'Radhey Ki Kunj Heritage, Khatu' },
+      { day: 2, title: 'Khatu to Salasar Balaji Siddha Peeth', description: 'Morning Nishan pooja at Khatu Dham, scenic drive to Salasar Balaji temple for special Savamani bhog and blessings.', stay: 'Salasar Heritage Resort' },
+      { day: 3, title: 'Salasar to the Holy Land of Vrindavan', description: 'Comfortable journey to Vrindavan. Check-in and witness the mesmerizing evening illumination of Prem Mandir.', stay: 'Nidhivan Sarovar Portico, Vrindavan' },
+      { day: 4, title: 'Bankey Bihari, Nidhivan & Yamuna Aarti', description: 'Early morning VIP darshan at Thakur Bankey Bihari, visit mystic Nidhivan, and private evening sunset boat Aarti on Yamuna ghat.', stay: 'Nidhivan Sarovar Portico, Vrindavan' },
+      { day: 5, title: 'Govardhan Parikrama & Departure', description: 'Visit Govardhan hill, Radha Kund, taste fresh Mathura peda prasadam, and transfer to Delhi or Agra for departure.', stay: 'Return Journey' }
+    ]
+  },
+  {
+    id: 'shirdi-jyotirlinga-tour',
+    title: 'Trimbakeshwar & Shirdi',
+    subtitle: 'Sai Baba Samadhi Mandir, Trimbakeshwar Jyotirlinga & Shani Shingnapur',
+    circuit: 'jyotirlinga',
+    durationDays: 4,
+    durationNights: 3,
+    pricePerPerson: 19500,
+    rating: 4.96,
+    reviewsCount: 520,
+    image: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/03_Trimbakeshwar_Shirdi.png?v=1794019674',
+    badge: 'VIP Kakad Aarti',
+    startLocation: 'Mumbai / Pune / Shirdi',
+    nextBatches: ['Oct 22, 2026', 'Nov 14, 2026', 'Dec 10, 2026', 'Jan 16, 2027'],
+    highlights: [
+      'VIP Kakad & Shej Aarti entry passes at Sai Baba Samadhi Mandir, Shirdi',
+      'Special Rudrabhishek at Trimbakeshwar Jyotirlinga (Kushaavarta Holy Snan)',
+      'Darshan at Swayambhu Shani Dev Temple at Shani Shingnapur with oil abhishek',
+      'Dwarkamai, Chavadi & Gurusthan guided meditative walks'
+    ],
+    inclusions: [
+      'VIP Shirdi & Trimbakeshwar Passes',
+      'Priest-Guided Kushaavarta Snan',
+      '5-Star Stays in Shirdi & Nashik',
+      'Satvik Maharashtrian Vegetarian Cuisine',
+      'AC Chauffeur Transport',
+      'Consecrated Sai Udi & Prasad Box'
+    ],
+    itinerary: [
+      { day: 1, title: 'Arrival & Welcome to Holy Shirdi', description: 'Pickup from Mumbai/Pune/Shirdi Airport, check-in, afternoon VIP Darshan of Sai Baba Samadhi and evening Dhoop Aarti.', stay: 'Sun-n-Sand Resort Shirdi' },
+      { day: 2, title: 'Pre-Dawn Kakad Aarti & Shani Shingnapur', description: '4:30 AM VIP Kakad Aarti entry, followed by pilgrimage drive to holy Shani Shingnapur for oil anointing.', stay: 'Sun-n-Sand Resort Shirdi' },
+      { day: 3, title: 'Shirdi to Nashik & Trimbakeshwar Jyotirlinga', description: 'Scenic morning drive to Nashik. Holy bath at Kushaavarta Kund and priority Garbhagriha Rudrabhishekam at Trimbakeshwar.', stay: 'Courtyard by Marriott Nashik' },
+      { day: 4, title: 'Panchavati, Sita Gufa & Consecrated Farewell', description: 'Visit sacred Panchavati, Kalaram temple and departure transfer with blessed Sai Udi and Prasad.', stay: 'Return Journey' }
+    ]
+  },
+  {
+    id: 'kashi-vishwanath-varanasi',
+    title: 'Kashi & Ayodhya',
+    subtitle: 'Ram Janmabhoomi Mandir, Kashi Vishwanath Corridor & Ganga Maha Aarti',
+    circuit: 'jyotirlinga',
+    durationDays: 5,
+    durationNights: 4,
+    pricePerPerson: 21900,
+    rating: 4.98,
+    reviewsCount: 640,
+    image: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/04_Kashi_Ayodhya.png?v=1794019693',
+    badge: 'Sugam Darshan VIP',
+    startLocation: 'Varanasi / Lucknow / Ayodhya',
+    nextBatches: ['Oct 25, 2026', 'Nov 18, 2026', 'Dec 15, 2026', 'Feb 05, 2027'],
+    highlights: [
+      'VIP Sugam Darshan at Shri Ram Janmabhoomi Mandir & Hanumangarhi in Ayodhya',
+      'Priority Garbhagriha Rudrabhishekam at Kashi Vishwanath Jyotirlinga Golden Corridor',
+      'Private Bajra river cruise for sunrise Ganga Snan and sunset Dashashwamedh Maha Aarti',
+      'Saryu River evening Aarti and sacred Saryu Snan with Vedic Priest escort'
+    ],
+    inclusions: [
+      'VIP Ram Mandir & Kashi Vishwanath Entry',
+      'Private River Bajra Boat with Live Shehnai',
+      'Heritage Hotel & Palace Stays',
+      'Pure Satvik Awadhi & Banarasi Dining',
+      'Assi Ghat Vedic Havan Sankalpa',
+      'Dedicated Sanskrit Acharya Guide'
+    ],
+    itinerary: [
+      { day: 1, title: 'Arrival in Varanasi & Kaal Bhairav', description: 'Arrival in Varanasi, check-in, visit Kaal Bhairav temple for guardian blessing and evening boat ride.', stay: 'BrijRama Palace, Varanasi' },
+      { day: 2, title: 'Kashi Vishwanath Rudrabhishek & Ganga Aarti', description: 'Pre-dawn VIP entry into Golden Corridor for Rudrabhishek, Manikarnika Ghat, and evening Dashashwamedh Aarti.', stay: 'BrijRama Palace, Varanasi' },
+      { day: 3, title: 'Varanasi to Divine Ayodhya Dham', description: 'Scenic drive to Ayodhya. Evening Saryu River Aarti and visit to Ram Ki Paidi.', stay: 'Park Inn by Radisson Ayodhya' },
+      { day: 4, title: 'Ram Janmabhoomi VIP Darshan & Hanumangarhi', description: 'VIP Darshan at newly consecrated Shri Ram Janmabhoomi Temple, Hanumangarhi, and Kanak Bhawan.', stay: 'Park Inn by Radisson Ayodhya' },
+      { day: 5, title: 'Saryu Snan & Consecrated Return', description: 'Morning Saryu holy snan, receive blessed Ram Lalla prasad, and airport transfer.', stay: 'Return Journey' }
+    ]
+  },
+  {
     id: 'kailash-mansarovar-yatra',
-    title: 'Kailash Mansarovar Yatra',
+    title: 'Kailash Mansarovar',
     subtitle: 'The ultimate cosmic circumambulation of Lord Shiva’s eternal abode',
     circuit: 'himalayas',
     durationDays: 13,
@@ -145,7 +252,7 @@ export const TRAVEL_PACKAGES: YatraPackage[] = [
     pricePerPerson: 185000,
     rating: 5.0,
     reviewsCount: 290,
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    image: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/05_Kailash_Mansarovar.png?v=1794019695',
     badge: 'Sacred Parikrama',
     startLocation: 'Kathmandu / Lucknow',
     nextBatches: ['May 18, 2026', 'June 14, 2026', 'Aug 22, 2026'],

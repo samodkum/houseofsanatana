@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, Instagram, Linkedin, Twitter, Youtube, MessageCircle, Sparkles } from 'lucide-react';
+import { HOS_LOGO_URL } from '../lib/constants';
 
 export interface MenuItem {
   id: string;
@@ -74,9 +75,9 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
             duration: isOpen ? 0.85 : 0.65,
             ease: [0.16, 1, 0.3, 1]
           }}
-          className="fixed inset-0 z-[9999] text-[#FEFBF2] flex flex-col justify-between overflow-hidden select-none pointer-events-auto bg-[#0A4C83]"
+          className="fixed inset-0 z-[9999] text-[#FEFBF2] flex flex-col justify-between overflow-hidden select-none pointer-events-auto bg-[#51000F]"
           style={{
-            background: 'radial-gradient(ellipse 110% 110% at 8% 8%, #105996 0%, #0A4C83 35%, #073863 70%, #041B32 100%)',
+            background: 'radial-gradient(ellipse 110% 110% at 8% 8%, #742A35 0%, #51000F 40%, #3B000B 75%, #250207 100%)',
             willChange: 'clip-path, opacity'
           }}
         >
@@ -97,7 +98,14 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
 
           {/* Top Header Row inside Menu */}
           <div className="relative z-20 w-full px-6 sm:px-12 pt-6 sm:pt-8 flex items-center justify-between">
-            <div className="flex items-center gap-3 pl-16 sm:pl-20">
+            <div className="flex items-center gap-2.5 sm:gap-3 pl-16 sm:pl-20">
+              <div className="w-6 h-6 rounded-full overflow-hidden border border-[#E4B968]/70 flex items-center justify-center bg-[#36050e] shadow-xs shrink-0">
+                <img
+                  src={HOS_LOGO_URL}
+                  alt="House of Sanatana"
+                  className="w-full h-full object-contain rounded-full"
+                />
+              </div>
               <span className="font-sanskrit text-sm font-bold text-[#E4B968]">॥ सनातन सूची ॥</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#E4B968]/50" />
               <span className="font-dm text-xs uppercase tracking-[0.25em] text-[#FEFBF2]/80 font-semibold">
@@ -166,7 +174,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                       {/* Main Link Text in Cormorant Garamond Serif */}
                       <div className="relative z-10 flex items-baseline gap-3.5 sm:gap-5">
                         <span className={`font-dm text-xs sm:text-sm font-bold transition-colors duration-150 ${
-                          isActive ? 'text-[#0A4C83]' : 'text-[#E4B968]/70'
+                          isActive ? 'text-[#51000F]' : 'text-[#E4B968]/70'
                         }`}>
                           0{index + 1}
                         </span>
@@ -180,7 +188,7 @@ export const FullscreenMenu: React.FC<FullscreenMenuProps> = ({
                       {/* Sanskrit Subtext & Arrow */}
                       <div className="relative z-10 hidden md:flex items-center gap-3.5">
                         <span className={`font-sanskrit text-xs font-semibold transition-colors duration-150 ${
-                          isActive ? 'text-[#0A4C83]' : 'text-[#E4B968]/70'
+                          isActive ? 'text-[#51000F]' : 'text-[#E4B968]/70'
                         }`}>
                           {item.sanskrit}
                         </span>

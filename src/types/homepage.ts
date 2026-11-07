@@ -9,7 +9,7 @@ export interface PoojaKit {
   id: string;
   title: string;
   subtitle: string;
-  category: 'daily' | 'festival' | 'havan' | 'meditation';
+  category: 'daily' | 'festival' | 'havan' | 'meditation' | 'protection' | string;
   price: number;
   originalPrice: number;
   rating: number;
@@ -21,6 +21,7 @@ export interface PoojaKit {
   itemsIncluded: PoojaKitItem[];
   idealFor: string;
   weightGrams?: number;
+  variantId?: string;
 }
 
 export interface YatraDayPlan {
@@ -49,6 +50,7 @@ export interface YatraPackage {
   inclusions: string[];
   itinerary: YatraDayPlan[];
   highlights: string[];
+  variantId?: string;
 }
 
 export interface Testimonial {

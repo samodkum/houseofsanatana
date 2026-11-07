@@ -31,15 +31,22 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     setIsCheckingOut(true);
     try {
       // Build checkout lines with item details & custom attributes
-      const lines = items.map(item => ({
-        merchandiseId: item.kit.id.startsWith('gid://') ? item.kit.id : '',
-        quantity: item.quantity,
-        attributes: [
-          { key: 'Product', value: item.kit.title },
-          { key: 'Price', value: `₹${item.kit.price}` },
-          { key: 'Sacred Category', value: item.kit.category || 'General' },
-        ],
-      }));
+      const lines = items.map(item => {
+        // Find valid variant ID (either from variantId or product ID if it's already a variant)
+        const merchandiseId = item.kit.variantId?.startsWith('gid://shopify/ProductVariant/')
+          ? item.kit.variantId
+          : (item.kit.id.startsWith('gid://shopify/ProductVariant/') ? item.kit.id : '');
+
+        return {
+          merchandiseId,
+          quantity: item.quantity,
+          attributes: [
+            { key: 'Product', value: item.kit.title },
+            { key: 'Price', value: `₹${item.kit.price}` },
+            { key: 'Sacred Category', value: item.kit.category || 'General' },
+          ],
+        };
+      });
 
       // Try creating Shopify cart / checkout
       const validLines = lines.filter(l => Boolean(l.merchandiseId));
@@ -48,7 +55,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       if (validLines.length > 0) {
         checkoutUrl = await createShopifyCheckout(validLines);
       } else {
-        // Direct redirect to Shopify store's checkout/cart with custom note or destination
+        // Direct redirect to Shopify store's checkout/cart
         checkoutUrl = `https://${SHOPIFY_DOMAIN}/cart`;
       }
 

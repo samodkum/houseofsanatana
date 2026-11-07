@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { HOS_LOGO_URL } from '../lib/constants';
 import { 
   Instagram, 
   Linkedin, 
@@ -241,7 +242,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                C 1280 4, 1305 46, 1345 46 
                L 1440 46 
                L 1440 60 Z" 
-            fill="#0A4C83" 
+            fill="#51000F" 
           />
         </svg>
       </div>
@@ -250,7 +251,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
       {/* 2. MAIN EDITORIAL FOOTER BODY                            */}
       {/* Styled after the refined editorial reference             */}
       {/* ======================================================== */}
-      <div className="w-full bg-[#0A4C83] text-[#FEFBF2] pt-6 sm:pt-10 pb-12 px-6 sm:px-10 lg:px-16 shadow-2xl relative">
+      <div className="w-full bg-[#51000F] text-[#FEFBF2] pt-6 sm:pt-10 pb-12 px-6 sm:px-10 lg:px-16 shadow-2xl relative">
         <div className="max-w-7xl mx-auto flex flex-col gap-12 sm:gap-16">
 
           {/* Main 2-Column Editorial Grid */}
@@ -258,13 +259,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
             
             {/* Left Column: Brand Name & Huge Elegant Serif Nav Links */}
             <div className="lg:col-span-7 flex flex-col items-start">
-              {/* Brand Heading */}
+              {/* Brand Heading with Official Circular Logo */}
               <a 
                 href="#home" 
                 onClick={(e) => handleNavClick(e, 'home', '#home')}
-                className="font-cormorant font-normal text-4xl sm:text-5xl md:text-6xl text-[#FEFBF2] tracking-tight hover:text-[#E4B968] transition-colors mb-8 sm:mb-10 block cursor-pointer"
+                className="group inline-flex items-center gap-3.5 sm:gap-4 font-cormorant font-normal text-3xl sm:text-4xl md:text-5xl text-[#FEFBF2] tracking-tight hover:text-[#E4B968] transition-colors mb-8 sm:mb-10 cursor-pointer"
               >
-                House Of Sanatana
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-[#E4B968]/70 flex items-center justify-center bg-[#36050e] shadow-[0_0_15px_rgba(228,185,104,0.4)] shrink-0 group-hover:scale-105 transition-transform">
+                  <img
+                    src={HOS_LOGO_URL}
+                    alt="House Of Sanatana"
+                    className="w-full h-full object-contain rounded-full"
+                  />
+                </div>
+                <span>House Of Sanatana</span>
               </a>
 
               {/* Large Stacked Nav Links matching Navbar */}
@@ -298,10 +306,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                 </p>
                 <a 
                   href="#newsletter"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FEFBF2] hover:bg-white text-[#0A4C83] font-dm font-bold text-xs sm:text-[13px] transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FEFBF2] hover:bg-white text-[#51000F] font-dm font-bold text-xs sm:text-[13px] transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02] cursor-pointer"
                 >
                   <span>Subscribe</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#0A4C83]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#51000F]" />
                 </a>
               </div>
 
@@ -321,7 +329,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label="LinkedIn"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#0A4C83] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#51000F] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
                   >
                     <Linkedin className="w-4 h-4" />
                   </a>
@@ -331,7 +339,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label="YouTube"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#0A4C83] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#51000F] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
                   >
                     <Youtube className="w-4 h-4" />
                   </a>
@@ -341,7 +349,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label="Instagram"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#0A4C83] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#51000F] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
                   >
                     <Instagram className="w-4 h-4" />
                   </a>
@@ -351,7 +359,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label="X / Twitter"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#0A4C83] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#51000F] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
                   >
                     <Twitter className="w-4 h-4" />
                   </a>
@@ -361,7 +369,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label="WhatsApp Desk"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#0A4C83] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FEFBF2] text-[#51000F] hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
                   >
                     <MessageCircle className="w-4 h-4" />
                   </a>
@@ -392,14 +400,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                     onClick={(e) => openPolicy(e, policy.id)}
                     className="group text-left p-3 sm:p-3.5 rounded-xl bg-black/20 hover:bg-[#FEFBF2] transition-all duration-200 border border-white/10 hover:border-[#FEFBF2] flex flex-col justify-between gap-2.5 cursor-pointer shadow-sm hover:shadow-md"
                   >
-                    <div className="w-7 h-7 rounded-lg bg-white/10 group-hover:bg-[#0A4C83]/15 flex items-center justify-center text-[#FEFBF2] group-hover:text-[#0A4C83] transition-colors">
+                    <div className="w-7 h-7 rounded-lg bg-white/10 group-hover:bg-[#51000F]/15 flex items-center justify-center text-[#FEFBF2] group-hover:text-[#51000F] transition-colors">
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="font-dm font-semibold text-xs text-[#FEFBF2] group-hover:text-[#0A4C83] leading-snug transition-colors">
+                      <p className="font-dm font-semibold text-xs text-[#FEFBF2] group-hover:text-[#51000F] leading-snug transition-colors">
                         {policy.title}
                       </p>
-                      <p className="text-[10px] text-[#FEFBF2]/70 group-hover:text-[#0A4C83]/80 line-clamp-1 mt-0.5 transition-colors">
+                      <p className="text-[10px] text-[#FEFBF2]/70 group-hover:text-[#51000F]/80 line-clamp-1 mt-0.5 transition-colors">
                         {policy.tagline}
                       </p>
                     </div>
@@ -473,7 +481,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="bg-[#0A4C83] text-[#FEFBF2] p-5 sm:p-6 flex items-center justify-between border-b border-[#C59239]/30 relative">
+            <div className="bg-[#51000F] text-[#FEFBF2] p-5 sm:p-6 flex items-center justify-between border-b border-[#C59239]/30 relative">
               <div className="flex items-center gap-3.5 pr-8">
                 <div className="w-10 h-10 rounded-full bg-[#C59239]/20 border border-[#C59239]/40 flex items-center justify-center text-[#FEFBF2] shrink-0">
                   <activePolicy.icon className="w-5 h-5 text-[#E4B968]" />
@@ -502,7 +510,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
                 <div key={idx} className="bg-white/80 p-4 sm:p-5 rounded-xl border border-[#C59239]/20 shadow-xs">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C59239]" />
-                    <h4 className="font-dm font-bold text-sm sm:text-base text-[#0A4C83]">
+                    <h4 className="font-dm font-bold text-sm sm:text-base text-[#51000F]">
                       {sec.heading}
                     </h4>
                   </div>
@@ -531,7 +539,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAccount, onNavigatePag
               </span>
               <button
                 onClick={() => setSelectedPolicyId(null)}
-                className="px-5 py-2 rounded-xl bg-[#0A4C83] hover:bg-[#073863] text-[#FEFBF2] font-dm font-semibold text-xs transition-colors cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-[#51000F] hover:bg-[#742A35] text-[#FEFBF2] font-dm font-semibold text-xs transition-colors cursor-pointer"
               >
                 Close Policy
               </button>

@@ -25,24 +25,8 @@ export const TravelProductBridge: React.FC = () => {
     <section
       ref={containerRef}
       id="travel-to-product-bridge"
-      className="relative w-full bg-[#FEFBF2] overflow-hidden select-none flex items-center justify-center pt-14 pb-6 sm:pt-18 sm:pb-8 lg:pt-20 lg:pb-10 px-4 sm:px-8 lg:px-16"
+      className="relative w-full bg-transparent overflow-hidden select-none flex items-center justify-center pt-12 pb-3 sm:pt-16 sm:pb-4 lg:pt-18 lg:pb-5 px-4 sm:px-8 lg:px-16"
     >
-      {/* Sacred River Ghats Sunrise Backdrop */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <img
-          src="/sacred_ghats_bg.jpg"
-          alt=""
-          className="w-full h-full object-cover object-center scale-[1.02] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(254,251,242,0.75) 0%, rgba(254,251,242,0.18) 25%, rgba(254,251,242,0.18) 75%, rgba(254,251,242,0.8) 100%)',
-          }}
-        />
-      </div>
-
       {/* Background Subtle Grid Texture */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none"

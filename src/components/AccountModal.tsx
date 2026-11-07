@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, User, Crown, ShieldCheck, ShoppingBag, Heart, Calendar, Phone, ArrowRight, ExternalLink } from 'lucide-react';
 import { SunIcon } from './SunIcon';
+import { HOS_LOGO_URL } from '../lib/constants';
 
 interface AccountModalProps {
   isOpen: boolean;
@@ -57,8 +58,12 @@ export const AccountModal: React.FC<AccountModalProps> = ({
 
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FE7613] to-[#C59239] p-0.5 shadow-lg flex items-center justify-center text-white">
-                  <div className="w-full h-full rounded-[14px] bg-[#221508] flex items-center justify-center">
-                    <SunIcon className="w-7 h-7 text-[#E4B968]" />
+                  <div className="w-full h-full rounded-[14px] bg-[#221508] flex items-center justify-center p-1.5">
+                    <img 
+                      src={HOS_LOGO_URL} 
+                      alt="House of Sanatan Logo" 
+                      className="w-full h-full object-contain rounded-full"
+                    />
                   </div>
                 </div>
 

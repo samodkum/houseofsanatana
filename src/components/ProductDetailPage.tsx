@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { HOS_LOGO_URL } from '../lib/constants';
 import { motion } from 'motion/react';
 import { 
   ArrowLeft, 
@@ -155,6 +156,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const handleAddToCart = () => {
     const asPoojaKit: PoojaKit = {
       id: product.id,
+      variantId: product.variantId,
       title: product.title,
       subtitle: product.subtitle,
       category: product.category === 'gift-sets' ? 'daily' : 'festival',
@@ -238,8 +240,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               onClick={onNavigateHome}
               className="flex items-center gap-2.5 text-left group cursor-pointer"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0A4C83] flex items-center justify-center text-[#FEFBF2] shadow-xs group-hover:scale-105 transition-transform">
-                <SunIcon className="w-5 h-5 text-[#FEFBF2]" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0A4C83] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform p-0.5 overflow-hidden">
+                <img 
+                  src={HOS_LOGO_URL} 
+                  alt="House of Sanatan" 
+                  className="w-full h-full object-contain rounded-full" 
+                />
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="font-cormorant font-bold text-lg sm:text-xl md:text-2xl tracking-tight text-[#221508] group-hover:text-[#0A4C83] transition-colors">
@@ -675,25 +681,32 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {/* ACTION BUTTONS (INCLUDING DEDICATED WISHLIST BUTTON ON PRODUCT PAGE) */}
             <div className="space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  className="w-full py-3.5 px-4 rounded-xl bg-white hover:bg-[#98555E] text-[#98555E] hover:text-white border border-[#98555E]/40 hover:border-[#98555E] text-xs font-dm font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
-                >
-                  <ShoppingCart className="w-4 h-4" />
-                  <span>ADD TO BASKET</span>
-                </button>
+              {!product.inStock ? (
+                <div className="w-full py-3.5 px-4 rounded-xl bg-[#3D2619]/10 border border-[#3D2619]/25 text-[#3D2619]/75 text-xs font-dm font-bold tracking-wider uppercase flex items-center justify-center gap-2 cursor-not-allowed select-none">
+                  <span className="w-2 h-2 rounded-full bg-[#98555E]/70" />
+                  <span>OUT OF STOCK</span>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className="w-full py-3.5 px-4 rounded-xl bg-white hover:bg-[#98555E] text-[#98555E] hover:text-white border border-[#98555E]/40 hover:border-[#98555E] text-xs font-dm font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    <span>ADD TO BASKET</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={handleBuyNow}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#51000F] hover:bg-[#742A35] text-white text-xs font-dm font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_4px_14px_rgba(81,0,15,0.35)] active:scale-98"
-                >
-                  <Sparkles className="w-4 h-4 text-[#FEFBF2]" />
-                  <span>BUY NOW</span>
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={handleBuyNow}
+                    className="w-full py-3.5 px-4 rounded-xl bg-[#51000F] hover:bg-[#742A35] text-white text-xs font-dm font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_4px_14px_rgba(81,0,15,0.35)] active:scale-98"
+                  >
+                    <Sparkles className="w-4 h-4 text-[#FEFBF2]" />
+                    <span>BUY NOW</span>
+                  </button>
+                </div>
+              )}
 
               {/* DEDICATED WISHLIST BUTTON ON PRODUCT PAGE */}
               <button

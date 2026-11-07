@@ -29,9 +29,7 @@ import { openShopifyAccount } from './lib/shopify';
 import { MALL_PRODUCTS, MallProduct } from './data/mallData';
 import { AccountPage } from './pages/AccountPage';
 
-import heroVideo from '../c27f5537-6cf2-4ecb-b5eb-cef782b8a65d.mp4';
-
-const VIDEO_URL = heroVideo;
+const VIDEO_URL = 'https://cdn.shopify.com/videos/c/o/v/1268334039ee4112885be4f097e76e43.mp4';
 
 // The 8 letters of SANATANA
 const LETTERS = ['S', 'A', 'N', 'A', 'T', 'A', 'N', 'A'];
@@ -409,6 +407,7 @@ export default function App() {
           onToggleMenu={() => setIsMenuOpen(!isMenuOpen)} 
           onGetStarted={handleGetStarted}
           currentPage={currentPage}
+          isHero={currentPage === 'home' ? isHeroSection : false}
           onNavigatePage={(page) => {
             if (page === 'mall') navigateToMall();
             else if (page === 'travel') navigateToTravel();
@@ -580,7 +579,7 @@ export default function App() {
                 ॐ
               </div>
 
-              {/* Sanskrit Inscription: ॥ सत्यं धर्म सनातन ॥ */}
+              {/* Sanskrit Inscription: ॥ वसुधैव कुटुम्बकम् ॥ */}
               <div 
                 className="font-sanskrit text-[10px] sm:text-xs md:text-[13px] text-[#FEFBF2] tracking-[0.08em] font-semibold select-none mt-1 md:mt-1.5 text-center"
                 style={isRevealed ? {
@@ -588,7 +587,7 @@ export default function App() {
                   animation: 'letterWaveIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards'
                 } : { opacity: 0 }}
               >
-                ॥ सत्यं धर्म सनातन ॥
+                ॥ वसुधैव कुटुम्बकम् ॥
               </div>
             </div>
 
@@ -785,17 +784,47 @@ export default function App() {
           <TravelSection onViewAllYatras={navigateToTravel} />
 
           {/* ======================================================== */}
-          {/* SECTION 3.5: TRAVEL TO PRODUCTS WAVY BRIDGE BANNER       */}
+          {/* SECTION 4: PRODUCT SHOWCASE & BRIDGE (SANATANA MALL)     */}
           {/* ======================================================== */}
-          <TravelProductBridge />
+          <div id="product-showcase-section" className="relative w-full bg-[#FEFBF2] overflow-hidden">
+            {/* Sacred Temple Sanctum & Lamps Backdrop */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-01_at_12.28.45.jpg?v=1793704003"
+                alt=""
+                className="w-full h-full object-cover object-[center_35%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
+              />
+              {/* Soft edge blend at top and bottom for smooth section transitions */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(180deg, rgba(254,251,242,0.72) 0%, rgba(254,251,242,0.18) 12%, rgba(254,251,242,0.14) 85%, rgba(254,251,242,0.85) 100%)',
+                }}
+              />
+              {/* Subtle warm golden ambient wash */}
+              <div
+                className="absolute inset-0 mix-blend-color"
+                style={{
+                  background:
+                    'radial-gradient(ellipse 80% 60% at 50% 45%, rgba(220,155,65,0.14) 0%, transparent 70%)',
+                }}
+              />
+            </div>
 
-          {/* ======================================================== */}
-          {/* SECTION 4: STACK SCROLL REVEAL (PRODUCT SHOWCASE)        */}
-          {/* ======================================================== */}
-          <StackScrollReveal 
-            onAddToCart={handleAddToCart} 
-            onViewAll={navigateToMall}
-          />
+            {/* Introductory Heading Banner */}
+            <TravelProductBridge />
+
+            {/* Product Cards Carousel */}
+            <StackScrollReveal 
+              onAddToCart={handleAddToCart} 
+              onBuyNow={(kit) => {
+                handleAddToCart(kit);
+                setIsCartOpen(true);
+              }}
+              onViewAll={navigateToMall}
+            />
+          </div>
 
           {/* ======================================================== */}
           {/* SECTION 4.5: THE HOUSE (STORY, VISION & MISSION)         */}

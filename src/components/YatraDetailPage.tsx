@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { HOS_LOGO_URL } from '../lib/constants';
 import { 
   MapPin, 
   Clock, 
@@ -99,6 +100,7 @@ export const YatraDetailPage: React.FC<YatraDetailPageProps> = ({
       const checkoutUrl = await createTravelShopifyCheckout({
         packageTitle: yatra.title,
         packageId: yatra.id,
+        variantId: yatra.variantId || 'gid://shopify/ProductVariant/68214956884099',
         departureDate: selectedBatch || 'Upcoming Sacred Muhurat',
         pilgrimCount,
         contactName: bookingForm.name.trim(),
@@ -110,7 +112,6 @@ export const YatraDetailPage: React.FC<YatraDetailPageProps> = ({
       });
 
       if (checkoutUrl) {
-        showToast('Redirecting to Sacred Shopify Checkout...');
         window.location.href = checkoutUrl;
       }
     } catch (err) {
@@ -263,9 +264,9 @@ export const YatraDetailPage: React.FC<YatraDetailPageProps> = ({
             title="House of Sanatana Home"
           >
             <img 
-              src="https://res.cloudinary.com/dzc1dckta/image/upload/v1790697704/HOS_logo_bpd1v5.jpg" 
+              src={HOS_LOGO_URL} 
               alt="House of Sanatana"
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-[#C59239]/30 shadow-xs group-hover:scale-105 transition-transform" 
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-contain p-0.5 border border-[#C59239]/30 shadow-xs group-hover:scale-105 transition-transform" 
             />
             <div className="flex flex-col text-left">
               <span className="font-cormorant font-bold text-base sm:text-lg text-[#221508] tracking-wide leading-none group-hover:text-[#0A4C83] transition-colors">
@@ -658,14 +659,14 @@ export const YatraDetailPage: React.FC<YatraDetailPageProps> = ({
                   <span className="font-bold text-base text-[#98555E]">₹{totalCalculated.toLocaleString()}</span>
                 </div>
 
-                {/* Primary Radiant Fire Orange Shopify Direct Booking CTA */}
+                {/* Primary Radiant Fire Orange Direct Booking CTA */}
                 <button
                   type="button"
                   onClick={handleOpenBookingModal}
                   className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#FE7613] via-[#FE8D3B] to-[#FE7613] hover:brightness-105 text-white font-dm text-xs font-bold uppercase tracking-wider transition-all shadow-[0_10px_25px_rgba(254,118,19,0.35)] hover:shadow-[0_14px_35px_rgba(254,118,19,0.5)] active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-white" />
-                  <span>Book Sacred Yatra Passage (Shopify)</span>
+                  <span>Book Sacred Yatra Passage</span>
                 </button>
 
                 {/* Secondary WhatsApp Enquiry Button: Mountain Green */}
@@ -1028,13 +1029,13 @@ export const YatraDetailPage: React.FC<YatraDetailPageProps> = ({
             <div className="mb-5 pr-8">
               <span className="px-3 py-1 rounded-full bg-[#FE7613]/15 border border-[#FE7613]/30 text-[#FE7613] text-[11px] font-dm font-bold tracking-wide uppercase inline-flex items-center gap-1.5 mb-2 shadow-xs">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Shopify Sacred Checkout</span>
+                <span>Sacred Yatra Booking</span>
               </span>
               <h3 className="font-cormorant text-2xl sm:text-3xl font-bold text-[#221508]">
                 {yatra.title}
               </h3>
               <p className="font-dm text-xs text-[#3D2619]/75 mt-1">
-                Please provide primary traveler details. Your selected departure date and contact info will be securely passed directly into your Shopify order.
+                Please provide primary traveler details. Your selected departure date and contact info will be securely registered for your pilgrimage.
               </p>
             </div>
 
@@ -1140,12 +1141,12 @@ export const YatraDetailPage: React.FC<YatraDetailPageProps> = ({
                   {isSubmittingBooking ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Creating Shopify Order...</span>
+                      <span>Securing Yatra Order...</span>
                     </>
                   ) : (
                     <>
                       <ShoppingBag className="w-4 h-4" />
-                      <span>Proceed to Shopify Checkout</span>
+                      <span>Proceed to Sacred Checkout</span>
                     </>
                   )}
                 </button>

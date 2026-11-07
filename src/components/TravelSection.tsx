@@ -195,7 +195,7 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
   {
     stage: 1,
     stopNumber: 1,
-    title: 'Puri Jagannath Dham',
+    title: 'Puri Jagannath',
     sanskrit: '॥ भागीरथी सलिल ॥',
     colorName: 'Water Blue',
     hex: '#3DB3E4',
@@ -206,46 +206,46 @@ const TRAVEL_STAGES: TravelStageConfig[] = [
   {
     stage: 2,
     stopNumber: 2,
-    title: 'Kailash Mansarovar Yatra',
-    sanskrit: '॥ अनन्त वायु ॥',
-    colorName: 'Wind Blue',
-    hex: '#0A4C83',
-    isLight: false,
-    accentBorder: '#3DB3E4',
-    tag: 'Stop 02 • Kailash'
-  },
-  {
-    stage: 3,
-    stopNumber: 3,
-    title: 'Kolkata Kali Darshan',
-    sanskrit: '॥ दिव्य कुङ्कुम ॥',
-    colorName: 'Ruby Red',
-    hex: '#98555E',
-    isLight: false,
-    accentBorder: '#C59239',
-    tag: 'Stop 03 • Kolkata'
-  },
-  {
-    stage: 4,
-    stopNumber: 4,
-    title: 'Kamakhya Shakti Peeth',
-    sanskrit: '॥ पावक अग्नि ॥',
-    colorName: 'Fire Orange',
-    hex: '#FE7613',
-    isLight: false,
-    accentBorder: '#C59239',
-    tag: 'Stop 04 • Kamakhya'
-  },
-  {
-    stage: 5,
-    stopNumber: 5,
     title: 'Khatu Shyam - Vrindavan',
     sanskrit: '॥ तुलसी दल ॥',
     colorName: 'Mountain Green',
     hex: '#607427',
     isLight: false,
     accentBorder: '#C59239',
-    tag: 'Stop 05 • Vrindavan'
+    tag: 'Stop 02 • Vrindavan'
+  },
+  {
+    stage: 3,
+    stopNumber: 3,
+    title: 'Trimbakeshwar & Shirdi',
+    sanskrit: '॥ दिव्य ज्योति ॥',
+    colorName: 'Ruby Red',
+    hex: '#98555E',
+    isLight: false,
+    accentBorder: '#C59239',
+    tag: 'Stop 03 • Shirdi'
+  },
+  {
+    stage: 4,
+    stopNumber: 4,
+    title: 'Kashi & Ayodhya',
+    sanskrit: '॥ पावक अग्नि ॥',
+    colorName: 'Fire Orange',
+    hex: '#FE7613',
+    isLight: false,
+    accentBorder: '#C59239',
+    tag: 'Stop 04 • Kashi'
+  },
+  {
+    stage: 5,
+    stopNumber: 5,
+    title: 'Kailash Mansarovar',
+    sanskrit: '॥ अनन्त वायु ॥',
+    colorName: 'Wind Blue',
+    hex: '#0A4C83',
+    isLight: false,
+    accentBorder: '#3DB3E4',
+    tag: 'Stop 05 • Kailash'
   },
   {
     stage: 6,
@@ -368,13 +368,13 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
       } else if (latest < 0.16) {
         stage = 1; // Stop 1 (Puri Jagannath): Water Blue (#3DB3E4)
       } else if (latest < 0.33) {
-        stage = 2; // Stop 2 (Kailash Mansarovar): Wind Blue (#0A4C83)
+        stage = 2; // Stop 2 (Khatu Shyam - Vrindavan): Mountain Green (#607427)
       } else if (latest < 0.51) {
-        stage = 3; // Stop 3 (Kolkata Kali Darshan): Ruby Red (#98555E)
+        stage = 3; // Stop 3 (Trimbakeshwar & Shirdi): Ruby Red (#98555E)
       } else if (latest < 0.69) {
-        stage = 4; // Stop 4 (Kamakhya Shakti Peeth): Fire Orange (#FE7613)
+        stage = 4; // Stop 4 (Kashi & Ayodhya): Fire Orange (#FE7613)
       } else if (latest < 0.88) {
-        stage = 5; // Stop 5 (Khatu Shyam - Vrindavan): Mountain Green (#607427)
+        stage = 5; // Stop 5 (Kailash Mansarovar): Wind Blue (#0A4C83)
       } else {
         stage = 6; // Final Station (All Packages): Sacred Gold (#C59239)
       }
@@ -901,14 +901,11 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                   {/* Glowing background ambient gradient */}
                   <div className="absolute inset-0 bg-gradient-to-r from-[#FE7613]/10 via-[#C59239]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
 
-                  {/* Top Tag & Sacred Counter */}
+                  {/* Top Tag */}
                   <div className="relative z-10 flex items-center justify-between mb-3">
                     <span className="px-2.5 py-1 rounded-full bg-[#C59239]/15 border border-[#C59239]/40 text-[#3D2619] text-[10px] font-dm font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-xs">
                       <Sparkles className="w-3 h-3 text-[#FE7613]" />
                       <span>Full Catalog</span>
-                    </span>
-                    <span className="text-[10px] font-dm font-bold text-[#C59239] uppercase tracking-widest">
-                      20+ Yatras
                     </span>
                   </div>
 
@@ -918,7 +915,7 @@ export const TravelSection: React.FC<TravelSectionProps> = ({ onViewAllYatras })
                       View All Packages
                     </h3>
                     <p className="font-dm text-xs text-[#3D2619]/85 leading-relaxed">
-                      Explore all 4 Dhams, 12 Jyotirlingas & 51 Shaktipeeth circuits across Bharat with VIP Darshan.
+                      Explore all 11 curated sacred travel packages across holy circuits with VIP Darshan.
                     </p>
                   </div>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Eye, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface MediaItem {
   id: string;
@@ -14,154 +14,138 @@ export interface MediaItem {
 
 const MEDIA_ROW_1: MediaItem[] = [
   {
-    id: 'm1-1',
-    url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-1',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.46_1.jpg?v=1793704004',
     type: 'image',
-    title: 'Himalayan Kedarnath Yatra',
-    subtitle: 'High altitude pilgrimage & sacred snows',
+    title: 'Kashi Manikarnika & Ganga Aarti',
+    subtitle: 'Eternal twilight prayers on sacred ghats',
     category: 'Sacred Yatra'
   },
   {
-    id: 'm1-2',
-    url: 'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-2',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.45_3.jpg?v=1793704004',
     type: 'image',
-    title: 'Nitya Akhand Diya & Aarti',
-    subtitle: 'Vedic rituals consecrated at dawn',
-    category: 'Home Sanctum'
+    title: 'Vedic Chanting & Gurukulam Lineage',
+    subtitle: 'Preserving the oral shruti shastra tradition',
+    category: 'Vedic Wisdom'
   },
   {
-    id: 'm1-3',
-    url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-3',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.45.jpg?v=1793704004',
     type: 'image',
-    title: 'Kailash Mansarovar Parikrama',
-    subtitle: 'The cosmic axis of Lord Shiva',
+    title: 'Temple Architecture & Sacred Sanctums',
+    subtitle: 'Ancient stone carvings, mandapas & spires',
+    category: 'Sacred Heritage'
+  },
+  {
+    id: 'hos-media-4',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.43.jpg?v=1793704004',
+    type: 'image',
+    title: 'Himalayan Tapasya & High Pilgrimage',
+    subtitle: 'Meditative stillness amidst the cosmic peaks',
     category: 'Divine Circuit'
   },
   {
-    id: 'm1-4',
-    url: 'https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-5',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.55.30_2.jpg?v=1793704004',
     type: 'image',
-    title: 'Panchaloha Brass Sculptors',
-    subtitle: '5th-generation Vedic metallurgical guild',
-    category: 'Artisan Heritage'
+    title: 'Nitya Akhand Jyoti & Daily Pooja',
+    subtitle: 'Handcrafted bell metal diya illuminating dawn',
+    category: 'Home Sanctum'
   },
   {
-    id: 'm1-5',
-    url: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-6',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.55.30_1.jpg?v=1793704004',
     type: 'image',
-    title: 'Varanasi Ganga Maha Aarti',
-    subtitle: 'Evening twilight invocation of Maa Ganga',
-    category: 'Maha Aarti'
-  },
-  {
-    id: 'm1-6',
-    url: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80',
-    type: 'image',
-    title: 'Badrinath Garbhagriha Path',
-    subtitle: 'The eternal abode of Lord Badri Vishal',
-    category: 'Char Dham'
+    title: 'Consecrated Samagri & Vedic Dravyas',
+    subtitle: 'Purity tested Bhimseni camphor & Chandan',
+    category: 'Consecrated Samagri'
   }
 ];
 
 const MEDIA_ROW_2: MediaItem[] = [
   {
-    id: 'm2-1',
-    url: 'https://images.unsplash.com/photo-1516117172878-fd2c41f4a759?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-7',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.45_1.jpg?v=1793704004',
     type: 'image',
-    title: 'Sacred Agamic Puja Samagri',
-    subtitle: 'Lab-tested Kasturi, Chandan & Roli',
-    category: 'Consecrated Samagri'
-  },
-  {
-    id: 'm2-2',
-    url: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80',
-    type: 'image',
-    title: 'Puri Jagannath Grand Corridor',
-    subtitle: 'Maha Prasadam & sacred sea breeze',
+    title: 'Puri Jagannath Maha Prasadam',
+    subtitle: 'Divine communion & Anand Bazar traditions',
     category: 'Eastern Dham'
   },
   {
-    id: 'm2-3',
-    url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-8',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.55.32_4.jpg?v=1793704004',
     type: 'image',
-    title: 'Rameshwaram Agni Theertham',
-    subtitle: 'Consecrated dip in 22 sacred wells',
-    category: 'Southern Jyotirlinga'
+    title: 'Kedarnath & Badrinath Divine Path',
+    subtitle: 'High altitude pilgrimage across sacred snows',
+    category: 'Char Dham'
   },
   {
-    id: 'm2-4',
-    url: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-9',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_11.47.24.jpg?v=1793704004',
     type: 'image',
-    title: 'Ayodhya Saryu Ghat Sunrise',
-    subtitle: 'Bhakti immersion & morning chants',
+    title: 'Panchaloha Metallurgical Artisans',
+    subtitle: 'Generational bronze & brass sculpting guilds',
+    category: 'Artisan Heritage'
+  },
+  {
+    id: 'hos-media-10',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.43_1.jpg?v=1793704004',
+    type: 'image',
+    title: 'Ayodhya Saryu Maha Sandhya',
+    subtitle: 'Devotional immersion & sacred lamp offerings',
     category: 'Ram Janmabhoomi'
   },
   {
-    id: 'm2-5',
-    url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-11',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.43_2.jpg?v=1793704004',
     type: 'image',
-    title: 'Gomukh Glacier Yatra Path',
-    subtitle: 'Origin of Bhagirathi River',
-    category: 'Himalayan Tapasya'
-  },
-  {
-    id: 'm2-6',
-    url: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80',
-    type: 'image',
-    title: 'Somnath Sunset Jyotirlinga',
-    subtitle: 'The eternal shrine on the western shore',
-    category: 'First Jyotirlinga'
+    title: 'Rameshwaram Agni Theertham',
+    subtitle: 'Sacred cleansing waters of the southern sea',
+    category: 'Southern Jyotirlinga'
   }
 ];
 
 const MEDIA_ROW_3: MediaItem[] = [
   {
-    id: 'm3-1',
-    url: 'https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-12',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.59.45_2.jpg?v=1793704004',
     type: 'image',
-    title: 'Vedic Acharya Gurukulam',
-    subtitle: 'Oral lineage of Rigvedic chanting',
-    category: 'Shastra Parampara'
+    title: 'Gomukhi Gangajal & Snana Patra',
+    subtitle: 'Pure glacial stream sanctifying Vedic rituals',
+    category: 'Agamic Purity'
   },
   {
-    id: 'm3-2',
-    url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-13',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.55.32_3.jpg?v=1793704004',
     type: 'image',
-    title: 'Kamakhya Shakti Peeth Nilachal',
-    subtitle: 'Tantric empowerment & sacred red cloth',
-    category: 'Maha Peetham'
-  },
-  {
-    id: 'm3-3',
-    url: 'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=800&q=80',
-    type: 'image',
-    title: 'Vrindavan Nidhivan Sandhya',
-    subtitle: 'Radha Krishna devotional melodies',
+    title: 'Vrindavan Devotional Sangeet',
+    subtitle: 'Soulful kirtan and joyful community sangha',
     category: 'Braj Darshan'
   },
   {
-    id: 'm3-4',
-    url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-14',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.55.30_4.jpg?v=1793704004',
     type: 'image',
-    title: 'Kashi Vishwanath Corridor',
-    subtitle: 'Consecrated golden temple spires',
-    category: 'Moksha Puri'
+    title: 'Kamakhya & 51 Shakti Peethams',
+    subtitle: 'Awakened epicenters of the Divine Mother',
+    category: 'Maha Peetham'
   },
   {
-    id: 'm3-5',
-    url: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-15',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_11.05.41_1.jpg?v=1793704004',
     type: 'image',
-    title: 'Hampi Virupaksha Temple',
-    subtitle: 'Vijayanagara sacred architectural majesty',
-    category: 'Sacred Architecture'
+    title: 'Vedic Hawan & Fire Invocation',
+    subtitle: 'Purifying living spaces through Agni Deva',
+    category: 'Living Sanatan'
   },
   {
-    id: 'm3-6',
-    url: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80',
+    id: 'hos-media-16',
+    url: 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_08.55.32_2.jpg?v=1793704004',
     type: 'image',
-    title: 'Tirupati Venkateswara Hill',
-    subtitle: 'Seven sacred hills of Lord Govinda',
-    category: 'Kaliyuga Vaikuntha'
+    title: 'Bespoke Spiritual Sangha & Heritage',
+    subtitle: 'Connecting generations under one sacred House',
+    category: 'HOS Community'
   }
 ];
 
@@ -209,50 +193,27 @@ function SyncScrollSliderRow({
           return (
             <motion.div
               key={`${item.id}-${index}`}
-              whileHover={{ 
-                scale: 1.05, 
-                y: -6, 
-                filter: 'brightness(1.08)' 
+              whileHover={{
+                scale: 1.05,
+                y: -6,
+                filter: 'brightness(1.05)'
               }}
-              transition={{ 
-                type: 'spring', 
-                stiffness: 260, 
-                damping: 20, 
-                mass: 0.8 
+              transition={{
+                type: 'spring',
+                stiffness: 260,
+                damping: 20,
+                mass: 0.8
               }}
               onClick={() => onItemClick(item, index, rowIndex)}
               className="group relative cursor-pointer overflow-hidden shadow-[0_8px_20px_rgba(34,21,8,0.1)] sm:shadow-[0_12px_28px_rgba(34,21,8,0.12)] hover:shadow-[0_20px_40px_rgba(197,146,57,0.25)] border border-[#C59239]/40 select-none shrink-0 w-[190px] xs:w-[215px] sm:w-[320px] h-[120px] xs:h-[135px] sm:h-[200px] rounded-2xl sm:rounded-[22px]"
             >
-              {/* Image */}
+              {/* Pure Clean Image without any words or titles */}
               <img
                 src={item.url}
-                alt={item.title}
+                alt=""
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
               />
-
-              {/* Dark gradient vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none transition-opacity duration-300 group-hover:opacity-90" />
-
-              {/* Top Category Badge */}
-              <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[8.5px] sm:text-[10px] font-dm font-bold text-[#E4B968] uppercase tracking-wider shadow-xs">
-                {item.category}
-              </div>
-
-              {/* Hover Action Pill */}
-              <div className="absolute top-2 sm:top-3 right-2 sm:right-3 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/80 backdrop-blur-md text-[#FE7613] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 shadow-md">
-                <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-              </div>
-
-              {/* Bottom Caption */}
-              <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 z-10 text-white">
-                <h4 className="font-cormorant text-xs sm:text-lg font-semibold leading-tight line-clamp-1 group-hover:text-[#E4B968] transition-colors">
-                  {item.title}
-                </h4>
-                <p className="font-dm text-[9.5px] sm:text-[11px] text-stone-300 line-clamp-1 mt-0.5">
-                  {item.subtitle}
-                </p>
-              </div>
             </motion.div>
           );
         })}
@@ -322,10 +283,10 @@ export const MediaSection: React.FC = () => {
       id="media"
       className="relative w-full py-12 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
-      {/* Sacred River Ghats Dawn Panorama Backdrop */}
+      {/* Sacred Panorama Backdrop */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src="/sacred_ghats_bg.jpg"
+          src="https://cdn.shopify.com/s/files/1/0794/4516/4163/files/09688899-1a80-4059-8d51-694783941621.png?v=1794025059"
           alt=""
           className="w-full h-full object-cover object-center scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
         />
@@ -346,7 +307,7 @@ export const MediaSection: React.FC = () => {
       </div>
 
       {/* Subtle Sacred Geometry Texture Background */}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage: `radial-gradient(circle at 50% 50%, #C59239 1.2px, transparent 1.2px)`,
@@ -360,7 +321,7 @@ export const MediaSection: React.FC = () => {
 
       {/* Header Container */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8 sm:mb-16">
-        
+
         {/* Main Title */}
         <h2 className="font-cormorant text-3xl sm:text-6xl md:text-7xl font-semibold text-[#221508] tracking-tight leading-[0.92] uppercase">
           SANATANA MEDIA
@@ -445,33 +406,13 @@ export const MediaSection: React.FC = () => {
                   exit={{ opacity: 0, scale: 0.94, y: -12 }}
                   transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.45 }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative max-w-[90%] max-h-[82vh] rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.9)] border border-white/20 flex flex-col bg-[#140b05]"
+                  className="relative max-w-[92%] max-h-[88vh] rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.9)] border border-white/20 flex flex-col bg-[#140b05]"
                 >
                   <img
                     src={activeMedia.url}
-                    alt={activeMedia.title}
-                    className="max-w-full max-h-[72vh] object-contain"
+                    alt=""
+                    className="max-w-full max-h-[86vh] object-contain rounded-3xl"
                   />
-
-                  {/* Modal Bottom Inscription Bar */}
-                  <div className="p-4 sm:p-5 bg-gradient-to-t from-black via-black/90 to-black/40 border-t border-white/10 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                      <span className="text-[10px] font-dm font-bold uppercase tracking-widest text-[#E4B968] px-2.5 py-0.5 rounded-full bg-[#C59239]/25 border border-[#C59239]/50 inline-block mb-1">
-                        {activeMedia.category}
-                      </span>
-                      <h3 className="font-cormorant text-xl sm:text-2xl font-semibold text-white">
-                        {activeMedia.title}
-                      </h3>
-                      <p className="font-dm text-xs text-stone-300">
-                        {activeMedia.subtitle}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-stone-400 text-xs font-dm">
-                      <Sparkles className="w-3.5 h-3.5 text-[#FE7613]" />
-                      <span>House of Sanatan Archive</span>
-                    </div>
-                  </div>
                 </motion.div>
 
                 {/* Next Slide Button */}

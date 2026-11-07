@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Compass, HeartHandshake, Award } from 'lucide-react';
+import { Flame, Compass, HeartHandshake, Award, Sparkles } from 'lucide-react';
 
 export const SacredPromise: React.FC = () => {
   const promises = [

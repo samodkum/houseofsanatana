@@ -35,7 +35,7 @@ import { ProductDetailPage } from './ProductDetailPage';
 import { WishlistDrawer } from './WishlistDrawer';
 import { Footer } from './Footer';
 import { HeaderActionButtons } from './HeaderActionButtons';
-import { openShopifyAccount } from '../lib/shopify';
+import { openShopifyAccount, getShopifyPotlis, ShopifyProduct } from '../lib/shopify';
 import { DividerOrnamental } from './ui/SacredPatterns';
 
 interface SanatanaMallPageProps {
@@ -86,10 +86,97 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
   // Toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Horizontal scroll refs for the 3 sections
+  // Horizontal scroll refs for the sections
   const kitsScrollRef = useRef<HTMLDivElement>(null);
   const corporateScrollRef = useRef<HTMLDivElement>(null);
   const festivalScrollRef = useRef<HTMLDivElement>(null);
+  const potlisScrollRef = useRef<HTMLDivElement>(null);
+
+  // Shopify Potlis & Bags State
+  const [shopifyPotlis, setShopifyPotlis] = useState<MallProduct[]>([]);
+  const [isPotlisLoading, setIsPotlisLoading] = useState(true);
+
+  // Fetch real Bags & Potlis directly from Shopify Storefront API
+  useEffect(() => {
+    let isMounted = true;
+    async function loadPotlis() {
+      try {
+        setIsPotlisLoading(true);
+        const shopifyItems = await getShopifyPotlis(50);
+        if (!isMounted) return;
+
+        const converted: MallProduct[] = shopifyItems.map((item, idx) => {
+          const firstVariant = item.variants[0];
+          const rawPrice = firstVariant?.price?.amount
+            ? parseFloat(firstVariant.price.amount)
+            : (item.priceRange?.minVariantPrice ? parseFloat(item.priceRange.minVariantPrice.amount) : 500);
+
+          const comparePrice = firstVariant?.compareAtPrice?.amount
+            ? parseFloat(firstVariant.compareAtPrice.amount)
+            : (item.compareAtPriceRange?.minVariantPrice?.amount && parseFloat(item.compareAtPriceRange.minVariantPrice.amount) > rawPrice
+                ? parseFloat(item.compareAtPriceRange.minVariantPrice.amount)
+                : Math.round(rawPrice * 1.25));
+
+          const primaryImage = item.images[0]?.url || firstVariant?.image?.url || 'https://cdn.shopify.com/s/files/1/0794/4516/4163/files/WhatsApp_Image_2026-11-03_at_11.35.52_2.jpg?v=1793704004';
+          const additional = item.images.slice(1).map(img => img.url);
+
+          // Direct inventory and availability from Shopify
+          const isAvailable = Boolean(item.availableForSale ?? firstVariant?.availableForSale ?? true);
+          const quantityAvail = firstVariant?.quantityAvailable;
+          const inventoryBadge = !isAvailable
+            ? 'SOLD OUT'
+            : (quantityAvail !== undefined && quantityAvail !== null && quantityAvail <= 5 && quantityAvail > 0
+                ? `ONLY ${quantityAvail} LEFT`
+                : (item.tags && item.tags.length > 0 ? item.tags[0].toUpperCase() : (idx % 2 === 0 ? 'CONSECRATED' : 'HANDLOOM')));
+
+          return {
+            id: item.id,
+            variantId: firstVariant?.id,
+            title: item.title,
+            subtitle: item.productType || 'Consecrated Ritual Handloom Potli Bag',
+            category: 'puja-essentials' as MallCategoryType,
+            categoryLabel: (item.productType || 'SACRED POTLIS & BAGS').toUpperCase(),
+            price: rawPrice,
+            originalPrice: comparePrice,
+            rating: 4.9,
+            reviewsCount: 18 + (idx * 3),
+            image: primaryImage,
+            additionalImages: additional.length > 0 ? additional : undefined,
+            badge: inventoryBadge,
+            consecratedAt: 'Kashi Vishwanath & Haridwar Sanctums',
+            originLocation: item.vendor || 'Varanasi Weavers Guild, Bharat',
+            shortDesc: item.description || 'Pure handwoven consecrated potli bag lined with sacred raw silk, crafted specifically for safekeeping puja samagri, sacred malas, yantras, and prasad.',
+            fullDesc: item.descriptionHtml || item.description || 'Each sacred potli is crafted using unadulterated handspun fabric and blessed in traditional sanctums. Ideal for holding japa malas, sacred vigrahas during yatra, consecrated coins, and sacred offerings with supreme spiritual sanctity.',
+            idealFor: 'Safekeeping sacred malas, temple coins, rudrakshas, puja dravyas, and travel sadhana.',
+            weightGrams: 85,
+            inStock: isAvailable,
+            material: 'Mixed Materials' as MallMaterialType,
+            occasion: 'Daily Worship' as MallOccasionType,
+            itemsIncluded: [
+              { name: 'Pure Handwoven Potli Bag', significance: 'Protection of energized sacred items', origin: item.vendor || 'Kashi' },
+              { name: 'Consecrated Raksha Thread & Bell Pulls', significance: 'Auspicious ritual tie', origin: 'Haridwar' }
+            ],
+            specifications: [
+              { label: 'Craft Technique', value: 'Heritage Handloom Weaving' },
+              { label: 'Closure', value: 'Traditional Drawstring with Tassels' },
+              { label: 'Inventory Status', value: isAvailable ? (quantityAvail ? `${quantityAvail} In Stock` : 'Available') : 'Out of Stock' },
+              { label: 'Vendor / Guild', value: item.vendor || 'House of Sanatana' },
+              { label: 'Sanctum Blessed', value: 'Peetham Certified' }
+            ]
+          };
+        });
+
+        setShopifyPotlis(converted);
+      } catch (err) {
+        console.error('Failed to load Shopify potlis:', err);
+      } finally {
+        if (isMounted) setIsPotlisLoading(false);
+      }
+    }
+
+    loadPotlis();
+    return () => { isMounted = false; };
+  }, []);
 
   const scrollHorizontally = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
@@ -127,7 +214,7 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
       const hash = window.location.hash;
       if (hash.startsWith('#product-')) {
         const prodId = hash.replace('#product-', '');
-        const found = MALL_PRODUCTS.find(p => p.id === prodId);
+        const found = MALL_PRODUCTS.find(p => p.id === prodId) || shopifyPotlis.find(p => p.id === prodId);
         if (found) {
           setSelectedProduct(found);
           return;
@@ -140,7 +227,7 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
     handleHash();
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
+  }, [shopifyPotlis]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -316,6 +403,7 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
     if (e) e.stopPropagation();
     const asPoojaKit: PoojaKit = {
       id: prod.id,
+      variantId: prod.variantId,
       title: prod.title,
       subtitle: prod.subtitle,
       category: prod.category === 'gift-sets' ? 'daily' : 'festival',
@@ -452,6 +540,38 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
     [searchQuery, selectedMaterials, minPrice, maxPrice, selectedRating, availability, sortBy]
   );
 
+  // Filter Shopify Potlis respecting active search & filter states
+  const filteredPotlisProducts = useMemo(() => {
+    return shopifyPotlis.filter(product => {
+      // Search query
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const matches =
+          product.title.toLowerCase().includes(q) ||
+          product.subtitle.toLowerCase().includes(q) ||
+          product.shortDesc.toLowerCase().includes(q);
+        if (!matches) return false;
+      }
+
+      // Price filter
+      if (product.price < minPrice || product.price > maxPrice) {
+        return false;
+      }
+
+      // Rating filter
+      if (selectedRating !== null && product.rating < selectedRating) {
+        return false;
+      }
+
+      return true;
+    }).sort((a, b) => {
+      if (sortBy === 'price-low') return a.price - b.price;
+      if (sortBy === 'price-high') return b.price - a.price;
+      if (sortBy === 'rating') return b.rating - a.rating;
+      return 0;
+    });
+  }, [shopifyPotlis, searchQuery, minPrice, maxPrice, selectedRating, sortBy]);
+
   // Render a single product card inside horizontal carousel with on-scroll entrance animation
   const renderProductCard = (product: MallProduct, index: number = 0) => {
     const isWishlisted = wishlistIds.has(product.id);
@@ -542,24 +662,33 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
           </div>
         </div>
 
-        {/* Action CTA Buttons (Curvy Capsule Buttons) */}
-        <div className="mt-2.5 pt-2.5 border-t border-[#C59239]/20 grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={(e) => handleAddToCartClick(product, e)}
-            className="w-full py-2 px-2 rounded-full bg-white hover:bg-[#98555E] text-[#98555E] hover:text-[#FEFBF2] border border-[#98555E]/40 hover:border-[#98555E] text-[10px] sm:text-[11px] font-dm font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all cursor-pointer active:scale-95 shadow-2xs"
-          >
-            <ShoppingCart className="w-3.5 h-3.5" />
-            <span>Add</span>
-          </button>
+        {/* Action CTA Buttons (Curvy Capsule Buttons or Out of Stock) */}
+        <div className="mt-2.5 pt-2.5 border-t border-[#C59239]/20">
+          {!product.inStock ? (
+            <div className="w-full py-2 px-3 rounded-full bg-[#3D2619]/10 border border-[#3D2619]/20 text-[#3D2619]/70 text-[10px] sm:text-[11px] font-dm font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-not-allowed select-none">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#98555E]/70" />
+              <span>Out of Stock</span>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={(e) => handleAddToCartClick(product, e)}
+                className="w-full py-2 px-2 rounded-full bg-white hover:bg-[#98555E] text-[#98555E] hover:text-[#FEFBF2] border border-[#98555E]/40 hover:border-[#98555E] text-[10px] sm:text-[11px] font-dm font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all cursor-pointer active:scale-95 shadow-2xs"
+              >
+                <ShoppingCart className="w-3.5 h-3.5" />
+                <span>Add</span>
+              </button>
 
-          <button
-            type="button"
-            onClick={(e) => handleBuyNowClick(product, e)}
-            className="w-full py-2 px-2 rounded-full bg-[#51000F] hover:bg-[#742A35] text-white text-[10px] sm:text-[11px] font-dm font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all cursor-pointer active:scale-95 shadow-[0_3px_12px_rgba(81,0,15,0.3)]"
-          >
-            <span>Buy Now</span>
-          </button>
+              <button
+                type="button"
+                onClick={(e) => handleBuyNowClick(product, e)}
+                className="w-full py-2 px-2 rounded-full bg-[#51000F] hover:bg-[#742A35] text-white text-[10px] sm:text-[11px] font-dm font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all cursor-pointer active:scale-95 shadow-[0_3px_12px_rgba(81,0,15,0.3)]"
+              >
+                <span>Buy Now</span>
+              </button>
+            </div>
+          )}
         </div>
       </motion.div>
     );
@@ -844,13 +973,13 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
             <button
               type="button"
               onClick={() => {
-                document.getElementById('section-festival-kits')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('section-bags-potlis')?.scrollIntoView({ behavior: 'smooth' });
               }}
               className="px-4 py-2 rounded-full text-xs font-dm font-bold transition-all cursor-pointer bg-white/90 hover:bg-[#0A4C83] text-[#221508] hover:text-white border border-[#C59239]/40 hover:border-[#0A4C83] shadow-2xs whitespace-nowrap flex items-center gap-1.5 active:scale-95"
             >
               <span className="text-[#C59239]">✦</span>
-              <span>Festival Kits</span>
-              <span className="text-[10px] opacity-75 font-normal">({festivalProducts.length})</span>
+              <span>Bags & Potlis</span>
+              <span className="text-[10px] opacity-75 font-normal">({filteredPotlisProducts.length})</span>
             </button>
           </div>
 
@@ -1058,43 +1187,43 @@ export const SanatanaMallPage: React.FC<SanatanaMallPageProps> = ({
           corporateScrollRef
         )}
 
-        {/* SECTION 3: FESTIVAL KITS */}
+        {/* SECTION 3: BAGS & POTLIS (DIRECT FROM SHOPIFY) */}
         {renderSectionCarousel(
-          'section-festival-kits',
+          'section-bags-potlis',
           <div className="text-center max-w-4xl mx-auto px-4">
             {/* Top Meta Tag */}
             <div className="flex items-center justify-center gap-2 mb-2 sm:mb-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#98555E]"></span>
-              <span className="text-[10px] sm:text-xs font-dm font-bold uppercase tracking-[0.25em] text-[#98555E]">
-                03 • MAHA UTSAV CELEBRATIONS
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0A4C83]"></span>
+              <span className="text-[10px] sm:text-xs font-dm font-bold uppercase tracking-[0.25em] text-[#0A4C83]">
+                03 • SACRED SANGRAHA
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#98555E]"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0A4C83]"></span>
             </div>
 
-            {/* Exactly 2 Lines Typography at balanced scale */}
+            {/* Exactly 2 Lines Typography */}
             <h2 className="font-montserrat font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#221508] uppercase tracking-[-0.02em] leading-tight">
               <span className="block">
-                AUSPICIOUS FESTIVAL KITS FOR
+                HANDCRAFTED VEDIC BAGS &
               </span>
               <span className="block mt-1">
-                SACRED UTSAVS
-                <span className="inline-flex items-center justify-center align-middle mx-2 sm:mx-2.5 h-6 sm:h-7.5 px-2.5 rounded-full bg-gradient-to-r from-[#FE7613] to-[#C23053] text-white shadow-xs border border-[#FE7613]/50 overflow-hidden transform -translate-y-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FEFBF2] mr-1.5 animate-pulse"></span>
-                  <span className="text-[9px] sm:text-[10px] font-dm font-bold tracking-widest text-[#FEFBF2] uppercase">Utsav</span>
+                SACRED POTLIS
+                <span className="inline-flex items-center justify-center align-middle mx-2 sm:mx-2.5 h-6 sm:h-7.5 px-2.5 rounded-full bg-gradient-to-r from-[#0A4C83] to-[#1E3A8A] text-white shadow-xs border border-[#C59239]/50 overflow-hidden transform -translate-y-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#E4B968] mr-1.5 animate-pulse"></span>
+                  <span className="text-[9px] sm:text-[10px] font-dm font-bold tracking-widest text-[#FEFBF2] uppercase">Live Store</span>
                 </span>
-                <span className="text-[#98555E]">— BLESSINGS THAT ENDURE</span>
+                <span className="text-[#0A4C83]">— FOR JAPA & OFFERINGS</span>
               </span>
             </h2>
 
             {/* Subtext */}
             <p className="font-dm text-xs sm:text-sm text-[#3D2619] max-w-xl mx-auto mt-2.5 leading-relaxed">
-              Opulent ceremonial sets prepared under temple guidance for grand Diwali, Navratri, Shivratri & home anushthans.
+              Consecrated handloom silk and raw cotton potlis fetched live from our sacred sanctum collection for keeping japa malas, puja samagri, and temple offerings untouched and pure.
             </p>
           </div>,
-          'Festival Kits',
-          'bg-gradient-to-br from-[#FDF0F3] via-[#F8D4DE] to-[#EEB2C0] shadow-[0_20px_45px_rgba(152,85,94,0.2)]',
-          festivalProducts,
-          festivalScrollRef
+          'Bags & Potlis',
+          'bg-gradient-to-br from-[#E6EEF8] via-[#CFE2F7] to-[#B8D5F4] shadow-[0_20px_45px_rgba(10,76,131,0.18)]',
+          filteredPotlisProducts,
+          potlisScrollRef
         )}
 
       </main>

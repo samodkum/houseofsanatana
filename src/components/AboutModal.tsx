@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { X, Sparkles, Shield, Compass, HeartHandshake, Award, Sun, CheckCircle2, MapPin } from 'lucide-react';
 import { MandalaGeometry, LotusLineArt } from './ui/SacredPatterns';
+import { HOS_LOGO_URL } from '../lib/constants';
 
 interface AboutModalProps {
   isOpen: boolean;
@@ -52,9 +53,18 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               <Sun className="w-3.5 h-3.5 text-[#3DB3E4]" />
               <span>॥ सत्यं धर्म सनातन ॥ &bull; ABOUT THE SANCTUM</span>
             </div>
-            <h2 className="font-cormorant text-2xl sm:text-3xl font-semibold text-[#221508]">
-              The House of Sanatan
-            </h2>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full overflow-hidden border border-[#C59239]/60 flex items-center justify-center bg-[#36050e] shadow-xs shrink-0">
+                <img
+                  src={HOS_LOGO_URL}
+                  alt="The House of Sanatana"
+                  className="w-full h-full object-contain rounded-full"
+                />
+              </div>
+              <h2 className="font-cormorant text-2xl sm:text-3xl font-semibold text-[#221508]">
+                The House of Sanatana
+              </h2>
+            </div>
           </div>
 
           <button
@@ -68,113 +78,149 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="p-6 sm:p-10 overflow-y-auto space-y-8 text-[#221508] font-dm">
+        <div className="p-6 sm:p-10 overflow-y-auto space-y-10 text-[#221508] font-dm">
           
-          {/* Hero Story Banner */}
-          <div className="relative rounded-2xl overflow-hidden border border-[#C59239]/30 shadow-md">
-            <img 
-              src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=80"
-              alt="Sacred Aarti on the ghats of Varanasi"
-              className="w-full h-56 sm:h-64 object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#221508]/90 via-[#221508]/40 to-transparent" />
-            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-              <span className="font-sanskrit text-[#3DB3E4] text-sm font-semibold block mb-1">
-                ॥ धर्म एव हतो हन्ति धर्मो रक्षति रक्षितः ॥
-              </span>
-              <p className="text-xs sm:text-sm text-[#FEFBF2] italic max-w-xl font-dm">
-                "Dharma protects those who uphold it. In every sacred flame, every mantra, and every pilgrimage across Bharat, the divine heritage endures."
-              </p>
+          {/* 1. ABOUT US: Hero Story Banner */}
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 text-xs font-dm font-bold tracking-widest text-[#98555E] uppercase">
+              <Sparkles className="w-4 h-4 text-[#C59239]" />
+              <span>ABOUT US &bull; A TIMELESS WAY FORWARD</span>
             </div>
-          </div>
-
-          {/* Detailed Founding Story */}
-          <div className="space-y-4 text-xs sm:text-sm text-[#221508] leading-relaxed font-dm font-medium">
-            <h3 className="font-cormorant text-2xl font-semibold text-[#221508] flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#3DB3E4]" />
-              <span>Our Sacred Genesis</span>
+            <h3 className="font-cormorant text-2xl sm:text-4xl font-semibold text-[#221508] leading-tight">
+              A House Built on Heritage. Designed for the Future.
             </h3>
-            <p>
-              <strong className="text-[#221508]">House of Sanatan</strong> was established with an unyielding vow: to bridge ancient Vedic sanctity with modern seekers. In an era where commercialization has diluted ritual purity—replacing natural forest resins with synthetic perfumes, and turning sacred pilgrimages into chaotic logistical struggles—we created an uncompromised sanctuary.
+            <p className="text-sm sm:text-base text-[#3D2619] leading-relaxed font-normal">
+              Sanatana Dharma has shaped civilisations with timeless wisdom. House of Sanatana was born from a clear conviction: this extraordinary heritage deserves more than preservation — it deserves a vital, powerful place in the future.
             </p>
-            <p>
-              We collaborate directly with venerable peethams in <strong>Varanasi, Kashi Vishwanath, Pashupatinath, and Haridwar</strong>, where Vedic scholars and Acharyas supervise the consecration of every brass vigraha, silver yantra, and 100% natural samagri batch.
+            <p className="text-sm sm:text-base text-[#3D2619] leading-relaxed font-normal">
+              We are building a global ecosystem where faith, culture, knowledge, commerce, and innovation unite under one House. Through Sanatana Mall, curated spiritual journeys, cultural storytelling, community programmes, and digital platforms, we connect the living dimensions of dharma — accessible, relevant, and deeply authentic.
             </p>
-          </div>
-
-          {/* Vision & Mission Core */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-5 rounded-2xl bg-white/80 border border-[#3DB3E4]/30 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-[#3DB3E4]/15 text-[#3DB3E4] flex items-center justify-center mb-3">
-                <Sun className="w-5 h-5" />
-              </div>
-              <h4 className="font-cormorant text-xl font-semibold text-[#221508] mb-2">Our Vision</h4>
-              <p className="text-xs text-[#221508] leading-relaxed font-dm font-medium">
-                To be the world’s pre-eminent spiritual sanctuary where authentic Vedic wisdom, Agamic sanctity, and temple-grade rituals are preserved in unadulterated purity for generations to come.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white/80 border border-[#C59239]/30 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-[#C59239]/15 text-[#C59239] flex items-center justify-center mb-3">
-                <Award className="w-5 h-5" />
-              </div>
-              <h4 className="font-cormorant text-xl font-semibold text-[#221508] mb-2">Our Mission</h4>
-              <p className="text-xs text-[#221508] leading-relaxed font-dm font-medium">
-                To empower 10 Million households across the globe with consecrated daily pooja samagri, ethical fair-trade artisan crafts, and transformative, elder-first pilgrimage care across Bharat.
-              </p>
+            <div className="p-4 rounded-2xl bg-[#FEFBF2] border border-[#C59239]/30 text-xs sm:text-sm text-[#221508] font-medium italic">
+              "A House where traditions are not merely inherited, but understood, lived, and carried forward with conviction."
             </div>
           </div>
 
-          {/* 3 Pillars of Authenticity */}
-          <div>
-            <h3 className="font-cormorant text-2xl font-semibold text-[#221508] mb-4 flex items-center gap-2">
-              <Shield className="w-4 h-4 text-[#98555E]" />
-              <span>The Three Pillars of The House</span>
+          {/* 2. OUR STORY: An Idea Became a Purpose */}
+          <div className="pt-6 border-t border-[#C59239]/20 space-y-4">
+            <div className="inline-flex items-center gap-2 text-xs font-dm font-bold tracking-widest text-[#FE7613] uppercase">
+              <Sun className="w-4 h-4 text-[#FE7613]" />
+              <span>OUR STORY &bull; 2024 TO 2025 & BEYOND</span>
+            </div>
+            <h3 className="font-cormorant text-2xl sm:text-3xl font-semibold text-[#221508]">
+              An Idea Became a Purpose. A Purpose Became a House.
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-white/80 border border-[#98555E]/30 shadow-xs">
-                <CheckCircle2 className="w-5 h-5 text-[#98555E] mb-2" />
-                <h5 className="font-cormorant text-base font-semibold text-[#221508] mb-1">100% Vedic Agamic</h5>
-                <p className="text-[11px] text-[#221508] font-dm font-medium">
-                  Zero paraffin, synthetic fragrances, or animal derivatives. Pure Bhimseni camphor, natural resins & cow ghee.
+            <p className="text-xs sm:text-sm text-[#3D2619] leading-relaxed font-normal">
+              The beginnings were personal. Following a transformative spiritual journey in late 2024, a pivotal question emerged: <em>In a world advancing at extraordinary speed, why should connecting with our own traditions still feel so fragmented?</em>
+            </p>
+            <p className="text-xs sm:text-sm text-[#3D2619] leading-relaxed font-normal">
+              We saw the distance between devotion and accessibility — sacred customs repeated without their deeper meaning, rich traditions made distant by logistical friction. In 2025, that realization took shape: technology, thoughtful enterprise, and collective creativity could unite these worlds.
+            </p>
+            <p className="text-xs sm:text-sm text-[#3D2619] leading-relaxed font-normal">
+              We envisioned far more than a marketplace or travel service. We set out to build a House that accompanies the entire spiritual journey — from curiosity to knowledge, faith to direct experience, and individual participation to collective progress.
+            </p>
+          </div>
+
+          {/* 3. WHERE WE ARE GOING: 4 Pillars of the Ecosystem */}
+          <div className="pt-6 border-t border-[#C59239]/20 space-y-5">
+            <div className="inline-flex items-center gap-2 text-xs font-dm font-bold tracking-widest text-[#0A4C83] uppercase">
+              <Compass className="w-4 h-4 text-[#3DB3E4]" />
+              <span>WHERE WE ARE GOING &bull; GLOBAL VISION</span>
+            </div>
+            <h3 className="font-cormorant text-2xl sm:text-3xl font-semibold text-[#221508]">
+              One House. A Global Vision. Generations of Possibility.
+            </h3>
+            <p className="text-xs sm:text-sm text-[#3D2619] leading-relaxed font-normal">
+              Our vision is to establish House of Sanatana as a global institution where sacred living extends naturally into everyday life — uniting traditions with technology across borders.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 sm:p-5 rounded-2xl bg-white/80 border border-[#98555E]/30 shadow-xs">
+                <span className="font-dm font-bold text-[10.5px] uppercase tracking-wider text-[#98555E] block mb-1">
+                  [ 01 ] Sanatana Mall
+                </span>
+                <h4 className="font-cormorant text-lg font-semibold text-[#221508] mb-1">
+                  Everyday Sacred Living
+                </h4>
+                <p className="text-xs text-[#3D2619]/90 leading-relaxed font-normal">
+                  Consecrated ritual essentials, handcrafted brassware, festival collections, and thoughtful gifting for contemporary homes worldwide.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/80 border border-[#3DB3E4]/30 shadow-xs">
-                <Compass className="w-5 h-5 text-[#3DB3E4] mb-2" />
-                <h5 className="font-cormorant text-base font-semibold text-[#221508] mb-1">Dharmic Pilgrimage</h5>
-                <p className="text-[11px] text-[#221508] font-dm font-medium">
-                  Pre-cleared VIP garbhagriha darshans, luxury sanitized transit, dedicated medical support & elder care.
+              <div className="p-4 sm:p-5 rounded-2xl bg-white/80 border border-[#0A4C83]/30 shadow-xs">
+                <span className="font-dm font-bold text-[10.5px] uppercase tracking-wider text-[#0A4C83] block mb-1">
+                  [ 02 ] HOS Travel
+                </span>
+                <h4 className="font-cormorant text-lg font-semibold text-[#221508] mb-1">
+                  Curated Sacred Yatras
+                </h4>
+                <p className="text-xs text-[#3D2619]/90 leading-relaxed font-normal">
+                  Connecting Jyotirlingas, Shakti Peethas, and Himalayan shrines with story-led routes, verified stays, and stress-free pilgrim coordination.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/80 border border-[#607427]/30 shadow-xs">
-                <HeartHandshake className="w-5 h-5 text-[#607427] mb-2" />
-                <h5 className="font-cormorant text-base font-semibold text-[#221508] mb-1">Temple Artisan Seva</h5>
-                <p className="text-[11px] text-[#221508] font-dm font-medium">
-                  Fair remuneration supporting 300+ hereditary sculptors, brass casters, and Vedic scholars across Bharat.
+              <div className="p-4 sm:p-5 rounded-2xl bg-white/80 border border-[#607427]/30 shadow-xs">
+                <span className="font-dm font-bold text-[10.5px] uppercase tracking-wider text-[#607427] block mb-1">
+                  [ 03 ] Knowledge & Digital Innovation
+                </span>
+                <h4 className="font-cormorant text-lg font-semibold text-[#221508] mb-1">
+                  Living Dharmic Wisdom
+                </h4>
+                <p className="text-xs text-[#3D2619]/90 leading-relaxed font-normal">
+                  Unlocking timeless wisdom for new generations through cultural storytelling, learning modules, and future intelligent platforms.
+                </p>
+              </div>
+
+              <div className="p-4 sm:p-5 rounded-2xl bg-white/80 border border-[#FE7613]/30 shadow-xs">
+                <span className="font-dm font-bold text-[10.5px] uppercase tracking-wider text-[#FE7613] block mb-1">
+                  [ 04 ] HOS Community & Co-Create
+                </span>
+                <h4 className="font-cormorant text-lg font-semibold text-[#221508] mb-1">
+                  Shared Growth & Culture
+                </h4>
+                <p className="text-xs text-[#3D2619]/90 leading-relaxed font-normal">
+                  Bringing families, creators, scholars, and enterprises together through events, paid creative initiatives, and cultural collaborations.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Sanctuary Footprint Stats */}
-          <div className="pt-6 border-t border-[#C59239]/20 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-            <div>
-              <span className="font-cormorant text-3xl sm:text-4xl font-semibold text-[#FE7613] block">50,000+</span>
-              <span className="text-[10px] text-[#221508]/70 font-semibold uppercase tracking-wider font-dm">Devotees Blessed</span>
+          {/* 4. OUR GREATEST AMBITION: Growing with our family */}
+          <div className="pt-6 border-t border-[#C59239]/20 space-y-4">
+            <div className="inline-flex items-center gap-2 text-xs font-dm font-bold tracking-widest text-[#C59239] uppercase">
+              <HeartHandshake className="w-4 h-4 text-[#C59239]" />
+              <span>OUR GREATEST AMBITION &bull; GROWING WITH OUR FAMILY</span>
             </div>
-            <div>
-              <span className="font-cormorant text-3xl sm:text-4xl font-semibold text-[#3DB3E4] block">108</span>
-              <span className="text-[10px] text-[#221508]/70 font-semibold uppercase tracking-wider font-dm">Temple Peethams</span>
-            </div>
-            <div>
-              <span className="font-cormorant text-3xl sm:text-4xl font-semibold text-[#607427] block">100%</span>
-              <span className="text-[10px] text-[#221508]/70 font-semibold uppercase tracking-wider font-dm">Lab Tested Purity</span>
-            </div>
-            <div>
-              <span className="font-cormorant text-3xl sm:text-4xl font-semibold text-[#C59239] block">24/7</span>
-              <span className="text-[10px] text-[#221508]/70 font-semibold uppercase tracking-wider font-dm">Pilgrimage Care</span>
+            <h3 className="font-cormorant text-2xl sm:text-3xl font-semibold text-[#221508]">
+              Measured Not by Numbers, but by People.
+            </h3>
+            <p className="text-xs sm:text-sm text-[#3D2619] leading-relaxed font-normal">
+              The true strength of House of Sanatana will never be measured solely by products sold or pilgrimages organized. It will be measured by the lives we touch and the people who grow with us.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white/60 border border-[#C59239]/20">
+                <CheckCircle2 className="w-4 h-4 text-[#C59239] shrink-0 mt-0.5" />
+                <p className="text-xs text-[#3D2619] font-normal leading-relaxed">
+                  <strong className="text-[#221508]">Active Participation:</strong> Helping seekers become engaged participants in their heritage.
+                </p>
+              </div>
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white/60 border border-[#C59239]/20">
+                <CheckCircle2 className="w-4 h-4 text-[#C59239] shrink-0 mt-0.5" />
+                <p className="text-xs text-[#3D2619] font-normal leading-relaxed">
+                  <strong className="text-[#221508]">Creator Opportunities:</strong> Providing young creators a platform for their talent and livelihoods.
+                </p>
+              </div>
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white/60 border border-[#C59239]/20">
+                <CheckCircle2 className="w-4 h-4 text-[#C59239] shrink-0 mt-0.5" />
+                <p className="text-xs text-[#3D2619] font-normal leading-relaxed">
+                  <strong className="text-[#221508]">Meaningful Careers:</strong> Offering professionals and entrepreneurs avenues to build lasting value.
+                </p>
+              </div>
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white/60 border border-[#C59239]/20">
+                <CheckCircle2 className="w-4 h-4 text-[#C59239] shrink-0 mt-0.5" />
+                <p className="text-xs text-[#3D2619] font-normal leading-relaxed">
+                  <strong className="text-[#221508]">Lasting Legacy:</strong> Where participation leads to contribution, and contribution opens doors to opportunity.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -182,9 +228,8 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
 
         {/* Modal Footer */}
         <div className="p-4 sm:p-6 bg-[#0A4C83] border-t border-[#C59239]/30 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
-          <span className="text-xs text-[#E4B968] font-dm flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-[#3DB3E4]" />
-            Sanctums in Varanasi &bull; Haridwar &bull; Bengaluru
+          <span className="text-xs text-[#E4B968] font-dm tracking-wider uppercase font-semibold">
+            House of Sanatana &bull; A Timeless Way Forward
           </span>
           <button
             type="button"

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { YatraPackage } from '../types/homepage';
 import { EXPANDED_TRAVEL_PACKAGES, YatraCircuitType } from '../data/travelData';
-import cleanBharatMapImg from '../../clean_bharat_map.png';
+import cleanBharatMapImg from '../assets/clean_bharat_map.png';
 
 export interface BharatMapYatraPin {
   id: string;
@@ -204,7 +204,7 @@ function useTransparentCleanMap(sourceUrl: string) {
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        
+
         if (!ctx) {
           if (!isCancelled) {
             setCleanSrc(sourceUrl);
@@ -418,7 +418,7 @@ export function BharatYatraMapSection({
       {/* Top & Bottom Soft Fade */}
       <div className="absolute top-0 inset-x-0 h-16 pointer-events-none z-1 bg-gradient-to-b from-[#FEFBF2] to-transparent" />
       <div className="absolute bottom-0 inset-x-0 h-16 pointer-events-none z-1 bg-gradient-to-t from-[#FEFBF2] to-transparent" />
-      
+
       {/* Centered Antique Manuscript Title */}
       <div className="relative z-10 text-center max-w-2xl mx-auto mb-6 sm:mb-10">
         <div className="flex items-center justify-center gap-2.5 mb-2">
@@ -438,15 +438,14 @@ export function BharatYatraMapSection({
 
       {/* Centered Antique Indian Map Container */}
       <div className="relative z-10 w-full max-w-xl sm:max-w-2xl lg:max-w-3xl aspect-square mx-auto flex items-center justify-center">
-        
+
         {/* Clean Antique Indian Map Artwork Floating over Celestial Watermark */}
         {cleanSrc ? (
           <img
             src={cleanSrc}
             alt="Sacred Map of Bharat"
-            className={`w-full h-full object-contain select-none transition-all duration-500 ${
-              isReady ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`w-full h-full object-contain select-none transition-all duration-500 ${isReady ? 'opacity-100' : 'opacity-0'
+              }`}
             style={{
               mixBlendMode: 'multiply',
               filter: 'contrast(1.18) brightness(1.06) sepia(0.18) drop-shadow(0 20px 35px rgba(35,14,4,0.45))',
@@ -469,9 +468,8 @@ export function BharatYatraMapSection({
                 left: `${pin.xPercent}%`,
                 top: `${pin.yPercent}%`,
               }}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto transition-zIndex ${
-                isHovered ? 'z-40' : 'z-20'
-              }`}
+              className={`absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto transition-zIndex ${isHovered ? 'z-40' : 'z-20'
+                }`}
             >
               <motion.div
                 whileHover={isLaptop ? {
@@ -487,9 +485,8 @@ export function BharatYatraMapSection({
               >
                 {/* Circular Temple/Deity Frame with Golden Double Rim (No Numbers) */}
                 <div className="relative flex items-center justify-center">
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-[#D4B086] ring-2 ring-[#38271A] shadow-[0_5px_14px_rgba(0,0,0,0.38)] transition-all duration-300 bg-[#26201B] ${
-                    isHovered ? 'ring-[#E8B84B] border-[#F5D061] shadow-[0_0_22px_rgba(232,184,75,0.85)]' : ''
-                  }`}>
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-[#D4B086] ring-2 ring-[#38271A] shadow-[0_5px_14px_rgba(0,0,0,0.38)] transition-all duration-300 bg-[#26201B] ${isHovered ? 'ring-[#E8B84B] border-[#F5D061] shadow-[0_0_22px_rgba(232,184,75,0.85)]' : ''
+                    }`}>
                     <img
                       src={pin.image}
                       alt={pin.title}
@@ -502,9 +499,8 @@ export function BharatYatraMapSection({
                 </div>
 
                 {/* Elegant Rounded Yatra Pill Card directly under circle */}
-                <div className={`-mt-1 sm:-mt-1.5 min-w-[82px] sm:min-w-[105px] md:min-w-[120px] max-w-[115px] sm:max-w-[138px] md:max-w-[155px] px-2 sm:px-2.5 py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#2A1D13] via-[#1E140C] to-[#140D07] border border-[#C59239]/80 shadow-[0_5px_16px_rgba(0,0,0,0.48)] text-center transition-all duration-300 ${
-                  isHovered ? 'border-[#E4B968] shadow-[0_0_20px_rgba(197,146,57,0.6)] bg-gradient-to-b from-[#3A281A] via-[#2A1D13] to-[#1C130B]' : ''
-                }`}>
+                <div className={`-mt-1 sm:-mt-1.5 min-w-[82px] sm:min-w-[105px] md:min-w-[120px] max-w-[115px] sm:max-w-[138px] md:max-w-[155px] px-2 sm:px-2.5 py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#2A1D13] via-[#1E140C] to-[#140D07] border border-[#C59239]/80 shadow-[0_5px_16px_rgba(0,0,0,0.48)] text-center transition-all duration-300 ${isHovered ? 'border-[#E4B968] shadow-[0_0_20px_rgba(197,146,57,0.6)] bg-gradient-to-b from-[#3A281A] via-[#2A1D13] to-[#1C130B]' : ''
+                  }`}>
                   {/* Temple / Yatra Title */}
                   <span className="block text-[7.5px] sm:text-[8.5px] md:text-[9.5px] font-dm font-black text-white tracking-wide leading-tight line-clamp-1 uppercase">
                     {pin.title}

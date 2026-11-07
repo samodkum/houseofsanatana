@@ -23,7 +23,7 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
       num: digitMode === '123' ? '1' : '3',
       color: '#3DB3E4', // Sacred Water Blue
       title: 'Sacred Pooja Kits',
-      image: '/@fs/C:/Users/Anjal/.gemini/antigravity-ide/brain/c650d01c-2fcb-423d-a351-1d218e575db7/category_pooja_kit_1790488501548.jpg',
+      image: 'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=800&q=85',
       fallback: 'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=800&q=85',
       targetId: 'section-category-grid',
       tiltClass: '-rotate-6 group-hover:-rotate-2',
@@ -33,7 +33,7 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
       num: digitMode === '123' ? '2' : '6',
       color: '#C59239', // Temple Gold
       title: 'Devalaya Vigrahas',
-      image: '/@fs/C:/Users/Anjal/.gemini/antigravity-ide/brain/c650d01c-2fcb-423d-a351-1d218e575db7/category_murti_vigraha_1790488518838.jpg',
+      image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=85',
       fallback: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=85',
       targetId: 'section-category-grid',
       tiltClass: 'rotate-0 group-hover:scale-105',
@@ -43,7 +43,7 @@ export const ThreeCategoryShowcase: React.FC<ThreeCategoryShowcaseProps> = ({
       num: digitMode === '123' ? '3' : '9',
       color: '#607427', // Mountain / Bilva Green
       title: 'Vedic Dravyas',
-      image: '/@fs/C:/Users/Anjal/.gemini/antigravity-ide/brain/c650d01c-2fcb-423d-a351-1d218e575db7/category_vedic_dravyas_1790488547761.jpg',
+      image: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?auto=format&fit=crop&w=800&q=85',
       fallback: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?auto=format&fit=crop&w=800&q=85',
       targetId: 'section-category-grid',
       tiltClass: 'rotate-6 group-hover:rotate-2',

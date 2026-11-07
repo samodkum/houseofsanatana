@@ -102,10 +102,10 @@ export const FAQSection: React.FC = () => {
       id="faqs"
       className="relative w-full py-14 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
-      {/* Sacred Temple & River Ghats Backdrop */}
+      {/* Sacred Temple & Sanctum Backdrop */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src="/sacred_temple_bg.jpg"
+          src="https://cdn.shopify.com/s/files/1/0794/4516/4163/files/cd14bd3d-e66c-4ae0-a8d4-21230213433f.png?v=1794025032"
           alt=""
           className="w-full h-full object-cover object-[center_28%] scale-[1.01] brightness-[1.02] contrast-[1.04] saturate-[1.12]"
         />
@@ -256,13 +256,10 @@ export const FAQSection: React.FC = () => {
                       }}
                       className="overflow-hidden border-t border-stone-200/80 bg-[#FFFDF9]"
                     >
-                      <div className="p-3.5 sm:p-6 flex flex-col sm:flex-row items-start gap-3 sm:gap-6 bg-white">
+                      <div className="p-3.5 sm:p-6 bg-white">
                         
                         {/* Acharya Response Chat Bubble */}
-                        <div className="flex-1 rounded-2xl p-4 sm:p-6 bg-gradient-to-br from-[#98555E] via-[#742A35] to-[#51000F] text-white border-2 border-[#E4B968]/60 shadow-[0_12px_32px_rgba(152,85,94,0.35)] relative">
-                          {/* Chat bubble tail pointing to Acharya */}
-                          <div className="hidden sm:block absolute -right-2 top-7 w-4 h-4 bg-[#742A35] border-t-2 border-r-2 border-[#E4B968]/60 rotate-45 transform" />
-
+                        <div className="w-full rounded-2xl p-4 sm:p-6 bg-gradient-to-br from-[#98555E] via-[#742A35] to-[#51000F] text-white border-2 border-[#E4B968]/60 shadow-[0_12px_32px_rgba(152,85,94,0.35)] relative">
                           {/* Top Tag Pills */}
                           <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-3.5">
                             <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/25 backdrop-blur-xs border border-white/30 text-[10px] sm:text-xs font-dm font-bold text-white uppercase tracking-wider shadow-xs">
@@ -285,26 +282,6 @@ export const FAQSection: React.FC = () => {
                               <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#E4B968]" />
                               <span>Peetham Verified &bull; Consecrated Guidance</span>
                             </span>
-                          </div>
-                        </div>
-
-                        {/* Right Acharya Avatar Image & Title Badge */}
-                        <div className="flex sm:flex-col items-center sm:items-center gap-2.5 sm:gap-3 shrink-0 self-start sm:self-center sm:w-36 text-left sm:text-center pt-0.5 sm:pt-0">
-                          <div className="relative w-11 h-11 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden border border-[#C59239]/60 shadow-xs group bg-stone-100">
-                            <img 
-                              src={faq.acharyaAvatar} 
-                              alt={faq.acharyaName}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                            />
-                          </div>
-
-                          <div>
-                            <h4 className="font-cormorant font-semibold text-sm sm:text-lg text-[#221508] leading-tight">
-                              {faq.acharyaName}
-                            </h4>
-                            <p className="font-dm text-[9px] sm:text-[10px] text-[#607427] font-medium leading-tight mt-0.5">
-                              {faq.acharyaRole}
-                            </p>
                           </div>
                         </div>
 

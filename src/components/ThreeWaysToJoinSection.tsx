@@ -32,17 +32,17 @@ export const JOIN_WAYS: JoinWay[] = [
   {
     id: 'family-hos',
     serialNumber: '01',
-    sanskrit: '॥ कुल धर्म रक्षा ॥',
-    title: 'Family HOS',
-    subtitle: 'Nitya Devotion & Sacred Home Sanctum',
-    badge: 'Daily Griha Dharma',
-    description: 'Transform your daily home puja into an authentic spiritual sanctuary. Receive lab-pure consecrated samagri kits, astrological tithi muhurats, and step-by-step Vedic ritual guides tailored for your entire family.',
+    sanskrit: '॥ सनातन कुलम् ॥',
+    title: 'HOS Family',
+    subtitle: 'Belong. Explore. Experience.',
+    badge: 'Belong & Experience',
+    description: 'Become part of a global family where Sanatana Dharma is not just followed, but understood, celebrated and lived. Unlock a world of sacred experiences, curated journeys, meaningful products, cultural knowledge, exclusive updates, events and community initiatives. Discover your traditions, deepen your connection and grow with a House that brings heritage into everyday life.',
     highlights: [
-      'Consecrated Nitya & Festival puja kits delivered to your doorstep',
-      'Personalized monthly Griha Muhurat & Vrat Panchang calendar',
-      'Direct WhatsApp access to temple acharyas for ritual guidance'
+      'Sacred experiences, curated journeys & meaningful offerings',
+      'Living cultural knowledge, exclusive events & community initiatives',
+      'Deepen your connection with heritage in daily life'
     ],
-    ctaText: 'Join Family Circle',
+    ctaText: 'Join the HOS Family',
     ctaAction: 'community',
     image: 'https://images.unsplash.com/photo-1609358905581-e5382c473956?auto=format&fit=crop&w=1200&q=80',
     accentColor: '#C59239',
@@ -53,17 +53,17 @@ export const JOIN_WAYS: JoinWay[] = [
   {
     id: 'roles',
     serialNumber: '02',
-    sanskrit: '॥ सेवा अधिकार ॥',
-    title: 'Roles',
-    subtitle: 'Temple Ambassadors & Vedic Pilgrimage Scholars',
-    badge: 'Dharma Leadership',
-    description: 'Step forward to lead Bharat’s devotional renaissance. We are welcoming certified Vedic priests, Sanskrit scholars, luxury yatra coordinators, pilgrimage medics, and regional cultural ambassadors.',
+    sanskrit: '॥ सहभागिता सङ्कल्प ॥',
+    title: 'Roles & Partnerships',
+    subtitle: 'Collaborate. Build. Grow.',
+    badge: 'Collaborate & Build',
+    description: 'Be more than a participant — become part of what we are building. From careers and professional opportunities to corporate partnerships, business collaborations, bulk gifting, strategic investments and volunteering, House of Sanatana opens its doors to individuals and organisations ready to contribute. Bring your skills, ideas or resources and help shape a global ecosystem where purpose meets opportunity.',
     highlights: [
-      'Lead VIP Himalayan & Dham yatras with full logistical support',
-      'Honorarium & dakshina according with highest dharmic dignity',
-      'Peetham-accredited training in Agamic rituals & pilgrim hospitality'
+      'Careers, professional opportunities & leadership avenues',
+      'Corporate partnerships, business collaborations & bulk gifting',
+      'Strategic investments & volunteering where purpose meets opportunity'
     ],
-    ctaText: 'Explore Open Roles',
+    ctaText: 'Build With HOS',
     ctaAction: 'roles',
     image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80',
     accentColor: '#0A4C83',
@@ -74,15 +74,15 @@ export const JOIN_WAYS: JoinWay[] = [
   {
     id: 'social-revolution',
     serialNumber: '03',
-    sanskrit: '॥ नव निर्माण क्रांति ॥',
+    sanskrit: '॥ नव निर्माण क्रान्ति ॥',
     title: 'Social Revolution / Co-Creator',
-    subtitle: 'Artisan Guilds, Research & Devotional Innovation',
-    badge: 'Sacred Guild Co-Creation',
-    description: 'Dharma is an eternal creative force. We partner directly with 5th-generation brass sculptors, organic samagri farmers, botanical perfumers, and Vedic researchers to revive authentic sacred heritage without middlemen.',
+    subtitle: 'Create. Influence. Earn.',
+    badge: 'Create & Earn',
+    description: 'Your creativity has the power to carry a civilisation forward. Join a global network of creators, storytellers and changemakers bringing Sanatana Dharma to a new generation through digital campaigns, creative challenges and cultural storytelling. Get opportunities to showcase your talent, collaborate with House of Sanatana, earn through approved paid campaigns and grow towards long-term creative partnerships.',
     highlights: [
-      'Direct fair-trade guild contracts with guaranteed advance patronage',
-      'Authenticity verification certificates bearing your artisan mark',
-      'R&D co-grants for indigenous herbal incense & temple metallurgy'
+      'Digital campaigns, creative challenges & cultural storytelling',
+      'Showcase your talent with direct House of Sanatana collaboration',
+      'Earn through approved paid campaigns & long-term partnerships'
     ],
     ctaText: 'Become a Co-Creator',
     ctaAction: 'cocreate',
@@ -134,10 +134,10 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
       id="three-ways-to-join"
       className="relative w-full py-20 sm:py-28 bg-[#FEFBF2] text-[#221508] overflow-hidden select-none"
     >
-      {/* Sacred Temple Mandapa Corridor Backdrop */}
+      {/* Sacred Temple Art Backdrop */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src="/sacred_mandapa_bg.jpg"
+          src="https://cdn.shopify.com/s/files/1/0794/4516/4163/files/ccf19b7b-af54-4b37-910d-63c955ed1375.png?v=1794025063"
           alt=""
           className="w-full h-full object-cover object-center scale-[1.01] brightness-[1.02] contrast-[1.03] saturate-[1.12]"
         />
@@ -182,11 +182,15 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
             THREE WAYS TO JOIN
           </h2>
           <div className="mt-1 font-cormorant text-3xl sm:text-5xl md:text-6xl font-semibold text-[#221508] tracking-tight leading-[0.95] uppercase">
-            HOUSE OF SANATAN
+            HOUSE OF SANATANA
           </div>
 
-          <p className="mt-5 font-dm text-sm sm:text-base text-[#221508] font-medium leading-relaxed max-w-2xl mx-auto">
-            Choose how you walk this sacred path—as a devoted family, a dharmic leader, or an artisanal co-creator restoring timeless Vedic heritage.
+          <p className="mt-4 sm:mt-5 font-cormorant text-xl sm:text-2xl md:text-3xl text-[#98555E] font-medium tracking-tight">
+            Three Pathways. One House. Endless Possibilities.
+          </p>
+
+          <p className="mt-2 font-dm text-xs sm:text-sm text-[#3D2619] font-normal leading-relaxed max-w-2xl mx-auto">
+            Belong to a living family, build through professional partnerships, or co-create the digital and cultural future of Sanatana Dharma.
           </p>
         </div>
 
@@ -521,6 +525,16 @@ export const ThreeWaysToJoinSection: React.FC<ThreeWaysToJoinSectionProps> = ({
             </div>
           </div>
 
+        </div>
+
+        {/* Bottom Banner: One House. A World of Opportunity */}
+        <div className="mt-14 sm:mt-16 text-center">
+          <div className="inline-flex items-center gap-2 sm:gap-3 px-6 py-2.5 rounded-full bg-[#FEFBF2] border border-[#C59239]/35 shadow-xs">
+            <span className="font-sanskrit text-xs text-[#C59239] font-bold">॥ एकं कुलम् ॥</span>
+            <span className="text-[11px] sm:text-xs font-dm font-bold uppercase tracking-[0.22em] text-[#221508]">
+              ONE HOUSE. A WORLD OF OPPORTUNITY.
+            </span>
+          </div>
         </div>
 
       </div>

@@ -330,12 +330,12 @@ export const YatraModal: React.FC<YatraModalProps> = ({ yatra, onClose }) => {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Connecting to Shopify...</span>
+                        <span>Connecting to Sacred Checkout...</span>
                       </>
                     ) : (
                       <>
                         <ShoppingBag className="w-4 h-4" />
-                        <span>Proceed to Shopify Checkout</span>
+                        <span>Proceed to Sacred Checkout</span>
                       </>
                     )}
                   </button>
